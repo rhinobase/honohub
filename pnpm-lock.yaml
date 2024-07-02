@@ -20,6 +20,9 @@ devDependencies:
   '@nx/web':
     specifier: 19.3.2
     version: 19.3.2(@swc-node/register@1.9.2)(@swc/core@1.5.29)(@types/node@18.16.9)(nx@19.3.2)(typescript@5.4.5)(verdaccio@5.31.1)
+  '@rollup/plugin-terser':
+    specifier: ^0.4.4
+    version: 0.4.4(rollup@4.18.0)
   '@swc-node/register':
     specifier: ~1.9.1
     version: 1.9.2(@swc/core@1.5.29)(@swc/types@0.1.9)(typescript@5.4.5)
@@ -2292,6 +2295,21 @@ packages:
       is-module: 1.0.0
       resolve: 1.22.8
       rollup: 4.18.0
+    dev: true
+
+  /@rollup/plugin-terser@0.4.4(rollup@4.18.0):
+    resolution: {integrity: sha512-XHeJC5Bgvs8LfukDwWZp7yeqin6ns8RTl2B9avbejt6tZqsqvVoWI7ZTQrcNsfKEDWBTnTxM8nMDkO2IFFbd0A==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      rollup: 4.18.0
+      serialize-javascript: 6.0.2
+      smob: 1.5.0
+      terser: 5.31.1
     dev: true
 
   /@rollup/pluginutils@4.2.1:
@@ -7621,6 +7639,10 @@ packages:
     dependencies:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 5.0.0
+    dev: true
+
+  /smob@1.5.0:
+    resolution: {integrity: sha512-g6T+p7QO8npa+/hNx9ohv1E5pVCmWrVCUzUXJyLdMmftX6ER0oiWY/w9knEonLpnOp6b6FenKnMfR8gqwWdwig==}
     dev: true
 
   /sonic-boom@2.8.0:

@@ -1,4 +1,5 @@
 const { withNx } = require("@nx/rollup/with-nx");
+const terser = require("@rollup/plugin-terser");
 
 module.exports = withNx(
   {
@@ -10,8 +11,6 @@ module.exports = withNx(
     assets: [{ input: ".", output: ".", glob: "*.md" }],
   },
   {
-    // Provide additional rollup configuration here. See: https://rollupjs.org/configuration-options
-    // e.g.
-    // output: { sourcemap: true },
+    plugins: [terser()],
   },
 );
