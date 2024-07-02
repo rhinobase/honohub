@@ -2,14 +2,41 @@
   "name": "ganga",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "commit": "czg",
+    "prepare": "is-ci || husky install",
+    "format": "biome check --write ."
+  },
   "private": true,
-  "dependencies": {},
   "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
     "@nx/js": "19.3.2",
-    "nx": "19.3.2"
+    "@nx/rollup": "19.3.2",
+    "@nx/vite": "19.3.2",
+    "@nx/web": "19.3.2",
+    "@swc-node/register": "~1.9.1",
+    "@swc/cli": "~0.3.12",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "@types/node": "18.16.9",
+    "@vitest/coverage-v8": "^1.0.4",
+    "@vitest/ui": "^1.3.1",
+    "czg": "^1.9.3",
+    "husky": "^9.0.11",
+    "is-ci": "^3.0.1",
+    "lint-staged": "^15.2.7",
+    "nx": "19.3.2",
+    "rollup": "^4.14.0",
+    "swc-loader": "0.1.15",
+    "typescript": "~5.4.2",
+    "verdaccio": "^5.0.4",
+    "vite": "^5.0.0",
+    "vitest": "^1.3.1"
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "nx": {
+    "includedScripts": []
+  }
 }
