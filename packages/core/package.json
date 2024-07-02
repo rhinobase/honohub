@@ -1,7 +1,37 @@
 {
   "name": "@ganga/core",
-  "version": "0.0.1",
-  "dependencies": {},
-  "main": "./index.cjs",
-  "module": "./index.js"
+  "version": "0.1.0",
+  "license": "MIT",
+  "keywords": [
+    "hono",
+    "api",
+    "middleware",
+    "rest-api",
+    "builder",
+    "drizzle",
+    "zod",
+    "validation",
+    "honojs"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhinobase/ganga.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/rhinobase/ganga/issues"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.2.2",
+    "drizzle-zod": "^0.5.1",
+    "zod": "^3.23.8"
+  },
+  "peerDependencies": {
+    "drizzle-orm": "^0.31.2",
+    "hono": "^4.1.1"
+  },
+  "types": "./index.cjs.d.ts"
 }

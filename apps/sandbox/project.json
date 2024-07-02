@@ -1,0 +1,21 @@
+{
+  "name": "sandbox",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/sandbox/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "command": "tsx watch --tsconfig ./apps/sandbox/tsconfig.json apps/sandbox/src/index.ts"
+    },
+    "db:generate": {
+      "command": "drizzle-kit generate --dialect postgresql --schema apps/sandbox/src/db/schema.ts --out apps/sandbox/src/db/migrations"
+    },
+    "db:migrate": {
+      "command": "tsx ./apps/sandbox/src/db/migrate.ts"
+    },
+    "db:seed": {
+      "command": "tsx ./apps/sandbox/src/db/seed.ts"
+    }
+  }
+}
