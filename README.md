@@ -2,6 +2,13 @@
 
 A CMS framework using Hono + Drizzle + Zod.
 
+## Install
+
+```sh
+# Using npm/yarn/pnpm/bun
+npm add honohub
+```
+
 ## TODOs
 
 - [x] REST API
