@@ -1,4 +1,5 @@
 import { serve } from "@hono/node-server";
+import { useGraphql } from "@honohub/graphql";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { Hono } from "hono";
@@ -28,6 +29,7 @@ const app = new Hono().route(
       (app) => {
         return new Hono().use(logger()).route("/", app);
       },
+      useGraphql(),
     ],
   }),
 );

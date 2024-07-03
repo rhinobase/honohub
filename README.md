@@ -11,8 +11,8 @@ npm add honohub
 
 ## TODOs
 
-- [x] REST API
-- [ ] GraphQL Plugin
+- [x] REST API `honohub`
+- [x] GraphQL Plugin `@honohub/graphql`
 - [ ] Hooks Support
 - [ ] File Storage
 - [ ] Dashboard Plugin

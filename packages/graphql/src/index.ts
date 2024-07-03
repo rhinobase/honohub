@@ -9,7 +9,7 @@ export type GraphQLPluginConfig = {
   route?: string;
 };
 
-export function graphQL<
+export function useGraphql<
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   Database extends AnyDrizzleDB<any>,
   E extends Env,
@@ -30,7 +30,7 @@ export function graphQL<
           source: data.query,
         });
 
-        c.json(response);
+        return c.json(response);
       })
       .route("/", _app);
 
