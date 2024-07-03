@@ -8,7 +8,7 @@ module.exports = withNx(
     tsConfig: "./tsconfig.lib.json",
     compiler: "swc",
     format: ["cjs", "esm"],
-    assets: [{ input: ".", output: ".", glob: "*.md" }],
+    assets: [{ input: "./packages/graphql", output: ".", glob: "*.md" }],
   },
   {
     plugins: [terser()],
