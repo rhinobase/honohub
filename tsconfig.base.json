@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@honohub/core": ["packages/core/src/index.ts"]
+      "honohub": ["packages/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

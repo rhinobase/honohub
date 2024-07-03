@@ -1,9 +1,9 @@
 import { serve } from "@hono/node-server";
-import { defineApp, defineCollection } from "@honohub/core";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
+import { defineApp, defineCollection } from "honohub";
 import { todos } from "./db/schema";
 import * as schema from "./db/schema";
 
