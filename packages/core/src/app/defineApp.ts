@@ -1,10 +1,10 @@
+import type { AnyDrizzleDB } from "drizzle-graphql";
 import { type Env, Hono, type Schema } from "hono";
-import type { BlankSchema } from "hono/types";
 import { createRoutes } from "../routes";
-import type { AppConfig, ExtendedTableConfig, SanitizedApp } from "../types";
+import type { AppConfig, SanitizedApp } from "../types";
 
 export function defineApp<
-  Database,
+  Database extends AnyDrizzleDB<any>,
   E extends Env,
   P extends Schema,
   I extends string,
@@ -22,7 +22,8 @@ export function defineApp<
   // Adding routes
   for (let index = collections.length - 1; index >= 0; index--) {
     const collection = collections[index];
-    // @ts-expect-error
+
+    // @ts-ignore
     app.route(`/${collection.slug}`, createRoutes(sanitizedConfig, collection));
   }
 

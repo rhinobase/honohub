@@ -1,4 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
+import type { AnyDrizzleDB } from "drizzle-graphql";
 import { asc, desc, eq } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { type Env, Hono, type Schema } from "hono";
@@ -6,9 +7,9 @@ import { HTTPException } from "hono/http-exception";
 import type { BlankSchema } from "hono/types";
 import { z } from "zod";
 import type {
-  AppConfig,
   ExtendedTableConfig,
   Promisify,
+  SanitizedApp,
   SanitizedCollection,
 } from "../types";
 import { AccessType } from "../utils";
@@ -16,19 +17,18 @@ import { operationsMiddleware } from "./middlewares";
 import { queryValidationSchema } from "./validations";
 
 export function createRoutes<
-  Database,
+  Database extends AnyDrizzleDB<any>,
   U extends ExtendedTableConfig,
   E extends Env = Env,
   P extends Schema = BlankSchema,
   I extends string = string,
 >(
-  config: AppConfig<Database, E, P, I>,
+  config: SanitizedApp<Database, E, P, I>,
   collection: SanitizedCollection<U, E, P, I>,
 ) {
   // Creating a new app
   let app = new Hono<E, P, I>();
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const db = config.db as any;
 
   // List records endpoint
@@ -166,7 +166,6 @@ export function createRoutes<
       // Generating the zod validation
       const validation = createInsertSchema(collection.schema).omit({
         [collection.queryKey.name]: true,
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } as any);
 
       // Getting the raw data

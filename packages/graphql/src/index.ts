@@ -10,7 +10,6 @@ export type GraphQLPluginConfig = {
 };
 
 export function useGraphql<
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   Database extends AnyDrizzleDB<any>,
   E extends Env,
   P extends Schema,

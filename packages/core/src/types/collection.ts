@@ -5,7 +5,6 @@ import type { AccessType } from "../utils";
 import type { CollectionHooks } from "./hook";
 import type { Prettify, Promisify } from "./utils";
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export type ExtendedTableConfig = TableConfig<Column<any, object, object>>;
 
 export type CollectionConfig<

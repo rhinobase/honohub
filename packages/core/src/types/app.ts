@@ -1,8 +1,9 @@
+import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { Env, Hono, Schema } from "hono";
 import type { SanitizedCollection } from "./collection";
 
 export type AppConfig<
-  Database,
+  Database extends AnyDrizzleDB<any>,
   E extends Env,
   P extends Schema,
   I extends string,
@@ -11,7 +12,7 @@ export type AppConfig<
 };
 
 export type SanitizedApp<
-  Database,
+  Database extends AnyDrizzleDB<any>,
   E extends Env,
   P extends Schema,
   I extends string,
@@ -22,7 +23,7 @@ export type SanitizedApp<
 };
 
 export type AppPlugin<
-  Database,
+  Database extends AnyDrizzleDB<any>,
   E extends Env,
   P extends Schema,
   I extends string,
