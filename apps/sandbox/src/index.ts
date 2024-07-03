@@ -3,6 +3,7 @@ import { serve } from "@hono/node-server";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { Hono } from "hono";
+import { logger } from "hono/logger";
 import { todos } from "./db/schema";
 import * as schema from "./db/schema";
 
@@ -22,7 +23,11 @@ const app = new Hono().route(
     collections: [
       // @ts-expect-error
       collection,
-      // defineCollection({ slug: "messages", schema: messages }),
+    ],
+    plugins: [
+      (app) => {
+        return new Hono().use(logger()).route("/", app);
+      },
     ],
   }),
 );
