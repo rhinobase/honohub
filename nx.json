@@ -4,7 +4,8 @@
   "release": {
     "version": {
       "preVersionCommand": "pnpm dlx nx run-many -t build"
-    }
+    },
+    "projectsRelationship": "independent"
   },
   "plugins": [
     {
@@ -17,7 +18,10 @@
   "targetDefaults": {
     "@nx/vite:test": {
       "cache": true,
-      "inputs": ["default", "^default"]
+      "inputs": [
+        "default",
+        "^default"
+      ]
     }
   }
 }
