@@ -1,7 +1,38 @@
 {
   "name": "@honohub/graphql",
-  "version": "0.0.1",
-  "dependencies": {},
-  "main": "./index.cjs",
-  "module": "./index.js"
+  "version": "0.1.0",
+  "license": "MIT",
+  "keywords": [
+    "hono",
+    "api",
+    "middleware",
+    "graphql",
+    "builder",
+    "drizzle",
+    "zod",
+    "validation",
+    "honojs"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhinobase/honohub.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/rhinobase/honohub/issues"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.2.2",
+    "drizzle-graphql": "^0.8.4",
+    "graphql": "^16.9.0",
+    "zod": "^3.23.8"
+  },
+  "peerDependencies": {
+    "hono": "^4.1.1",
+    "honohub": "^0.1.0"
+  },
+  "types": "./index.cjs.d.ts"
 }
