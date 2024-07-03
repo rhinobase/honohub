@@ -13,7 +13,7 @@ npm add honohub
 
 - [x] REST API `honohub`
 - [x] GraphQL Plugin `@honohub/graphql`
-- [ ] Hooks Support
+- [x] Hooks Support
 - [ ] File Storage
 - [ ] Dashboard Plugin
 
