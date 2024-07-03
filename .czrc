@@ -5,6 +5,10 @@
       "name": "core:                 anything core specific"
     },
     {
+      "value": "gql",
+      "name": "graphql:              anything graphql specific"
+    },
+    {
       "value": "sandbox",
       "name": "sandbox:              anything sandbox specific"
     }

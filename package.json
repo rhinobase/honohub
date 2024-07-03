@@ -44,8 +44,10 @@
     "@hono/node-server": "^1.11.5",
     "@hono/zod-validator": "^0.2.2",
     "@neondatabase/serverless": "^0.9.4",
+    "drizzle-graphql": "^0.8.4",
     "drizzle-orm": "^0.31.2",
     "drizzle-zod": "^0.5.1",
+    "graphql": "^16.9.0",
     "hono": "^4.4.10",
     "zod": "^3.23.8"
   }

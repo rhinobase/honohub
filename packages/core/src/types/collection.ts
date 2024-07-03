@@ -44,8 +44,15 @@ export type SanitizedCollection<
       }
     | false;
   hooks: Partial<CollectionHooks>;
-  plugins: ((
-    app: Hono<E, P, I>,
-    config: SanitizedCollection<T, E, P, I>,
-  ) => Hono<E, P, I>)[];
+  plugins: CollectionPlugin<T, E, P, I>[];
 };
+
+export type CollectionPlugin<
+  T extends ExtendedTableConfig = ExtendedTableConfig,
+  E extends Env = Env,
+  P extends Schema = BlankSchema,
+  I extends string = string,
+> = (
+  app: Hono<E, P, I>,
+  config: SanitizedCollection<T, E, P, I>,
+) => Hono<E, P, I>;

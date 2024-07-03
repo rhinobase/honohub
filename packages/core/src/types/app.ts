@@ -1,5 +1,5 @@
 import type { Env, Hono, Schema } from "hono";
-import type { ExtendedTableConfig, SanitizedCollection } from "./collection";
+import type { SanitizedCollection } from "./collection";
 
 export type AppConfig<
   Database,
@@ -18,8 +18,15 @@ export type SanitizedApp<
 > = {
   db: Database;
   collections: SanitizedCollection[];
-  plugins: ((
-    app: Hono<E, P, I>,
-    config: SanitizedApp<Database, E, P, I>,
-  ) => Hono<E, P, I>)[];
+  plugins: AppPlugin<Database, E, P, I>[];
 };
+
+export type AppPlugin<
+  Database,
+  E extends Env,
+  P extends Schema,
+  I extends string,
+> = (
+  app: Hono<E, P, I>,
+  config: SanitizedApp<Database, E, P, I>,
+) => Hono<E, P, I>;

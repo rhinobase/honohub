@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@honohub/graphql": ["packages/graphql/src/index.ts"],
       "honohub": ["packages/core/src/index.ts"]
     }
   },
