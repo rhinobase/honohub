@@ -62,11 +62,26 @@ export function createRoutes<
       records = records.orderBy(order(collection.schema[sortByInString]));
     }
 
+    console.log(collection.pagination);
+
     if (!collection.pagination) {
       return c.json(await records);
     }
 
-    const results = await records.limit(query.limit).offset(query.offset);
+    const limit = query.limit ?? collection.pagination.defaultLimit;
+
+    if (
+      collection.pagination.maxLimit &&
+      limit > collection.pagination.maxLimit
+    ) {
+      throw new HTTPException(400, {
+        message: "The limit value exceeds the maximum allowed limit.",
+      });
+    }
+
+    const results = await records
+      .limit(query.limit ?? collection.pagination.defaultLimit)
+      .offset(query.offset);
     return c.json(results);
   });
 

@@ -15,6 +15,9 @@ const db = drizzle(sql, { schema });
 const collection = defineCollection({
   slug: "todos",
   schema: todos,
+  pagination: {
+    defaultLimit: 10,
+  },
 });
 
 const app = new Hono().route(

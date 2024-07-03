@@ -38,7 +38,7 @@ export type SanitizedCollection<
   listSearchableFields: (keyof DTable<T>)[];
   pagination:
     | {
-        defaultLimit?: number;
+        defaultLimit: number;
         maxLimit?: number;
       }
     | false;
