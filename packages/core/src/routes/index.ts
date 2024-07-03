@@ -49,20 +49,18 @@ export function createRoutes<
     const sortBy = query.sortBy ?? collection.defaultSort;
     let sortByInString = String(sortBy);
 
-    if (sortBy && sortByInString in collection.schema) {
-      let order: typeof desc;
-      if (sortByInString.startsWith("-")) {
-        sortByInString = sortByInString.slice(1);
-        order = desc;
-      } else {
-        order = asc;
-      }
+    let order: typeof desc;
+    if (sortByInString.startsWith("-")) {
+      sortByInString = sortByInString.slice(1);
+      order = desc;
+    } else {
+      order = asc;
+    }
 
+    if (sortBy && sortByInString in collection.schema) {
       // @ts-expect-error
       records = records.orderBy(order(collection.schema[sortByInString]));
     }
-
-    console.log(collection.pagination);
 
     if (!collection.pagination) {
       return c.json(await records);
