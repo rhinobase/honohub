@@ -1,5 +1,5 @@
-import { defineApp, defineCollection } from "@ganga/core";
 import { serve } from "@hono/node-server";
+import { defineApp, defineCollection } from "@honohub/core";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { Hono } from "hono";

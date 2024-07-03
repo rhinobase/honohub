@@ -1,5 +1,5 @@
 {
-  "name": "@ganga/core",
+  "name": "honohub",
   "version": "0.1.0",
   "license": "MIT",
   "keywords": [
@@ -18,11 +18,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rhinobase/ganga.git",
+    "url": "git+https://github.com/rhinobase/honohub.git",
     "directory": "packages/core"
   },
   "bugs": {
-    "url": "https://github.com/rhinobase/ganga/issues"
+    "url": "https://github.com/rhinobase/honohub/issues"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",

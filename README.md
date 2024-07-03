@@ -1,4 +1,4 @@
-# Ganga
+# Hono Hub
 
 A CMS framework using Hono + Drizzle + Zod.
 
