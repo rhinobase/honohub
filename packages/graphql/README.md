@@ -1,11 +1,15 @@
-# graphql
+# Hono Hub GraphQL Plugin
 
-This library was generated with [Nx](https://nx.dev).
+## Usage
 
-## Building
-
-Run `nx build graphql` to build the library.
-
-## Running unit tests
-
-Run `nx test graphql` to execute the unit tests via [Vitest](https://vitest.dev/).
+```ts
+defineApp({
+  db,
+  collections: [],
+  plugins: [
+    useGraphql({
+      route: "/custom-route", // Default `/graphql`
+    }),
+  ],
+});
+```
