@@ -1,18 +1,13 @@
-import type { Table } from "drizzle-orm";
-import type { Env, Schema } from "hono";
-import type { BlankSchema } from "hono/types";
+import { type Table, getTableColumns, getTableName } from "drizzle-orm";
 import type {
   CollectionConfig,
   ExtendedTableConfig,
   SanitizedCollection,
-} from "../types";
+} from "./types";
 
-export function defineCollection<
-  T extends ExtendedTableConfig,
-  E extends Env = Env,
-  P extends Schema = BlankSchema,
-  I extends string = string,
->(config: CollectionConfig<T, E, P, I>): SanitizedCollection<T, E, P, I> {
+export function defineCollection<T extends ExtendedTableConfig>(
+  config: CollectionConfig<T>,
+): SanitizedCollection<T> {
   const {
     slug,
     schema,
@@ -52,12 +47,15 @@ export function defineCollection<
   };
 }
 
-function findPrimaryKey<T extends ExtendedTableConfig>(schema: Table<T>) {
-  for (const key in schema) {
-    // @ts-ignore
-    const column = schema[key];
+function findPrimaryKey<T extends ExtendedTableConfig>(table: Table<T>) {
+  const columns = getTableColumns(table);
+
+  for (const key in columns) {
+    const column = columns[key];
     if (column.primary) return column;
   }
 
-  throw new Error(`Unable to find primary key for ${schema._.name} table!`);
+  throw new Error(
+    `Unable to find primary key for ${getTableName(table)} table!`,
+  );
 }

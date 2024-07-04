@@ -8,9 +8,9 @@ import { defineApp, defineCollection } from "honohub";
 import { todos } from "./db/schema";
 import * as schema from "./db/schema";
 
-const sql = neon(process.env.DATABASE_URL ?? "");
+const neonSql = neon(process.env.DATABASE_URL ?? "");
 
-const db = drizzle(sql, { schema });
+const db = drizzle(neonSql, { schema });
 
 const collection = defineCollection({
   slug: "todos",
@@ -36,6 +36,11 @@ const app = new Hono().route(
     ],
   }),
 );
+
+app.get("/", (c) => {
+  c.req.valid;
+  return c.text("");
+});
 
 const port = 3000;
 console.log(`Server is running on port ${port}`);
