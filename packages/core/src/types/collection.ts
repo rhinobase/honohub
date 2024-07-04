@@ -73,7 +73,7 @@ export type CollectionBeforeOperationHook = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
->(props: { context: Context<E, P, I> }) => void;
+>(props: { context: Context<E, P, I> }) => Promisify<void>;
 
 export type CollectionBeforeValidateHook<
   T extends ExtendedTableConfig = ExtendedTableConfig,
@@ -85,7 +85,7 @@ export type CollectionBeforeValidateHook<
   context: Context<E, P, I>;
   data: JSONValue;
   originalDoc?: DzTable<T>["$inferInsert"];
-}) => JSONValue;
+}) => Promisify<JSONValue>;
 
 export type CollectionBeforeChangeHook<
   T extends ExtendedTableConfig = ExtendedTableConfig,
@@ -97,7 +97,7 @@ export type CollectionBeforeChangeHook<
   context: Context<E, P, I>;
   data: DzTable<T>["$inferInsert"];
   originalDoc?: DzTable<T>["$inferInsert"];
-}) => DzTable<T>["$inferInsert"];
+}) => Promisify<DzTable<T>["$inferInsert"]>;
 
 export type CollectionAfterChangeHook<
   T extends ExtendedTableConfig = ExtendedTableConfig,
@@ -109,13 +109,13 @@ export type CollectionAfterChangeHook<
   context: Context<E, P, I>;
   doc: DzTable<T>["$inferInsert"];
   previousDoc: DzTable<T>["$inferInsert"];
-}) => void;
+}) => Promisify<JSONValue | undefined>;
 
 export type CollectionBeforeReadHook = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
->(props: { context: Context<E, P, I> }) => void;
+>(props: { context: Context<E, P, I> }) => Promisify<void>;
 
 export type CollectionAfterReadHook<
   T extends ExtendedTableConfig = ExtendedTableConfig,
@@ -125,14 +125,14 @@ export type CollectionAfterReadHook<
   I extends Input = Input,
 >(props: {
   context: Context<E, P, I>;
-  doc: DzTable<T>["$inferInsert"];
-}) => Partial<DzTable<T>["$inferInsert"]>;
+  doc: DzTable<T>["$inferInsert"] | DzTable<T>["$inferInsert"][];
+}) => Promisify<JSONValue | undefined>;
 
 export type CollectionBeforeDeleteHook = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
->(props: { context: Context<E, P, I> }) => void;
+>(props: { context: Context<E, P, I> }) => Promisify<void>;
 
 /**
  * Runs immediately after the delete operation removes
@@ -147,7 +147,7 @@ export type CollectionAfterDeleteHook<
 >(props: {
   context: Context<E, P, I>;
   doc: DzTable<T>["$inferInsert"];
-}) => void;
+}) => Promisify<JSONValue | undefined>;
 
 export type CollectionAfterOperationHook = <
   E extends Env = Env,
@@ -156,4 +156,4 @@ export type CollectionAfterOperationHook = <
 >(props: {
   context: Context<E, P, I>;
   result: unknown;
-}) => JSONValue;
+}) => Promisify<JSONValue>;

@@ -6,6 +6,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { type Env, Hono, type Schema } from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { BlankSchema } from "hono/types";
+import type { JSONValue } from "hono/utils/types";
 import type {
   ExtendedTableConfig,
   SanitizedApp,
@@ -46,10 +47,17 @@ export function createRoutes<
   const collectionDeleteQuery = db
     .delete(collection.schema)
     .where(eq(collection.queryKey, sql.placeholder("id")))
+    .returning()
     .prepare(`${collection.slug}_delete_query`);
 
   // List records endpoint
   app.get("/", zValidator("query", queryValidationSchema), async (c) => {
+    for (const hook of collection.hooks.beforeRead ?? []) {
+      await hook({
+        context: c,
+      });
+    }
+
     const query = c.req.valid("query");
 
     let records = db.select().from(collection.schema);
@@ -77,53 +85,120 @@ export function createRoutes<
       records = records.orderBy(order(collection.schema[sortByInString]));
     }
 
-    if (!collection.pagination) {
-      return c.json(await records);
+    if (collection.pagination) {
+      const limit = query.limit ?? collection.pagination.defaultLimit;
+
+      if (
+        collection.pagination.maxLimit &&
+        limit > collection.pagination.maxLimit
+      ) {
+        throw new HTTPException(400, {
+          message: "The limit value exceeds the maximum allowed limit.",
+        });
+      }
+
+      records
+        .limit(query.limit ?? collection.pagination.defaultLimit)
+        .offset(query.offset);
     }
 
-    const limit = query.limit ?? collection.pagination.defaultLimit;
+    let results = await records;
 
-    if (
-      collection.pagination.maxLimit &&
-      limit > collection.pagination.maxLimit
-    ) {
-      throw new HTTPException(400, {
-        message: "The limit value exceeds the maximum allowed limit.",
+    for (const hook of collection.hooks.afterRead ?? []) {
+      const res = await hook({
+        context: c,
+        doc: results,
       });
+
+      // @ts-ignore
+      if (res !== undefined) results = res;
     }
 
-    const results = await records
-      .limit(query.limit ?? collection.pagination.defaultLimit)
-      .offset(query.offset);
     return c.json(results);
   });
 
   // Create record endpoint
   app.post("/", async (c) => {
     // Getting the raw data
-    const raw = await (c.req.header("Content-Type") === "application/json"
+    let raw = await (c.req.header("Content-Type") === "application/json"
       ? c.req.json()
       : c.req.formData());
 
+    if (!raw)
+      throw new HTTPException(404, {
+        message: "Request body is missing or empty",
+      });
+
+    for (const hook of collection.hooks.beforeValidate ?? []) {
+      const res = await hook({
+        context: c,
+        data: raw,
+      });
+      if (res !== undefined) raw = res;
+    }
+
     // Parsing the value
-    const data = collectionInsertSchema.parse(raw);
+    let data = collectionInsertSchema.parse(raw);
+
+    for (const hook of collection.hooks.beforeChange ?? []) {
+      const res = await hook({
+        context: c,
+        data,
+      });
+
+      // @ts-expect-error
+      if (res !== undefined) data = res;
+    }
 
     // Saving the record
-    const response = await db
+    let createdDoc: JSONValue = await db
       .insert(collection.schema)
       .values(data)
-      .returning({ insertedId: collection.queryKey });
+      .returning();
+
+    for (const hook of collection.hooks.afterChange ?? []) {
+      const res = await hook({
+        context: c,
+        // @ts-expect-error
+        doc: createdDoc,
+        previousDoc: data,
+      });
+
+      if (res !== undefined) createdDoc = res;
+    }
 
     // Returning the response
-    return c.json(response);
+    // @ts-ignore
+    return c.json(createdDoc);
   });
 
   // Retrieve record endpoint
   app.get("/:id", async (c) => {
+    for (const hook of collection.hooks.beforeRead ?? []) {
+      await hook({
+        context: c,
+      });
+    }
+
     // Getting the record
-    const record = await collectionRetrieveQuery.execute({
-      id: c.req.param("id"),
-    });
+    let record = await collectionRetrieveQuery
+      .execute({
+        id: c.req.param("id"),
+      })
+      .then((records) => records[0]);
+
+    if (!record)
+      throw new HTTPException(404, { message: "Document not found" });
+
+    for (const hook of collection.hooks.afterRead ?? []) {
+      const res = await hook({
+        context: c,
+        doc: record,
+      });
+
+      // @ts-ignore
+      if (res !== undefined) record = res;
+    }
 
     // Returning the response
     return c.json(record);
@@ -132,32 +207,91 @@ export function createRoutes<
   // Update record endpoint
   app.patch("/:id", async (c) => {
     // Getting the raw data
-    const raw = await (c.req.header("Content-Type") === "application/json"
+    let raw = await (c.req.header("Content-Type") === "application/json"
       ? c.req.json()
       : c.req.formData());
 
+    if (!raw)
+      throw new HTTPException(404, {
+        message: "Request body is missing or empty",
+      });
+
+    // Getting the original document
+    const record = await collectionRetrieveQuery
+      .execute({
+        id: c.req.param("id"),
+      })
+      .then((records) => records[0]);
+
+    if (!record)
+      throw new HTTPException(404, { message: "Document not found" });
+
+    for (const hook of collection.hooks.beforeValidate ?? []) {
+      const res = await hook({
+        context: c,
+        data: raw,
+        originalDoc: record,
+      });
+      if (res !== undefined) raw = res;
+    }
+
     // Parsing the value
-    const data = collectionInsertSchema.parse(raw);
+    let data = collectionInsertSchema.parse(raw);
+
+    for (const hook of collection.hooks.beforeChange ?? []) {
+      const res = await hook({
+        context: c,
+        data,
+        originalDoc: record,
+      });
+
+      // @ts-expect-error
+      if (res !== undefined) data = res;
+    }
 
     // Updating the record
-    const response = await db
+    let updatedDoc: JSONValue = await db
       .update(collection.schema)
       // @ts-expect-error
       .set(data)
       .where(eq(collection.queryKey, c.req.param("id")))
-      .returning({ updatedId: collection.queryKey });
+      .returning();
+
+    for (const hook of collection.hooks.afterChange ?? []) {
+      const res = await hook({
+        context: c,
+        // @ts-expect-error
+        doc: updatedDoc,
+        previousDoc: data,
+      });
+      if (res !== undefined) updatedDoc = res;
+    }
 
     // Returning the response
-    return c.json(response);
+    // @ts-ignore
+    return c.json(updatedDoc);
   });
 
   // Delete record endpoint
   app.delete("/:id", async (c) => {
+    for (const hook of collection.hooks.beforeDelete ?? []) {
+      await hook({ context: c });
+    }
+
     // Deleting the record
-    await collectionDeleteQuery.execute({ id: c.req.param("id") });
+    let deletedDoc: JSONValue = await collectionDeleteQuery.execute({
+      id: c.req.param("id"),
+    });
+
+    for (const hook of collection.hooks.afterDelete ?? []) {
+      // @ts-expect-error
+      const res = await hook({ context: c, doc: deletedDoc });
+      if (res !== undefined) deletedDoc = res;
+    }
 
     // Returning the response
-    return c.json(null);
+    // @ts-ignore
+    return c.json(deletedDoc);
   });
 
   // Applying the plugins

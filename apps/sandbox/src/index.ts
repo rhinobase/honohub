@@ -18,6 +18,15 @@ const collection = defineCollection({
   pagination: {
     defaultLimit: 10,
   },
+  hooks: {
+    afterRead: [
+      ({ doc }) => {
+        if (!Array.isArray(doc)) {
+          return { id: doc.id, status: doc.status };
+        }
+      },
+    ],
+  },
 });
 
 const app = new Hono().route(
