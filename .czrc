@@ -9,6 +9,10 @@
       "name": "graphql:              anything graphql specific"
     },
     {
+      "value": "dash",
+      "name": "dashboard:              anything dashboard specific"
+    },
+    {
       "value": "sandbox",
       "name": "sandbox:              anything sandbox specific"
     }
