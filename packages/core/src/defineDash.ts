@@ -4,16 +4,17 @@ import type { DashConfig, SanitizedDash } from "./types";
 export function defineDash<E extends Env, P extends Schema, I extends string>(
   config: DashConfig,
 ) {
-  const { serverURL, meta = {}, dateFormat, components } = config;
+  const { serverURL, meta = {}, dateFormat, components, plugins = [] } = config;
 
   const sanitizedConfig: SanitizedDash = {
     serverURL,
     meta,
     dateFormat,
     components,
+    plugins,
   };
 
-  const app = new Hono<E, P, I>();
+  let app = new Hono<E, P, I>();
 
   // Adding routes
   // for (let index = collections.length - 1; index >= 0; index--) {
@@ -23,9 +24,9 @@ export function defineDash<E extends Env, P extends Schema, I extends string>(
   // }
 
   // Applying the plugins
-  // for (const plugin of plugins) {
-  //   app = plugin(app, sanitizedConfig);
-  // }
+  for (const plugin of plugins) {
+    app = plugin(app, sanitizedConfig);
+  }
 
   // Returning the app
   return app;

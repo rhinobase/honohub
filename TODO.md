@@ -6,7 +6,8 @@
 - [x] `defineCollection` function
 - [x] `createAPIPlugin` function
 - [x] `createCollectionPlugin` function
-- [ ] Add hooks
+- [x] Add hooks
+- [ ] Improve List API and add count API
 
 ## @honohub/dashboard
 
