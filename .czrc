@@ -10,11 +10,15 @@
     },
     {
       "value": "dash",
-      "name": "dashboard:              anything dashboard specific"
+      "name": "dashboard:            anything dashboard specific"
     },
     {
       "value": "sandbox",
       "name": "sandbox:              anything sandbox specific"
+    },
+    {
+      "value": "docs",
+      "name": "docs:                 anything docs specific"
     }
   ],
   "scopesSearchValue": true,
