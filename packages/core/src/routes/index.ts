@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import type { AnyDrizzleDB } from "drizzle-graphql";
-import { asc, desc, eq, sql } from "drizzle-orm";
+import { asc, count, desc, eq, sql } from "drizzle-orm";
 import type { NeonHttpDatabase } from "drizzle-orm/neon-http";
 import { createInsertSchema } from "drizzle-zod";
 import { type Env, Hono, type Schema } from "hono";
@@ -39,6 +39,10 @@ export function createRoutes<
   const collectionInsertSchema = createInsertSchema(collection.schema);
 
   // Prepared queries
+  const collectionDocumentCount = db
+    .select({ count: count() })
+    .from(collection.schema)
+    .prepare(`${collection.slug}_count_query`);
   const collectionRetrieveQuery = db
     .select()
     .from(collection.schema)
@@ -116,6 +120,15 @@ export function createRoutes<
 
     return c.json(results);
   });
+
+  // List records endpoint
+  app.get("/count", async (c) =>
+    c.json({
+      totalDocs: await collectionDocumentCount
+        .execute()
+        .then((records) => records[0].count),
+    }),
+  );
 
   // Create record endpoint
   app.post("/", async (c) => {
