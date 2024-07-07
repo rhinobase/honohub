@@ -1,4 +1,4 @@
 export * from "./collection";
-export * from "./app";
+export * from "./hub";
 export * from "./utils";
-export * from "./dash";
+export * from "./admin";

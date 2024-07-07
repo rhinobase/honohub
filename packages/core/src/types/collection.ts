@@ -41,19 +41,25 @@ export type SanitizedCollection<
       }
     | false;
   hooks: Partial<CollectionHooks<Table>>;
-  plugins: CollectionPluginFunction<Table>[];
+  plugins: CollectionPlugin<Table>[];
 };
 
-export type CollectionPluginFunction<
+export type CollectionPlugin<
   T extends ExtendedTableConfig = ExtendedTableConfig,
-> = <
-  E extends Env = Env,
-  P extends Schema = BlankSchema,
-  I extends string = string,
->(
-  app: Hono<E, P, I>,
-  config: SanitizedCollection<T>,
-) => Hono<E, P, I>;
+> = {
+  name: string;
+  config?: (
+    config: SanitizedCollection<T>,
+  ) => SanitizedCollection<T> | undefined;
+  setup?: <
+    E extends Env = Env,
+    P extends Schema = BlankSchema,
+    I extends string = string,
+  >(props: {
+    app: Hono<E, P, I>;
+    config: SanitizedCollection<T>;
+  }) => Hono<E, P, I> | undefined;
+};
 
 export type CollectionHooks<
   T extends ExtendedTableConfig = ExtendedTableConfig,
@@ -73,7 +79,9 @@ export type CollectionBeforeOperationHook = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
->(props: { context: Context<E, P, I> }) => Promisify<void>;
+>(props: {
+  context: Context<E, P, I>;
+}) => Promisify<void>;
 
 export type CollectionBeforeValidateHook<
   T extends ExtendedTableConfig = ExtendedTableConfig,
@@ -115,7 +123,9 @@ export type CollectionBeforeReadHook = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
->(props: { context: Context<E, P, I> }) => Promisify<void>;
+>(props: {
+  context: Context<E, P, I>;
+}) => Promisify<void>;
 
 export type CollectionAfterReadHook<
   T extends ExtendedTableConfig = ExtendedTableConfig,
@@ -132,7 +142,9 @@ export type CollectionBeforeDeleteHook = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
->(props: { context: Context<E, P, I> }) => Promisify<void>;
+>(props: {
+  context: Context<E, P, I>;
+}) => Promisify<void>;
 
 /**
  * Runs immediately after the delete operation removes

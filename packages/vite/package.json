@@ -1,0 +1,31 @@
+{
+  "name": "@honohub/vite",
+  "version": "0.1.0",
+  "license": "MIT",
+  "keywords": [
+    "hono",
+    "middleware",
+    "react",
+    "builder",
+    "honohub",
+    "plugin",
+    "vite",
+    "honojs"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhinobase/honohub.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/rhinobase/honohub/issues"
+  },
+  "peerDependencies": {
+    "honohub": "^0.1.2",
+    "vite": "^5.3.3"
+  },
+  "types": "./index.cjs.d.ts"
+}

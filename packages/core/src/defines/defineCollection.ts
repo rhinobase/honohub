@@ -3,7 +3,7 @@ import type {
   CollectionConfig,
   ExtendedTableConfig,
   SanitizedCollection,
-} from "./types";
+} from "../types";
 
 export function defineCollection<T extends ExtendedTableConfig>(
   config: CollectionConfig<T>,
@@ -34,7 +34,7 @@ export function defineCollection<T extends ExtendedTableConfig>(
       throw new Error("maxLimit must be greater than defaultLimit.");
   }
 
-  return {
+  let sanitizedConfig: SanitizedCollection<T> = {
     slug,
     schema,
     queryKey,
@@ -45,6 +45,13 @@ export function defineCollection<T extends ExtendedTableConfig>(
     plugins,
     hooks,
   };
+
+  for (const plugin of plugins) {
+    const tmp = plugin.config?.(sanitizedConfig);
+    if (tmp) sanitizedConfig = tmp;
+  }
+
+  return sanitizedConfig;
 }
 
 function findPrimaryKey<T extends ExtendedTableConfig>(table: Table<T>) {
