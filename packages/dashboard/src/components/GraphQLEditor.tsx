@@ -4,7 +4,7 @@ import GraphiQL from "graphiql";
 export function GraphQLEditor() {
   const isClient = useIsClient();
 
-  if (isClient) return <></>;
+  if (!isClient) return <></>;
 
   return (
     <GraphiQL
