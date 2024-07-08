@@ -1,6 +1,6 @@
 import GraphiQL from "graphiql";
 
-export function GraphQLEditor() {
+export default function GraphQLEditor() {
   return (
     <GraphiQL
       fetcher={(graphQLParams) =>

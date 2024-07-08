@@ -9,18 +9,11 @@ export type HubOptions = {
   outDir?: string;
 };
 
-export default function honohub(options: HubOptions): PluginOption {
-  const {
-    hub,
-    cache = "./.honohub/generated",
-    outDir = "../../dist",
-  } = options;
-
+export default function honohub(hub: SanitizedHub): PluginOption {
   return {
     name: "honohub-vite-plugin",
     enforce: "pre",
     async config(config, { command }) {
-      config.root = cache;
       const { admin } = hub;
 
       if (command !== "build") return;
@@ -30,7 +23,10 @@ export default function honohub(options: HubOptions): PluginOption {
           "Config Error: The 'admin' property is not initialized in the config. Please ensure the 'admin' property is set correctly in your config.",
         );
 
+      const { cache, outDir } = admin.build;
+
       // Configuring the build
+      config.root = cache;
       config.build = config.build || {};
       config.build.outDir = outDir;
       config.build.emptyOutDir = true;

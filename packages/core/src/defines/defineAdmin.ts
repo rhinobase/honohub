@@ -1,5 +1,10 @@
 import type { AdminConfig, SanitizedAdmin } from "../types";
 
+const defaultBuildConfig = {
+  cache: "./.honohub/generated",
+  outDir: "../../dist",
+};
+
 export function defineAdmin(config: AdminConfig) {
   const {
     serverURL,
@@ -7,6 +12,7 @@ export function defineAdmin(config: AdminConfig) {
     dateFormat,
     routes = {},
     plugins = [],
+    build = {},
   } = config;
 
   let sanitizedConfig: SanitizedAdmin = {
@@ -15,6 +21,7 @@ export function defineAdmin(config: AdminConfig) {
     dateFormat,
     routes,
     plugins,
+    build: { ...defaultBuildConfig, ...build },
   };
 
   for (const plugin of plugins) {
