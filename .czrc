@@ -13,6 +13,10 @@
       "name": "vite:                 anything vite specific"
     },
     {
+      "value": "react",
+      "name": "react:                anything react specific"
+    },
+    {
       "value": "sandbox",
       "name": "sandbox:              anything sandbox specific"
     },
