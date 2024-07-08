@@ -7,8 +7,3 @@ export const todos = pgTable("todos", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
-
-export const message = pgTable("message", {
-  id: serial("id").primaryKey(),
-  message: text("message").notNull(),
-});
