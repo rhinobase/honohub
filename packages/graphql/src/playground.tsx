@@ -28,7 +28,7 @@ export type GraphQLPlaygroundPluginConfig = {
 export function useGraphQLPlayground<Database extends AnyDrizzleDB<any>>(
   config: GraphQLPlaygroundPluginConfig = {},
 ): GlobalPlugin<Database> {
-  const { route = "/playground", graphQLEndpoint = "/graphql" } = config;
+  const { route = "/playground", graphQLEndpoint } = config;
 
   return {
     name: "honohub-graphql-playground",
@@ -39,8 +39,10 @@ export function useGraphQLPlayground<Database extends AnyDrizzleDB<any>>(
           ...config.routes,
           [route]: {
             import: "@honohub/graphql/playground",
-            props(): GraphQLEditorProps {
-              return { endpoint: graphQLEndpoint };
+            props(config): GraphQLEditorProps {
+              return {
+                endpoint: graphQLEndpoint ?? `${config.serverUrl}/graphql`,
+              };
             },
           },
         },
