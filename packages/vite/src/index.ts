@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import type { JSONObject } from "hono/utils/types";
 import type { SanitizedHub } from "honohub";
 import type { PluginOption } from "vite";
 
@@ -52,6 +53,8 @@ export default function honohub(hub: SanitizedHub): PluginOption {
       for (const page in admin.routes) {
         const route = admin.routes[page];
 
+        const props = route.props?.(hub);
+
         hubFiles.push(
           // HTML file
           writeFile(
@@ -74,8 +77,9 @@ export default function honohub(hub: SanitizedHub): PluginOption {
                   : `import ${route.import.component} from "${route.import.module}"`,
               component:
                 typeof route.import === "string"
-                  ? "<DefaultComponent />"
-                  : `<${route.import.component} />`,
+                  ? "<DefaultComponent {...props} />"
+                  : `<${route.import.component} {...props} />`,
+              props,
             }),
             {
               flag: "w+",
@@ -89,10 +93,20 @@ export default function honohub(hub: SanitizedHub): PluginOption {
   };
 }
 
-type JSTemplateProps = { import: string; component: string };
+type JSTemplateProps = {
+  import: string;
+  component: string;
+  props?: JSONObject;
+};
 
 const jsTemplateCode = (props: JSTemplateProps) =>
-  `import React from "react";import ReactDOM from "react-dom/client";${props.import};ReactDOM.createRoot(document.getElementById("root")).render(<React.StrictMode>${props.component}</React.StrictMode>);`;
+  `import React from "react";import ReactDOM from "react-dom/client";${
+    props.import
+  };const props=JSON.parse(${JSON.stringify(
+    props.props ?? {},
+  )});ReactDOM.createRoot(document.getElementById("root")).render(<React.StrictMode>${
+    props.component
+  }</React.StrictMode>);`;
 
 type HTMLTemplateProps = {
   module: string;

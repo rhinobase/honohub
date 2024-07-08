@@ -1,5 +1,7 @@
 import type { Env, Hono, Schema } from "hono";
 import type { BlankSchema } from "hono/types";
+import type { JSONObject } from "hono/utils/types";
+import type { HubConfig } from "./hub";
 
 export type AdminConfig = Partial<SanitizedAdmin> & {
   serverURL: string;
@@ -15,19 +17,18 @@ export type SanitizedAdmin = {
     favicon?: string;
   };
   dateFormat?: string;
-  routes: Record<
-    string,
-    {
-      import: string | { module: string; component: string };
-      seo?: {
-        title?: string;
-      };
-    }
-  >;
+  routes: Record<string, RouteOptions>;
   plugins: AdminPlugin[];
 };
 
 export type BuildOptions = { cache: string; outDir: string };
+export type RouteOptions = {
+  import: string | { module: string; component: string };
+  props?: (config: HubConfig) => JSONObject;
+  seo?: {
+    title?: string;
+  };
+};
 
 export type AdminPlugin = {
   name: string;
