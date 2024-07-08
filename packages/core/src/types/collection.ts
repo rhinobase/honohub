@@ -1,28 +1,21 @@
-import type { Column, Table as DzTable, TableConfig } from "drizzle-orm";
+import type { Column, Table, TableConfig } from "drizzle-orm";
 import type { Context, Env, Hono, Schema } from "hono";
 import type { BlankSchema, Input } from "hono/types";
 import type { JSONValue } from "hono/utils/types";
-import type { Prettify, Promisify } from "./utils";
+import type { Prettify, Promisify, ValueOf } from "./utils";
 
-export type ExtendedTableConfig = TableConfig<Column<any, object, object>>;
-
-export type CollectionConfig<
-  Table extends ExtendedTableConfig = ExtendedTableConfig,
-> = Prettify<
-  Partial<SanitizedCollection<Table>> & {
+export type CollectionConfig<T extends Table = Table> = Prettify<
+  Partial<SanitizedCollection<T>> & {
     slug: string;
-    schema: DzTable<Table>;
+    schema: T;
   }
 >;
 
-type TableColumns<T extends ExtendedTableConfig> = DzTable<T>["_"]["columns"];
-
-export type SanitizedCollection<
-  Table extends ExtendedTableConfig = ExtendedTableConfig,
-> = {
+export type TableColumns<T extends Table> = keyof T["_"]["columns"];
+export type SanitizedCollection<T extends Table = Table> = {
   slug: string;
-  queryKey: TableColumns<Table>[keyof TableColumns<Table>];
-  schema: DzTable<Table>;
+  queryKey: Column<any, object, object>;
+  schema: T;
   access: <
     E extends Env = Env,
     P extends string = string,
@@ -30,23 +23,19 @@ export type SanitizedCollection<
   >(
     c: Context<E, P, I>,
   ) => Promisify<boolean>;
-  defaultSort?:
-    | keyof TableColumns<Table>
-    | `-${keyof TableColumns<Table> & string}`;
-  listSearchableFields: (keyof TableColumns<Table>)[];
+  defaultSort?: TableColumns<T> | `-${TableColumns<T> & string}`;
+  listSearchableFields: TableColumns<T>[];
   pagination:
     | {
         defaultLimit: number;
         maxLimit?: number;
       }
     | false;
-  hooks: Partial<CollectionHooks<Table>>;
-  plugins: CollectionPlugin<Table>[];
+  hooks: Partial<CollectionHooks<T>>;
+  plugins: CollectionPlugin<T>[];
 };
 
-export type CollectionPlugin<
-  T extends ExtendedTableConfig = ExtendedTableConfig,
-> = {
+export type CollectionPlugin<T extends Table = Table> = {
   name: string;
   config?: (
     config: SanitizedCollection<T>,
@@ -61,9 +50,7 @@ export type CollectionPlugin<
   }) => Hono<E, P, I> | undefined;
 };
 
-export type CollectionHooks<
-  T extends ExtendedTableConfig = ExtendedTableConfig,
-> = {
+export type CollectionHooks<T extends Table = Table> = {
   beforeOperation: CollectionBeforeOperationHook[];
   beforeValidate: CollectionBeforeValidateHook<T>[];
   beforeChange: CollectionBeforeChangeHook<T>[];
@@ -83,40 +70,34 @@ export type CollectionBeforeOperationHook = <
   context: Context<E, P, I>;
 }) => Promisify<void>;
 
-export type CollectionBeforeValidateHook<
-  T extends ExtendedTableConfig = ExtendedTableConfig,
-> = <
+export type CollectionBeforeValidateHook<T extends Table = Table> = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
 >(props: {
   context: Context<E, P, I>;
   data: JSONValue;
-  originalDoc?: DzTable<T>["$inferInsert"];
+  originalDoc?: T["$inferInsert"];
 }) => Promisify<JSONValue>;
 
-export type CollectionBeforeChangeHook<
-  T extends ExtendedTableConfig = ExtendedTableConfig,
-> = <
+export type CollectionBeforeChangeHook<T extends Table = Table> = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
 >(props: {
   context: Context<E, P, I>;
-  data: DzTable<T>["$inferInsert"];
-  originalDoc?: DzTable<T>["$inferInsert"];
-}) => Promisify<DzTable<T>["$inferInsert"]>;
+  data: T["$inferInsert"];
+  originalDoc?: T["$inferInsert"];
+}) => Promisify<T["$inferInsert"]>;
 
-export type CollectionAfterChangeHook<
-  T extends ExtendedTableConfig = ExtendedTableConfig,
-> = <
+export type CollectionAfterChangeHook<T extends Table = Table> = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
 >(props: {
   context: Context<E, P, I>;
-  doc: DzTable<T>["$inferInsert"];
-  previousDoc: DzTable<T>["$inferInsert"];
+  doc: T["$inferInsert"];
+  previousDoc: T["$inferInsert"];
 }) => Promisify<JSONValue | undefined>;
 
 export type CollectionBeforeReadHook = <
@@ -127,15 +108,13 @@ export type CollectionBeforeReadHook = <
   context: Context<E, P, I>;
 }) => Promisify<void>;
 
-export type CollectionAfterReadHook<
-  T extends ExtendedTableConfig = ExtendedTableConfig,
-> = <
+export type CollectionAfterReadHook<T extends Table = Table> = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
 >(props: {
   context: Context<E, P, I>;
-  doc: DzTable<T>["$inferInsert"] | DzTable<T>["$inferInsert"][];
+  doc: T["$inferInsert"] | T["$inferInsert"][];
 }) => Promisify<JSONValue | undefined>;
 
 export type CollectionBeforeDeleteHook = <
@@ -150,15 +129,13 @@ export type CollectionBeforeDeleteHook = <
  * Runs immediately after the delete operation removes
  * records from the database. Returned values are discarded.
  */
-export type CollectionAfterDeleteHook<
-  T extends ExtendedTableConfig = ExtendedTableConfig,
-> = <
+export type CollectionAfterDeleteHook<T extends Table = Table> = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
 >(props: {
   context: Context<E, P, I>;
-  doc: DzTable<T>["$inferInsert"];
+  doc: T["$inferInsert"];
 }) => Promisify<JSONValue | undefined>;
 
 export type CollectionAfterOperationHook = <

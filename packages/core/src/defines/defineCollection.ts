@@ -1,11 +1,7 @@
 import { type Table, getTableColumns, getTableName } from "drizzle-orm";
-import type {
-  CollectionConfig,
-  ExtendedTableConfig,
-  SanitizedCollection,
-} from "../types";
+import type { CollectionConfig, SanitizedCollection } from "../types";
 
-export function defineCollection<T extends ExtendedTableConfig>(
+export function defineCollection<T extends Table>(
   config: CollectionConfig<T>,
 ): SanitizedCollection<T> {
   const {
@@ -54,12 +50,11 @@ export function defineCollection<T extends ExtendedTableConfig>(
   return sanitizedConfig;
 }
 
-function findPrimaryKey<T extends ExtendedTableConfig>(table: Table<T>) {
+function findPrimaryKey<T extends Table>(table: T) {
   const columns = getTableColumns(table);
 
   for (const key in columns) {
-    const column = columns[key];
-    if (column.primary) return column;
+    if (columns[key].primary) return columns[key];
   }
 
   throw new Error(

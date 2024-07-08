@@ -1,22 +1,19 @@
 import { zValidator } from "@hono/zod-validator";
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import { asc, count, desc, eq, sql } from "drizzle-orm";
+import type { Table } from "drizzle-orm";
 import type { NeonHttpDatabase } from "drizzle-orm/neon-http";
 import { createInsertSchema } from "drizzle-zod";
 import { type Env, Hono, type Schema } from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { BlankSchema } from "hono/types";
 import type { JSONValue } from "hono/utils/types";
-import type {
-  ExtendedTableConfig,
-  SanitizedCollection,
-  SanitizedHub,
-} from "../types";
+import type { SanitizedCollection, SanitizedHub } from "../types";
 import { queryValidationSchema } from "./validations";
 
 export function createRoutes<
   Database extends AnyDrizzleDB<any>,
-  U extends ExtendedTableConfig,
+  U extends Table,
   E extends Env = Env,
   P extends Schema = BlankSchema,
   I extends string = string,
@@ -164,7 +161,7 @@ export function createRoutes<
     }
 
     // Saving the record
-    let createdDoc: JSONValue = await db
+    let createdDoc: any = await db
       .insert(collection.schema)
       .values(data)
       .returning();
@@ -172,7 +169,6 @@ export function createRoutes<
     for (const hook of collection.hooks.afterChange ?? []) {
       const res = await hook({
         context: c,
-        // @ts-expect-error
         doc: createdDoc,
         previousDoc: data,
       });
@@ -263,7 +259,7 @@ export function createRoutes<
     }
 
     // Updating the record
-    let updatedDoc: JSONValue = await db
+    let updatedDoc: any = await db
       .update(collection.schema)
       // @ts-expect-error
       .set(data)
@@ -273,7 +269,6 @@ export function createRoutes<
     for (const hook of collection.hooks.afterChange ?? []) {
       const res = await hook({
         context: c,
-        // @ts-expect-error
         doc: updatedDoc,
         previousDoc: data,
       });

@@ -13,7 +13,7 @@ export type SanitizedHub<
   Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>,
 > = {
   db: Database;
-  collections: SanitizedCollection[];
+  collections: SanitizedCollection<any>[];
   admin?: SanitizedAdmin;
   plugins: GlobalPlugin<Database>[];
 };
@@ -27,8 +27,17 @@ export type GlobalPlugin<Database extends AnyDrizzleDB<any>> = {
     E extends Env = Env,
     P extends Schema = BlankSchema,
     I extends string = string,
-  >(props: {
-    app: Hono<E, P, I>;
-    config: SanitizedHub<Database>;
-  }) => Hono<E, P, I> | undefined;
+  >(
+    props: GlobalPluginSetupProps<Database, E, P, I>,
+  ) => Hono<E, P, I> | undefined;
+};
+
+export type GlobalPluginSetupProps<
+  Database extends AnyDrizzleDB<any>,
+  E extends Env = Env,
+  P extends Schema = BlankSchema,
+  I extends string = string,
+> = {
+  app: Hono<E, P, I>;
+  config: SanitizedHub<Database>;
 };
