@@ -4,7 +4,6 @@ import { type Env, Hono, type Schema } from "hono";
 import { logger } from "hono/logger";
 import {
   type GlobalPluginSetupProps,
-  type SanitizedHub,
   defineCollection,
   defineHub,
 } from "honohub";
