@@ -1,5 +1,6 @@
 const { withNx } = require("@nx/rollup/with-nx");
-const terser = require("@rollup/plugin-terser");
+const url = require("@rollup/plugin-url");
+const svg = require("@svgr/rollup");
 
 module.exports = withNx(
   {
@@ -7,10 +8,25 @@ module.exports = withNx(
     outputPath: "../../dist/packages/graphql",
     tsConfig: "./tsconfig.lib.json",
     compiler: "swc",
-    format: ["cjs", "esm"],
-    assets: [{ input: "./packages/graphql", output: ".", glob: "*.md" }],
+    external: ["react", "react-dom", "react/jsx-runtime"],
+    format: ["esm", "cjs"],
+    assets: [{ input: ".", output: ".", glob: "README.md" }],
   },
   {
-    plugins: [terser()],
+    // Provide additional rollup configuration here. See: https://rollupjs.org/configuration-options
+    input: {
+      index: "./src/index.ts",
+      playground: "./src/playground.tsx",
+    },
+    plugins: [
+      svg({
+        svgo: false,
+        titleProp: true,
+        ref: true,
+      }),
+      url({
+        limit: 10000, // 10kB
+      }),
+    ],
   },
 );

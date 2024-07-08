@@ -31,8 +31,21 @@
     "zod": "^3.23.8"
   },
   "peerDependencies": {
+    "graphiql": "^3.3.2",
     "hono": "^4.1.1",
     "honohub": "^0.1.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.cjs.d.ts",
+      "import": "./index.esm.js",
+      "require": "./index.cjs.js"
+    },
+    "./playground": {
+      "types": "./playground.cjs.d.ts",
+      "import": "./playground.esm.js",
+      "require": "./playground.cjs.js"
+    }
   },
   "types": "./index.cjs.d.ts"
 }
