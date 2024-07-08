@@ -1,18 +1,22 @@
 # Hono Hub
 
-A CMS framework using Hono + Drizzle + Zod.
+A CMS framework using Hono + Drizzle + Zod + Vite.
 
-**HonoX** is a simple and fast meta-framework for creating full-stack websites or Web APIs - (formerly _[Sonik](https://github.com/sonikjs/sonik)_). It stands on the shoulders of giants; built on [Hono](https://hono.dev/), [Vite](https://vitejs.dev/), and UI libraries.
+**HonoHub** is a simple and fast meta-framework for creating CMS for your websites or Apps. It stands on the shoulders of giants; built on [Hono](https://hono.dev/), [Drizzle](https://orm.drizzle.team/), [Zod](https://zod.dev/), and [Vite](https://vitejs.dev/).
 
-**Note**: _HonoX is currently in the "alpha stage". Breaking changes are introduced without following semantic versioning._
+**Note**: _HonoHub is currently in the "alpha stage". Breaking changes are introduced without following semantic versioning._
 
 ## Features
 
-- **File-based routing** - You can create a large application like Next.js.
-- **Fast SSR** - Rendering is ultra-fast thanks to Hono.
-- **BYOR** - You can bring your own renderer, not only one using hono/jsx.
-- **Islands hydration** - If you want interactions, create an island. JavaScript is hydrated only for it.
-- **Middleware** - It works as Hono, so you can use a lot of Hono's middleware.
+- **REST API** - `honohub` provides a powerful and flexible REST API for your applications.
+- **GraphQL Plugin** - Utilize the `@honohub/graphql` plugin for seamless GraphQL integration.
+- **Hooks Support** - Incorporate hooks to manage and extend your application's functionality.
+- **Panel Plugin** - Integrate customizable UI components and panels to enhance your application's user interface and overall experience.
+
+## Coming Soon
+
+- **Search Support** - Future implementation to enable efficient search capabilities.
+- **File Storage** - Upcoming feature for robust file storage solutions.
 
 ## Install
 
@@ -20,15 +24,6 @@ A CMS framework using Hono + Drizzle + Zod.
 # Using npm/yarn/pnpm/bun
 npm add honohub
 ```
-
-## TODOs
-
-- [x] REST API `honohub`
-- [x] GraphQL Plugin `@honohub/graphql`
-- [x] Hooks Support
-- [x] Search Support
-- [ ] File Storage
-- [ ] Dashboard Plugin
 
 ## Endpoints
 
