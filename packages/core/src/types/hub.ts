@@ -1,21 +1,36 @@
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { Env, Hono, Schema } from "hono";
 import type { BlankSchema } from "hono/types";
-import type { SanitizedAdmin } from "./admin";
+import type { JSONObject } from "hono/utils/types";
 import type { SanitizedCollection } from "./collection";
 
 export type HubConfig<Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>> =
   Partial<SanitizedHub<Database>> & {
     db: Database;
+    serverUrl: string;
+    build?: Partial<BuildOptions>;
   };
 
 export type SanitizedHub<
   Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>,
 > = {
   db: Database;
+  serverUrl: string;
+  build: BuildOptions;
+  meta: Partial<RouteMetaOptions>;
   collections: SanitizedCollection<any>[];
-  admin?: SanitizedAdmin;
+  routes: Record<string, RouteOptions>;
   plugins: GlobalPlugin<Database>[];
+};
+
+export type BuildOptions = { cache: string; outDir: string };
+export type RouteOptions = {
+  import: string | { module: string; component: string };
+  props?: (config: HubConfig) => JSONObject | undefined;
+  meta?: Partial<RouteMetaOptions>;
+};
+export type RouteMetaOptions = {
+  title: string;
 };
 
 export type GlobalPlugin<Database extends AnyDrizzleDB<any>> = {

@@ -4,27 +4,14 @@ import type { JSONObject } from "hono/utils/types";
 import type { SanitizedHub } from "honohub";
 import type { PluginOption } from "vite";
 
-export type HubOptions = {
-  hub: SanitizedHub;
-  cache?: string;
-  outDir?: string;
-};
-
 export default function honohub(hub: SanitizedHub): PluginOption {
   return {
     name: "honohub-vite-plugin",
     enforce: "pre",
     async config(config, { command }) {
-      const { admin } = hub;
-
       if (command !== "build") return;
 
-      if (!admin)
-        throw new Error(
-          "Config Error: The 'admin' property is not initialized in the config. Please ensure the 'admin' property is set correctly in your config.",
-        );
-
-      const { cache, outDir } = admin.build;
+      const { cache, outDir } = hub.build;
 
       // Configuring the build
       config.root = cache;
@@ -34,7 +21,7 @@ export default function honohub(hub: SanitizedHub): PluginOption {
 
       // Multiple entry files
       const inputs = Object.fromEntries(
-        Object.keys(admin.routes).map((page) => [
+        Object.keys(hub.routes).map((page) => [
           [page, resolve(__dirname, cache, `/${page}.html`)],
         ]),
       );
@@ -50,8 +37,8 @@ export default function honohub(hub: SanitizedHub): PluginOption {
 
       // Generating the files
       const hubFiles = [];
-      for (const page in admin.routes) {
-        const route = admin.routes[page];
+      for (const page in hub.routes) {
+        const route = hub.routes[page];
 
         const props = route.props?.(hub);
 
@@ -61,7 +48,7 @@ export default function honohub(hub: SanitizedHub): PluginOption {
             resolve(__dirname, cache, `/${page}.html`),
             htmlTemplateCode({
               module: `/${page}.js`,
-              title: admin.meta.title,
+              title: route.meta?.title ?? hub.meta.title,
             }),
             {
               flag: "w+",

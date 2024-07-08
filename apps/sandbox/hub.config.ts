@@ -35,6 +35,7 @@ db._.fullSchema.todos;
 
 export default defineHub({
   db,
+  serverUrl: "/",
   collections: [collection],
   plugins: [
     {

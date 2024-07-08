@@ -8,7 +8,7 @@ export type GraphQLPluginConfig = {
   route?: string;
 };
 
-export function useGraphql<Database extends AnyDrizzleDB<any>>(
+export function useGraphQL<Database extends AnyDrizzleDB<any>>(
   config: GraphQLPluginConfig = {},
 ): GlobalPlugin<Database> {
   const { route = "/graphql" } = config;
