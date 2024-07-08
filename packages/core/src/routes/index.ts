@@ -1,6 +1,6 @@
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { GlobalPlugin } from "../types";
-import { createRoutes } from "./routes";
+import { createRoutes } from "./createRoutes";
 
 export function useRestAPI<
   Database extends AnyDrizzleDB<any>,

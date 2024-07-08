@@ -5,7 +5,7 @@ export function defineAdmin(config: AdminConfig) {
     serverURL,
     meta = {},
     dateFormat,
-    routes = [],
+    routes = {},
     plugins = [],
   } = config;
 

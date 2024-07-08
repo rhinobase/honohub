@@ -11,7 +11,7 @@ function rehypeParseCodeBlocks() {
       if (node.tagName === "code" && node.properties.className) {
         parentNode.properties.language = node.properties.className[0]?.replace(
           /^language-/,
-          ""
+          "",
         );
       }
     });

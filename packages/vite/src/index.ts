@@ -1,17 +1,17 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import type { SanitizedAdmin } from "honohub";
+import type { SanitizedHub } from "honohub";
 import type { PluginOption } from "vite";
 
 export type HubOptions = {
-  admin: SanitizedAdmin;
+  hub: SanitizedHub;
   cache?: string;
   outDir?: string;
 };
 
 export default function honohub(options: HubOptions): PluginOption {
   const {
-    admin,
+    hub,
     cache = "./.honohub/generated",
     outDir = "../../dist",
   } = options;
@@ -21,8 +21,14 @@ export default function honohub(options: HubOptions): PluginOption {
     enforce: "pre",
     async config(config, { command }) {
       config.root = cache;
+      const { admin } = hub;
 
       if (command !== "build") return;
+
+      if (!admin)
+        throw new Error(
+          "Config Error: The 'admin' property is not initialized in the config. Please ensure the 'admin' property is set correctly in your config.",
+        );
 
       // Configuring the build
       config.build = config.build || {};
@@ -31,7 +37,7 @@ export default function honohub(options: HubOptions): PluginOption {
 
       // Multiple entry files
       const inputs = Object.fromEntries(
-        admin.routes.map(({ page }) => [
+        Object.keys(admin.routes).map((page) => [
           [page, resolve(__dirname, cache, `/${page}.html`)],
         ]),
       );
@@ -46,15 +52,17 @@ export default function honohub(options: HubOptions): PluginOption {
       await mkdir(cache, { recursive: true });
 
       // Generating the files
-      const files = [];
-      for (const route of admin.routes) {
-        files.push(
+      const hubFiles = [];
+      for (const page in admin.routes) {
+        const route = admin.routes[page];
+
+        hubFiles.push(
           // HTML file
           writeFile(
-            resolve(__dirname, cache, `/${route.page}.html`),
+            resolve(__dirname, cache, `/${page}.html`),
             htmlTemplateCode({
-              module: `/${route.page}.js`,
-              title: admin.meta.titleSuffix,
+              module: `/${page}.js`,
+              title: admin.meta.title,
             }),
             {
               flag: "w+",
@@ -62,7 +70,7 @@ export default function honohub(options: HubOptions): PluginOption {
           ),
           // Component file
           writeFile(
-            resolve(__dirname, cache, `/${route.page}.js`),
+            resolve(__dirname, cache, `/${page}.js`),
             jsTemplateCode({
               import:
                 typeof route.import === "string"
@@ -79,6 +87,8 @@ export default function honohub(options: HubOptions): PluginOption {
           ),
         );
       }
+
+      await Promise.all(hubFiles);
     },
   };
 }
