@@ -27,15 +27,13 @@
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
     "drizzle-graphql": "^0.8.4",
+    "graphql": "^16.9.0",
     "zod": "^3.23.8"
   },
   "peerDependencies": {
+    "graphiql": "^3.3.2",
     "hono": "^4.1.1",
     "honohub": "^0.1.0"
-  },
-  "optionalDependencies": {
-    "graphql": "^16.9.0",
-    "graphiql": "^3.3.2"
   },
   "exports": {
     ".": {

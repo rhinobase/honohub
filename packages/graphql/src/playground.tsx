@@ -6,7 +6,7 @@ export type GraphQLEditorProps = {
   endpoint: string;
 };
 
-export default function GraphQLEditor(props: GraphQLEditorProps) {
+export function GraphQLEditor(props: GraphQLEditorProps) {
   return (
     <GraphiQL
       fetcher={(graphQLParams) =>
@@ -38,7 +38,10 @@ export function useGraphQLPlayground<Database extends AnyDrizzleDB<any>>(
         routes: {
           ...config.routes,
           [route]: {
-            import: "@honohub/graphql/playground",
+            import: {
+              module: "@honohub/graphql/playground",
+              component: "GraphQLEditor",
+            },
             props(config): GraphQLEditorProps {
               return {
                 endpoint: graphQLEndpoint ?? `${config.serverUrl}/graphql`,
