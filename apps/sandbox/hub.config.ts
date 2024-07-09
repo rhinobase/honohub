@@ -1,3 +1,4 @@
+import { useGraphQL, useGraphQLPlayground } from "@honohub/graphql";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { type Env, Hono, type Schema } from "hono";
@@ -8,8 +9,6 @@ import {
   defineHub,
 } from "honohub";
 import * as schema from "./src/db/schema";
-// import { useGraphQL } from "@honohub/graphql";
-// import { useGraphQLPlayground } from "@honohub/graphql/playground";
 
 const neonSql = neon(process.env.DATABASE_URL ?? "");
 
