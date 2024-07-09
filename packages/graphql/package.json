@@ -32,6 +32,7 @@
   },
   "peerDependencies": {
     "graphiql": "^3.3.2",
+    "@graphiql/toolkit": "^0.9.1",
     "hono": "^4.1.1",
     "honohub": "^0.1.0"
   },
