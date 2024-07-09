@@ -2,8 +2,8 @@ import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { HubConfig, SanitizedHub } from "../types";
 
 const defaultBuildConfig = {
-  cache: "./.honohub/generated",
-  outDir: "../../static",
+  cache: "./.honohub",
+  outDir: "../dist",
 };
 
 export function defineHub<Database extends AnyDrizzleDB<any>>(

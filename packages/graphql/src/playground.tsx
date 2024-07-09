@@ -1,23 +1,20 @@
+import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import GraphiQL from "graphiql";
 import type { GlobalPlugin } from "honohub";
+import "graphiql/graphiql.css";
+import { useMemo } from "react";
 
 export type GraphQLEditorProps = {
   endpoint: string;
 };
 
 export function GraphQLEditor(props: GraphQLEditorProps) {
-  return (
-    <GraphiQL
-      fetcher={(graphQLParams) =>
-        fetch(props.endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(graphQLParams),
-        }).then((response) => response.json())
-      }
-    />
+  const fetcher = useMemo(
+    () => createGraphiQLFetcher({ url: props.endpoint }),
+    [props.endpoint],
   );
+  return <GraphiQL fetcher={fetcher} />;
 }
 
 export type GraphQLPlaygroundPluginConfig = {

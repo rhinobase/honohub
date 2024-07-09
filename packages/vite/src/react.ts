@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { JSONObject } from "hono/utils/types";
@@ -7,18 +7,24 @@ import type { SanitizedHub } from "honohub";
 export async function generateReactTemplates<
   Database extends AnyDrizzleDB<any>,
 >(config: SanitizedHub<Database>) {
-  const hubFiles = [];
+  const generatedFiles = [];
   for (const page in config.routes) {
     const route = config.routes[page];
 
     const props = route.props?.(config);
 
-    hubFiles.push(
+    // Creating the dir
+    await mkdir(resolve(config.build.cache, `./${page}`), { recursive: true });
+
+    generatedFiles.push(
       // HTML file
       writeFile(
-        resolve(__dirname, config.build.cache, `/${page}.html`),
+        resolve(
+          process.cwd(),
+          resolve(config.build.cache, `./${page}/index.html`),
+        ),
         htmlTemplateCode({
-          module: `/${page}.js`,
+          module: resolve(config.build.cache, `./${page}/main.jsx`),
           title: route.meta?.title ?? config.meta.title,
         }),
         {
@@ -27,12 +33,15 @@ export async function generateReactTemplates<
       ),
       // Component file
       writeFile(
-        resolve(__dirname, config.build.cache, `/${page}.js`),
+        resolve(
+          process.cwd(),
+          resolve(config.build.cache, `./${page}/main.jsx`),
+        ),
         jsTemplateCode({
           import:
             typeof route.import === "string"
               ? `import DefaultComponent from "${route.import}"`
-              : `import ${route.import.component} from "${route.import.module}"`,
+              : `import {${route.import.component}} from "${route.import.module}"`,
           component:
             typeof route.import === "string"
               ? "<DefaultComponent {...props} />"
@@ -46,7 +55,7 @@ export async function generateReactTemplates<
     );
   }
 
-  await Promise.all(hubFiles);
+  await Promise.all(generatedFiles);
 }
 
 type JSTemplateProps = {
@@ -58,9 +67,9 @@ type JSTemplateProps = {
 const jsTemplateCode = (props: JSTemplateProps) =>
   `import React from "react";import ReactDOM from "react-dom/client";${
     props.import
-  };const props=JSON.parse(${JSON.stringify(
+  };const props=${JSON.stringify(
     props.props ?? {},
-  )});ReactDOM.createRoot(document.getElementById("root")).render(<React.StrictMode>${
+  )};ReactDOM.createRoot(document.getElementById("root")).render(<React.StrictMode>${
     props.component
   }</React.StrictMode>);`;
 
@@ -71,8 +80,8 @@ type HTMLTemplateProps = {
 };
 
 const htmlTemplateCode = (props: HTMLTemplateProps) =>
-  `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><link rel="icon" type="image/svg+xml" href="/vite.svg" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${
+  `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${
     props.title ?? "Honohub"
-  }</title></head><body><div id="root" /><script type="module" src="${
+  }</title></head><body><div id="root" ></div><script type="module" src="${
     props.module
   }"></script></body></html>`;

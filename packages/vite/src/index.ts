@@ -32,7 +32,8 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
       // Multiple entry files
       const inputs = Object.fromEntries(
         Object.keys(hub.routes).map((page) => [
-          [page, resolve(__dirname, cache, `/${page}.html`)],
+          page,
+          resolve(cache, `.${page}/index.html`),
         ]),
       );
 
@@ -40,6 +41,13 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
       config.build.rollupOptions.input = {
         ...(config.build.rollupOptions.input || ({} as any)),
         ...inputs,
+      };
+
+      config.build.rollupOptions.output = {
+        entryFileNames: (chunk) => {
+          const name = chunk.name.split("/").pop() ?? "index";
+          return `${name}/index.js`;
+        },
       };
 
       // Creating the dir
