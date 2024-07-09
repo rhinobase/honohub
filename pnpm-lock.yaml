@@ -11043,6 +11043,8 @@ packages:
     peerDependenciesMeta:
       webpack:
         optional: true
+      webpack-sources:
+        optional: true
     dependencies:
       webpack: 5.92.1(@swc/core@1.5.29)(esbuild@0.19.12)
       webpack-sources: 3.2.3

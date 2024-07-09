@@ -19,7 +19,8 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
     name: "honohub-vite-plugin",
     enforce: "pre",
     async config(config, { command }) {
-      if (command !== "build") return;
+      const routeKeys = Object.keys(hub.routes);
+      if (command !== "build" || routeKeys.length === 0) return;
 
       const { cache, outDir } = hub.build;
 
@@ -31,24 +32,29 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
 
       // Multiple entry files
       const inputs = Object.fromEntries(
-        Object.keys(hub.routes).map((page) => [
-          page,
-          resolve(cache, `.${page}/index.html`),
-        ]),
+        routeKeys.map((page) => [page, resolve(cache, `.${page}/index.html`)]),
       );
 
       config.build.rollupOptions = config.build.rollupOptions || {};
       config.build.rollupOptions.input = {
-        ...(config.build.rollupOptions.input || ({} as any)),
+        ...(config.build.rollupOptions.input ?? ({} as any)),
         ...inputs,
       };
 
-      config.build.rollupOptions.output = {
+      const customRollupConfig: typeof config.build.rollupOptions.output = {
         entryFileNames: (chunk) => {
           const name = chunk.name.split("/").pop() ?? "index";
           return `${name}/index.js`;
         },
       };
+
+      if (Array.isArray(config.build.rollupOptions.output)) {
+        config.build.rollupOptions.output.push(customRollupConfig);
+      } else
+        config.build.rollupOptions.output = {
+          ...(config.build.rollupOptions.output ?? {}),
+          ...customRollupConfig,
+        };
 
       // Creating the dir
       await mkdir(cache, { recursive: true });

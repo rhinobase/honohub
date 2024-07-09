@@ -8,6 +8,8 @@ import {
   defineHub,
 } from "honohub";
 import * as schema from "./src/db/schema";
+// import { useGraphQL } from "@honohub/graphql";
+// import { useGraphQLPlayground } from "@honohub/graphql/playground";
 
 const neonSql = neon(process.env.DATABASE_URL ?? "");
 
@@ -26,12 +28,11 @@ const collection = defineCollection({
         if (!Array.isArray(doc)) {
           return { id: doc.id, status: doc.status };
         }
+        return undefined;
       },
     ],
   },
 });
-
-db._.fullSchema.todos;
 
 export default defineHub({
   db,
@@ -46,6 +47,7 @@ export default defineHub({
         return new Hono<E, P, I>().use("*", logger()).route("/", props.app);
       },
     },
-    // useGraphql(),
+    // useGraphQL(),
+    // useGraphQLPlayground(),
   ],
 });
