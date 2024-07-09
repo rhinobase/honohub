@@ -10,16 +10,30 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@honohub/graphql": ["packages/graphql/src/index.ts"],
-      "@honohub/react": ["packages/react/src/index.ts"],
-      "@honohub/vite": ["packages/vite/src/index.ts"],
-      "honohub": ["packages/core/src/index.ts"]
+      "@honohub/graphql": [
+        "packages/graphql/src/index.ts"
+      ],
+      "@honohub/react": [
+        "packages/react/src/index.ts"
+      ],
+      "@honohub/vite": [
+        "packages/vite/src/index.ts"
+      ],
+      "honohub": [
+        "packages/core/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
