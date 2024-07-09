@@ -1,15 +1,18 @@
 import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
+import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { SanitizedHub } from "honohub";
 import type { PluginOption } from "vite";
 import { generateReactTemplates } from "./react";
 
-export type HonoHubViteOptions = {
-  config: SanitizedHub;
-  generator?: (config: SanitizedHub) => void | Promise<void>;
+export type HonoHubViteOptions<Database extends AnyDrizzleDB<any>> = {
+  config: SanitizedHub<Database>;
+  generator?: (config: SanitizedHub<Database>) => void | Promise<void>;
 };
 
-export default function honohub(options: HonoHubViteOptions): PluginOption {
+export default function honohub<Database extends AnyDrizzleDB<any>>(
+  options: HonoHubViteOptions<Database>,
+): PluginOption {
   const { config: hub, generator = generateReactTemplates } = options;
 
   return {

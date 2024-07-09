@@ -26,7 +26,9 @@ export type SanitizedHub<
 export type BuildOptions = { cache: string; outDir: string };
 export type RouteOptions = {
   import: string | { module: string; component: string };
-  props?: (config: HubConfig) => JSONObject | undefined;
+  props?: <Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>>(
+    config: HubConfig<Database>,
+  ) => JSONObject | undefined;
   meta?: Partial<RouteMetaOptions>;
 };
 export type RouteMetaOptions = {

@@ -1,9 +1,12 @@
 import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { JSONObject } from "hono/utils/types";
 import type { SanitizedHub } from "honohub";
 
-export async function generateReactTemplates(config: SanitizedHub) {
+export async function generateReactTemplates<
+  Database extends AnyDrizzleDB<any>,
+>(config: SanitizedHub<Database>) {
   const hubFiles = [];
   for (const page in config.routes) {
     const route = config.routes[page];

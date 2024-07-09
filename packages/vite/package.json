@@ -28,7 +28,8 @@
     "vite": "^5.3.3"
   },
   "devDependencies": {
-    "hono": "^4.4.12"
+    "hono": "^4.4.12",
+    "drizzle-graphql": "^0.8.4"
   },
   "types": "./index.cjs.d.ts"
 }
