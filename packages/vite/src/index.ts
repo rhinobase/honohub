@@ -46,7 +46,7 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
       await mkdir(cache, { recursive: true });
 
       // Generating the files
-      generator?.(hub);
+      await generator?.(hub);
     },
   };
 }
