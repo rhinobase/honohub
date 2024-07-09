@@ -20,10 +20,10 @@ const ITEMS = {
   },
 };
 
-export function Sidebar({ onClick }: { onClick: () => void }) {
+export function Sidebar({ onClick }: { onClick?: () => void }) {
   const pathname = usePathname();
 
-  const currentActive = pathname.split("/")[2] ?? "dashboard";
+  const currentActive = pathname.split("/")[2];
 
   return (
     <SidebarComponent
@@ -52,11 +52,10 @@ export function Sidebar({ onClick }: { onClick: () => void }) {
                 <SidebarItem
                   key={value}
                   className={classNames(
-                    value === currentActive &&
-                      "border-transparent bg-secondary-100",
+                    value === currentActive && "bg-secondary-100",
                   )}
                   value={value}
-                  href={`/sample/${value === "dashboard" ? "" : value}`}
+                  href={`/sample/${value}`}
                 >
                   <Text className="capitalize font-medium">{label}</Text>
                 </SidebarItem>

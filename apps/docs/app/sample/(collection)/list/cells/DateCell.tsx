@@ -1,10 +1,7 @@
 "use client";
-import type { CellContext } from "@tanstack/react-table";
 import { CellWrapper } from "./CellWrapper";
 
-export function DateCell<T = unknown, U = unknown>({
-  cell,
-}: CellContext<T, U>) {
+export function DateCell({ cell }: any) {
   const value = String(cell.getValue());
 
   return (

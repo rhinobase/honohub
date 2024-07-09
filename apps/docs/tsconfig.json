@@ -26,7 +26,8 @@
     "../../dist/apps/docs/.next/types/**/*.ts",
     "next-env.d.ts",
     "next.config.mjs",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "../../packages/react/src/Components/Header.tsx"
   ],
   "exclude": ["node_modules", "jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
 }

@@ -17,11 +17,8 @@ export const SidebarItem = forwardRef<ElementRef<typeof Link>, SidebarItem>(
       <Link
         href={href}
         title={value}
-        role="button"
-        tabIndex={0}
         className={classNames(
           "gap-2 rounded-md w-full border-2 transition-all ease-in-out flex items-center px-2 border-transparent text-secondary-600 hover:text-black hover:bg-secondary-200/80",
-
           className,
         )}
         {...props}

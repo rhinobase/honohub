@@ -1,11 +1,8 @@
 "use client";
 import { eventHandler } from "@rafty/ui";
-import type { CellContext } from "@tanstack/react-table";
 import { CellWrapper } from "./CellWrapper";
 
-export function ClipboardCell<T = unknown, U = unknown>({
-  cell,
-}: CellContext<T, U>) {
+export function ClipboardCell({ cell }: any) {
   const value = String(cell.getValue());
 
   const handleClick = eventHandler(() => navigator.clipboard.writeText(value));

@@ -70,6 +70,7 @@
     "@types/mdx": "^2.0.13",
     "@uidotdev/usehooks": "^2.4.1",
     "acorn": "^8.12.1",
+    "axios": "^1.7.2",
     "drizzle-graphql": "^0.8.4",
     "drizzle-orm": "^0.31.2",
     "drizzle-zod": "^0.5.1",

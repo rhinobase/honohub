@@ -10,19 +10,26 @@ import {
 } from "@rafty/corp";
 import { Button, Text } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useState } from "react";
 import { CheckboxHeader } from "./CheckboxHeader";
 import { SearchField } from "./SearchField";
 import { getCell } from "./cells";
+
+type DATAT_TYPE = {
+  flight_number: number;
+  mission_name: string;
+  launch_year: number;
+  is_tentative: boolean;
+  launch_window: string;
+};
 
 const COLUMNS: ColumnType<unknown>[] = [
   {
     id: "select",
     header: CheckboxHeader,
     cell: getCell("custom_checkbox"),
-    size: 15,
-    minSize: 10,
-    maxSize: 40,
+    size: 30,
   },
   {
     header: "Id",
@@ -57,32 +64,27 @@ export function CollectionDocumentsTable() {
     pageIndex: 0,
     pageSize: 10,
   });
-  const [data, setData] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
-
   const offset = pageSize * pageIndex;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsFetching(true);
-
-      const response = await fetch(
-        `https://api.spacexdata.com/v3/launches?limit=${pageSize}&offset=${offset}`,
-      );
-      const result = await response.json();
-      setData(result);
-    };
-
-    fetchData();
-  }, [pageSize, offset]);
+  const {
+    data = [],
+    isFetching,
+    isLoading,
+  } = useQuery<DATAT_TYPE[]>({
+    queryKey: ["launches", pageIndex, pageSize],
+    queryFn: () =>
+      axios
+        .get(
+          `https://api.spacexdata.com/v3/launches?limit=${pageSize}&offset=${offset}`,
+        )
+        .then((res) => res.data),
+  });
 
   const selected = Object.keys(rowsSelected).length;
-
-  const dataLength = data?.length;
+  const count = 110;
 
   return (
-    <div className="space-y-5">
-      <h1 className="text-3xl font-bold capitalize">demo</h1>
+    <>
       {selected > 0 ? (
         <div className="w-full min-h-[38px] flex items-center">
           <Text className="text-sm">
@@ -102,17 +104,18 @@ export function CollectionDocumentsTable() {
       <SharedDatatable
         data={data}
         columns={COLUMNS}
-        onRowsSelectedChange={setRowsSelected}
+        isFetching={isFetching}
+        isLoading={isLoading}
         enableRowSelection
         rowsSelected={rowsSelected}
-        isFetching={isFetching}
+        onRowsSelectedChange={setRowsSelected}
       />
       <Pagination
         size="sm"
         className="border rounded-lg px-4 py-3 dark:border-secondary-800"
         currentPage={pageIndex + 1}
         pageLimit={pageSize}
-        pages={Math.ceil(110 / pageSize)}
+        pages={Math.ceil(count / pageSize)}
         onChange={(page, pageSize) =>
           setPagination({
             pageIndex: page - 1,
@@ -121,7 +124,12 @@ export function CollectionDocumentsTable() {
         }
       >
         <p className="text-secondary-700 dark:text-secondary-200">
-          Total Items : {dataLength}
+          {pageIndex * pageSize + 1}
+          &nbsp;-&nbsp;
+          {pageSize + pageIndex * pageSize > count
+            ? count
+            : pageSize + pageIndex * pageSize}
+          &nbsp;of&nbsp;{count}
         </p>
         <div className="flex-1" />
         <div className="flex items-center gap-1">
@@ -136,6 +144,6 @@ export function CollectionDocumentsTable() {
         </div>
         <PaginationButtons />
       </Pagination>
-    </div>
+    </>
   );
 }

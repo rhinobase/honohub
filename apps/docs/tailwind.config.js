@@ -12,7 +12,7 @@ module.exports = {
       "{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html,mdx}",
     ),
     "../../packages/react/src/**/*.{jsx,tsx}",
-    "../../node_modules/@rafty/ui/**/*.js",
+    "../../node_modules/@rafty/**/**/*.js",
 
     ...createGlobPatternsForDependencies(__dirname),
   ],

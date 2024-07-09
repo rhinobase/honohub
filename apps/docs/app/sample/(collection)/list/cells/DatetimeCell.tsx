@@ -5,7 +5,7 @@ export type DatetimeCell = {
   value: string;
 };
 
-export function DatetimeCell<T = unknown, U = unknown>({ cell }: any) {
+export function DatetimeCell({ cell }: any) {
   const value = String(cell.getValue());
   console.log(new Date(value).toLocaleString());
 
