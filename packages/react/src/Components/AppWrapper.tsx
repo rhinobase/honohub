@@ -22,7 +22,7 @@ export function AppWrapper({ items, children }: AppWrapper) {
   const pathname = usePathname();
 
   return (
-    <div className="flex">
+    <div className="flex h-full w-full">
       <Sidebar
         className="w-20"
         header={<Logo className="w-10" />}

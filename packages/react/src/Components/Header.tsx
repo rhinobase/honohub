@@ -1,6 +1,4 @@
 import { Breadcrumbs } from "@honohub/react";
-import { Avatar } from "@rafty/ui";
-import Link from "next/link";
 
 export type Header = {
   slug: string;
@@ -19,9 +17,6 @@ export function Header({ basepath, slug }: Header) {
           },
         ]}
       />
-      <Link href="">
-        <Avatar size="sm" />
-      </Link>
     </div>
   );
 }

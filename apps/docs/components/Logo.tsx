@@ -12,7 +12,7 @@ export function Logo({ className, ...props }: Logo) {
       className={classNames("fill-primary-500", className)}
       {...props}
     >
-      <title>Fibr Logo</title>
+      <title>Dawn Logo</title>
       <rect x="17" y="0" width="85" height="15" transform="skewX(-15)" />
       <rect x="17" y="25" width="85" height="15" transform="skewX(-15)" />
       <rect x="17" y="50" width="85" height="15" transform="skewX(-15)" />
