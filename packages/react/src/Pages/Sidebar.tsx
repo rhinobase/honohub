@@ -1,0 +1,83 @@
+"use client";
+import { Bars3Icon, ChevronLeftIcon } from "@heroicons/react/24/outline";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Button,
+  Text,
+  classNames,
+} from "@rafty/ui";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { Sidebar as SidebarComponent, SidebarItem } from "../Components";
+
+const ITEMS = {
+  collection: {
+    list: {
+      label: "List",
+    },
+  },
+};
+
+export function Sidebar() {
+  const [open, setOpen] = useState(true);
+
+  const handleClick = () => setOpen(false);
+  const pathname = usePathname();
+
+  const currentActive = pathname.split("/")[2];
+
+  return (
+    <>
+      {open ? (
+        <SidebarComponent
+          header={
+            <Button
+              variant="outline"
+              className="w-max"
+              size="icon"
+              onClick={handleClick}
+            >
+              <ChevronLeftIcon className="size-5" />
+            </Button>
+          }
+        >
+          <Accordion type="multiple" variant="ghost">
+            {Object.entries(ITEMS).map(([sidebarValue, item]) => (
+              <AccordionItem value={sidebarValue} key={sidebarValue}>
+                <AccordionTrigger
+                  isUnstyled
+                  className="text-secondary-700 flex group transition-all justify-between items-center w-full py-1.5 px-2.5 font-medium"
+                >
+                  {sidebarValue}
+                </AccordionTrigger>
+                <AccordionContent className="space-y-0.5">
+                  {Object.entries(item).map(([value, { label }]) => (
+                    <SidebarItem
+                      key={value}
+                      className={classNames(
+                        value === currentActive && "bg-secondary-100",
+                      )}
+                      value={value}
+                      href={`/sample/${value}`}
+                    >
+                      <Text className="capitalize font-medium">{label}</Text>
+                    </SidebarItem>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </SidebarComponent>
+      ) : (
+        <div className="py-5 pl-3">
+          <Button size="icon" variant="outline" onClick={() => setOpen(true)}>
+            <Bars3Icon className="size-5" />
+          </Button>
+        </div>
+      )}
+    </>
+  );
+}

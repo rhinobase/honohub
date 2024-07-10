@@ -1,16 +1,19 @@
 "use client";
-import { Header } from "@honohub/react";
 import { usePathname } from "next/navigation";
-import type { PropsWithChildren } from "react";
+import { Header } from "../../Components";
+import { CollectionDocumentsTable } from "./Datatable";
 
-export default function Layout({ children }: PropsWithChildren) {
+export function ListPage() {
   const pathname = usePathname();
   const slug = pathname.split("/")[2];
 
   return (
     <div className="flex flex-col min-h-0 w-full h-full flex-grow gap-[30px]">
       <Header slug={slug} basepath="/sample" />
-      {children}
+      <div className="space-y-5">
+        <h1 className="text-3xl font-bold capitalize">List</h1>
+        <CollectionDocumentsTable />
+      </div>
     </div>
   );
 }
