@@ -1,2 +1,2 @@
 export * from "./Pages";
-export { Breadcrumbs, Header } from "./Components";
+export { Breadcrumbs, Header, AppWrapper } from "./Components";
