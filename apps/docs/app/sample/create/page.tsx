@@ -1,9 +1,5 @@
-import { Create } from "@honohub/react";
+import { CreatePage } from "@honohub/react";
 
-export default function CreatePage() {
-  return (
-    <div>
-      <Create />
-    </div>
-  );
+export default function CreateSamplePage() {
+  return <CreatePage />;
 }

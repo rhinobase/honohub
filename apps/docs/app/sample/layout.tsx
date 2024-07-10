@@ -11,7 +11,9 @@ export default function SampleLayout({ children }: PropsWithChildren) {
       <div className="flex w-full h-screen">
         <Sidebar />
         <div className="flex-1 px-12 py-4 overflow-x-hidden overflow-y-auto scroll-smooth">
-          {children}
+          <div className="flex flex-col min-h-0 w-full h-full flex-grow gap-[30px]">
+            {children}
+          </div>
         </div>
       </div>
     </QueryClientProvider>
