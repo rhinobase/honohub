@@ -1,6 +1,5 @@
 "use client";
 import { useThread } from "@fibr/react";
-import RaftyIcon from "@rafty/icons";
 import {
   InputGroup,
   LeftAddon,
@@ -43,17 +42,9 @@ export function InputWrapper({ children }: InputWrapper) {
           {prefix}
         </LeftAddon>
       )}
-      {prefixIcon && (
-        <Prefix>
-          <RaftyIcon type={prefixIcon} className="opacity-60 size-4" />
-        </Prefix>
-      )}
+      {prefixIcon && <Prefix>{prefixIcon}</Prefix>}
       {children}
-      {suffixIcon && (
-        <Suffix>
-          <RaftyIcon type={suffixIcon} className="size-4" />
-        </Suffix>
-      )}
+      {suffixIcon && <Suffix>{suffixIcon}</Suffix>}
       {suffix && (
         <RightAddon
           className={classNames(

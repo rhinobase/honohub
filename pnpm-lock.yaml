@@ -38,9 +38,6 @@ importers:
       '@rafty/corp':
         specifier: ^1.0.1
         version: 1.0.1(@internationalized/date@3.5.4)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.52.1(react@18.3.1))(react@18.3.1)
-      '@rafty/icons':
-        specifier: ^0.1.6
-        version: 0.1.6(react@18.3.1)
       '@rafty/ui':
         specifier: ^1.7.0
         version: 1.7.0(@internationalized/date@3.5.4)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.52.1(react@18.3.1))(react@18.3.1)
@@ -2547,11 +2544,6 @@ packages:
 
   '@rafty/corp@1.0.1':
     resolution: {integrity: sha512-ZfwJn3CgK3xYpMiaz9mfWN0rzxe31tFMMdIwHRnm9mw2+iYkPLduD471MUVKZ4UH3kIfFnCel8QaKZnWo0iXCg==}
-    peerDependencies:
-      react: ^18.2.0
-
-  '@rafty/icons@0.1.6':
-    resolution: {integrity: sha512-Pr5XA/u6d7SDhlS77fPr55q/Rik1w9gs3GfRI3Kbbfx5MoDpgvMrD2djLH7ax9vj1oVe6tE1msQ9CGT4H9Vvmg==}
     peerDependencies:
       react: ^18.2.0
 
@@ -11560,11 +11552,6 @@ snapshots:
       - react-dom
       - react-hook-form
       - react-native
-
-  '@rafty/icons@0.1.6(react@18.3.1)':
-    dependencies:
-      '@heroicons/react': 2.1.5(react@18.3.1)
-      react: 18.3.1
 
   '@rafty/plugin@1.1.1(tailwindcss@3.4.4(ts-node@10.9.1(@swc/core@1.5.29(@swc/helpers@0.5.11))(@types/node@18.16.9)(typescript@5.4.5)))':
     dependencies:
