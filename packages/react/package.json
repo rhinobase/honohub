@@ -1,4 +1,14 @@
 {
   "name": "@honohub/react",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    "@swc/helpers": "^0.5.11",
+    "@rafty/ui": "^1.7.0",
+    "@heroicons/react": "^2.1.5",
+    "fuse.js": "^7.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "next": "^14.2.5"
+  }
 }

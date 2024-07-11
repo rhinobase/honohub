@@ -4,60 +4,25 @@ import {
   type ColumnType,
   PageJumper,
   PageSizeSelect,
-  Pagination,
   PaginationButtons,
+  Pagination as RaftyPagination,
   DataTable as SharedDatatable,
 } from "@rafty/corp";
-import { Button, Text } from "@rafty/ui";
+import { Button, Text, classNames } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
-import { CheckboxHeader } from "./CheckboxHeader";
 import { SearchField } from "./SearchField";
-import { getCell } from "./cells";
 
-type DATAT_TYPE = {
-  flight_number: number;
-  mission_name: string;
-  launch_year: number;
-  is_tentative: boolean;
-  launch_window: string;
+export type CollectionTable<T> = {
+  endpoint: string;
+  columns: ColumnType<T>[];
 };
 
-const COLUMNS: ColumnType<unknown>[] = [
-  {
-    id: "select",
-    header: CheckboxHeader,
-    cell: getCell("custom_checkbox"),
-    size: 30,
-  },
-  {
-    header: "Id",
-    accessorKey: "flight_number",
-  },
-  {
-    header: "Mission Name",
-    accessorKey: "mission_name",
-  },
-  {
-    header: "Launch Year",
-    accessorKey: "launch_year",
-  },
-  {
-    header: "Tentative",
-    accessorKey: "is_tentative",
-  },
-  {
-    header: "Launch Window",
-    accessorKey: "launch_window",
-  },
-  {
-    header: "Rocket Name",
-    cell: ({ row }) => row.original.rocket.rocket_name,
-  },
-];
-
-export function CollectionDocumentsTable() {
+export function CollectionTable<T = unknown>({
+  columns,
+  endpoint,
+}: CollectionTable<T>) {
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
 
   const [{ pageIndex, pageSize }, setPagination] = useState({
@@ -70,13 +35,11 @@ export function CollectionDocumentsTable() {
     data = [],
     isFetching,
     isLoading,
-  } = useQuery<DATAT_TYPE[]>({
+  } = useQuery<T[]>({
     queryKey: ["launches", pageIndex, pageSize],
     queryFn: () =>
       axios
-        .get(
-          `https://api.spacexdata.com/v3/launches?limit=${pageSize}&offset=${offset}`,
-        )
+        .get(`${endpoint}?limit=${pageSize}&offset=${offset}`)
         .then((res) => res.data),
   });
 
@@ -103,7 +66,7 @@ export function CollectionDocumentsTable() {
       )}
       <SharedDatatable
         data={data}
-        columns={COLUMNS}
+        columns={columns}
         isFetching={isFetching}
         isLoading={isLoading}
         enableRowSelection
@@ -111,8 +74,6 @@ export function CollectionDocumentsTable() {
         onRowsSelectedChange={setRowsSelected}
       />
       <Pagination
-        size="sm"
-        className="border rounded-lg px-4 py-3 dark:border-secondary-800"
         currentPage={pageIndex + 1}
         pageLimit={pageSize}
         pages={Math.ceil(count / pageSize)}
@@ -131,19 +92,41 @@ export function CollectionDocumentsTable() {
             : pageSize + pageIndex * pageSize}
           &nbsp;of&nbsp;{count}
         </p>
-        <div className="flex-1" />
-        <div className="flex items-center gap-1">
-          <span className="text-secondary-700 dark:text-secondary-200">
-            Rows per page :
-          </span>
-          <PageSizeSelect className="dark:bg-secondary-950" />
-        </div>
-        <div className="flex items-center gap-1">
-          <p className="text-secondary-700 dark:text-secondary-200">Page :</p>
-          <PageJumper className="w-20" />
-        </div>
-        <PaginationButtons />
       </Pagination>
     </>
+  );
+}
+
+export type Pagination = RaftyPagination;
+
+export function Pagination({
+  children,
+  size = "sm",
+  className,
+  ...props
+}: Pagination) {
+  return (
+    <RaftyPagination
+      {...props}
+      size={size}
+      className={classNames(
+        "border rounded-lg px-4 py-3 dark:border-secondary-800",
+        className,
+      )}
+    >
+      {children}
+      <div className="flex-1" />
+      <div className="flex items-center gap-1">
+        <span className="text-secondary-700 dark:text-secondary-200">
+          Rows per page :
+        </span>
+        <PageSizeSelect className="dark:bg-secondary-950" />
+      </div>
+      <div className="flex items-center gap-1">
+        <p className="text-secondary-700 dark:text-secondary-200">Page :</p>
+        <PageJumper className="w-20" />
+      </div>
+      <PaginationButtons />
+    </RaftyPagination>
   );
 }

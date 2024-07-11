@@ -1,3 +1,8 @@
-export { AdminPage } from "./Admin";
-export { ListPage } from "./List";
-export { CreatePage } from "./Create";
+export { CollectionsPage, CollectionCard } from "./Collections";
+export {
+  CollectionViewPage,
+  CollectionTable,
+  Pagination,
+  SearchField,
+} from "./List";
+export { CreateCollectionPage } from "./Create";

@@ -5,8 +5,8 @@ import { Avatar, Menu, MenuContent, MenuItem, MenuTrigger } from "@rafty/ui";
 export function ProfileMenu() {
   return (
     <Menu>
-      <MenuTrigger variant="ghost" className="rounded-full p-2">
-        <Avatar />
+      <MenuTrigger variant="ghost" size="fab" className="p-1 w-max mx-auto">
+        <Avatar size="sm" />
       </MenuTrigger>
       <MenuContent side="right" align="end" className="min-w-[11rem] space-y-1">
         <MenuItem className="focus:text-red-500 focus:bg-red-200/40 dark:focus:text-red-300 dark:focus:bg-red-300/10">
