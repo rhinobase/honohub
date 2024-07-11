@@ -1,8 +1,8 @@
 "use client";
-import type { TooltipWrapperProps } from "@dawncms/core";
 import { useThread } from "@fibr/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import type { PropsWithChildren } from "react";
+import type { TooltipWrapperProps } from "../types";
 
 export type TooltipWrapper = PropsWithChildren;
 

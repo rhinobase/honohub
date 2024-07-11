@@ -1,6 +1,6 @@
-import type { getDateValidation } from "../validations";
+import type { getDatetimeValidation } from "../validations";
 
-type ValidationType = ReturnType<typeof getDateValidation>;
+type ValidationType = ReturnType<typeof getDatetimeValidation>;
 
 export type DatetimeFieldProps = {
   type: "datetime";

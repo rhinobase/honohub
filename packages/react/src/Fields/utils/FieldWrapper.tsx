@@ -1,5 +1,4 @@
 "use client";
-import type { FieldWrapperProps } from "@dawncms/core";
 import { useThread } from "@fibr/react";
 import {
   FieldWrapper as RaftyFieldWrapper,
@@ -8,6 +7,7 @@ import {
 } from "@rafty/ui";
 import type { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
+import type { FieldWrapperProps } from "../types";
 
 export type FieldWrapper = PropsWithChildren<{
   className?: RaftyFieldWrapper["className"];

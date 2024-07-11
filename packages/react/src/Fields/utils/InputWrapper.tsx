@@ -1,23 +1,24 @@
 "use client";
-import type { InputWrapperProps } from "@dawncms/core";
 import { useThread } from "@fibr/react";
 import RaftyIcon from "@rafty/icons";
-import { InputGroup, LeftAddon, Prefix, RightAddon, Suffix } from "@rafty/ui";
-import { cva } from "class-variance-authority";
+import {
+  InputGroup,
+  LeftAddon,
+  Prefix,
+  RightAddon,
+  Suffix,
+  classNames,
+} from "@rafty/ui";
 import type { PropsWithChildren } from "react";
+import type { InputWrapperProps } from "../types";
 
-const addonTextClasses = cva(
-  "text-secondary-600 dark:text-secondary-400 font-medium",
-  {
-    variants: {
-      size: {
-        sm: "text-xs",
-        md: "text-sm",
-        lg: "text-base",
-      },
-    },
+const addonTextClasses = {
+  size: {
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base",
   },
-);
+};
 
 export type InputWrapper = PropsWithChildren;
 
@@ -33,7 +34,14 @@ export function InputWrapper({ children }: InputWrapper) {
   return (
     <InputGroup size={size} className="w-full">
       {prefix && (
-        <LeftAddon className={addonTextClasses({ size })}>{prefix}</LeftAddon>
+        <LeftAddon
+          className={classNames(
+            addonTextClasses.size[size],
+            "text-secondary-600 dark:text-secondary-400 font-medium",
+          )}
+        >
+          {prefix}
+        </LeftAddon>
       )}
       {prefixIcon && (
         <Prefix>
@@ -47,7 +55,14 @@ export function InputWrapper({ children }: InputWrapper) {
         </Suffix>
       )}
       {suffix && (
-        <RightAddon className={addonTextClasses({ size })}>{suffix}</RightAddon>
+        <RightAddon
+          className={classNames(
+            addonTextClasses.size[size],
+            "text-secondary-600 dark:text-secondary-400 font-medium",
+          )}
+        >
+          {suffix}
+        </RightAddon>
       )}
     </InputGroup>
   );

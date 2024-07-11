@@ -1,6 +1,6 @@
 export type { CheckboxProps } from "./checkbox";
 export type { DateFieldProps } from "./date";
-export { DatetimeFieldProps } from "./datetime";
+export type { DatetimeFieldProps } from "./datetime";
 export type { FieldProps, FieldPropsMap } from "./fieldProps";
 export type { NumberProps } from "./number";
 export type { ObjectProps } from "./object";
@@ -14,5 +14,5 @@ export type {
   InputWrapperProps,
   TooltipWrapperProps,
 } from "./wrappers";
-export { DefaultValue } from "./defaultValue";
-export { Validation } from "./validation";
+export type { DefaultValue } from "./defaultValue";
+export type { Validation } from "./validation";
