@@ -57,10 +57,7 @@ export function useGraphQLPlayground<Database extends AnyDrizzleDB<any>>(
         routes: {
           ...config.routes,
           [route]: {
-            import: {
-              module: "@honohub/graphql/playground",
-              component: "GraphQLEditor",
-            },
+            import: "@honohub/graphql/playground",
             props(config): GraphQLEditorProps {
               return {
                 endpoint: graphQLEndpoint ?? `${config.serverUrl}/graphql`,

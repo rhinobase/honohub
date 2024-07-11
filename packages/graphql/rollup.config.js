@@ -16,7 +16,7 @@ module.exports = withNx(
     // Provide additional rollup configuration here. See: https://rollupjs.org/configuration-options
     input: {
       index: "./src/index.ts",
-      playground: "./src/playground/index.tsx",
+      playground: "./src/playground.tsx",
     },
     plugins: [
       svg({

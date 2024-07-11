@@ -1,14 +1,14 @@
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import GraphiQL from "graphiql";
 import "graphiql/graphiql.min.css";
-import "./page.css";
+import "@honohub/graphql/playground/page.esm.css";
 import { useMemo } from "react";
 
 export type GraphQLEditorProps = {
   endpoint: string;
 };
 
-export function GraphQLEditor(props: GraphQLEditorProps) {
+export default function GraphQLEditor(props: GraphQLEditorProps) {
   const fetcher = useMemo(
     () => createGraphiQLFetcher({ url: props.endpoint }),
     [props.endpoint],
