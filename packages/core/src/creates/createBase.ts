@@ -14,7 +14,7 @@ export function createBase<
 
   // Applying the plugins
   for (const plugin of plugins) {
-    const tmp = plugin.setup?.({ app: hub, config });
+    const tmp = plugin.bootstrap?.({ app: hub, config });
     if (tmp) hub = tmp;
   }
 

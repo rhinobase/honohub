@@ -30,7 +30,7 @@ export function defineHub<Database extends AnyDrizzleDB<any>>(
   };
 
   for (const plugin of plugins) {
-    const tmp = plugin.config?.(sanitizedConfig);
+    const tmp = plugin.register?.(sanitizedConfig);
     if (tmp) sanitizedConfig = tmp;
   }
 

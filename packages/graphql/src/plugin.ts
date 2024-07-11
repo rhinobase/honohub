@@ -16,7 +16,7 @@ export function useGraphQL<Database extends AnyDrizzleDB<any>>(
 
   return {
     name: "honohub-graphql-api",
-    setup: (props) => {
+    bootstrap(props) {
       const { schema } = buildSchema(props.config.db);
 
       props.app.post(
@@ -51,7 +51,7 @@ export function useGraphQLPlayground<Database extends AnyDrizzleDB<any>>(
 
   return {
     name: "honohub-graphql-playground",
-    config(config) {
+    register(config) {
       return {
         ...config,
         routes: {

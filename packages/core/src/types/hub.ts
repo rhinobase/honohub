@@ -37,10 +37,10 @@ export type RouteMetaOptions = {
 
 export type GlobalPlugin<Database extends AnyDrizzleDB<any>> = {
   name: string;
-  config?: (
+  register?: (
     config: SanitizedHub<Database>,
   ) => SanitizedHub<Database> | undefined;
-  setup?: <
+  bootstrap?: <
     E extends Env = Env,
     P extends Schema = BlankSchema,
     I extends string = string,

@@ -302,7 +302,7 @@ export function createRoutes<
 
   // Applying the plugins
   for (const plugin of collection.plugins) {
-    const tmp = plugin.setup?.({ app, config: collection });
+    const tmp = plugin.bootstrap?.({ app, config: collection });
     if (tmp) app = tmp;
   }
 
