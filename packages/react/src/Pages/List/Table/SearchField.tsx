@@ -1,3 +1,4 @@
+"use client";
 import { SearchField as RaftySearchField } from "@rafty/ui";
 import { useDebounce } from "@uidotdev/usehooks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
