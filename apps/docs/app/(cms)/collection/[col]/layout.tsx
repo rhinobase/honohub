@@ -1,12 +1,8 @@
 "use client";
-import { AcademicCapIcon, BugAntIcon } from "@heroicons/react/24/outline";
 import { CollectionSidebar } from "@honohub/react";
 import type { PropsWithChildren } from "react";
 
-const COLLECTIONS = {
-  collection: [{ label: "Sample", slug: "sample", icon: AcademicCapIcon }],
-  plugin: [{ label: "Demo", slug: "demo", icon: BugAntIcon }],
-};
+const COLLECTIONS = [{ label: "Sample", slug: "sample" }];
 
 export default function CollectionLayout(props: PropsWithChildren) {
   return (
