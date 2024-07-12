@@ -101,7 +101,7 @@ export const Sidebar = forwardRef<HTMLDivElement, Sidebar>(function Sidebar(
             <Fragment key={category}>
               <SidebarTitle>{category}</SidebarTitle>
               {items.map(({ slug, ...item }) => (
-                <SidebarItem key={slug} {...item} link={`/${slug}/sample`} />
+                <SidebarItem key={slug} {...item} link={`/${slug}`} />
               ))}
             </Fragment>
           ))

@@ -1,0 +1,89 @@
+"use client";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import { type ColumnType, DataTable as SharedDatatable } from "@rafty/corp";
+import { Button, Text } from "@rafty/ui";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useState } from "react";
+import { Pagination } from "./Pagination";
+import { SearchField } from "./SearchField";
+
+export type DataTable<T> = {
+  endpoint: string;
+  columns: ColumnType<T>[];
+};
+
+export function DataTable<T = unknown>({ columns, endpoint }: DataTable<T>) {
+  const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
+
+  const [{ pageIndex, pageSize }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+  const offset = pageSize * pageIndex;
+
+  const {
+    data = [],
+    isFetching,
+    isLoading,
+  } = useQuery<T[]>({
+    queryKey: ["launches", pageIndex, pageSize],
+    queryFn: () =>
+      axios
+        .get(`${endpoint}?limit=${pageSize}&offset=${offset}`)
+        .then((res) => res.data),
+  });
+
+  const selected = Object.keys(rowsSelected).length;
+  const count = 110;
+
+  return (
+    <>
+      {selected > 0 ? (
+        <div className="w-full min-h-[38px] flex items-center">
+          <Text className="text-sm">
+            {selected} {selected > 1 ? "rows" : "row"} selected
+          </Text>
+          <div className="flex-1" />
+          <Button
+            colorScheme="error"
+            leftIcon={<TrashIcon className="size-4 stroke-2" />}
+          >
+            Delete
+          </Button>
+        </div>
+      ) : (
+        <SearchField />
+      )}
+      <SharedDatatable
+        data={data}
+        columns={columns}
+        isFetching={isFetching}
+        isLoading={isLoading}
+        enableRowSelection
+        rowsSelected={rowsSelected}
+        onRowsSelectedChange={setRowsSelected}
+      />
+      <Pagination
+        currentPage={pageIndex + 1}
+        pageLimit={pageSize}
+        pages={Math.ceil(count / pageSize)}
+        onChange={(page, pageSize) =>
+          setPagination({
+            pageIndex: page - 1,
+            pageSize,
+          })
+        }
+      >
+        <p className="text-secondary-700 dark:text-secondary-200">
+          {pageIndex * pageSize + 1}
+          &nbsp;-&nbsp;
+          {pageSize + pageIndex * pageSize > count
+            ? count
+            : pageSize + pageIndex * pageSize}
+          &nbsp;of&nbsp;{count}
+        </p>
+      </Pagination>
+    </>
+  );
+}

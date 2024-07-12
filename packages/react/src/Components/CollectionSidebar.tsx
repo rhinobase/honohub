@@ -1,16 +1,14 @@
 "use client";
 import { InputField, Text, classNames } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   type HTMLAttributes,
-  type PropsWithChildren,
   type ReactNode,
   forwardRef,
   useMemo,
   useState,
 } from "react";
+import { NavLink } from "react-router-dom";
 
 export type CollectionSidebar = {
   options: {
@@ -83,7 +81,7 @@ export const CollectionSidebar = forwardRef<HTMLDivElement, CollectionSidebar>(
             searchResults.map(({ slug, label, matches }) => (
               <SidebarItem
                 key={slug}
-                link={`/collection/${slug}`}
+                link={slug}
                 label={label}
                 matches={matches}
               />
@@ -95,14 +93,6 @@ export const CollectionSidebar = forwardRef<HTMLDivElement, CollectionSidebar>(
   },
 );
 
-function SidebarTitle(props: PropsWithChildren) {
-  return (
-    <div className="w-full mx-[5px] first:mt-0 mt-[30px] mb-[15px] font-medium text-xs text-secondary-500 dark:text-secondary-400 capitalize select-none">
-      {props.children}
-    </div>
-  );
-}
-
 type SidebarItem = {
   link: string;
   label: string;
@@ -110,21 +100,21 @@ type SidebarItem = {
 };
 
 function SidebarItem({ link, label, matches }: SidebarItem) {
-  const pathname = usePathname();
-
   return (
-    <Link
+    <NavLink
       title={label}
-      href={link}
-      className={classNames(
-        "cursor-pointer outline-none no-underline flex w-full items-center gap-2.5 my-2 px-3 py-[3px] min-h-10 rounded-[4px] min-w-0 select-none transition-all ease-in-out",
-        pathname === link
-          ? "bg-secondary-200/80 text-black dark:bg-secondary-700/80 dark:text-white"
-          : "text-secondary-600 dark:text-secondary-400 hover:text-black dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-secondary-800/80",
-      )}
+      to={link}
+      className={({ isActive }) =>
+        classNames(
+          "cursor-pointer outline-none no-underline flex w-full items-center gap-2.5 my-2 px-3 py-[3px] min-h-10 rounded-[4px] min-w-0 select-none transition-all ease-in-out",
+          isActive
+            ? "bg-secondary-200/80 text-black dark:bg-secondary-700/80 dark:text-white"
+            : "text-secondary-600 dark:text-secondary-400 hover:text-black dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-secondary-800/80",
+        )
+      }
     >
       <Text className="font-medium">{highlightMatches(label, matches)}</Text>
-    </Link>
+    </NavLink>
   );
 }
 
