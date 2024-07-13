@@ -78,7 +78,7 @@
     "framer-motion": "^11.2.11",
     "graphiql": "^3.3.2",
     "graphql": "^16.9.0",
-    "hono": "^4.4.10",
+    "hono": "4.4.11",
     "mdast-util-to-string": "^4.0.0",
     "mdx-annotations": "^0.1.4",
     "next": "14.2.3",

@@ -20,7 +20,7 @@ function TopLevelNavItem({ href, children }: TopLevelNavItem) {
     <li>
       <Link
         href={href}
-        className="text-secondary-600 hover:text-secondary-900 dark:text-secondary-400 text-[0.875rem] leading-5 leading-[1.5rem] transition dark:hover:text-white"
+        className="text-secondary-600 hover:text-secondary-900 dark:text-secondary-400 text-[0.875rem] leading-5 transition dark:hover:text-white"
       >
         {children}
       </Link>
@@ -71,16 +71,21 @@ export const Header = forwardRef<HTMLDivElement, Header>(function Header(
       <div className="flex items-center gap-5 lg:hidden">
         <MobileNavigation />
         <Link href="/" aria-label="Home" className="flex items-center gap-1">
-          <Logo className="w-7" />
-          <span className="text-[1.5rem] font-semibold italic leading-[2rem]">
-            Fibr
+          <Logo />
+          <span className="text-[1.5rem] font-semibold leading-[2rem]">
+            HonoHub
           </span>
         </Link>
       </div>
       <div className="flex items-center gap-5">
         <nav className="hidden md:block">
           <ul className="flex items-center gap-8">
-            <TopLevelNavItem href="/playground">Playground</TopLevelNavItem>
+            <TopLevelNavItem href="https://github.com/rhinobase/starter">
+              Examples
+            </TopLevelNavItem>
+            <TopLevelNavItem href="https://github.com/rhinobase/honohub">
+              Github
+            </TopLevelNavItem>
           </ul>
         </nav>
         <div className="bg-secondary-900/10 hidden h-5 w-px md:block dark:bg-white/15" />

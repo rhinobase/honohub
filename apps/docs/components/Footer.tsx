@@ -81,12 +81,12 @@ function PageNavigation() {
 const SOCIALS = [
   {
     name: "Twitter",
-    link: "#",
+    link: "https://x.com/rhinobaseio",
     icon: BsTwitter,
   },
   {
     name: "Github",
-    link: "#",
+    link: "https://github.com/rhinobase/honohub",
     icon: BsGithub,
   },
   {

@@ -232,25 +232,45 @@ function NavigationGroup({
 
 export const NAVIGATION: NavGroupType[] = [
   {
-    title: "Guides",
+    title: "🚀 Getting Started",
     links: [
       { title: "Introduction", href: "/" },
-      { title: "Quickstart", href: "/quickstart" },
-      { title: "SDKs", href: "/sdks" },
-      { title: "Authentication", href: "/authentication" },
-      { title: "Pagination", href: "/pagination" },
-      { title: "Errors", href: "/errors" },
-      { title: "Webhooks", href: "/webhooks" },
+      { title: "Quick Start Guide", href: "/quickstart" },
     ],
   },
   {
-    title: "Resources",
+    title: "⚙️ Setup & Deployment",
     links: [
-      { title: "Contacts", href: "/contacts" },
-      { title: "Conversations", href: "/conversations" },
-      { title: "Messages", href: "/messages" },
-      { title: "Groups", href: "/groups" },
-      { title: "Attachments", href: "/attachments" },
+      { title: "Installation", href: "/contacts" },
+      { title: "Project Structure", href: "/conversations" },
+      { title: "Configuration", href: "/messages" },
+      { title: "Deployment", href: "/groups" },
+    ],
+  },
+  {
+    title: "📦 APIs",
+    links: [
+      { title: "Introduction", href: "/contacts" },
+      { title: "Rest API", href: "/conversations" },
+      { title: "GraphQL API", href: "/messages" },
+      { title: "Query Engine API", href: "/groups" },
+    ],
+  },
+  {
+    title: "🔧 Development",
+    links: [
+      { title: "Admin Panel Customization", href: "/contacts" },
+      { title: "Backend Customization", href: "/conversations" },
+      { title: "Typescript", href: "/messages" },
+      { title: "Providers", href: "/groups" },
+    ],
+  },
+  {
+    title: "🔌 Plugins",
+    links: [
+      { title: "Introduction", href: "/contacts" },
+      { title: "Using Plugins", href: "/conversations" },
+      { title: "Developing Plugins", href: "/messages" },
     ],
   },
 ];
