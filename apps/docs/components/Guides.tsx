@@ -4,26 +4,27 @@ import { Heading } from "./Heading";
 
 const GUIDES = [
   {
-    href: "/authentication",
-    name: "Authentication",
-    description: "Learn how to authenticate your API requests.",
+    href: "/setup/configuration",
+    name: "Configuration",
+    description: "Learn how to configure your App and APIs.",
   },
   {
-    href: "/pagination",
-    name: "Pagination",
-    description: "Understand how to work with paginated responses.",
-  },
-  {
-    href: "/errors",
-    name: "Errors",
+    href: "/setup/deployment",
+    name: "Deployment",
     description:
-      "Read about the different types of errors returned by the API.",
+      "Learn how to deploy your HonoHub APIs efficiently and securely.",
   },
   {
-    href: "/webhooks",
-    name: "Webhooks",
+    href: "/development/admin-panel",
+    name: "Admin Panel",
     description:
-      "Learn how to programmatically configure webhooks for your app.",
+      "Explore Admin Panel, designed to help you manage your APIs and data.",
+  },
+  {
+    href: "/plugins/introduction",
+    name: "Plugins",
+    description:
+      "Extend the functionality of your HonoHub application with plugins.",
   },
 ];
 

@@ -241,36 +241,35 @@ export const NAVIGATION: NavGroupType[] = [
   {
     title: "⚙️ Setup & Deployment",
     links: [
-      { title: "Installation", href: "/contacts" },
-      { title: "Project Structure", href: "/conversations" },
-      { title: "Configuration", href: "/messages" },
-      { title: "Deployment", href: "/groups" },
+      { title: "Installation", href: "/setup/installation" },
+      { title: "Project Structure", href: "/setup/structure" },
+      { title: "Configuration", href: "/setup/configuration" },
+      { title: "Deployment", href: "/setup/deployment" },
     ],
   },
   {
     title: "📦 APIs",
     links: [
-      { title: "Introduction", href: "/contacts" },
-      { title: "Rest API", href: "/conversations" },
-      { title: "GraphQL API", href: "/messages" },
-      { title: "Query Engine API", href: "/groups" },
+      { title: "Introduction", href: "/apis/introduction" },
+      { title: "Rest API", href: "/apis/rest" },
+      { title: "GraphQL API", href: "/apis/graphql" },
+      { title: "Query Engine API", href: "/apis/query-engine" },
     ],
   },
   {
     title: "🔧 Development",
     links: [
-      { title: "Admin Panel Customization", href: "/contacts" },
-      { title: "Backend Customization", href: "/conversations" },
-      { title: "Typescript", href: "/messages" },
-      { title: "Providers", href: "/groups" },
+      { title: "Admin Panel", href: "/development/admin-panel" },
+      { title: "Backend", href: "/development/backend" },
+      { title: "Providers", href: "/development/providers" },
     ],
   },
   {
     title: "🔌 Plugins",
     links: [
-      { title: "Introduction", href: "/contacts" },
-      { title: "Using Plugins", href: "/conversations" },
-      { title: "Developing Plugins", href: "/messages" },
+      { title: "Introduction", href: "/plugins/introduction" },
+      { title: "Usage", href: "/plugins/usage" },
+      { title: "Development", href: "/plugins/development" },
     ],
   },
 ];
