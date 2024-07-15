@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { CollectionPage } from "./CollectionPage";
 import { Create } from "./Create";
+import { Edit } from "./Edit";
 import { CollectionsWrapper } from "./Wrapper";
 import type { CollectionType } from "./types";
 
@@ -28,6 +29,10 @@ export function CollectionsPanel({
           {
             path: `${collection.slug}/create`,
             element: <Create {...collection} />,
+          },
+          {
+            path: `${collection.slug}/:id`,
+            element: <Edit {...collection} />,
           },
         ]),
       },
