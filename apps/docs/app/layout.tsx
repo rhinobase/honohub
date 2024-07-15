@@ -1,6 +1,10 @@
+import glob from "fast-glob";
 import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
+import { Layout } from "../components/Layout";
+import type { Section } from "../components/SectionProvider";
 import "./global.css";
+import { Providers } from "./providers";
 
 export function generateMetadata(): Metadata {
   const title = {
@@ -103,10 +107,21 @@ export function generateMetadata(): Metadata {
 }
 
 export default async function RootLayout(props: PropsWithChildren) {
+  const pages = await glob("**/*.mdx", { cwd: "./app" });
+  const allSectionsEntries = (await Promise.all(
+    pages.map(async (filename) => [
+      `/${filename.replace(/(^|\/)page\.mdx$/, "")}`,
+      (await import(`./${filename}`)).sections,
+    ]),
+  )) as Array<[string, Array<Section>]>;
+  const allSections = Object.fromEntries(allSectionsEntries);
+
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
-      <body className="dark:bg-secondary-950 flex min-h-full bg-white antialiased">
-        {props.children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="dark:bg-secondary-950 h-screen w-full bg-white antialiased">
+        <Providers>
+          <Layout allSections={allSections}>{props.children}</Layout>
+        </Providers>
       </body>
     </html>
   );

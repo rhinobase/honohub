@@ -53,7 +53,7 @@ export default function A(nextConfig = {}) {
         test: __filename,
         use: [
           createLoader(function () {
-            const appDir = path.resolve("./app/(docs)");
+            const appDir = path.resolve("./app");
             this.addContextDependency(appDir);
 
             const files = glob.sync("**/*.mdx", { cwd: appDir });

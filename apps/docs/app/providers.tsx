@@ -1,5 +1,4 @@
 "use client";
-
 import { ThemeProvider, useTheme } from "next-themes";
 import { useEffect } from "react";
 
