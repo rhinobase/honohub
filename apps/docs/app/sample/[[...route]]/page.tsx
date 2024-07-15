@@ -1,76 +1,54 @@
 "use client";
-import { CollectionsPanel } from "@honohub/react";
+import { AcademicCapIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { useIsClient } from "@uidotdev/usehooks";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { CollectionsPanel } from "./CollectionsPanel";
+import { AppWrapper } from "./Wrapper";
+
+// type PluginType = {
+//   label: string;
+//   icon?: string;
+//   path: string;
+//   routing?: string;
+//   import: string | { module: string; component: string };
+//   meta?: { title: string };
+// };
 
 export default function SamplePage() {
   const isClient = useIsClient();
 
   if (!isClient) return;
 
-  return (
-    <CollectionsPanel
-      serverUrl="https://api.spacexdata.com/v3"
-      basePath="/sample"
-      collections={[
-        {
-          slug: "launches",
-          label: "Launches",
-          columns: [
-            {
-              label: "Id",
-              name: "flight_number",
-              type: "custom_text",
-            },
-            {
-              label: "Mission Name",
-              name: "mission_name",
-              type: "custom_text",
-            },
-            {
-              label: "Launch Year",
-              name: "launch_year",
-              type: "custom_text",
-            },
-            {
-              label: "Tentative",
-              name: "is_tentative",
-              type: "custom_text",
-            },
-            {
-              label: "Launch Window",
-              name: "launch_window",
-              type: "custom_text",
-            },
-          ],
-          fields: [
-            {
-              label: "Id",
-              name: "flight_number",
-              type: "string",
-            },
-            {
-              label: "Mission Name",
-              name: "mission_name",
-              type: "string",
-            },
-            {
-              label: "Launch Year",
-              name: "launch_year",
-              type: "string",
-            },
-            {
-              label: "Tentative",
-              name: "is_tentative",
-              type: "string",
-            },
-            {
-              label: "Launch Window",
-              name: "launch_window",
-              type: "string",
-            },
-          ],
-        },
-      ]}
-    />
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: (
+          <AppWrapper
+            options={[
+              {
+                icon: AcademicCapIcon,
+                label: "Collections",
+                path: "/collections",
+              },
+              {
+                icon: Cog6ToothIcon,
+                label: "Settings",
+                path: "/settings",
+              },
+            ]}
+          />
+        ),
+        children: [
+          {
+            path: "/collections",
+            element: <CollectionsPanel />,
+          },
+        ],
+      },
+    ],
+    { basename: "/sample" },
   );
+
+  return <RouterProvider router={router} />;
 }

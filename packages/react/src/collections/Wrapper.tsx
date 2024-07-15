@@ -1,9 +1,17 @@
-import { Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import { CollectionSidebar } from "../Components";
 
 export type CollectionsWrapper = Pick<CollectionSidebar, "options">;
 
 export function CollectionsWrapper({ options }: CollectionsWrapper) {
+  const navigate = useNavigate();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Specified dependencies are enough
+  useEffect(() => {
+    navigate(`/${options[0].slug}`);
+  }, [options]);
+
   return (
     <>
       <CollectionSidebar options={options} />

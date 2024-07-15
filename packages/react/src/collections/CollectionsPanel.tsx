@@ -1,4 +1,9 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  redirect,
+} from "react-router-dom";
 import { CollectionPage } from "./CollectionPage";
 import { Create } from "./Create";
 import { Edit } from "./Edit";
@@ -37,7 +42,7 @@ export function CollectionsPanel({
         ]),
       },
     ],
-    { basename: basePath },
+    { basename: `${basePath}/collections` },
   );
 
   return <RouterProvider router={router} />;

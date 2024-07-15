@@ -3,6 +3,7 @@ import { InputField, Text, classNames } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
 import {
   type HTMLAttributes,
+  type PropsWithChildren,
   type ReactNode,
   forwardRef,
   useMemo,
@@ -72,7 +73,8 @@ export const CollectionSidebar = forwardRef<HTMLDivElement, CollectionSidebar>(
           />
         </header>
         <hr className="dark:border-secondary-800" />
-        <div className="mt-[15px] px-4 overflow-x-hidden overflow-y-auto h-full">
+        <div className="mt-[15px] px-3 overflow-x-hidden overflow-y-auto h-full">
+          <SidebarTitle>Collections</SidebarTitle>
           {isEmpty ? (
             <p className="font-medium text-sm text-center select-none text-secondary-400">
               Not found
@@ -93,6 +95,14 @@ export const CollectionSidebar = forwardRef<HTMLDivElement, CollectionSidebar>(
   },
 );
 
+function SidebarTitle(props: PropsWithChildren) {
+  return (
+    <div className="w-full mx-[5px] first:mt-0 mt-5 mb-1.5 font-semibold text-[10px] text-secondary-500 dark:text-secondary-400 uppercase select-none">
+      {props.children}
+    </div>
+  );
+}
+
 type SidebarItem = {
   link: string;
   label: string;
@@ -106,14 +116,16 @@ function SidebarItem({ link, label, matches }: SidebarItem) {
       to={link}
       className={({ isActive }) =>
         classNames(
-          "cursor-pointer outline-none no-underline flex w-full items-center gap-2.5 my-2 px-3 py-[3px] min-h-10 rounded-[4px] min-w-0 select-none transition-all ease-in-out",
+          "cursor-pointer outline-none no-underline flex w-full items-center gap-2 mb-2 px-3 py-1 min-h-10 rounded-md min-w-0 select-none transition-all ease-in-out",
           isActive
-            ? "bg-secondary-200/80 text-black dark:bg-secondary-700/80 dark:text-white"
+            ? "bg-primary-100 text-primary-600 dark:bg-secondary-700/80 dark:text-white"
             : "text-secondary-600 dark:text-secondary-400 hover:text-black dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-secondary-800/80",
         )
       }
     >
-      <Text className="font-medium">{highlightMatches(label, matches)}</Text>
+      <Text className="font-semibold text-sm leading-none">
+        {highlightMatches(label, matches)}
+      </Text>
     </NavLink>
   );
 }
