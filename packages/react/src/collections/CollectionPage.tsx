@@ -43,6 +43,12 @@ export function CollectionPage(props: CollectionPage) {
     size: 30,
   });
 
+  columns.push({
+    accessorKey: "flight_number",
+    header: "Action",
+    cell: getCell("custom_action"),
+  });
+
   return (
     <>
       <PageHeader className="justify-between">

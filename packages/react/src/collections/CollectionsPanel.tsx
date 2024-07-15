@@ -1,12 +1,6 @@
-import { useEffect } from "react";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  redirect,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { CollectionPage } from "./CollectionPage";
-import { Create } from "./Create";
-import { Edit } from "./Edit";
+import { Document } from "./Document";
 import { CollectionsWrapper } from "./Wrapper";
 import type { CollectionType } from "./types";
 
@@ -32,12 +26,8 @@ export function CollectionsPanel({
             element: <CollectionPage {...collection} serverUrl={serverUrl} />,
           },
           {
-            path: `${collection.slug}/create`,
-            element: <Create {...collection} />,
-          },
-          {
             path: `${collection.slug}/:id`,
-            element: <Edit {...collection} />,
+            element: <Document {...collection} serverUrl={serverUrl} />,
           },
         ]),
       },

@@ -3,6 +3,7 @@ import type { FieldProps } from "../Fields";
 import { BooleanCell } from "./Boolean";
 import { DateCell } from "./Date";
 import { Datetime } from "./Datetime";
+import { EditButton } from "./EditButton";
 import { Text } from "./Text";
 
 const CELLS: {
@@ -12,6 +13,7 @@ const CELLS: {
   custom_boolean: BooleanCell,
   custom_datetime: Datetime,
   custom_text: Text,
+  custom_action: EditButton,
 };
 
 export function getCell(type: FieldProps["type"]) {
