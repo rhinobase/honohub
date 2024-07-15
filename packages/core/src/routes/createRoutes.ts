@@ -302,8 +302,13 @@ export function createRoutes<
 
   // Applying the plugins
   for (const plugin of collection.plugins) {
-    const tmp = plugin.bootstrap?.({ app, config: collection });
-    if (tmp) app = tmp;
+    try {
+      const tmp = plugin.bootstrap?.({ app, config: collection });
+      if (tmp) app = tmp;
+    } catch (e) {
+      console.error(`Collection Plugin Bootstrap Error in ${plugin.name}`);
+      console.error(e);
+    }
   }
 
   return app;

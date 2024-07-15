@@ -43,8 +43,13 @@ export function defineCollection<T extends Table>(
   };
 
   for (const plugin of plugins) {
-    const tmp = plugin.register?.(sanitizedConfig);
-    if (tmp) sanitizedConfig = tmp;
+    try {
+      const tmp = plugin.register?.(sanitizedConfig);
+      if (tmp) sanitizedConfig = tmp;
+    } catch (e) {
+      console.error(`Collection Plugin Registration Error in ${plugin.name}`);
+      console.error(e);
+    }
   }
 
   return sanitizedConfig;

@@ -54,9 +54,11 @@ export function useGraphQLPlayground<Database extends AnyDrizzleDB<any>>(
     register(config) {
       return {
         ...config,
-        routes: {
+        routes: [
           ...config.routes,
-          [route]: {
+          {
+            label: "GraphQL Editor",
+            path: "/graphql",
             import: "@honohub/graphql/playground",
             props(config): GraphQLEditorProps {
               return {
@@ -64,7 +66,7 @@ export function useGraphQLPlayground<Database extends AnyDrizzleDB<any>>(
               };
             },
           },
-        },
+        ],
       };
     },
   };

@@ -15,7 +15,7 @@ export function defineHub<Database extends AnyDrizzleDB<any>>(
     plugins = [],
     serverUrl,
     meta = {},
-    routes = {},
+    routes = [],
     build = {},
   } = config;
 
@@ -30,8 +30,13 @@ export function defineHub<Database extends AnyDrizzleDB<any>>(
   };
 
   for (const plugin of plugins) {
-    const tmp = plugin.register?.(sanitizedConfig);
-    if (tmp) sanitizedConfig = tmp;
+    try {
+      const tmp = plugin.register?.(sanitizedConfig);
+      if (tmp) sanitizedConfig = tmp;
+    } catch (e) {
+      console.error(`Hub Plugin Registration Error in ${plugin.name}`);
+      console.error(e);
+    }
   }
 
   return sanitizedConfig;

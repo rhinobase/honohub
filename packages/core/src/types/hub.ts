@@ -19,12 +19,16 @@ export type SanitizedHub<
   build: BuildOptions;
   meta: Partial<RouteMetaOptions>;
   collections: SanitizedCollection<any>[];
-  routes: Record<string, RouteOptions>;
+  routes: RouteOptions[];
   plugins: GlobalPlugin<Database>[];
 };
 
 export type BuildOptions = { cache: string; outDir: string };
 export type RouteOptions = {
+  label: string;
+  icon?: string;
+  routing?: string;
+  path: string;
   import: string | { module: string; component: string };
   props?: <Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>>(
     config: HubConfig<Database>,
