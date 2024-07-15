@@ -27,7 +27,6 @@ export type BuildOptions = { cache: string; outDir: string };
 export type RouteOptions = {
   label: string;
   icon?: string;
-  routing?: string;
   path: string;
   import: string | { module: string; component: string };
   props?: <Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>>(
