@@ -2,4 +2,4 @@
 export * from "./Components";
 export * from "./Columns";
 export * from "./Fields";
-export * from "./collections";
+export { Honohub } from "./Honohub";

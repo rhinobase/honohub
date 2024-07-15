@@ -6,12 +6,7 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { blocks } from "../Fields";
-import type { CollectionType } from "./types";
-
-export type Document = Omit<CollectionType, "columns"> & {
-  serverUrl: string;
-  defaultValues?: any;
-};
+import type { CollectionType } from "../types";
 
 enum DocumentSubmitType {
   SAVE_AND_ADD_ANOTHER = "save_and_add_another",
@@ -23,14 +18,24 @@ enum FormType {
   EDIT = "Edit",
 }
 
-const document_submit_type_key = "_submit_btn";
+const SUBMIT_BUTTON_KEY = "_submit_btn";
 
-export function Document({ fields, slug, serverUrl, defaultValues }: Document) {
+export type DocumentPage = Omit<CollectionType, "columns"> & {
+  serverUrl: string;
+  defaultValues?: any;
+};
+
+export function DocumentPage({
+  fields,
+  slug,
+  serverUrl,
+  defaultValues,
+}: DocumentPage) {
   const { id } = useParams();
   const formType = id === "create" ? FormType.CREATE : FormType.EDIT;
 
   const { data, isLoading } = useQuery({
-    queryKey: ["launch"],
+    queryKey: [slug, id],
     queryFn: () =>
       axios.get(`${serverUrl}/${slug}/${id}`).then((res) => res.data),
     enabled: formType === FormType.EDIT,
@@ -42,11 +47,10 @@ export function Document({ fields, slug, serverUrl, defaultValues }: Document) {
 
   const { handleSubmit, reset, setValue } = methods;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (data) {
-      reset(data);
-    }
-  }, [data, reset]);
+    if (data) reset(data);
+  }, [data]);
 
   const navigate = useNavigate();
 
@@ -57,9 +61,8 @@ export function Document({ fields, slug, serverUrl, defaultValues }: Document) {
         <FibrProvider plugins={blocks}>
           <form
             onSubmit={handleSubmit((values) => {
-              const document_submit_type_value =
-                values[document_submit_type_key];
-              values[document_submit_type_key] = undefined;
+              const document_submit_type_value = values[SUBMIT_BUTTON_KEY];
+              values[SUBMIT_BUTTON_KEY] = undefined;
 
               console.log(values);
 
@@ -91,7 +94,7 @@ export function Document({ fields, slug, serverUrl, defaultValues }: Document) {
                 colorScheme="primary"
                 onClick={() =>
                   setValue(
-                    document_submit_type_key,
+                    SUBMIT_BUTTON_KEY,
                     DocumentSubmitType.SAVE_AND_ADD_ANOTHER,
                   )
                 }
@@ -102,7 +105,7 @@ export function Document({ fields, slug, serverUrl, defaultValues }: Document) {
                 type="submit"
                 colorScheme="primary"
                 onClick={() =>
-                  setValue(document_submit_type_key, DocumentSubmitType.SAVE)
+                  setValue(SUBMIT_BUTTON_KEY, DocumentSubmitType.SAVE)
                 }
               >
                 Submit

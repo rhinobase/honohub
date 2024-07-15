@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { getCell } from "../Columns";
 import { DataTable, PageHeader, PageTitle } from "../Components";
 import type { FieldProps } from "../Fields";
-import type { CollectionType } from "./types";
+import type { CollectionType } from "../types";
 
 export type CollectionPage = Omit<CollectionType, "fields"> & {
   serverUrl: string;
@@ -53,7 +53,7 @@ export function CollectionPage(props: CollectionPage) {
     <>
       <PageHeader className="justify-between">
         <PageTitle className="capitalize">{props.slug}</PageTitle>
-        <Link to={`/${props.slug}/create`}>
+        <Link to={`/collections/${props.slug}/create`}>
           <Button colorScheme="primary">Create</Button>
         </Link>
       </PageHeader>

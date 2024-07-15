@@ -1,8 +1,2 @@
-export { CollectionsPage, CollectionCard } from "./Collections";
-export {
-  CollectionViewPage,
-  CollectionTable,
-  Pagination,
-  SearchField,
-} from "./List";
-export { CreateCollectionPage } from "./Create";
+export { CollectionPage } from "./CollectionPage";
+export { DocumentPage } from "./DocumentPage";

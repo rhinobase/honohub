@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
-import { Sidebar } from "./Sidebar";
+import { AppSidebar } from "./Sidebar";
 
-export type AppWrapper = Pick<Sidebar, "options">;
+export type AppWrapper = Pick<AppSidebar, "options">;
 
 export function AppWrapper({ options }: AppWrapper) {
   return (
     <div className="flex w-full h-screen">
-      <Sidebar options={options} />
+      <AppSidebar options={options} />
       <Outlet />
     </div>
   );
