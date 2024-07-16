@@ -2,7 +2,7 @@ import { AcademicCapIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AppWrapper, CollectionsWrapper } from "./Components";
-import { CollectionPage, DocumentPage } from "./Pages";
+import { CollectionPage, DocumentPage, SettingsPage } from "./Pages";
 
 const COLLECTIONS_SERVER_URL = "https://api.spacexdata.com/v3";
 
@@ -122,6 +122,10 @@ export function Honohub({ plugins, basePath }: Honohub) {
                 ),
               },
             ]),
+          },
+          {
+            path: "/settings",
+            element: <SettingsPage />,
           },
         ],
       },

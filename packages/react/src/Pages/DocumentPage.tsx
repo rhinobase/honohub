@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { PageTitle } from "../Components";
 import { blocks } from "../Fields";
 import type { CollectionType } from "../types";
 
@@ -55,8 +56,8 @@ export function DocumentPage({
   const navigate = useNavigate();
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-3xl font-bold">{formType}</h1>
+    <>
+      <PageTitle>{formType}</PageTitle>
       <FormProvider {...methods}>
         <FibrProvider plugins={blocks}>
           <form
@@ -75,7 +76,7 @@ export function DocumentPage({
             })}
             className="space-y-4"
           >
-            <div className="space-y-5 max-w-4xl py-4 mx-auto">
+            <div className="space-y-3 max-w-4xl py-4 mx-auto">
               {isLoading
                 ? Array.from({ length: 8 }, (_, i) => (
                     <Skeleton
@@ -114,6 +115,6 @@ export function DocumentPage({
           </form>
         </FibrProvider>
       </FormProvider>
-    </div>
+    </>
   );
 }

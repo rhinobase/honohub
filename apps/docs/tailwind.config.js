@@ -11,7 +11,6 @@ module.exports = {
       __dirname,
       "{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html,mdx}",
     ),
-    "../../packages/react/src/**/*.{jsx,tsx,ts,js}",
     "../../node_modules/@rafty/**/**/*.js",
 
     ...createGlobPatternsForDependencies(__dirname),
