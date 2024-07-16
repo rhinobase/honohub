@@ -1,17 +1,18 @@
 "use client";
-import { PuzzlePieceIcon } from "@heroicons/react/24/outline";
-import { InputField, Text, classNames } from "@rafty/ui";
-import Fuse, { type RangeTuple } from "fuse.js";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PuzzlePieceIcon,
+} from "@heroicons/react/24/outline";
+import { Button, Text, classNames, useBoolean } from "@rafty/ui";
 import {
   Fragment,
   type HTMLAttributes,
   type PropsWithChildren,
-  type ReactNode,
   forwardRef,
-  useMemo,
-  useState,
 } from "react";
 import { NavLink } from "react-router-dom";
+import { Logo } from "./Logo";
 
 type AppSidebarOptionType = {
   label: string;
@@ -25,87 +26,66 @@ export type AppSidebar = {
 
 export const AppSidebar = forwardRef<HTMLDivElement, AppSidebar>(
   function AppSidebar({ className, options, ...props }, forwardedRef) {
-    const [search, setSearch] = useState<string>();
+    const [isOpen, setOpen] = useBoolean(true);
 
-    const fuse = useMemo(() => {
-      const data = Object.entries(options).flatMap(([category, items]) =>
-        items.map((item) => ({ category, ...item })),
-      );
-
-      return new Fuse(data, {
-        keys: ["label"],
-        includeMatches: true,
-      });
-    }, [options]);
-
-    let searchResults = options;
-    let isEmpty = false;
-
-    if (search) {
-      const init = Object.keys(options).reduce<
-        Record<string, AppSidebarOptionType[]>
-      >((prev, cur) => {
-        prev[cur] = [];
-        return prev;
-      }, {});
-
-      const results = fuse.search(search);
-
-      if (results.length === 0) isEmpty = true;
-
-      searchResults = results.reduce<
-        Record<string, (AppSidebarOptionType & { matches?: RangeTuple[] })[]>
-      >((prev, cur) => {
-        const { item, matches } = cur;
-
-        prev[item.category].push({
-          ...item,
-          matches: matches
-            ?.filter((match) => match.key === "label")
-            .flatMap((match) => match.indices),
-        });
-
-        return prev;
-      }, init);
-    }
+    const Icon = isOpen ? ChevronLeftIcon : ChevronRightIcon;
 
     return (
       <div
         {...props}
         className={classNames(
-          "flex h-full w-[250px] min-w-[250px] max-w-[250px] border-r flex-col flex-shrink-0 flex-grow-0 dark:border-secondary-800",
+          "flex h-full relative border-r flex-col flex-shrink-0 flex-grow-0 dark:border-secondary-800",
+          isOpen ? "w-[250px] min-w-[250px] max-w-[250px]" : "w-16",
           className,
         )}
         ref={forwardedRef}
       >
-        <header className="px-4 my-[15px]">
-          <InputField
-            size="sm"
-            type="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search..."
-            variant="ghost"
-            className="px-0 py-0 focus:border-transparent focus:ring-transparent dark:focus:border-transparent dark:focus:ring-transparent"
-          />
-        </header>
-        <hr className="dark:border-secondary-800" />
-        <div className="mt-[15px] px-3 overflow-x-hidden overflow-y-auto h-full">
-          {isEmpty ? (
-            <p className="font-medium text-sm text-center select-none text-secondary-400 dark:text-secondary-600">
-              Not found
-            </p>
+        <header className="px-3 my-[7.5px]">
+          {isOpen ? (
+            <div className="flex items-center -ml-1">
+              <Logo className="h-9 w-max" />
+              <p className="text-[26px] font-bold tracking-tight">
+                Hono
+                <span className="text-primary-500 dark:text-primary-300">
+                  Hub
+                </span>
+              </p>
+            </div>
           ) : (
-            Object.entries(searchResults).map(([category, items], index) => (
-              <Fragment key={category}>
-                {index !== 0 && <SidebarTitle>{category}</SidebarTitle>}
-                {items.map((item) => (
-                  <SidebarItem key={item.label} {...item} />
-                ))}
-              </Fragment>
-            ))
+            <Logo className="h-[39px] w-max" />
           )}
+        </header>
+        <hr
+          className={
+            isOpen
+              ? "border-secondary-200 dark:border-secondary-800"
+              : "border-transparent"
+          }
+        />
+        <div className="mt-[15px] px-3 overflow-x-hidden overflow-y-auto h-full">
+          {Object.entries(options).map(([category, items], index) => (
+            <Fragment key={category}>
+              {index !== 0 &&
+                (isOpen ? (
+                  <SidebarTitle>{category}</SidebarTitle>
+                ) : (
+                  <div className="h-[33px] flex items-center">
+                    <hr className="border-secondary-200 dark:border-secondary-800 w-full" />
+                  </div>
+                ))}
+              {items.map((item) => (
+                <SidebarItem key={item.label} {...item} isOpen={isOpen} />
+              ))}
+            </Fragment>
+          ))}
         </div>
+        <Button
+          className="absolute bottom-6 hover:dark:bg-secondary-950 hover:bg-white -right-4 border border-secondary-300 dark:border-secondary-700 bg-white dark:bg-secondary-950"
+          size="fab"
+          onClick={() => setOpen()}
+        >
+          <Icon className="size-4 stroke-2 stroke-secondary-500 dark:stroke-secondary-400" />
+        </Button>
       </div>
     );
   },
@@ -120,10 +100,10 @@ function SidebarTitle(props: PropsWithChildren) {
 }
 
 type SidebarItem = AppSidebarOptionType & {
-  matches?: RangeTuple[];
+  isOpen: boolean;
 };
 
-function SidebarItem({ label, icon, path, matches }: SidebarItem) {
+function SidebarItem({ label, icon, path, isOpen }: SidebarItem) {
   const Icon = icon ?? PuzzlePieceIcon;
 
   return (
@@ -136,48 +116,14 @@ function SidebarItem({ label, icon, path, matches }: SidebarItem) {
           isActive
             ? "bg-primary-100 text-primary-600 dark:bg-secondary-700/80 dark:text-white"
             : "text-secondary-600 dark:text-secondary-400 hover:text-black dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-secondary-800/80",
+          !isOpen && "w-max",
         )
       }
     >
       <Icon className="size-4 stroke-2" />
-      <Text className="font-semibold text-sm leading-none">
-        {highlightMatches(label, matches)}
-      </Text>
+      {isOpen && (
+        <Text className="font-semibold text-sm leading-none">{label}</Text>
+      )}
     </NavLink>
   );
-}
-
-function highlightMatches(
-  inputText: string,
-  regions: readonly RangeTuple[] = [],
-) {
-  const children: ReactNode[] = [];
-  let nextUnhighlightedRegionStartingIndex = 0;
-
-  regions.forEach((region, i) => {
-    const lastRegionNextIndex = region[1] + 1;
-
-    children.push(
-      ...[
-        inputText
-          .substring(nextUnhighlightedRegionStartingIndex, region[0])
-          .replace(" ", "\u00A0"),
-        <span key={`${i}-${region}`} className="bg-yellow-200/80">
-          {inputText
-            .substring(region[0], lastRegionNextIndex)
-            .replace(" ", "\u00A0")}
-        </span>,
-      ],
-    );
-
-    nextUnhighlightedRegionStartingIndex = lastRegionNextIndex;
-  });
-
-  children.push(
-    inputText
-      .substring(nextUnhighlightedRegionStartingIndex)
-      .replace(" ", "\u00A0"),
-  );
-
-  return children;
 }

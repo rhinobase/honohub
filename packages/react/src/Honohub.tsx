@@ -1,4 +1,4 @@
-import { AcademicCapIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AppWrapper, CollectionsWrapper } from "./Components";
@@ -79,7 +79,7 @@ export function Honohub({ plugins, basePath }: Honohub) {
   const appWrapperOptions = {
     collections: [
       {
-        icon: AcademicCapIcon,
+        icon: ArchiveBoxIcon,
         label: "Collections",
         path: "/collections",
       },
