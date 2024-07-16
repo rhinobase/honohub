@@ -17,7 +17,6 @@ export type SanitizedHub<
   db: Database;
   serverUrl: string;
   build: BuildOptions;
-  meta: Partial<RouteMetaOptions>;
   collections: SanitizedCollection<any>[];
   routes: RouteOptions[];
   plugins: GlobalPlugin<Database>[];
@@ -29,13 +28,11 @@ export type RouteOptions = {
   icon?: string;
   path: string;
   import: string | { module: string; component: string };
-  props?: <Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>>(
-    config: HubConfig<Database>,
-  ) => JSONObject | undefined;
-  meta?: Partial<RouteMetaOptions>;
-};
-export type RouteMetaOptions = {
-  title: string;
+  props?:
+    | JSONObject
+    | (<Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>>(
+        config: HubConfig<Database>,
+      ) => JSONObject | undefined);
 };
 
 export type GlobalPlugin<Database extends AnyDrizzleDB<any>> = {
