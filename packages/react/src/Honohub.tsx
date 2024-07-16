@@ -1,4 +1,5 @@
 import { AcademicCapIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AppWrapper, CollectionsWrapper } from "./Components";
 import { CollectionPage, DocumentPage } from "./Pages";
@@ -66,6 +67,8 @@ const COLLECTIONS_OPTIONS = [
   },
 ];
 
+const CLIENT = new QueryClient();
+
 export type Honohub = {
   plugins?: { label: string; path: string; icon?: string }[];
   basePath: string;
@@ -126,5 +129,9 @@ export function Honohub({ plugins, basePath }: Honohub) {
     { basename: basePath },
   );
 
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={CLIENT}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
