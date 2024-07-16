@@ -14,7 +14,6 @@ export function defineHub<Database extends AnyDrizzleDB<any>>(
     collections = [],
     plugins = [],
     serverUrl,
-    meta = {},
     routes = [],
     build = {},
   } = config;
@@ -24,7 +23,6 @@ export function defineHub<Database extends AnyDrizzleDB<any>>(
     collections,
     plugins,
     serverUrl,
-    meta,
     routes,
     build: { ...defaultBuildConfig, ...build },
   };
