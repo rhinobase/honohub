@@ -1,4 +1,4 @@
-// export * from "./Pages";
+// export * from "./pages";
 export * from "./components";
 export * from "./columns";
 export * from "./fields";

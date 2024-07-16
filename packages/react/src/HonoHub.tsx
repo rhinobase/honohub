@@ -5,8 +5,8 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import { AppWrapper, CollectionsWrapper } from "./Components";
-import { CollectionPage, DocumentPage, SettingsPage } from "./Pages";
+import { AppWrapper, CollectionsWrapper } from "./components";
+import { CollectionPage, DocumentPage, SettingsPage } from "./pages";
 import { ThemeProvider } from "./providers";
 import type { HonoHubProps } from "./types";
 

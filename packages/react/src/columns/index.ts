@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { FieldProps } from "../Fields";
+import type { FieldProps } from "../fields";
 import { BooleanCell } from "./Boolean";
 import { DateCell } from "./Date";
 import { Datetime } from "./Datetime";

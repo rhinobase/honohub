@@ -46,7 +46,7 @@ dependencies:
     version: 2.2.1
   '@tailwindcss/typography':
     specifier: 0.5.9
-    version: 0.5.9(tailwindcss@3.4.5)
+    version: 0.5.9(tailwindcss@3.4.6)
   '@tanstack/react-query':
     specifier: ^5.50.1
     version: 5.51.1(react@18.3.1)
@@ -82,7 +82,7 @@ dependencies:
     version: 0.7.43
   framer-motion:
     specifier: ^11.2.11
-    version: 11.3.3(react-dom@18.3.1)(react@18.3.1)
+    version: 11.3.4(react-dom@18.3.1)(react@18.3.1)
   fuse.js:
     specifier: ^7.0.0
     version: 7.0.0
@@ -124,7 +124,7 @@ dependencies:
     version: 5.2.1(react@18.3.1)
   react-router-dom:
     specifier: ^6.24.1
-    version: 6.24.1(react-dom@18.3.1)(react@18.3.1)
+    version: 6.25.0(react-dom@18.3.1)(react@18.3.1)
   remark:
     specifier: ^15.0.1
     version: 15.0.1
@@ -180,7 +180,7 @@ devDependencies:
     version: 19.3.2(@swc-node/register@1.9.2)(@swc/core@1.5.29)(@types/node@18.16.9)(nx@19.3.2)(typescript@5.4.5)(verdaccio@5.31.1)
   '@rafty/plugin':
     specifier: ^1.1.1
-    version: 1.1.1(tailwindcss@3.4.5)
+    version: 1.1.1(tailwindcss@3.4.6)
   '@rollup/plugin-terser':
     specifier: ^0.4.4
     version: 0.4.4(rollup@4.18.1)
@@ -261,7 +261,7 @@ devDependencies:
     version: 0.1.15(@swc/core@1.5.29)(webpack@5.93.0)
   tailwindcss:
     specifier: ^3.4.4
-    version: 3.4.5
+    version: 3.4.6
   tslib:
     specifier: ^2.6.3
     version: 2.6.3
@@ -5065,13 +5065,13 @@ packages:
       - react-native
     dev: false
 
-  /@rafty/plugin@1.1.1(tailwindcss@3.4.5):
+  /@rafty/plugin@1.1.1(tailwindcss@3.4.6):
     resolution: {integrity: sha512-g9iPRt+HNjVCLCqqUbejsZQK1I4o05vZ+jd2DKPTbmqM4SR1mS7C/e0+w1lQgY/ElU6htN3swOnCAW0EgqXvCQ==}
     peerDependencies:
       tailwindcss: ^3.3.5
     dependencies:
-      tailwindcss: 3.4.5
-      tailwindcss-animate: 1.0.7(tailwindcss@3.4.5)
+      tailwindcss: 3.4.6
+      tailwindcss-animate: 1.0.7(tailwindcss@3.4.6)
     dev: true
 
   /@rafty/ui@1.7.0(@internationalized/date@3.5.4)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(react-dom@18.3.1)(react-hook-form@7.52.1)(react@18.3.1):
@@ -5121,8 +5121,8 @@ packages:
       - react-hook-form
     dev: false
 
-  /@remix-run/router@1.17.1:
-    resolution: {integrity: sha512-mCOMec4BKd6BRGBZeSnGiIgwsbLGp3yhVqAD8H+PxiRNEHgDpZb8J1TnrSDlg97t0ySKMQJTHCWBCmBpSmkF6Q==}
+  /@remix-run/router@1.18.0:
+    resolution: {integrity: sha512-L3jkqmqoSVBVKHfpGZmLrex0lxR5SucGA0sUfFzGctehw+S/ggL9L/0NnC5mw6P8HUWpFZ3nQw3cRApjjWx9Sw==}
     engines: {node: '>=14.0.0'}
     dev: false
 
@@ -5222,7 +5222,7 @@ packages:
       rollup: 4.18.1
       serialize-javascript: 6.0.2
       smob: 1.5.0
-      terser: 5.31.2
+      terser: 5.31.3
     dev: true
 
   /@rollup/plugin-url@8.0.2(rollup@4.18.1):
@@ -5788,7 +5788,7 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@tailwindcss/typography@0.5.9(tailwindcss@3.4.5):
+  /@tailwindcss/typography@0.5.9(tailwindcss@3.4.6):
     resolution: {integrity: sha512-t8Sg3DyynFysV9f4JDOVISGsjazNb48AeIYQwcL+Bsq5uf4RYL75C1giZ43KISjeDGBaTN3Kxh7Xj/vRSMJUUg==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
@@ -5797,7 +5797,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.5
+      tailwindcss: 3.4.6
     dev: false
 
   /@tanstack/query-core@5.51.1:
@@ -9892,8 +9892,8 @@ packages:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
     dev: true
 
-  /framer-motion@11.3.3(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-Z+fwgwKveyjDXPpnNP0invAt0W8y2kYk7FHH3Vk2DxLtNVzBg8qhEvGapVeWZgcuvVnKvTKhJLX091mYdMzQBg==}
+  /framer-motion@11.3.4(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-LC+luwNmz4zEg0AU0rol3yLUFKSJ9GDmIyvigXBAwEbUBG59EWmcRQ2Xh+0py7IkmvWxFUH0TN42v1Dda8xgUg==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0
@@ -14162,26 +14162,26 @@ packages:
       use-sidecar: 1.1.2(@types/react@18.3.1)(react@18.3.1)
     dev: false
 
-  /react-router-dom@6.24.1(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-U19KtXqooqw967Vw0Qcn5cOvrX5Ejo9ORmOtJMzYWtCT4/WOfFLIZGGsVLxcd9UkBO0mSTZtXqhZBsWlHr7+Sg==}
+  /react-router-dom@6.25.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-BhcczgDWWgvGZxjDDGuGHrA8HrsSudilqTaRSBYLWDayvo1ClchNIDVt5rldqp6e7Dro5dEFx9Mzc+r292lN0w==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.17.1
+      '@remix-run/router': 1.18.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-router: 6.24.1(react@18.3.1)
+      react-router: 6.25.0(react@18.3.1)
     dev: false
 
-  /react-router@6.24.1(react@18.3.1):
-    resolution: {integrity: sha512-PTXFXGK2pyXpHzVo3rR9H7ip4lSPZZc0bHG5CARmj65fTT6qG7sTngmb6lcYu1gf3y/8KxORoy9yn59pGpCnpg==}
+  /react-router@6.25.0(react@18.3.1):
+    resolution: {integrity: sha512-bziKjCcDbcxgWS9WlWFcQIVZ2vJHnCP6DGpQDT0l+0PFDasfJKgzf9CM22eTyhFsZkjk8ApCdKjJwKtzqH80jQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.17.1
+      '@remix-run/router': 1.18.0
       react: 18.3.1
     dev: false
 
@@ -15436,16 +15436,16 @@ packages:
     resolution: {integrity: sha512-49AwoOQNKdqKPd9CViyH5wJoSKsCDjUlzL8DxuGp3P1FsGY36NJDAa18jLZcaHAUUuTj+JB8IAo8zWgBNvBF7A==}
     dev: false
 
-  /tailwindcss-animate@1.0.7(tailwindcss@3.4.5):
+  /tailwindcss-animate@1.0.7(tailwindcss@3.4.6):
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
-      tailwindcss: 3.4.5
+      tailwindcss: 3.4.6
     dev: true
 
-  /tailwindcss@3.4.5:
-    resolution: {integrity: sha512-DlTxttYcogpDfx3tf/8jfnma1nfAYi2cBUYV2YNoPPecwmO3YGiFlOX9D8tGAu+EDF38ryBzvrDKU/BLMsUwbw==}
+  /tailwindcss@3.4.6:
+    resolution: {integrity: sha512-1uRHzPB+Vzu57ocybfZ4jh5Q3SdlH7XW23J5sQoM9LhE9eIOlzxer/3XPSsycvih3rboRsvt0QCmzSrqyOYUIA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -15519,11 +15519,11 @@ packages:
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
-      terser: 5.31.2
+      terser: 5.31.3
       webpack: 5.93.0(@swc/core@1.5.29)(esbuild@0.19.12)
 
-  /terser@5.31.2:
-    resolution: {integrity: sha512-LGyRZVFm/QElZHy/CPr/O4eNZOZIzsrQ92y4v9UJe/pFJjypje2yI3C2FmPtvUEnhadlSbmG2nXtdcjHOjCfxw==}
+  /terser@5.31.3:
+    resolution: {integrity: sha512-pAfYn3NIZLyZpa83ZKigvj6Rn9c/vd5KfYGX7cN1mnzqgDcxWvrU5ZtAfIKhEXz9nRecw4z3LXkjaq96/qZqAA==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
