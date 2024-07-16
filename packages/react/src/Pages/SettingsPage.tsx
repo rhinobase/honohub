@@ -8,9 +8,10 @@ import {
 } from "@rafty/ui";
 import { PageTitle } from "../Components";
 import { useTheme } from "../providers";
+import { ColorMode } from "../providers/theme";
 
 export function SettingsPage() {
-  // const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="flex-1 px-10 py-4 overflow-x-hidden overflow-y-auto scroll-smooth">
@@ -25,12 +26,12 @@ export function SettingsPage() {
               <Label>Select a theme for your app</Label>
               <Select
                 className="w-full"
-                // value={theme}
-                // onChange={(e) => setTheme(e.target.value as string)}
+                value={theme}
+                onChange={(e) => setTheme(e.target.value as ColorMode)}
               >
-                {/* <SelectItem value="system">System</SelectItem> */}
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
+                <SelectItem value={ColorMode.SYSTEM}>System</SelectItem>
+                <SelectItem value={ColorMode.LIGHT}>Light</SelectItem>
+                <SelectItem value={ColorMode.DARK}>Dark</SelectItem>
               </Select>
             </CardContent>
           </Card>

@@ -1,4 +1,3 @@
-"use client";
 import {
   type PropsWithChildren,
   createContext,
@@ -6,6 +5,12 @@ import {
   useEffect,
   useState,
 } from "react";
+
+export enum ColorMode {
+  DARK = "dark",
+  LIGHT = "light",
+  SYSTEM = "system",
+}
 
 export type ThemeContextType = ReturnType<typeof useThemeWatcher>;
 
@@ -22,26 +27,38 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 };
 
 function useThemeWatcher() {
-  const [theme, setThemeColor] = useState("light");
+  const [theme, toggle] = useState<ColorMode>(
+    localStorage.theme || ColorMode.SYSTEM,
+  );
 
   useEffect(() => {
-    if (theme === "system") {
+    const applyTheme = (theme: ColorMode) => {
+      if (theme === ColorMode.DARK) {
+        document.documentElement.classList.add(ColorMode.DARK);
+      } else {
+        document.documentElement.classList.remove(ColorMode.DARK);
+      }
+    };
+
+    if (theme === ColorMode.SYSTEM) {
       const media = window.matchMedia("(prefers-color-scheme: dark)");
-      const systemTheme = media.matches ? "dark" : "light";
-      setThemeColor(systemTheme);
+      const systemTheme = media.matches ? ColorMode.DARK : ColorMode.LIGHT;
+      applyTheme(systemTheme);
 
       const handleChange = (e: MediaQueryListEvent) => {
-        setThemeColor(e.matches ? "dark" : "light");
+        applyTheme(e.matches ? ColorMode.DARK : ColorMode.LIGHT);
       };
 
       media.addEventListener("change", handleChange);
       return () => media.removeEventListener("change", handleChange);
     }
+
+    applyTheme(theme);
   }, [theme]);
 
-  const setTheme = (theme: string) => {
-    localStorage.setItem("theme", theme);
-    document.documentElement.setAttribute("data-theme", theme);
+  const setTheme = (newTheme: ColorMode) => {
+    toggle(newTheme);
+    localStorage.setItem("theme", newTheme);
   };
 
   return {

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AppWrapper, CollectionsWrapper } from "./Components";
 import { CollectionPage, DocumentPage, SettingsPage } from "./Pages";
+import { ThemeProvider } from "./providers";
 
 const COLLECTIONS_SERVER_URL = "https://api.spacexdata.com/v3";
 
@@ -135,7 +136,9 @@ export function Honohub({ plugins, basePath }: Honohub) {
 
   return (
     <QueryClientProvider client={CLIENT}>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
