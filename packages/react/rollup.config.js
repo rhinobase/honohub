@@ -13,7 +13,6 @@ module.exports = withNx(
     assets: [{ input: ".", output: ".", glob: "README.md" }],
   },
   {
-    // Provide additional rollup configuration here. See: https://rollupjs.org/configuration-options
     plugins: [
       svg({
         svgo: false,
