@@ -1,81 +1,25 @@
 import { ArchiveBoxIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  type RouteObject,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import { AppWrapper, CollectionsWrapper } from "./Components";
 import { CollectionPage, DocumentPage, SettingsPage } from "./Pages";
 import { ThemeProvider } from "./providers";
-
-const COLLECTIONS_SERVER_URL = "https://api.spacexdata.com/v3";
-
-const COLLECTIONS_OPTIONS = [
-  {
-    slug: "launches",
-    label: "Launches",
-    columns: [
-      {
-        label: "Id",
-        name: "flight_number",
-        type: "custom_text",
-      },
-      {
-        label: "Mission Name",
-        name: "mission_name",
-        type: "custom_text",
-      },
-      {
-        label: "Launch Year",
-        name: "launch_year",
-        type: "custom_text",
-      },
-      {
-        label: "Tentative",
-        name: "is_tentative",
-        type: "custom_text",
-      },
-      {
-        label: "Launch Window",
-        name: "launch_window",
-        type: "custom_text",
-      },
-    ],
-    fields: [
-      {
-        label: "Id",
-        name: "flight_number",
-        type: "string",
-      },
-      {
-        label: "Mission Name",
-        name: "mission_name",
-        type: "string",
-      },
-      {
-        label: "Launch Year",
-        name: "launch_year",
-        type: "string",
-      },
-      {
-        label: "Tentative",
-        name: "is_tentative",
-        type: "string",
-      },
-      {
-        label: "Launch Window",
-        name: "launch_window",
-        type: "string",
-      },
-    ],
-  },
-];
+import type { HonoHubProps } from "./types";
 
 const CLIENT = new QueryClient();
 
-export type Honohub = {
-  plugins?: { label: string; path: string; icon?: string }[];
-  basePath: string;
-};
+export function HonoHub({
+  plugins,
+  basePath,
+  collections,
+  serverUrl,
+}: HonoHubProps) {
+  const hasPlugins = plugins && Object.keys(plugins).length > 0;
 
-export function Honohub({ plugins, basePath }: Honohub) {
   const appWrapperOptions = {
     collections: [
       {
@@ -84,7 +28,15 @@ export function Honohub({ plugins, basePath }: Honohub) {
         path: "/collections",
       },
     ],
-    ...(plugins && plugins.length > 0 ? { plugins } : {}),
+    ...(hasPlugins
+      ? {
+          plugins: Object.entries(plugins).map(([path, { label, icon }]) => ({
+            icon,
+            label,
+            path,
+          })),
+        }
+      : {}),
     general: [
       {
         icon: Cog6ToothIcon,
@@ -102,28 +54,39 @@ export function Honohub({ plugins, basePath }: Honohub) {
         children: [
           {
             path: "/collections",
-            element: <CollectionsWrapper options={COLLECTIONS_OPTIONS} />,
-            children: COLLECTIONS_OPTIONS.flatMap((collection) => [
+            element: <CollectionsWrapper options={collections} />,
+            children: collections.flatMap((collection) => [
               {
                 path: collection.slug,
                 element: (
-                  <CollectionPage
-                    {...collection}
-                    serverUrl={COLLECTIONS_SERVER_URL}
-                  />
+                  <CollectionPage {...collection} serverUrl={serverUrl} />
                 ),
               },
               {
                 path: `${collection.slug}/:id`,
-                element: (
-                  <DocumentPage
-                    {...collection}
-                    serverUrl={COLLECTIONS_SERVER_URL}
-                  />
-                ),
+                element: <DocumentPage {...collection} serverUrl={serverUrl} />,
               },
             ]),
           },
+          ...(hasPlugins
+            ? Object.entries(plugins).map<RouteObject>(([path, plugin]) => ({
+                path,
+                lazy: async () => {
+                  let Panel: () => JSX.Element;
+
+                  if (typeof plugin.import === "string")
+                    Panel = await import(plugin.import);
+                  else {
+                    const { module, component } = plugin.import;
+                    Panel = await import(module).then((mod) => mod[component]);
+                  }
+
+                  return {
+                    element: <Panel {...plugin.props} />,
+                  };
+                },
+              }))
+            : []),
           {
             path: "/settings",
             element: <SettingsPage />,

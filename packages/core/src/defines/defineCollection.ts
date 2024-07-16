@@ -58,8 +58,8 @@ export function defineCollection<T extends Table>(
 function findPrimaryKey<T extends Table>(table: T) {
   const columns = getTableColumns(table);
 
-  for (const key in columns) {
-    if (columns[key].primary) return columns[key];
+  for (const [_, column] of Object.entries(columns)) {
+    if (column.primary) return column;
   }
 
   throw new Error(

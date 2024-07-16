@@ -14,6 +14,7 @@ export type CollectionConfig<T extends Table = Table> = Prettify<
 export type TableColumns<T extends Table> = keyof T["_"]["columns"];
 export type SanitizedCollection<T extends Table = Table> = {
   slug: string;
+  label?: string | { singular: string; plural: string };
   queryKey: Column<any, object, object>;
   schema: T;
   access: <
@@ -25,6 +26,7 @@ export type SanitizedCollection<T extends Table = Table> = {
   ) => Promisify<boolean>;
   defaultSort?: TableColumns<T> | `-${TableColumns<T> & string}`;
   listSearchableFields: TableColumns<T>[];
+  columns?: TableColumns<T>[];
   pagination:
     | {
         defaultLimit: number;

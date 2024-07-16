@@ -3,17 +3,20 @@ import { resolve } from "node:path";
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { SanitizedHub } from "honohub";
 import type { PluginOption } from "vite";
-import { generateReactTemplates } from "./react";
+import { type TemplateGeneratorProps, generateReactTemplates } from "./react";
 
 export type HonoHubViteOptions<Database extends AnyDrizzleDB<any>> = {
+  basePath: string;
   config: SanitizedHub<Database>;
-  generator?: (config: SanitizedHub<Database>) => void | Promise<void>;
+  generator?: (
+    options: TemplateGeneratorProps<Database>,
+  ) => void | Promise<void>;
 };
 
 export default function honohub<Database extends AnyDrizzleDB<any>>(
   options: HonoHubViteOptions<Database>,
 ): PluginOption {
-  const { config: hub, generator = generateReactTemplates } = options;
+  const { config: hub, basePath, generator = generateReactTemplates } = options;
 
   return {
     name: "honohub-vite-plugin",
@@ -60,7 +63,7 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
       await mkdir(cache, { recursive: true });
 
       // Generating the files
-      await generator?.(hub);
+      await generator?.({ basePath, config: hub });
     },
   };
 }
