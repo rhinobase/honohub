@@ -27,9 +27,11 @@ export function CollectionPage(props: CollectionPage) {
     header: ({ table }: any) => (
       <Checkbox
         checked={
-          table.getIsAllRowsSelected() || table.getIsSomeRowsSelected()
-            ? "indeterminate"
-            : false
+          table.getIsAllRowsSelected()
+            ? true
+            : table.getIsSomeRowsSelected()
+              ? "indeterminate"
+              : false
         }
         onCheckedChange={() => table.toggleAllRowsSelected()}
       />

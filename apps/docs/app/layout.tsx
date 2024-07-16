@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function RootLayout(props: PropsWithChildren) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
-      <body className="dark:bg-secondary-950 flex min-h-full bg-white antialiased">
+      <body className="dark:bg-secondary-950 flex min-h-full bg-white antialiased text-black dark:text-white">
         {props.children}
       </body>
     </html>

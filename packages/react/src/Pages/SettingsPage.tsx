@@ -10,7 +10,7 @@ import { PageTitle } from "../Components";
 import { useTheme } from "../providers";
 
 export function SettingsPage() {
-  const { theme, setTheme } = useTheme();
+  // const { theme, setTheme } = useTheme();
 
   return (
     <div className="flex-1 px-10 py-4 overflow-x-hidden overflow-y-auto scroll-smooth">
@@ -25,8 +25,8 @@ export function SettingsPage() {
               <Label>Select a theme for your app</Label>
               <Select
                 className="w-full"
-                value={theme}
-                onChange={(e) => setTheme(e.target.value as string)}
+                // value={theme}
+                // onChange={(e) => setTheme(e.target.value as string)}
               >
                 {/* <SelectItem value="system">System</SelectItem> */}
                 <SelectItem value="light">Light</SelectItem>
