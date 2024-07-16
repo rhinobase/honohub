@@ -1,3 +1,4 @@
+import { useGraphQL, useGraphQLPlayground } from "@honohub/graphql";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { type Env, Hono, type Schema } from "hono";
@@ -26,15 +27,15 @@ const collection = defineCollection({
         if (!Array.isArray(doc)) {
           return { id: doc.id, status: doc.status };
         }
+        return undefined;
       },
     ],
   },
 });
 
-db._.fullSchema.todos;
-
 export default defineHub({
   db,
+  serverUrl: "/",
   collections: [collection],
   plugins: [
     {
@@ -45,6 +46,7 @@ export default defineHub({
         return new Hono<E, P, I>().use("*", logger()).route("/", props.app);
       },
     },
-    // useGraphql(),
+    // useGraphQL(),
+    // useGraphQLPlayground(),
   ],
 });

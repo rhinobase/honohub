@@ -1,29 +1,49 @@
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { Env, Hono, Schema } from "hono";
 import type { BlankSchema } from "hono/types";
-import type { SanitizedAdmin } from "./admin";
+import type { JSONObject } from "hono/utils/types";
 import type { SanitizedCollection } from "./collection";
 
 export type HubConfig<Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>> =
-  Partial<SanitizedHub<Database>> & {
+  Partial<Omit<SanitizedHub<Database>, "build">> & {
     db: Database;
+    serverUrl: string;
+    build?: Partial<BuildOptions>;
   };
 
 export type SanitizedHub<
   Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>,
 > = {
   db: Database;
+  serverUrl: string;
+  build: BuildOptions;
+  meta: Partial<RouteMetaOptions>;
   collections: SanitizedCollection<any>[];
-  admin?: SanitizedAdmin;
+  routes: RouteOptions[];
   plugins: GlobalPlugin<Database>[];
+};
+
+export type BuildOptions = { cache: string; outDir: string };
+export type RouteOptions = {
+  label: string;
+  icon?: string;
+  path: string;
+  import: string | { module: string; component: string };
+  props?: <Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>>(
+    config: HubConfig<Database>,
+  ) => JSONObject | undefined;
+  meta?: Partial<RouteMetaOptions>;
+};
+export type RouteMetaOptions = {
+  title: string;
 };
 
 export type GlobalPlugin<Database extends AnyDrizzleDB<any>> = {
   name: string;
-  config?: (
+  register?: (
     config: SanitizedHub<Database>,
   ) => SanitizedHub<Database> | undefined;
-  setup?: <
+  bootstrap?: <
     E extends Env = Env,
     P extends Schema = BlankSchema,
     I extends string = string,

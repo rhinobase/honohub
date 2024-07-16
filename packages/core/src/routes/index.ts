@@ -7,7 +7,7 @@ export function useRestAPI<
 >(): GlobalPlugin<Database> {
   return {
     name: "honhub-rest-api",
-    setup(props) {
+    bootstrap(props) {
       for (
         let index = props.config.collections.length - 1;
         index >= 0;

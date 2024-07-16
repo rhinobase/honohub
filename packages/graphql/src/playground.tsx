@@ -1,15 +1,17 @@
+import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import GraphiQL from "graphiql";
+import "graphiql/graphiql.min.css";
+import "@honohub/graphql/playground/page.esm.css";
+import { useMemo } from "react";
 
-export default function GraphQLEditor() {
-  return (
-    <GraphiQL
-      fetcher={(graphQLParams) =>
-        fetch("/graphql", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(graphQLParams),
-        }).then((response) => response.json())
-      }
-    />
+export type GraphQLEditorProps = {
+  endpoint: string;
+};
+
+export default function GraphQLEditor(props: GraphQLEditorProps) {
+  const fetcher = useMemo(
+    () => createGraphiQLFetcher({ url: props.endpoint }),
+    [props.endpoint],
   );
+  return <GraphiQL fetcher={fetcher} />;
 }

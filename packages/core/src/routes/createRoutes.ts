@@ -7,7 +7,6 @@ import { createInsertSchema } from "drizzle-zod";
 import { type Env, Hono, type Schema } from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { BlankSchema } from "hono/types";
-import type { JSONValue } from "hono/utils/types";
 import type { SanitizedCollection, SanitizedHub } from "../types";
 import { queryValidationSchema } from "./validations";
 
@@ -287,12 +286,11 @@ export function createRoutes<
     }
 
     // Deleting the record
-    let deletedDoc: JSONValue = await collectionDeleteQuery.execute({
+    let deletedDoc: any = await collectionDeleteQuery.execute({
       id: c.req.param("id"),
     });
 
     for (const hook of collection.hooks.afterDelete ?? []) {
-      // @ts-expect-error
       const res = await hook({ context: c, doc: deletedDoc });
       if (res !== undefined) deletedDoc = res;
     }
@@ -304,8 +302,13 @@ export function createRoutes<
 
   // Applying the plugins
   for (const plugin of collection.plugins) {
-    const tmp = plugin.setup?.({ app, config: collection });
-    if (tmp) app = tmp;
+    try {
+      const tmp = plugin.bootstrap?.({ app, config: collection });
+      if (tmp) app = tmp;
+    } catch (e) {
+      console.error(`Collection Plugin Bootstrap Error in ${plugin.name}`);
+      console.error(e);
+    }
   }
 
   return app;

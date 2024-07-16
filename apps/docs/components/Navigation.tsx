@@ -232,25 +232,44 @@ function NavigationGroup({
 
 export const NAVIGATION: NavGroupType[] = [
   {
-    title: "Guides",
+    title: "🚀 Getting Started",
     links: [
       { title: "Introduction", href: "/" },
-      { title: "Quickstart", href: "/quickstart" },
-      { title: "SDKs", href: "/sdks" },
-      { title: "Authentication", href: "/authentication" },
-      { title: "Pagination", href: "/pagination" },
-      { title: "Errors", href: "/errors" },
-      { title: "Webhooks", href: "/webhooks" },
+      { title: "Quick Start Guide", href: "/quickstart" },
     ],
   },
   {
-    title: "Resources",
+    title: "⚙️ Setup & Deployment",
     links: [
-      { title: "Contacts", href: "/contacts" },
-      { title: "Conversations", href: "/conversations" },
-      { title: "Messages", href: "/messages" },
-      { title: "Groups", href: "/groups" },
-      { title: "Attachments", href: "/attachments" },
+      { title: "Installation", href: "/setup/installation" },
+      { title: "Project Structure", href: "/setup/structure" },
+      { title: "Configuration", href: "/setup/configuration" },
+      { title: "Deployment", href: "/setup/deployment" },
+    ],
+  },
+  {
+    title: "📦 APIs",
+    links: [
+      { title: "Introduction", href: "/apis/introduction" },
+      { title: "Rest API", href: "/apis/rest" },
+      { title: "GraphQL API", href: "/apis/graphql" },
+      { title: "Query Engine API", href: "/apis/query-engine" },
+    ],
+  },
+  {
+    title: "🔧 Development",
+    links: [
+      { title: "Admin Panel", href: "/development/admin-panel" },
+      { title: "Backend", href: "/development/backend" },
+      { title: "Providers", href: "/development/providers" },
+    ],
+  },
+  {
+    title: "🔌 Plugins",
+    links: [
+      { title: "Introduction", href: "/plugins/introduction" },
+      { title: "Usage", href: "/plugins/usage" },
+      { title: "Development", href: "/plugins/development" },
     ],
   },
 ];

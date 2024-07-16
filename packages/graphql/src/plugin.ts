@@ -2,20 +2,21 @@ import { zValidator } from "@hono/zod-validator";
 import { type AnyDrizzleDB, buildSchema } from "drizzle-graphql";
 import { graphql } from "graphql";
 import type { GlobalPlugin } from "honohub";
+import type { GraphQLEditorProps } from "./playground";
 import { graphQLBodyValidation } from "./validation";
 
 export type GraphQLPluginConfig = {
   route?: string;
 };
 
-export function useGraphql<Database extends AnyDrizzleDB<any>>(
+export function useGraphQL<Database extends AnyDrizzleDB<any>>(
   config: GraphQLPluginConfig = {},
 ): GlobalPlugin<Database> {
   const { route = "/graphql" } = config;
 
   return {
     name: "honohub-graphql-api",
-    setup: (props) => {
+    bootstrap(props) {
       const { schema } = buildSchema(props.config.db);
 
       props.app.post(
@@ -34,6 +35,39 @@ export function useGraphql<Database extends AnyDrizzleDB<any>>(
       );
 
       return props.app;
+    },
+  };
+}
+
+export type GraphQLPlaygroundPluginConfig = {
+  route?: string;
+  graphQLEndpoint?: string;
+};
+
+export function useGraphQLPlayground<Database extends AnyDrizzleDB<any>>(
+  config: GraphQLPlaygroundPluginConfig = {},
+): GlobalPlugin<Database> {
+  const { route = "/playground", graphQLEndpoint } = config;
+
+  return {
+    name: "honohub-graphql-playground",
+    register(config) {
+      return {
+        ...config,
+        routes: [
+          ...config.routes,
+          {
+            label: "GraphQL Editor",
+            path: "/graphql",
+            import: "@honohub/graphql/playground",
+            props(config): GraphQLEditorProps {
+              return {
+                endpoint: graphQLEndpoint ?? `${config.serverUrl}/graphql`,
+              };
+            },
+          },
+        ],
+      };
     },
   };
 }

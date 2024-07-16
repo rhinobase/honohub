@@ -1,0 +1,35 @@
+import { Guides } from "../components/Guides";
+import { Features } from "../components/Features";
+import { HeroPattern } from "../components/HeroPattern";
+import { Button, Text } from "@rafty/ui";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+
+export const metadata = {
+  description:
+    "Learn everything there is to know about the Protocol API and integrate Protocol into your product.",
+};
+
+export const sections = [{ title: "Guides", id: "guides" }];
+
+<HeroPattern />
+
+# HonoHub
+
+A powerful and efficient meta-framework for building APIs and CMS solutions for your websites or apps. Leveraging the strengths of industry-leading technologies, HonoHub is built on top of [Hono](https://hono.dev/), [Drizzle](https://orm.drizzle.team/), [Zod](https://zod.dev/), and [Vite](https://vitejs.dev/). With HonoHub, you can create fast, reliable, and scalable APIs or CMS applications effortlessly, standing on the shoulders of giants in the web development ecosystem. {{ className: 'lead' }}
+
+<div className="not-prose mb-16 mt-6 flex gap-3">
+  <Link href="/quickstart">
+    <Button
+      colorScheme="primary"
+      className="rounded-full py-1"
+      rightIcon={<ArrowRightIcon width={14} height={14} className="stroke-2" />}
+    >
+      Quickstart
+    </Button>
+  </Link>
+</div>
+
+<Features />
+
+<Guides />

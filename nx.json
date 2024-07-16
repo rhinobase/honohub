@@ -5,8 +5,13 @@
     "version": {
       "preVersionCommand": "pnpm dlx nx run-many -t build"
     },
+    "projects": ["*"],
     "changelog": {
-      "projectChangelogs": true
+      "projectChangelogs": {
+        "renderOptions": {
+          "authors": false
+        }
+      }
     },
     "projectsRelationship": "independent"
   },

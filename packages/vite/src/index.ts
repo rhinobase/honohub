@@ -1,29 +1,28 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
+import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { SanitizedHub } from "honohub";
 import type { PluginOption } from "vite";
+import { generateReactTemplates } from "./react";
 
-export type HubOptions = {
-  hub: SanitizedHub;
-  cache?: string;
-  outDir?: string;
+export type HonoHubViteOptions<Database extends AnyDrizzleDB<any>> = {
+  config: SanitizedHub<Database>;
+  generator?: (config: SanitizedHub<Database>) => void | Promise<void>;
 };
 
-export default function honohub(hub: SanitizedHub): PluginOption {
+export default function honohub<Database extends AnyDrizzleDB<any>>(
+  options: HonoHubViteOptions<Database>,
+): PluginOption {
+  const { config: hub, generator = generateReactTemplates } = options;
+
   return {
     name: "honohub-vite-plugin",
     enforce: "pre",
     async config(config, { command }) {
-      const { admin } = hub;
+      const routeKeys = Object.keys(hub.routes);
+      if (command !== "build" || routeKeys.length === 0) return;
 
-      if (command !== "build") return;
-
-      if (!admin)
-        throw new Error(
-          "Config Error: The 'admin' property is not initialized in the config. Please ensure the 'admin' property is set correctly in your config.",
-        );
-
-      const { cache, outDir } = admin.build;
+      const { cache, outDir } = hub.build;
 
       // Configuring the build
       config.root = cache;
@@ -33,76 +32,35 @@ export default function honohub(hub: SanitizedHub): PluginOption {
 
       // Multiple entry files
       const inputs = Object.fromEntries(
-        Object.keys(admin.routes).map((page) => [
-          [page, resolve(__dirname, cache, `/${page}.html`)],
-        ]),
+        routeKeys.map((page) => [page, resolve(cache, `.${page}/index.html`)]),
       );
 
       config.build.rollupOptions = config.build.rollupOptions || {};
       config.build.rollupOptions.input = {
-        ...(config.build.rollupOptions.input || ({} as any)),
+        ...(config.build.rollupOptions.input ?? ({} as any)),
         ...inputs,
       };
+
+      const customRollupConfig: typeof config.build.rollupOptions.output = {
+        entryFileNames: (chunk) => {
+          const name = chunk.name.split("/").pop() ?? "index";
+          return `${name}/index.js`;
+        },
+      };
+
+      if (Array.isArray(config.build.rollupOptions.output)) {
+        config.build.rollupOptions.output.push(customRollupConfig);
+      } else
+        config.build.rollupOptions.output = {
+          ...(config.build.rollupOptions.output ?? {}),
+          ...customRollupConfig,
+        };
 
       // Creating the dir
       await mkdir(cache, { recursive: true });
 
       // Generating the files
-      const hubFiles = [];
-      for (const page in admin.routes) {
-        const route = admin.routes[page];
-
-        hubFiles.push(
-          // HTML file
-          writeFile(
-            resolve(__dirname, cache, `/${page}.html`),
-            htmlTemplateCode({
-              module: `/${page}.js`,
-              title: admin.meta.title,
-            }),
-            {
-              flag: "w+",
-            },
-          ),
-          // Component file
-          writeFile(
-            resolve(__dirname, cache, `/${page}.js`),
-            jsTemplateCode({
-              import:
-                typeof route.import === "string"
-                  ? `import DefaultComponent from "${route.import}"`
-                  : `import ${route.import.component} from "${route.import.module}"`,
-              component:
-                typeof route.import === "string"
-                  ? "<DefaultComponent />"
-                  : `<${route.import.component} />`,
-            }),
-            {
-              flag: "w+",
-            },
-          ),
-        );
-      }
-
-      await Promise.all(hubFiles);
+      await generator?.(hub);
     },
   };
 }
-
-type JSTemplateProps = { import: string; component: string };
-
-const jsTemplateCode = (props: JSTemplateProps) =>
-  `import React from "react";import ReactDOM from "react-dom/client";${props.import};ReactDOM.createRoot(document.getElementById("root")).render(<React.StrictMode>${props.component}</React.StrictMode>);`;
-
-type HTMLTemplateProps = {
-  module: string;
-  title?: string;
-  icon?: string;
-};
-
-const htmlTemplateCode = (props: HTMLTemplateProps) =>
-  `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><link rel="icon" type="image/svg+xml" href="/vite.svg" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${
-    props.title ?? "Honohub"
-  }</title></head><body><div id="root" /><script type="module" src="${
-    props.module
-  }"></script></body></html>`;

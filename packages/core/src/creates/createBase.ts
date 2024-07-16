@@ -14,8 +14,13 @@ export function createBase<
 
   // Applying the plugins
   for (const plugin of plugins) {
-    const tmp = plugin.setup?.({ app: hub, config });
-    if (tmp) hub = tmp;
+    try {
+      const tmp = plugin.bootstrap?.({ app: hub, config });
+      if (tmp) hub = tmp;
+    } catch (e) {
+      console.error(`Hub Plugin Bootstrap Error in ${plugin.name}`);
+      console.error(e);
+    }
   }
 
   // Returning the app

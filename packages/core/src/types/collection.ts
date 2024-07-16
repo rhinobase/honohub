@@ -37,10 +37,10 @@ export type SanitizedCollection<T extends Table = Table> = {
 
 export type CollectionPlugin<T extends Table = Table> = {
   name: string;
-  config?: (
+  register?: (
     config: SanitizedCollection<T>,
   ) => SanitizedCollection<T> | undefined;
-  setup?: <
+  bootstrap?: <
     E extends Env = Env,
     P extends Schema = BlankSchema,
     I extends string = string,

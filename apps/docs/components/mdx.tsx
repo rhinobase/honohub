@@ -2,7 +2,6 @@ import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { classNames } from "@rafty/ui";
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
-import { Feedback } from "./Feedback";
 import { Heading } from "./Heading";
 import { Prose } from "./Prose";
 
@@ -13,9 +12,6 @@ export function wrapper({ children }: PropsWithChildren) {
   return (
     <article className="flex h-full flex-col pb-10 pt-16">
       <Prose className="flex-auto">{children}</Prose>
-      <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
-        <Feedback />
-      </footer>
     </article>
   );
 }
