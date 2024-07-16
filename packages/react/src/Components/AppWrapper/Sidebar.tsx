@@ -92,13 +92,13 @@ export const AppSidebar = forwardRef<HTMLDivElement, AppSidebar>(
         <hr className="dark:border-secondary-800" />
         <div className="mt-[15px] px-3 overflow-x-hidden overflow-y-auto h-full">
           {isEmpty ? (
-            <p className="font-medium text-sm text-center select-none text-secondary-400">
+            <p className="font-medium text-sm text-center select-none text-secondary-400 dark:text-secondary-600">
               Not found
             </p>
           ) : (
-            Object.entries(searchResults).map(([category, items]) => (
+            Object.entries(searchResults).map(([category, items], index) => (
               <Fragment key={category}>
-                <SidebarTitle>{category}</SidebarTitle>
+                {index !== 0 && <SidebarTitle>{category}</SidebarTitle>}
                 {items.map((item) => (
                   <SidebarItem key={item.label} {...item} />
                 ))}

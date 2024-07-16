@@ -75,7 +75,7 @@ export function DataTable<T = unknown>({ columns, endpoint }: DataTable<T>) {
           })
         }
       >
-        <p className="text-secondary-700 dark:text-secondary-200">
+        <p className="text-secondary-700 dark:text-secondary-300">
           {pageIndex * pageSize + 1}
           &nbsp;-&nbsp;
           {pageSize + pageIndex * pageSize > count

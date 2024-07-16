@@ -74,9 +74,8 @@ export const CollectionSidebar = forwardRef<HTMLDivElement, CollectionSidebar>(
         </header>
         <hr className="dark:border-secondary-800" />
         <div className="mt-[15px] px-3 overflow-x-hidden overflow-y-auto h-full">
-          <SidebarTitle>Collections</SidebarTitle>
           {isEmpty ? (
-            <p className="font-medium text-sm text-center select-none text-secondary-400">
+            <p className="font-medium text-sm text-center select-none text-secondary-400 dark:text-secondary-600">
               Not found
             </p>
           ) : (
