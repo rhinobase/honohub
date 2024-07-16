@@ -2,9 +2,9 @@ import type { ColumnType } from "@rafty/corp";
 import { Button, Checkbox } from "@rafty/ui";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { getCell } from "../Columns";
-import { DataTable, PageHeader, PageTitle } from "../Components";
-import type { FieldProps } from "../Fields";
+import { getCell } from "../columns";
+import { DataTable, PageHeader, PageTitle } from "../components";
+import type { FieldProps } from "../fields";
 import type { CollectionType } from "../types";
 
 export type CollectionPage = Omit<CollectionType, "fields"> & {
@@ -19,7 +19,7 @@ export function CollectionPage(props: CollectionPage) {
         accessorKey: column.name,
         cell: getCell(column.type as FieldProps["type"]),
       })),
-    [props.columns],
+    [props.columns]
   );
 
   columns.unshift({
@@ -30,8 +30,8 @@ export function CollectionPage(props: CollectionPage) {
           table.getIsAllRowsSelected()
             ? true
             : table.getIsSomeRowsSelected()
-              ? "indeterminate"
-              : false
+            ? "indeterminate"
+            : false
         }
         onCheckedChange={() => table.toggleAllRowsSelected()}
       />

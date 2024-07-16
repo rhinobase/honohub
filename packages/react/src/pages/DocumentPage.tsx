@@ -5,8 +5,8 @@ import axios from "axios";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { PageTitle } from "../Components";
-import { blocks } from "../Fields";
+import { PageTitle } from "../components";
+import { blocks } from "../fields";
 import type { CollectionType } from "../types";
 
 enum DocumentSubmitType {

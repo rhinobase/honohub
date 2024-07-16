@@ -6,7 +6,7 @@ import {
   Select,
   SelectItem,
 } from "@rafty/ui";
-import { PageTitle } from "../Components";
+import { PageTitle } from "../components";
 import { ColorMode, useTheme } from "../providers";
 
 export function SettingsPage() {
