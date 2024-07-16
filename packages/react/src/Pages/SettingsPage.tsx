@@ -7,8 +7,7 @@ import {
   SelectItem,
 } from "@rafty/ui";
 import { PageTitle } from "../Components";
-import { useTheme } from "../providers";
-import { ColorMode } from "../providers/theme";
+import { ColorMode, useTheme } from "../providers";
 
 export function SettingsPage() {
   const { theme, setTheme } = useTheme();

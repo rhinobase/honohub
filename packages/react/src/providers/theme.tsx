@@ -16,9 +16,9 @@ export type ThemeContextType = ReturnType<typeof useThemeWatcher>;
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
-export type ThemeProviderProps = PropsWithChildren;
+export type ThemeProvider = PropsWithChildren;
 
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+export const ThemeProvider = ({ children }: ThemeProvider) => {
   const values = useThemeWatcher();
 
   return (
