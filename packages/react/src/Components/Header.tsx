@@ -26,7 +26,10 @@ export const PageTitle = forwardRef<HTMLHeadingElement, PageTitle>(
     return (
       <Component
         {...props}
-        className={classNames("text-3xl font-bold", className)}
+        className={classNames(
+          "text-3xl font-bold dark:text-secondary-100",
+          className,
+        )}
         ref={forwardedRef}
       />
     );

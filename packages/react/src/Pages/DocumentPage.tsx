@@ -88,7 +88,7 @@ export function DocumentPage({
                     <Thread key={props.name} id={props.name} {...props} />
                   ))}
             </div>
-            <div className="flex justify-end gap-4 p-2 bg-secondary-100 rounded-md">
+            <div className="flex justify-end gap-4 p-2 bg-secondary-100 dark:bg-secondary-900 rounded-md">
               <Button
                 type="submit"
                 variant="ghost"
