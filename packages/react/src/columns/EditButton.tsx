@@ -1,4 +1,3 @@
-"use client";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@rafty/ui";
 import Link from "next/link";

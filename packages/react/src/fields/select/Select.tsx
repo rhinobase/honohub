@@ -1,4 +1,3 @@
-"use client";
 import { useThread } from "@fibr/react";
 import { Select as SelectField, SelectItem } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";

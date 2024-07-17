@@ -1,4 +1,3 @@
-"use client";
 import dateFormat from "dateformat";
 import { CellWrapper } from "./CellWrapper";
 

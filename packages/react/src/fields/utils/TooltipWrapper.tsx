@@ -1,4 +1,3 @@
-"use client";
 import { useThread } from "@fibr/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import type { PropsWithChildren } from "react";

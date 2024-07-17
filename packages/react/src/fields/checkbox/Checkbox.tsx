@@ -1,4 +1,3 @@
-"use client";
 import { useThread } from "@fibr/react";
 import { Checkbox as RaftyCheckbox } from "@rafty/ui";
 import { Controller, useFormContext } from "react-hook-form";

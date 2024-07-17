@@ -1,4 +1,3 @@
-"use client";
 import { Thread, useThread } from "@fibr/react";
 import type { FieldProps, ObjectProps, Prettify } from "../types";
 

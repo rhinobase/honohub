@@ -1,4 +1,3 @@
-"use client";
 import { InputField, Text, classNames } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
 import {

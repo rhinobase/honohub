@@ -1,4 +1,3 @@
-"use client";
 import { useThread } from "@fibr/react";
 import {
   InputGroup,
