@@ -12,7 +12,8 @@ export default defineConfig({
       config: hubConfig,
       basePath: "/",
       build: {
-        cache: "./sample",
+        cache: "./apps/sandbox/.honohub",
+        outDir: "../dist",
       },
     }),
   ],

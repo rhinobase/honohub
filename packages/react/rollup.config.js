@@ -10,7 +10,7 @@ module.exports = withNx(
     compiler: "swc",
     external: ["react", "react-dom", "react/jsx-runtime"],
     format: ["esm"],
-    assets: [{ input: ".", output: ".", glob: "README.md" }],
+    assets: [{ input: "./packages/react", output: ".", glob: "README.md" }],
   },
   {
     plugins: [

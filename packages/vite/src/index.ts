@@ -1,9 +1,12 @@
 import { mkdir } from "node:fs/promises";
-import { resolve } from "node:path";
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { SanitizedHub } from "honohub";
 import type { PluginOption } from "vite";
-import { type TemplateGeneratorProps, generateReactTemplates } from "./react";
+import {
+  type BuildOptions,
+  type TemplateGeneratorProps,
+  generateReactTemplates,
+} from "./react";
 
 export type HonoHubViteOptions<Database extends AnyDrizzleDB<any>> = {
   basePath: string;
@@ -14,7 +17,10 @@ export type HonoHubViteOptions<Database extends AnyDrizzleDB<any>> = {
   ) => void | Promise<void>;
 };
 
-export type BuildOptions = { cache: string; outDir: string };
+const defaultBuildProps: BuildOptions = {
+  cache: "./.honohub",
+  outDir: "../dist",
+};
 
 export default function honohub<Database extends AnyDrizzleDB<any>>(
   options: HonoHubViteOptions<Database>,
@@ -26,52 +32,25 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
     generator = generateReactTemplates,
   } = options;
 
+  const buildProps = { ...defaultBuildProps, ...build };
+
   return {
     name: "honohub-vite-plugin",
     enforce: "pre",
     async config(config, { command }) {
-      const routeKeys = Object.keys(hub.routes);
-      if (command !== "build" || routeKeys.length === 0) return;
-
-      const { cache = "./.honohub", outDir = "../dist" } = build;
+      // if (command !== "build") return;
 
       // Configuring the build
-      config.root = cache;
+      config.root = buildProps.cache;
       config.build = config.build || {};
-      config.build.outDir = outDir;
+      config.build.outDir = buildProps.outDir;
       config.build.emptyOutDir = true;
 
-      // Multiple entry files
-      const inputs = Object.fromEntries(
-        routeKeys.map((page) => [page, resolve(cache, "./index.html")]),
-      );
-
-      config.build.rollupOptions = config.build.rollupOptions || {};
-      config.build.rollupOptions.input = {
-        ...(config.build.rollupOptions.input ?? ({} as any)),
-        ...inputs,
-      };
-
-      const customRollupConfig: typeof config.build.rollupOptions.output = {
-        entryFileNames: (chunk) => {
-          const name = chunk.name.split("/").pop() ?? "index";
-          return `${name}/index.js`;
-        },
-      };
-
-      if (Array.isArray(config.build.rollupOptions.output)) {
-        config.build.rollupOptions.output.push(customRollupConfig);
-      } else
-        config.build.rollupOptions.output = {
-          ...(config.build.rollupOptions.output ?? {}),
-          ...customRollupConfig,
-        };
-
       // Creating the dir
-      await mkdir(cache, { recursive: true });
+      await mkdir(buildProps.cache, { recursive: true });
 
       // Generating the files
-      await generator?.({ basePath, config: hub });
+      await generator?.({ basePath, config: hub, build: buildProps });
     },
   };
 }

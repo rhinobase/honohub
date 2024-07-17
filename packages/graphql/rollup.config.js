@@ -10,7 +10,7 @@ module.exports = withNx(
     compiler: "swc",
     external: ["react", "react-dom", "react/jsx-runtime"],
     format: ["esm", "cjs"],
-    assets: [{ input: ".", output: ".", glob: "README.md" }],
+    assets: [{ input: "./packages/graphql", output: ".", glob: "README.md" }],
   },
   {
     // Provide additional rollup configuration here. See: https://rollupjs.org/configuration-options

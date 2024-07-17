@@ -9,6 +9,7 @@ import { AppWrapper, CollectionsWrapper } from "./components";
 import { CollectionPage, DocumentPage, SettingsPage } from "./pages";
 import { ThemeProvider } from "./providers";
 import type { HonoHubProps } from "./types";
+import "./main.css";
 
 const CLIENT = new QueryClient();
 

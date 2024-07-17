@@ -1,5 +1,5 @@
 import { mkdir, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { join } from "node:path";
 import type { CollectionType, HonoHubProps } from "@honohub/react";
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import { getTableColumns, getTableName } from "drizzle-orm";
@@ -7,12 +7,15 @@ import type { SanitizedHub } from "honohub";
 
 export type TemplateGeneratorProps<Database extends AnyDrizzleDB<any>> = {
   basePath: string;
+  build: BuildOptions;
   config: SanitizedHub<Database>;
 };
 
+export type BuildOptions = { cache: string; outDir: string };
+
 export async function generateReactTemplates<
   Database extends AnyDrizzleDB<any>,
->({ config, basePath }: TemplateGeneratorProps<Database>) {
+>({ config, build, basePath }: TemplateGeneratorProps<Database>) {
   const pluginProps: NonNullable<HonoHubProps["plugins"]> = {};
 
   for (const page in config.routes) {
@@ -30,14 +33,14 @@ export async function generateReactTemplates<
   }
 
   // Creating the dir
-  await mkdir(config.build.cache, { recursive: true });
+  await mkdir(build.cache, { recursive: true });
 
   await Promise.all([
     // HTML file
     writeFile(
-      resolve(process.cwd(), resolve(config.build.cache, "./index.html")),
+      join(process.cwd(), build.cache, "./index.html"),
       htmlTemplateCode({
-        module: resolve(config.build.cache, "./main.jsx"),
+        module: join(build.cache, "./main.jsx"),
       }),
       {
         flag: "w+",
@@ -45,7 +48,7 @@ export async function generateReactTemplates<
     ),
     // Component file
     writeFile(
-      resolve(process.cwd(), resolve(config.build.cache, "./main.jsx")),
+      join(process.cwd(), build.cache, "./main.jsx"),
       jsTemplateCode({
         props: {
           basePath,
