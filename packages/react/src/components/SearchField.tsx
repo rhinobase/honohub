@@ -1,12 +1,10 @@
 import { SearchField as RaftySearchField } from "@rafty/ui";
 import { useDebounce } from "@uidotdev/usehooks";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export function SearchField() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const defaultSearch = searchParams.get("search") ?? undefined;
 
@@ -15,9 +13,11 @@ export function SearchField() {
   const debouncedSearch = useDebounce(search, 150);
 
   const createQueryString = useCallback(
-    (name: string, value: string) => {
+    (name: string, value?: string) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
+
+      if (value) params.set(name, value);
+      else params.delete(name);
 
       return params.toString();
     },
@@ -26,11 +26,7 @@ export function SearchField() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: need to push new url only when search changes
   useEffect(() => {
-    if (debouncedSearch)
-      router.push(
-        `${pathname}?${createQueryString("search", debouncedSearch)}`,
-      );
-    else router.push(pathname);
+    setSearchParams(createQueryString("search", debouncedSearch));
   }, [debouncedSearch]);
 
   return <RaftySearchField value={search} onValueChange={setSearch} />;
