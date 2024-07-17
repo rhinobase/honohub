@@ -306,8 +306,7 @@ export function createRoutes<
       const tmp = plugin.bootstrap?.({ app, config: collection });
       if (tmp) app = tmp;
     } catch (e) {
-      console.error(`Collection Plugin Bootstrap Error in ${plugin.name}`);
-      console.error(e);
+      console.error(`[${plugin.name}] Collection Plugin Bootstrap Error`, e);
     }
   }
 

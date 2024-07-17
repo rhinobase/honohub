@@ -7,16 +7,24 @@ import { type TemplateGeneratorProps, generateReactTemplates } from "./react";
 
 export type HonoHubViteOptions<Database extends AnyDrizzleDB<any>> = {
   basePath: string;
+  build?: Partial<BuildOptions>;
   config: SanitizedHub<Database>;
   generator?: (
     options: TemplateGeneratorProps<Database>,
   ) => void | Promise<void>;
 };
 
+export type BuildOptions = { cache: string; outDir: string };
+
 export default function honohub<Database extends AnyDrizzleDB<any>>(
   options: HonoHubViteOptions<Database>,
 ): PluginOption {
-  const { config: hub, basePath, generator = generateReactTemplates } = options;
+  const {
+    config: hub,
+    build = {},
+    basePath,
+    generator = generateReactTemplates,
+  } = options;
 
   return {
     name: "honohub-vite-plugin",
@@ -25,7 +33,7 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
       const routeKeys = Object.keys(hub.routes);
       if (command !== "build" || routeKeys.length === 0) return;
 
-      const { cache, outDir } = hub.build;
+      const { cache = "./.honohub", outDir = "../dist" } = build;
 
       // Configuring the build
       config.root = cache;
@@ -35,7 +43,7 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
 
       // Multiple entry files
       const inputs = Object.fromEntries(
-        routeKeys.map((page) => [page, resolve(cache, `.${page}/index.html`)]),
+        routeKeys.map((page) => [page, resolve(cache, "./index.html")]),
       );
 
       config.build.rollupOptions = config.build.rollupOptions || {};

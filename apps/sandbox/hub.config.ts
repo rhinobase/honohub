@@ -1,4 +1,4 @@
-import { useGraphQL, useGraphQLPlayground } from "@honohub/graphql";
+// import { useGraphQL, useGraphQLPlayground } from "@honohub/graphql";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { type Env, Hono, type Schema } from "hono";
@@ -7,7 +7,7 @@ import {
   type GlobalPluginSetupProps,
   defineCollection,
   defineHub,
-} from "honohub";
+} from "../../packages/core/src";
 import * as schema from "./src/db/schema";
 
 const neonSql = neon(process.env.DATABASE_URL ?? "");
@@ -40,7 +40,7 @@ export default defineHub({
   plugins: [
     {
       name: "hono-logger",
-      setup: <E extends Env, P extends Schema, I extends string>(
+      bootstrap: <E extends Env, P extends Schema, I extends string>(
         props: GlobalPluginSetupProps<typeof db, E, P, I>,
       ) => {
         return new Hono<E, P, I>().use("*", logger()).route("/", props.app);

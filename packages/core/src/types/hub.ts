@@ -8,7 +8,6 @@ export type HubConfig<Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>> =
   Partial<Omit<SanitizedHub<Database>, "build">> & {
     db: Database;
     serverUrl: string;
-    build?: Partial<BuildOptions>;
   };
 
 export type SanitizedHub<
@@ -16,13 +15,11 @@ export type SanitizedHub<
 > = {
   db: Database;
   serverUrl: string;
-  build: BuildOptions;
   collections: SanitizedCollection<any>[];
   routes: RouteOptions[];
   plugins: GlobalPlugin<Database>[];
 };
 
-export type BuildOptions = { cache: string; outDir: string };
 export type RouteOptions = {
   label: string;
   icon?: string;

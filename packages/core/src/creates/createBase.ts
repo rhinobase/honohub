@@ -18,8 +18,7 @@ export function createBase<
       const tmp = plugin.bootstrap?.({ app: hub, config });
       if (tmp) hub = tmp;
     } catch (e) {
-      console.error(`Hub Plugin Bootstrap Error in ${plugin.name}`);
-      console.error(e);
+      console.error(`[${plugin.name}] Hub Plugin Bootstrap Error`, e);
     }
   }
 
