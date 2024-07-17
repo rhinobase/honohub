@@ -8,15 +8,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PageTitle } from "../components";
 import { blocks } from "../fields";
 import type { CollectionType } from "../types";
+import { getSingularLabel } from "../utils";
 
 enum DocumentSubmitType {
-  SAVE_AND_ADD_ANOTHER = "save_and_add_another",
-  SAVE = "save",
+  SAVE_AND_ADD_ANOTHER = 1,
+  SAVE = 2,
 }
 
 enum FormType {
-  CREATE = "Create",
-  EDIT = "Edit",
+  CREATE = 1,
+  EDIT = 2,
 }
 
 const SUBMIT_BUTTON_KEY = "_submit_btn";
@@ -31,6 +32,7 @@ export function DocumentPage({
   slug,
   serverUrl,
   defaultValues,
+  label,
 }: DocumentPage) {
   const { id } = useParams();
   const formType = id === "create" ? FormType.CREATE : FormType.EDIT;
@@ -38,7 +40,9 @@ export function DocumentPage({
   const { data, isLoading } = useQuery({
     queryKey: [slug, id],
     queryFn: () =>
-      axios.get(`${serverUrl}/${slug}/${id}`).then((res) => res.data),
+      axios
+        .get(new URL(`${slug}/${id}`, serverUrl).href)
+        .then((res) => res.data),
     enabled: formType === FormType.EDIT,
   });
 
@@ -57,7 +61,10 @@ export function DocumentPage({
 
   return (
     <>
-      <PageTitle>{formType}</PageTitle>
+      <PageTitle>
+        {formType === FormType.CREATE ? "Create" : "Edit"}{" "}
+        {getSingularLabel(label)}
+      </PageTitle>
       <FormProvider {...methods}>
         <FibrProvider plugins={blocks}>
           <form

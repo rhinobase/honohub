@@ -2,7 +2,7 @@ import type { JSONObject } from "hono/utils/types";
 
 export type CollectionType = {
   slug: string;
-  label: string;
+  label: string | { singular: string; plural: string };
   columns: { name: string; label: string; type: string }[];
   fields: { name: string; label: string; type: string; required?: boolean }[];
 };

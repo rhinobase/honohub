@@ -6,6 +6,7 @@ import { getCell } from "../columns";
 import { DataTable, PageHeader, PageTitle } from "../components";
 import type { FieldProps } from "../fields";
 import type { CollectionType } from "../types";
+import { getPluralLabel } from "../utils";
 
 export type CollectionPage = Omit<CollectionType, "fields"> & {
   serverUrl: string;
@@ -19,7 +20,7 @@ export function CollectionPage(props: CollectionPage) {
         accessorKey: column.name,
         cell: getCell(column.type as FieldProps["type"]),
       })),
-    [props.columns]
+    [props.columns],
   );
 
   columns.unshift({
@@ -30,8 +31,8 @@ export function CollectionPage(props: CollectionPage) {
           table.getIsAllRowsSelected()
             ? true
             : table.getIsSomeRowsSelected()
-            ? "indeterminate"
-            : false
+              ? "indeterminate"
+              : false
         }
         onCheckedChange={() => table.toggleAllRowsSelected()}
       />
@@ -54,14 +55,16 @@ export function CollectionPage(props: CollectionPage) {
   return (
     <>
       <PageHeader className="justify-between">
-        <PageTitle className="capitalize">{props.slug}</PageTitle>
+        <PageTitle className="capitalize">
+          {getPluralLabel(props.label)}
+        </PageTitle>
         <Link to={`/collections/${props.slug}/create`}>
           <Button colorScheme="primary">Create</Button>
         </Link>
       </PageHeader>
       <DataTable
         columns={columns}
-        endpoint={`${props.serverUrl}/${props.slug}`}
+        endpoint={new URL(props.slug, props.serverUrl).href}
       />
     </>
   );

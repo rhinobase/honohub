@@ -16,6 +16,7 @@ const db = drizzle(neonSql, { schema });
 
 const collection = defineCollection({
   slug: "todos",
+  label: { singular: "Todo", plural: "Todos" },
   schema: schema.todos,
   queryKey: schema.todos.id,
   pagination: {
@@ -24,7 +25,7 @@ const collection = defineCollection({
   hooks: {
     afterRead: [
       ({ doc }) => {
-        if (!Array.isArray(doc)) {
+        if (!("results" in doc)) {
           return { id: doc.id, status: doc.status };
         }
         return undefined;
@@ -35,7 +36,7 @@ const collection = defineCollection({
 
 export default defineHub({
   db,
-  serverUrl: "/",
+  serverUrl: "http://localhost:3000/",
   collections: [collection],
   plugins: [
     {

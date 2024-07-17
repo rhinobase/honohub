@@ -116,7 +116,7 @@ export type CollectionAfterReadHook<T extends Table = Table> = <
   I extends Input = Input,
 >(props: {
   context: Context<E, P, I>;
-  doc: T["$inferInsert"] | T["$inferInsert"][];
+  doc: T["$inferInsert"] | { results: T["$inferInsert"][]; count: number };
 }) => Promisify<JSONValue | undefined>;
 
 export type CollectionBeforeDeleteHook = <

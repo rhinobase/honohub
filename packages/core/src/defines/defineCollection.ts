@@ -6,6 +6,8 @@ export function defineCollection<T extends Table>(
 ): SanitizedCollection<T> {
   const {
     slug,
+    label = slug,
+    columns,
     schema,
     queryKey = findPrimaryKey(schema),
     access = () => true,
@@ -32,6 +34,8 @@ export function defineCollection<T extends Table>(
 
   let sanitizedConfig: SanitizedCollection<T> = {
     slug,
+    label,
+    columns,
     schema,
     queryKey,
     access,

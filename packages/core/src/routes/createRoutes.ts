@@ -61,6 +61,7 @@ export function createRoutes<
     const query = c.req.valid("query");
 
     let records = db.select().from(collection.schema);
+    const recordsCount = db.select({ count: count() }).from(collection.schema);
 
     records.$dynamic();
 
@@ -102,19 +103,22 @@ export function createRoutes<
         .offset(query.offset);
     }
 
-    let results = await records;
+    const results = await records;
+    const totalDocuments = await recordsCount.then((res) => res[0].count);
+
+    let payload = { results, count: totalDocuments };
 
     for (const hook of collection.hooks.afterRead ?? []) {
       const res = await hook({
         context: c,
-        doc: results,
+        doc: payload,
       });
 
       // @ts-ignore
-      if (res !== undefined) results = res;
+      if (res !== undefined) payload = res;
     }
 
-    return c.json(results);
+    return c.json(payload);
   });
 
   // List records endpoint

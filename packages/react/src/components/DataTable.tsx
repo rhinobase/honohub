@@ -22,10 +22,10 @@ export function DataTable<T = unknown>({ columns, endpoint }: DataTable<T>) {
   const offset = pageSize * pageIndex;
 
   const {
-    data = [],
+    data = { results: [], count: 0 },
     isFetching,
     isLoading,
-  } = useQuery<T[]>({
+  } = useQuery<{ results: T[]; count: number }>({
     queryKey: ["launches", pageIndex, pageSize],
     queryFn: () =>
       axios
@@ -34,7 +34,6 @@ export function DataTable<T = unknown>({ columns, endpoint }: DataTable<T>) {
   });
 
   const selected = Object.keys(rowsSelected).length;
-  const count = 110;
 
   return (
     <>
@@ -55,7 +54,7 @@ export function DataTable<T = unknown>({ columns, endpoint }: DataTable<T>) {
         <SearchField />
       )}
       <SharedDatatable
-        data={data}
+        data={data.results}
         columns={columns}
         isFetching={isFetching}
         isLoading={isLoading}
@@ -66,7 +65,7 @@ export function DataTable<T = unknown>({ columns, endpoint }: DataTable<T>) {
       <Pagination
         currentPage={pageIndex + 1}
         pageLimit={pageSize}
-        pages={Math.ceil(count / pageSize)}
+        pages={Math.ceil(data.count / pageSize)}
         onChange={(page, pageSize) =>
           setPagination({
             pageIndex: page - 1,
@@ -77,10 +76,10 @@ export function DataTable<T = unknown>({ columns, endpoint }: DataTable<T>) {
         <p className="text-secondary-700 dark:text-secondary-300">
           {pageIndex * pageSize + 1}
           &nbsp;-&nbsp;
-          {pageSize + pageIndex * pageSize > count
-            ? count
+          {pageSize + pageIndex * pageSize > data.count
+            ? data.count
             : pageSize + pageIndex * pageSize}
-          &nbsp;of&nbsp;{count}
+          &nbsp;of&nbsp;{data.count}
         </p>
       </Pagination>
     </>

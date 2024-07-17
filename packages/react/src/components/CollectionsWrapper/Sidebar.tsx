@@ -2,19 +2,17 @@ import { InputField, Text, classNames } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
 import {
   type HTMLAttributes,
-  type PropsWithChildren,
   type ReactNode,
   forwardRef,
   useMemo,
   useState,
 } from "react";
 import { NavLink } from "react-router-dom";
+import type { CollectionType } from "../../types";
+import { getPluralLabel } from "../../utils";
 
 export type CollectionSidebar = {
-  options: {
-    slug: string;
-    label: string;
-  }[];
+  options: Pick<CollectionType, "slug" | "label">[];
 } & HTMLAttributes<HTMLDivElement>;
 
 export const CollectionSidebar = forwardRef<HTMLDivElement, CollectionSidebar>(
@@ -93,24 +91,17 @@ export const CollectionSidebar = forwardRef<HTMLDivElement, CollectionSidebar>(
   },
 );
 
-function SidebarTitle(props: PropsWithChildren) {
-  return (
-    <div className="w-full mx-[5px] first:mt-0 mt-5 mb-1.5 font-semibold text-[10px] text-secondary-500 dark:text-secondary-400 uppercase select-none">
-      {props.children}
-    </div>
-  );
-}
-
-type SidebarItem = {
+type SidebarItem = Pick<CollectionType, "label"> & {
   link: string;
-  label: string;
   matches?: RangeTuple[];
 };
 
 function SidebarItem({ link, label, matches }: SidebarItem) {
+  const title = getPluralLabel(label);
+
   return (
     <NavLink
-      title={label}
+      title={title}
       to={link}
       className={({ isActive }) =>
         classNames(
@@ -121,8 +112,8 @@ function SidebarItem({ link, label, matches }: SidebarItem) {
         )
       }
     >
-      <Text className="font-semibold text-sm leading-none">
-        {highlightMatches(label, matches)}
+      <Text className="font-semibold text-sm leading-none capitalize">
+        {highlightMatches(title, matches)}
       </Text>
     </NavLink>
   );

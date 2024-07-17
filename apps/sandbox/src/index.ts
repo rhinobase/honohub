@@ -6,10 +6,17 @@ import hubConfig from "../hub.config";
 
 const app = new Hono().route("/", createHub(hubConfig));
 
+const pathValidationRegex = /^\/[a-zA-Z0-9\/-]*(?<!\.[a-zA-Z0-9]+)$/;
 app.use(
   "/*",
   serveStatic({
     root: "./apps/sandbox/dist",
+    rewriteRequestPath: (path) => {
+      const isPath = pathValidationRegex.test(path);
+
+      if (isPath) return "/";
+      return path;
+    },
   }),
 );
 
