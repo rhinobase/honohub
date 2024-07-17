@@ -6,10 +6,7 @@ export type Datetime = {
   cell: any;
 };
 
-export function Datetime({
-  cell,
-  format = "dd-mm-yyyy, hh:mm:ss TT",
-}: Datetime) {
+export function Datetime({ cell, format = "default" }: Datetime) {
   const value = String(cell.getValue());
   const date = new Date(value);
   const datetime = dateFormat(date, format);

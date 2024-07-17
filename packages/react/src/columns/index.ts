@@ -1,22 +1,20 @@
 import type { ReactNode } from "react";
-import type { FieldProps } from "../fields";
 import { BooleanCell } from "./Boolean";
 import { DateCell } from "./Date";
 import { Datetime } from "./Datetime";
 import { EditButton } from "./EditButton";
 import { Text } from "./Text";
 
-const CELLS: {
-  [K in FieldProps["type"]]?: (props: any) => ReactNode;
-} = {
+const CELLS: Record<string, (props: any) => ReactNode> = {
   date: DateCell,
-  custom_boolean: BooleanCell,
-  custom_datetime: Datetime,
-  custom_text: Text,
-  custom_action: EditButton,
+  boolean: BooleanCell,
+  datetime: Datetime,
+  string: Text,
+  number: Text,
+  action: EditButton,
 };
 
-export function getCell(type: FieldProps["type"]) {
+export function getCell(type: string) {
   if (type in CELLS) return CELLS[type];
 
   return undefined;

@@ -60,11 +60,11 @@ export async function generateReactTemplates<
             const fields: CollectionType["fields"] = [];
             const fieldMap: Record<string, CollectionType["columns"][0]> = {};
 
-            for (const [_, column] of Object.entries(columns)) {
-              const { uniqueName, name, notNull, dataType } = column as any;
+            for (const [key, column] of Object.entries(columns)) {
+              const { name, notNull, dataType } = column as any;
 
               const common_data = {
-                name: uniqueName,
+                name: key,
                 label: name,
                 type: dataType,
               };
@@ -101,7 +101,7 @@ type JSTemplateProps = {
 };
 
 const jsTemplateCode = ({ props }: JSTemplateProps) =>
-  `import React from "react";import ReactDOM from "react-dom/client";import {HonoHub} from "@honohub/react";const props=${JSON.stringify(
+  `import React from "react";import ReactDOM from "react-dom/client";import {HonoHub} from "@honohub/react";import "../../../dist/packages/react/index.esm.css";const props=${JSON.stringify(
     props,
   )};ReactDOM.createRoot(document.getElementById("root")).render(<React.StrictMode><HonoHub {...props} /></React.StrictMode>);`;
 

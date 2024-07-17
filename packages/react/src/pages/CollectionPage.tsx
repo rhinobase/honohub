@@ -4,7 +4,6 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { getCell } from "../columns";
 import { DataTable, PageHeader, PageTitle } from "../components";
-import type { FieldProps } from "../fields";
 import type { CollectionType } from "../types";
 import { getPluralLabel } from "../utils";
 
@@ -13,44 +12,45 @@ export type CollectionPage = Omit<CollectionType, "fields"> & {
 };
 
 export function CollectionPage(props: CollectionPage) {
-  const columns = useMemo<ColumnType<unknown>[]>(
-    () =>
-      props.columns.map((column) => ({
-        header: column.label,
-        accessorKey: column.name,
-        cell: getCell(column.type as FieldProps["type"]),
-      })),
-    [props.columns],
-  );
+  const columns = useMemo(() => {
+    const columns: ColumnType<unknown>[] = props.columns.map((column) => ({
+      id: column.name,
+      header: column.label,
+      accessorKey: column.name,
+      cell: getCell(column.type),
+    }));
 
-  columns.unshift({
-    id: "select",
-    header: ({ table }: any) => (
-      <Checkbox
-        checked={
-          table.getIsAllRowsSelected()
-            ? true
-            : table.getIsSomeRowsSelected()
-              ? "indeterminate"
-              : false
-        }
-        onCheckedChange={() => table.toggleAllRowsSelected()}
-      />
-    ),
-    cell: ({ row }: any) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={() => row.toggleSelected()}
-      />
-    ),
-    size: 30,
-  });
+    columns.unshift({
+      id: "_select",
+      header: ({ table }: any) => (
+        <Checkbox
+          checked={
+            table.getIsAllRowsSelected()
+              ? true
+              : table.getIsSomeRowsSelected()
+                ? "indeterminate"
+                : false
+          }
+          onCheckedChange={() => table.toggleAllRowsSelected()}
+        />
+      ),
+      cell: ({ row }: any) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={() => row.toggleSelected()}
+        />
+      ),
+      size: 30,
+    });
 
-  columns.push({
-    accessorKey: "flight_number",
-    header: "Action",
-    cell: getCell("custom_action"),
-  });
+    columns.push({
+      accessorKey: "id",
+      header: "Action",
+      cell: getCell("action"),
+    });
+
+    return columns;
+  }, [props.columns]);
 
   return (
     <>
