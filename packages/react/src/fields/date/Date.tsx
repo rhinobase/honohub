@@ -15,13 +15,18 @@ export function DateField() {
           <Controller
             name={id}
             control={control}
-            render={({ field: { onChange, ...props } }) => (
-              <DatePicker
-                {...props}
-                placeholder={placeholder}
-                onValueChange={onChange}
-              />
-            )}
+            render={({ field: { onChange, value, ...props } }) => {
+              const newValue = value ? value.substr(0, 10) : "";
+
+              return (
+                <DatePicker
+                  {...props}
+                  placeholder={placeholder}
+                  value={newValue}
+                  onValueChange={onChange}
+                />
+              );
+            }}
           />
         </InputWrapper>
       </FieldWrapper>

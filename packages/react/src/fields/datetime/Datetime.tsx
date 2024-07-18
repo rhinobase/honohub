@@ -1,23 +1,33 @@
 import { useThread } from "@fibr/react";
 import { InputField } from "@rafty/ui";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import type { DatetimeFieldProps } from "../types";
 import { FieldWrapper, InputWrapper, TooltipWrapper } from "../utils";
 
 export function DatetimeField() {
   const { id, placeholder } = useThread<DatetimeFieldProps>();
-
-  const { register } = useFormContext();
+  const { control } = useFormContext();
 
   return (
     <TooltipWrapper>
       <FieldWrapper>
         <InputWrapper>
-          <InputField
-            id={id}
-            type="datetime-local"
-            placeholder={placeholder}
-            {...register(id)}
+          <Controller
+            name={id}
+            control={control}
+            render={({ field: { onChange, value, ...props } }) => {
+              const newValue = value ? value.substr(0, 16) : "";
+
+              return (
+                <InputField
+                  {...props}
+                  type="datetime-local"
+                  placeholder={placeholder}
+                  value={newValue}
+                  onChange={onChange}
+                />
+              );
+            }}
           />
         </InputWrapper>
       </FieldWrapper>
