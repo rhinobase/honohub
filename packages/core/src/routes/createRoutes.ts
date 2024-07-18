@@ -8,7 +8,7 @@ import { type Env, Hono, type Schema } from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { BlankSchema } from "hono/types";
 import type { SanitizedCollection, SanitizedHub } from "../types";
-import { queryValidationSchema } from "./validations";
+import { actionValidationSchema, queryValidationSchema } from "./validations";
 
 export function createRoutes<
   Database extends AnyDrizzleDB<any>,
@@ -315,6 +315,24 @@ export function createRoutes<
     // @ts-ignore
     return c.json(deletedDoc);
   });
+
+  // Actions
+  const actionRouter = new Hono<E, P, I>();
+  for (const action of collection.admin.actions ?? []) {
+    actionRouter.post(
+      `/${action.name}`,
+      zValidator("json", actionValidationSchema),
+      async (c) => {
+        const { ids } = c.req.valid("json");
+
+        await action.action({ ids, context: c });
+
+        return c.json(null);
+      },
+    );
+  }
+
+  app.route("/actions", actionRouter);
 
   // Applying the plugins
   for (const plugin of collection.plugins) {

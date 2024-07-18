@@ -60,7 +60,14 @@ export type CollectionAction = {
   name: string;
   label?: string;
   icon?: string;
-  action: Promisify<(ids: string[]) => void>;
+  action: <
+    E extends Env = Env,
+    P extends string = string,
+    I extends Input = Input,
+  >(props: {
+    ids: string[];
+    context: Context<E, P, I>;
+  }) => Promisify<void>;
   level?: boolean | { title: string; message: string };
 };
 
