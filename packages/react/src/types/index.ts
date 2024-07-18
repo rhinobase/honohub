@@ -1,10 +1,17 @@
 import type { JSONObject } from "hono/utils/types";
+import type { CollectionAdminProps } from "honohub";
+
+type GetObject<T> = T extends string ? never : T;
 
 export type CollectionType = {
   slug: string;
-  label: string | { singular: string; plural: string };
-  columns: { name: string; label: string; type: string }[];
-  fields: { name: string; label: string; type: string; required?: boolean }[];
+  label: CollectionAdminProps["label"];
+  columns: GetObject<
+    NonNullable<CollectionAdminProps["columns"]>[0] & { type: string }
+  >[];
+  fields: GetObject<
+    NonNullable<CollectionAdminProps["fields"]>[0] & { type: string }
+  >[];
 };
 
 export type PluginType = Record<

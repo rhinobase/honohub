@@ -8,13 +8,13 @@ export type CollectionConfig<T extends Table = Table> = Prettify<
   Partial<SanitizedCollection<T>> & {
     slug: string;
     schema: T;
+    admin?: Partial<CollectionAdminProps<T>>;
   }
 >;
 
 export type TableColumns<T extends Table> = keyof T["_"]["columns"];
 export type SanitizedCollection<T extends Table = Table> = {
   slug: string;
-  label?: string | { singular: string; plural: string };
   queryKey: Column<any, object, object>;
   schema: T;
   access: <
@@ -26,10 +26,7 @@ export type SanitizedCollection<T extends Table = Table> = {
   ) => Promisify<boolean>;
   defaultSort?: TableColumns<T> | `-${TableColumns<T> & string}`;
   listSearchableFields: TableColumns<T>[];
-  columns?: (
-    | TableColumns<T>
-    | { name: TableColumns<T>; label: string; type?: string }
-  )[];
+  admin: CollectionAdminProps<T>;
   pagination:
     | {
         defaultLimit: number;
@@ -38,6 +35,24 @@ export type SanitizedCollection<T extends Table = Table> = {
     | false;
   hooks: Partial<CollectionHooks<T>>;
   plugins: CollectionPlugin<T>[];
+};
+
+export type CollectionAdminProps<T extends Table = Table> = {
+  label: string | { singular: string; plural: string };
+  columns?: (
+    | TableColumns<T>
+    | { name: TableColumns<T>; label: string; type?: string }
+  )[];
+  fields?: (
+    | TableColumns<T>
+    | {
+        name: TableColumns<T>;
+        label: string;
+        type?: string;
+        required?: boolean;
+        description?: string;
+      }
+  )[];
 };
 
 export type CollectionPlugin<T extends Table = Table> = {

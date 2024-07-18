@@ -151,7 +151,13 @@ export function createRoutes<
     }
 
     // Parsing the value
-    let data = collectionInsertSchema.parse(raw);
+    const parsedData = await collectionInsertSchema.safeParseAsync(raw);
+
+    if (!parsedData.success) {
+      return c.json(parsedData.error, 400);
+    }
+
+    let data = parsedData.data;
 
     for (const hook of collection.hooks.beforeChange ?? []) {
       const res = await hook({
@@ -248,7 +254,13 @@ export function createRoutes<
     }
 
     // Parsing the value
-    let data = collectionInsertSchema.parse(raw);
+    const parsedData = await collectionInsertSchema.safeParseAsync(raw);
+
+    if (!parsedData.success) {
+      return c.json(parsedData.error, 400);
+    }
+
+    let data = parsedData.data;
 
     for (const hook of collection.hooks.beforeChange ?? []) {
       const res = await hook({

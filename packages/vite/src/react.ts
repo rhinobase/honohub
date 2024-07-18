@@ -3,7 +3,7 @@ import { join } from "node:path";
 import type { CollectionType, HonoHubProps } from "@honohub/react";
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import { getTableColumns, getTableName } from "drizzle-orm";
-import type { SanitizedHub } from "honohub";
+import type { SanitizedHub, ValueOf } from "honohub";
 
 export type TemplateGeneratorProps<Database extends AnyDrizzleDB<any>> = {
   basePath: string;
@@ -57,37 +57,49 @@ export async function generateReactTemplates<
           collections: config.collections.map((collection) => {
             const columns = getTableColumns(collection.schema);
 
-            const fields: CollectionType["fields"] = [];
-            const fieldMap: Record<string, CollectionType["columns"][0]> = {};
+            const fieldMap: Record<
+              string,
+              {
+                name: string;
+                label: string;
+                type: string;
+                required: boolean;
+              }
+            > = {};
 
             for (const [key, column] of Object.entries(columns)) {
               const { name, notNull, dataType } = column as any;
 
-              const common_data = {
+              fieldMap[name] = {
                 name: key,
                 label: name,
                 type: dataType,
-              };
-
-              fieldMap[name] = common_data;
-              fields.push({
-                ...common_data,
                 required: notNull,
-              });
+              };
             }
 
-            const collectionColumns: CollectionType["columns"] =
-              collection.columns?.map((col: any) => {
-                if ("name" in col) {
-                  return { ...fieldMap[String(col.name)], ...col };
-                }
+            const collectionColumns =
+              collection.admin.columns?.map((col: any) => {
+                let tmp: ValueOf<typeof fieldMap>;
+                if (typeof col === "string") tmp = fieldMap[String(col)];
+                tmp = { ...fieldMap[String(col.name)], ...col };
 
-                return fieldMap[String(col)];
+                return {
+                  name: tmp.name,
+                  label: tmp.label,
+                  type: tmp.type,
+                };
+              }) ?? Object.values(fieldMap);
+
+            const fields =
+              collection.admin.fields?.map((col: any) => {
+                if (typeof col === "string") return fieldMap[String(col)];
+                return { ...fieldMap[String(col.name)], ...col };
               }) ?? Object.values(fieldMap);
 
             return {
               slug: collection.slug,
-              label: collection.label ?? getTableName(collection.schema),
+              label: collection.admin.label ?? getTableName(collection.schema),
               columns: collectionColumns,
               fields: fields,
             };

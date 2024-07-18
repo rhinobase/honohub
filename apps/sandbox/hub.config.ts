@@ -16,7 +16,10 @@ const db = drizzle(neonSql, { schema });
 
 const collection = defineCollection({
   slug: "todos",
-  label: { singular: "Todo", plural: "Todos" },
+  admin: {
+    label: { singular: "Todo", plural: "Todos" },
+    fields: ["message", "status"],
+  },
   schema: schema.todos,
   queryKey: schema.todos.id,
   pagination: {

@@ -18,7 +18,8 @@
     "zod": "^3.23.8"
   },
   "peerDependencies": {
-    "react": "^18.3.1"
+    "react": "^18.3.1",
+    "honohub": "^0.2.2"
   },
   "devDependencies": {
     "hono": "^4.5.0"
