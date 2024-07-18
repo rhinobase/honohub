@@ -16,7 +16,7 @@ export function Select() {
           id={id}
           placeholder={placeholder}
           {...register(id)}
-          className="dark:bg-secondary-950"
+          className="dark:bg-secondary-900"
         >
           {options.map(({ value, label }) => (
             <SelectItem key={value} value={value}>

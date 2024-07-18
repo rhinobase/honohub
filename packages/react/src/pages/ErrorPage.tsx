@@ -3,7 +3,7 @@ import { BaseWrapper } from "../components";
 
 export function ErrorPage() {
   const error = useRouteError() as Error;
-  let errorProps: Wrapper;
+  let errorProps: ErrorPageRender;
 
   if (isRouteErrorResponse(error)) {
     const routeError = error as any;
@@ -23,20 +23,20 @@ export function ErrorPage() {
 
   return (
     <BaseWrapper>
-      <Wrapper {...errorProps} />
+      <ErrorPageRender {...errorProps} />
     </BaseWrapper>
   );
 }
 
-type Wrapper = {
+type ErrorPageRender = {
   name: string;
   message: string;
   stack?: string;
 };
 
-function Wrapper({ message, name, stack }: Wrapper) {
+function ErrorPageRender({ message, name, stack }: ErrorPageRender) {
   return (
-    <div className="flex items-center justify-center h-screen w-full">
+    <div className="flex items-center justify-center h-full w-full">
       <div className="max-w-3xl w-full mx-auto bg-white dark:bg-secondary-900 border-t-4 space-y-4 shadow-lg border-red-500 dark:border-red-400 flex flex-col rounded-md p-3 max-h-[500px]">
         <div>
           <h2 className="text-2xl font-bold text-black dark:text-white">
@@ -47,9 +47,9 @@ function Wrapper({ message, name, stack }: Wrapper) {
           </p>
         </div>
         <div className="flex-1 flex flex-col gap-1 overflow-hidden">
-          <h2 className="text-xl font-semibold dark:text-white text-black">
+          <h3 className="text-xl font-semibold dark:text-white text-black">
             Source
-          </h2>
+          </h3>
           <pre className="overflow-auto flex-1 text-secondary-600 dark:text-secondary-400 text-sm">
             {stack}
           </pre>

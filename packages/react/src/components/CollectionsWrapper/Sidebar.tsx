@@ -19,16 +19,20 @@ export const CollectionSidebar = forwardRef<HTMLDivElement, CollectionSidebar>(
   function CollectionSidebar({ className, options, ...props }, forwardedRef) {
     const [search, setSearch] = useState<string>();
 
-    const [data, fuse] = useMemo(
-      () => [
-        options,
-        new Fuse(options, {
+    const [data, fuse] = useMemo(() => {
+      const tmp = options.map(({ label, slug }) => ({
+        label: getPluralLabel(label),
+        slug,
+      }));
+
+      return [
+        tmp,
+        new Fuse(tmp, {
           keys: ["label"],
           includeMatches: true,
         }),
-      ],
-      [options],
-    );
+      ];
+    }, [options]);
 
     let searchResults: ((typeof data)[0] & { matches?: RangeTuple[] })[] = data;
     let isEmpty = false;
@@ -53,10 +57,12 @@ export const CollectionSidebar = forwardRef<HTMLDivElement, CollectionSidebar>(
 
     return (
       <div
+        {...props}
         className={classNames(
           "flex h-full w-[250px] min-w-[250px] max-w-[250px] border-r flex-col flex-shrink-0 flex-grow-0 dark:border-secondary-800",
           className,
         )}
+        ref={forwardedRef}
       >
         <header className="px-4 my-[15px]">
           <InputField

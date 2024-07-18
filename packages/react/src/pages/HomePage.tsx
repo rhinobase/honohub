@@ -13,7 +13,7 @@ import { Link, type LinkProps } from "react-router-dom";
 import urlJoin from "url-join";
 import { Logo } from "../components";
 
-const SOCIAL = [
+const SOCIALS = [
   {
     icon: StarIcon,
     label: "Star on GitHub",
@@ -117,7 +117,7 @@ export function HomePage({ stats, basePath }: HomePage) {
         </LinkCard>
       </div>
       <div className="flex gap-5">
-        {SOCIAL.map(({ icon: Icon, label, href, isExternal }) => (
+        {SOCIALS.map(({ icon: Icon, label, href, isExternal }) => (
           <a
             href={isExternal ? href : urlJoin(basePath, href)}
             key={label}

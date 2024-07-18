@@ -1,3 +1,4 @@
+import { PlusIcon } from "@heroicons/react/24/outline";
 import type { ColumnType } from "@rafty/corp";
 import { Button, Checkbox } from "@rafty/ui";
 import { useMemo } from "react";
@@ -58,7 +59,12 @@ export function CollectionPage(props: CollectionPage) {
           {getPluralLabel(props.label)}
         </PageTitle>
         <Link to={`/collections/${props.slug}/create`}>
-          <Button colorScheme="primary">Create</Button>
+          <Button
+            colorScheme="primary"
+            leftIcon={<PlusIcon className="size-3.5 stroke-[3]" />}
+          >
+            Create
+          </Button>
         </Link>
       </PageHeader>
       <DataTable columns={columns} slug={props.slug} />

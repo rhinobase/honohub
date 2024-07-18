@@ -1,11 +1,13 @@
 import { ArchiveBoxIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
 import {
   type RouteObject,
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
 import { AppWrapper, CollectionsWrapper } from "./components";
+import "./main.css";
 import {
   CollectionPage,
   DocumentPage,
@@ -15,7 +17,6 @@ import {
 } from "./pages";
 import { ServerProvider, ThemeProvider } from "./providers";
 import type { HonoHubProps } from "./types";
-import "./main.css";
 
 const CLIENT = new QueryClient();
 
@@ -123,6 +124,7 @@ export function HonoHub({
       <ThemeProvider>
         <ServerProvider baseURL={serverUrl}>
           <RouterProvider router={router} />
+          <Toaster />
         </ServerProvider>
       </ThemeProvider>
     </QueryClientProvider>

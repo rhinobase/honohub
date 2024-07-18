@@ -12,7 +12,9 @@ export function BooleanCell({ cell }: any) {
         height={16}
         width={16}
         className={classNames(
-          value ? "text-green-500 dark:text-green-300" : "opacity-40",
+          value
+            ? "text-green-500 dark:text-green-300"
+            : "text-red-500 dark:text-red-300",
           "mx-auto stroke-[3]",
         )}
       />
