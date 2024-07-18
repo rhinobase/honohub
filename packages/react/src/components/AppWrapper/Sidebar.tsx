@@ -11,7 +11,7 @@ import {
   forwardRef,
 } from "react";
 import { NavLink } from "react-router-dom";
-import { Logo } from "./Logo";
+import { Logo } from "../Logo";
 
 type AppSidebarOptionType = {
   label: string;

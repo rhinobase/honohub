@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import urlJoin from "url-join";
 import { PageTitle } from "../components";
 import { blocks } from "../fields";
 import type { CollectionType } from "../types";
@@ -40,9 +41,7 @@ export function DocumentPage({
   const { data, isLoading } = useQuery({
     queryKey: [slug, id],
     queryFn: () =>
-      axios
-        .get(new URL(`${slug}/${id}`, serverUrl).href)
-        .then((res) => res.data),
+      axios.get(urlJoin(serverUrl, slug, id ?? "")).then((res) => res.data),
     enabled: formType === FormType.EDIT,
   });
 

@@ -7,7 +7,6 @@ import type { SanitizedCollection } from "./collection";
 export type HubConfig<Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>> =
   Partial<Omit<SanitizedHub<Database>, "build">> & {
     db: Database;
-    serverUrl: string;
   };
 
 export type SanitizedHub<

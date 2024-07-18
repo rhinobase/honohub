@@ -22,16 +22,6 @@ const collection = defineCollection({
   pagination: {
     defaultLimit: 10,
   },
-  hooks: {
-    afterRead: [
-      ({ doc }) => {
-        if (!("results" in doc)) {
-          return { id: doc.id, status: doc.status };
-        }
-        return undefined;
-      },
-    ],
-  },
 });
 
 export default defineHub({

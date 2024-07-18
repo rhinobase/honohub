@@ -26,7 +26,10 @@ export type SanitizedCollection<T extends Table = Table> = {
   ) => Promisify<boolean>;
   defaultSort?: TableColumns<T> | `-${TableColumns<T> & string}`;
   listSearchableFields: TableColumns<T>[];
-  columns?: TableColumns<T>[];
+  columns?: (
+    | TableColumns<T>
+    | { name: TableColumns<T>; label: string; type?: string }
+  )[];
   pagination:
     | {
         defaultLimit: number;

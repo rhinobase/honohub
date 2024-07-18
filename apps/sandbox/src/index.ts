@@ -1,10 +1,11 @@
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { createHub } from "honohub";
 import hubConfig from "../hub.config";
 
-const app = new Hono().route("/", createHub(hubConfig));
+const app = new Hono().use(cors()).route("/", createHub(hubConfig));
 
 const pathValidationRegex = /^\/[a-zA-Z0-9\/-]*(?<!\.[a-zA-Z0-9]+)$/;
 app.use(

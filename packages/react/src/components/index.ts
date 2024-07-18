@@ -4,3 +4,4 @@ export { DataTable } from "./DataTable";
 export { PageHeader, PageTitle } from "./Header";
 export { Pagination } from "./Pagination";
 export { SearchField } from "./SearchField";
+export { Logo } from "./Logo";

@@ -11,6 +11,9 @@
     "vite:build": {
       "command": "vite build -m client -c ./apps/sandbox/vite.config.ts"
     },
+    "vite:serve": {
+      "command": "vite -m client -c ./apps/sandbox/vite.config.ts"
+    },
     "db:generate": {
       "command": "drizzle-kit generate --dialect postgresql --schema apps/sandbox/src/db/schema.ts --out apps/sandbox/src/db/migrations"
     },

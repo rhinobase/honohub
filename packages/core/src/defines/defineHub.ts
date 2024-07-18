@@ -4,7 +4,13 @@ import type { HubConfig, SanitizedHub } from "../types";
 export function defineHub<Database extends AnyDrizzleDB<any>>(
   config: HubConfig<Database>,
 ): SanitizedHub<Database> {
-  const { db, collections = [], plugins = [], serverUrl, routes = [] } = config;
+  const {
+    db,
+    collections = [],
+    plugins = [],
+    serverUrl = "/",
+    routes = [],
+  } = config;
 
   let sanitizedConfig: SanitizedHub<Database> = {
     db,

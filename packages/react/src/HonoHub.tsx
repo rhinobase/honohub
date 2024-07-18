@@ -6,7 +6,13 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import { AppWrapper, CollectionsWrapper } from "./components";
-import { CollectionPage, DocumentPage, SettingsPage } from "./pages";
+import {
+  CollectionPage,
+  DocumentPage,
+  ErrorPage,
+  HomePage,
+  SettingsPage,
+} from "./pages";
 import { ThemeProvider } from "./providers";
 import type { HonoHubProps } from "./types";
 import "./main.css";
@@ -52,7 +58,12 @@ export function HonoHub({
       {
         path: "/",
         element: <AppWrapper options={appWrapperOptions} />,
+        errorElement: <ErrorPage />,
         children: [
+          {
+            path: "/",
+            element: <HomePage basePath={basePath} version="0.1.0" />,
+          },
           {
             path: "/collections",
             element: <CollectionsWrapper options={collections} />,
