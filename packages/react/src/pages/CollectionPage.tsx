@@ -66,7 +66,7 @@ export function CollectionPage(props: CollectionPage) {
           </Button>
         </Link>
       </PageHeader>
-      <DataTable columns={columns} slug={props.slug} />
+      <DataTable columns={columns} slug={props.slug} actions={props.actions} />
     </>
   );
 }
