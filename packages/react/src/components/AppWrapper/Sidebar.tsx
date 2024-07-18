@@ -41,8 +41,8 @@ export const AppSidebar = forwardRef<HTMLDivElement, AppSidebar>(
       >
         <header className="px-3 my-[7.5px]">
           {isOpen ? (
-            <Link to="/" className="flex items-center -ml-1 w-max">
-              <Logo className="h-9 w-max" />
+            <Link to="/" className="flex items-center ml-1 w-max">
+              <Logo className="h-8 w-max" />
               <p className="text-[26px] font-bold tracking-tight">
                 Hono
                 <span className="text-primary-500 dark:text-primary-300">

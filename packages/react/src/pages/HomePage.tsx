@@ -55,7 +55,7 @@ export function HomePage({ stats, basePath }: HomePage) {
     <div className="flex h-full w-full justify-center items-center flex-col gap-6">
       <div className="space-y-1.5">
         <div className="flex items-center">
-          <Logo className="w-14 h-14" />
+          <Logo className="size-14" />
           <p className="text-5xl font-bold tracking-tight">
             Hono
             <span className="text-primary-500 dark:text-primary-300">Hub</span>
@@ -68,7 +68,7 @@ export function HomePage({ stats, basePath }: HomePage) {
       <div className="grid grid-cols-5 gap-4 w-full max-w-6xl">
         <LinkCard
           to="https://github.com/rhinobase/honohub"
-          className="text-secondary-500 dark:text-secondary-400 hover:bg-primary-50 dark:hover:bg-primary-950/50 hover:text-primary-500 dark:hover:text-primary-300"
+          className="grayscale hover:bg-primary-50 dark:hover:bg-primary-950/50 hover:grayscale-0"
           target="_blank"
           rel="noopener"
         >

@@ -18,7 +18,7 @@ const collection = defineCollection({
   slug: "todos",
   admin: {
     label: { singular: "Todo", plural: "Todos" },
-    fields: ["message", "status"],
+    fields: ["message", { name: "status", label: "Status", required: false }],
   },
   schema: schema.todos,
   queryKey: schema.todos.id,

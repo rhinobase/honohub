@@ -7,6 +7,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import urlJoin from "url-join";
+import { ZodError } from "zod";
 import { PageTitle } from "../components";
 import { blocks } from "../fields";
 import { useServer } from "../providers";
@@ -50,7 +51,7 @@ export function DocumentPage({
     defaultValues,
   });
 
-  const { handleSubmit, reset, setValue } = methods;
+  const { handleSubmit, reset, setValue, setError } = methods;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -94,15 +95,36 @@ export function DocumentPage({
               } catch (err) {
                 console.error(err);
 
-                if (isAxiosError(err))
-                  toast.custom(({ visible }) => (
-                    <Toast
-                      severity="error"
-                      title={`${err.response?.status} ${err.code}`}
-                      message={err.response?.statusText}
-                      visible={visible}
-                    />
-                  ));
+                if (isAxiosError(err)) {
+                  const errorResponse = err.response?.data;
+
+                  if (
+                    errorResponse &&
+                    typeof errorResponse === "object" &&
+                    "name" in errorResponse &&
+                    "issues" in errorResponse &&
+                    errorResponse.name === "ZodError" &&
+                    Array.isArray(errorResponse.issues)
+                  ) {
+                    const zodError = ZodError.create(errorResponse.issues);
+
+                    for (const issue of zodError.issues) {
+                      const name = issue.path.join(".");
+                      setError(name, {
+                        type: issue.code,
+                        message: issue.message,
+                      });
+                    }
+                  } else
+                    toast.custom(({ visible }) => (
+                      <Toast
+                        severity="error"
+                        title={`${err.response?.status} ${err.code}`}
+                        message={err.response?.statusText}
+                        visible={visible}
+                      />
+                    ));
+                }
               }
             })}
             className="space-y-4"
