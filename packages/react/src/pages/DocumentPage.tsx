@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import urlJoin from "url-join";
 import { PageTitle } from "../components";
 import { blocks } from "../fields";
+import { useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { getSingularLabel } from "../utils";
 
@@ -24,24 +25,23 @@ enum FormType {
 const SUBMIT_BUTTON_KEY = "_submit_btn";
 
 export type DocumentPage = Omit<CollectionType, "columns"> & {
-  serverUrl: string;
   defaultValues?: any;
 };
 
 export function DocumentPage({
   fields,
   slug,
-  serverUrl,
   defaultValues,
   label,
 }: DocumentPage) {
   const { id } = useParams();
+  const { endpoint } = useServer();
   const formType = id === "create" ? FormType.CREATE : FormType.EDIT;
 
   const { data, isLoading } = useQuery({
     queryKey: [slug, id],
     queryFn: () =>
-      axios.get(urlJoin(serverUrl, slug, id ?? "")).then((res) => res.data),
+      endpoint.get(urlJoin(slug, id ?? "")).then((res) => res.data),
     enabled: formType === FormType.EDIT,
   });
 
@@ -67,11 +67,17 @@ export function DocumentPage({
       <FormProvider {...methods}>
         <FibrProvider plugins={blocks}>
           <form
-            onSubmit={handleSubmit((values) => {
+            onSubmit={handleSubmit(async (values) => {
               const document_submit_type_value = values[SUBMIT_BUTTON_KEY];
               values[SUBMIT_BUTTON_KEY] = undefined;
 
-              console.log(values);
+              try {
+                if (formType === FormType.CREATE)
+                  await endpoint.post(`/${slug}`, values);
+                else await endpoint.put(urlJoin(slug, id ?? ""), values);
+              } catch (err) {
+                console.error(err);
+              }
 
               if (
                 document_submit_type_value ===

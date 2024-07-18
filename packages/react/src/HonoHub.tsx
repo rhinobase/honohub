@@ -13,7 +13,7 @@ import {
   HomePage,
   SettingsPage,
 } from "./pages";
-import { ThemeProvider } from "./providers";
+import { ServerProvider, ThemeProvider } from "./providers";
 import type { HonoHubProps } from "./types";
 import "./main.css";
 
@@ -70,13 +70,11 @@ export function HonoHub({
             children: collections.flatMap((collection) => [
               {
                 path: collection.slug,
-                element: (
-                  <CollectionPage {...collection} serverUrl={serverUrl} />
-                ),
+                element: <CollectionPage {...collection} />,
               },
               {
                 path: `${collection.slug}/:id`,
-                element: <DocumentPage {...collection} serverUrl={serverUrl} />,
+                element: <DocumentPage {...collection} />,
               },
             ]),
           },
@@ -112,7 +110,9 @@ export function HonoHub({
   return (
     <QueryClientProvider client={CLIENT}>
       <ThemeProvider>
-        <RouterProvider router={router} />
+        <ServerProvider baseURL={serverUrl}>
+          <RouterProvider router={router} />
+        </ServerProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

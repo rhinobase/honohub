@@ -2,17 +2,19 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { type ColumnType, DataTable as SharedDatatable } from "@rafty/corp";
 import { Button, Text } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from "react";
+import urlJoin from "url-join";
+import { useServer } from "../providers";
 import { Pagination } from "./Pagination";
 import { SearchField } from "./SearchField";
 
 export type DataTable<T> = {
-  endpoint: string;
+  slug: string;
   columns: ColumnType<T>[];
 };
 
-export function DataTable<T = unknown>({ columns, endpoint }: DataTable<T>) {
+export function DataTable<T = unknown>({ columns, slug }: DataTable<T>) {
+  const { endpoint } = useServer();
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
 
   const [{ pageIndex, pageSize }, setPagination] = useState({
@@ -28,8 +30,8 @@ export function DataTable<T = unknown>({ columns, endpoint }: DataTable<T>) {
   } = useQuery<{ results: T[]; count: number }>({
     queryKey: ["launches", pageIndex, pageSize],
     queryFn: () =>
-      axios
-        .get(`${endpoint}?limit=${pageSize}&offset=${offset}`)
+      endpoint
+        .get(urlJoin(slug, `?limit=${pageSize}&offset=${offset}`))
         .then((res) => res.data),
   });
 

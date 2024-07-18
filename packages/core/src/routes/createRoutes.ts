@@ -217,7 +217,7 @@ export function createRoutes<
   });
 
   // Update record endpoint
-  app.patch("/:id", async (c) => {
+  app.put("/:id", async (c) => {
     // Getting the raw data
     let raw = await (c.req.header("Content-Type") === "application/json"
       ? c.req.json()

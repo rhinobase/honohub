@@ -197,7 +197,7 @@ export function getValidation<T extends Record<string, FieldProps>>(
   }
 
   switch (block.type) {
-    case "checkbox":
+    case "boolean":
       return getCheckboxValidation(block);
     case "date":
       return getDateValidation(block);

@@ -14,7 +14,7 @@ export const blocks: Record<FieldProps["type"], () => JSX.Element> = {
   number: NumberField,
   select: Select,
   textarea: Textarea,
-  checkbox: Checkbox,
+  boolean: Checkbox,
   string: StringField,
   datetime: DatetimeField,
 };

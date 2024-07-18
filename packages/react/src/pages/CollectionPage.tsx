@@ -8,9 +8,7 @@ import { DataTable, PageHeader, PageTitle } from "../components";
 import type { CollectionType } from "../types";
 import { getPluralLabel } from "../utils";
 
-export type CollectionPage = Omit<CollectionType, "fields"> & {
-  serverUrl: string;
-};
+export type CollectionPage = Omit<CollectionType, "fields">;
 
 export function CollectionPage(props: CollectionPage) {
   const columns = useMemo(() => {
@@ -63,10 +61,7 @@ export function CollectionPage(props: CollectionPage) {
           <Button colorScheme="primary">Create</Button>
         </Link>
       </PageHeader>
-      <DataTable
-        columns={columns}
-        endpoint={urlJoin(props.serverUrl, props.slug)}
-      />
+      <DataTable columns={columns} slug={props.slug} />
     </>
   );
 }
