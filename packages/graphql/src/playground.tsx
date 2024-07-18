@@ -1,7 +1,6 @@
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import GraphiQL from "graphiql";
 import "graphiql/graphiql.min.css";
-import "@honohub/graphql/playground/page.esm.css";
 import { useMemo } from "react";
 
 export type GraphQLEditorProps = {

@@ -40,7 +40,9 @@ export default defineHub({
         return new Hono<E, P, I>().use("*", logger()).route("/", props.app);
       },
     },
-    // useGraphQL(),
-    // useGraphQLPlayground(),
+    useGraphQL(),
+    useGraphQLPlayground({
+      graphQLEndpoint: "http://localhost:3000/graphql",
+    }),
   ],
 });

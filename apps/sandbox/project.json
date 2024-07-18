@@ -9,10 +9,10 @@
       "command": "tsx watch --tsconfig ./apps/sandbox/tsconfig.json apps/sandbox/src/index.ts"
     },
     "vite:build": {
-      "command": "vite build -m client -c ./apps/sandbox/vite.config.ts"
+      "command": "vite build -m client -c ./apps/sandbox/vite.config.mts"
     },
     "vite:serve": {
-      "command": "vite -m client -c ./apps/sandbox/vite.config.ts"
+      "command": "vite -m client -c ./apps/sandbox/vite.config.mts"
     },
     "db:generate": {
       "command": "drizzle-kit generate --dialect postgresql --schema apps/sandbox/src/db/schema.ts --out apps/sandbox/src/db/migrations"
