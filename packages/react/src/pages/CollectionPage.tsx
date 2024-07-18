@@ -3,7 +3,6 @@ import type { ColumnType } from "@rafty/corp";
 import { Button, Checkbox } from "@rafty/ui";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import urlJoin from "url-join";
 import { getCell } from "../columns";
 import { DataTable, PageHeader, PageTitle } from "../components";
 import type { CollectionType } from "../types";

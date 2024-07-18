@@ -33,7 +33,22 @@ export function defineCollection<T extends Table>(
 
   let sanitizedConfig: SanitizedCollection<T> = {
     slug,
-    admin: { label: slug, ...admin },
+    admin: {
+      ...admin,
+      label: admin.label ?? slug,
+      actions: [
+        ...(admin.actions ?? []),
+        {
+          name: "bulk_delete",
+          label: "Bulk Delete",
+          icon: "TrashIcon",
+          level: true,
+          action: (ids) => {
+            console.log(ids);
+          },
+        },
+      ],
+    },
     schema,
     queryKey,
     access,

@@ -102,6 +102,10 @@ export async function generateReactTemplates<
               label: collection.admin.label ?? getTableName(collection.schema),
               columns: collectionColumns,
               fields: fields,
+              actions:
+                collection.admin.actions?.map(
+                  ({ action, ...props }) => props,
+                ) ?? [],
             };
           }),
         },

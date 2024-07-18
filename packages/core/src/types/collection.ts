@@ -5,7 +5,7 @@ import type { JSONValue } from "hono/utils/types";
 import type { Prettify, Promisify, ValueOf } from "./utils";
 
 export type CollectionConfig<T extends Table = Table> = Prettify<
-  Partial<SanitizedCollection<T>> & {
+  Partial<Omit<SanitizedCollection<T>, "admin">> & {
     slug: string;
     schema: T;
     admin?: Partial<CollectionAdminProps<T>>;
@@ -53,6 +53,15 @@ export type CollectionAdminProps<T extends Table = Table> = {
         description?: string;
       }
   )[];
+  actions?: CollectionAction[];
+};
+
+export type CollectionAction = {
+  name: string;
+  label?: string;
+  icon?: string;
+  action: Promisify<(ids: string[]) => void>;
+  level?: boolean | { title: string; message: string };
 };
 
 export type CollectionPlugin<T extends Table = Table> = {

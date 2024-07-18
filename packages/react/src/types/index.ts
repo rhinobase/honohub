@@ -12,6 +12,7 @@ export type CollectionType = {
   fields: GetObject<
     NonNullable<CollectionAdminProps["fields"]>[0] & { type: string }
   >[];
+  actions: Omit<NonNullable<CollectionAdminProps["actions"]>[0], "action">[];
 };
 
 export type PluginType = Record<
