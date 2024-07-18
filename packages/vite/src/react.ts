@@ -106,7 +106,7 @@ type JSTemplateProps = {
 };
 
 const jsTemplateCode = ({ props }: JSTemplateProps) =>
-  `import React from "react";import ReactDOM from "react-dom/client";import {HonoHub} from "@honohub/react";import "@honohub/react/index.css";const props=${JSON.stringify(
+  `import React from "react";import ReactDOM from "react-dom/client";import {HonoHub} from "@honohub/react";const props=${JSON.stringify(
     props,
   )};ReactDOM.createRoot(document.getElementById("root")).render(<React.StrictMode><HonoHub {...props} /></React.StrictMode>);`;
 

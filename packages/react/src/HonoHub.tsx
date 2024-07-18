@@ -62,7 +62,18 @@ export function HonoHub({
         children: [
           {
             path: "/",
-            element: <HomePage basePath={basePath} version="0.1.0" />,
+            element: (
+              <HomePage
+                basePath={basePath}
+                stats={{
+                  version: "0.1.0",
+                  hono: "4.5.0",
+                  collections: 1,
+                  plugins: 0,
+                  routes: 0,
+                }}
+              />
+            ),
           },
           {
             path: "/collections",

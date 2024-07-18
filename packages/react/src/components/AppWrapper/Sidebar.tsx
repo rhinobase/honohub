@@ -10,7 +10,7 @@ import {
   type PropsWithChildren,
   forwardRef,
 } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Logo } from "../Logo";
 
 type AppSidebarOptionType = {
@@ -41,7 +41,7 @@ export const AppSidebar = forwardRef<HTMLDivElement, AppSidebar>(
       >
         <header className="px-3 my-[7.5px]">
           {isOpen ? (
-            <div className="flex items-center -ml-1">
+            <Link to="/" className="flex items-center -ml-1 w-max">
               <Logo className="h-9 w-max" />
               <p className="text-[26px] font-bold tracking-tight">
                 Hono
@@ -49,7 +49,7 @@ export const AppSidebar = forwardRef<HTMLDivElement, AppSidebar>(
                   Hub
                 </span>
               </p>
-            </div>
+            </Link>
           ) : (
             <Logo className="h-[39px] w-max" />
           )}
