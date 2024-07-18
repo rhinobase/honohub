@@ -5,3 +5,4 @@ export { PageHeader, PageTitle } from "./Header";
 export { Pagination } from "./Pagination";
 export { SearchField } from "./SearchField";
 export { Logo } from "./Logo";
+export { BaseWrapper } from "./BaseWrapper";
