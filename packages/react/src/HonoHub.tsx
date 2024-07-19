@@ -1,4 +1,3 @@
-import { ArchiveBoxIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import {
@@ -8,6 +7,7 @@ import {
 } from "react-router-dom";
 import { AppWrapper, CollectionsWrapper } from "./components";
 import "./main.css";
+import * as HeroIcon from "@heroicons/react/24/outline";
 import {
   CollectionPage,
   DocumentPage,
@@ -32,7 +32,7 @@ export function HonoHub({
   const appWrapperOptions = {
     collections: [
       {
-        icon: ArchiveBoxIcon,
+        icon: HeroIcon.ArchiveBoxIcon,
         label: "Collections",
         path: "/collections",
       },
@@ -40,7 +40,8 @@ export function HonoHub({
     ...(hasPlugins
       ? {
           plugins: Object.entries(plugins).map(([path, { label, icon }]) => ({
-            icon,
+            // @ts-expect-error
+            icon: icon ? HeroIcon[icon] : undefined,
             label,
             path,
           })),
@@ -48,7 +49,7 @@ export function HonoHub({
       : {}),
     general: [
       {
-        icon: Cog6ToothIcon,
+        icon: HeroIcon.Cog6ToothIcon,
         label: "Settings",
         path: "/settings",
       },
