@@ -1,6 +1,6 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { CollectionType, HonoHubProps } from "@honohub/react";
+import type { HonoHubProps } from "@honohub/react";
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import { getTableColumns, getTableName } from "drizzle-orm";
 import type { SanitizedHub, ValueOf } from "honohub";
@@ -54,6 +54,13 @@ export async function generateReactTemplates<
           basePath,
           serverUrl: config.serverUrl,
           plugins: pluginProps,
+          stats: {
+            version: "",
+            hono: "",
+            collections: config.collections.length,
+            plugins: config.plugins.length,
+            routes: 0,
+          },
           collections: config.collections.map((collection) => {
             const columns = getTableColumns(collection.schema);
 

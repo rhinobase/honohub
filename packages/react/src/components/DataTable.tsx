@@ -11,8 +11,7 @@ import {
 } from "@rafty/corp";
 import { Text } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
-import urlJoin from "url-join";
+import { useCallback, useMemo, useState } from "react";
 import { useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { Pagination } from "./Pagination";
@@ -44,7 +43,7 @@ export function DataTable<T = unknown>({
     queryKey: ["launches", pageIndex, pageSize],
     queryFn: () =>
       endpoint
-        .get(urlJoin(slug, `?limit=${pageSize}&offset=${offset}`))
+        .get(`/collections/${slug}?limit=${pageSize}&offset=${offset}`)
         .then((res) => res.data),
   });
 
@@ -97,6 +96,7 @@ export function DataTable<T = unknown>({
 }
 
 function ActionSelect({ actions }: Pick<CollectionType, "actions">) {
+  const { endpoint } = useServer();
   const options: ComboboxOptionType[] = actions.map(({ label, name }) => ({
     label: label ?? name,
     value: name,
@@ -109,6 +109,15 @@ function ActionSelect({ actions }: Pick<CollectionType, "actions">) {
         return prev;
       }, {}),
     [actions],
+  );
+
+  const slug = "todos";
+  const ids: string[] = [];
+  const fireAction = useCallback(
+    (action: string) => {
+      endpoint.post(`/collections/${slug}/actions/${action}`, { ids });
+    },
+    [endpoint],
   );
 
   return (

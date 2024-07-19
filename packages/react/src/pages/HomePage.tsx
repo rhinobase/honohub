@@ -94,7 +94,7 @@ export function HomePage({ stats, basePath }: HomePage) {
           <ArchiveBoxIcon className="size-7" />
           <p className="text-sm font-medium">
             {stats.collections}{" "}
-            {stats.collections > 1 ? "collections" : "collection"}
+            {stats.collections === 1 ? "collection" : "collections"}
           </p>
         </LinkCard>
         <LinkCard
@@ -103,7 +103,7 @@ export function HomePage({ stats, basePath }: HomePage) {
         >
           <BoltIcon className="size-7" />
           <p className="text-sm font-medium">
-            {stats.routes} {stats.routes > 1 ? "routes" : "route"}
+            {stats.routes} {stats.routes === 1 ? "route" : "routes"}
           </p>
         </LinkCard>
         <LinkCard
@@ -112,7 +112,7 @@ export function HomePage({ stats, basePath }: HomePage) {
         >
           <PuzzlePieceIcon className="size-7" />
           <p className="text-sm font-medium">
-            {stats.plugins} {stats.plugins > 1 ? "plugins" : "plugin"}
+            {stats.plugins} {stats.plugins === 1 ? "plugin" : "plugins"}
           </p>
         </LinkCard>
       </div>

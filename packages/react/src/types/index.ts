@@ -30,4 +30,11 @@ export type HonoHubProps = {
   serverUrl: string;
   plugins?: PluginType;
   collections: CollectionType[];
+  stats: {
+    version: string;
+    hono: string;
+    collections: number;
+    plugins: number;
+    routes: number;
+  };
 };

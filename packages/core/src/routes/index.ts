@@ -15,7 +15,7 @@ export function useRestAPI<
       ) {
         const collection = props.config.collections[index];
         props.app.route(
-          `/${collection.slug}`,
+          `collections/${collection.slug}`,
           createRoutes(props.config, collection),
         );
       }

@@ -325,7 +325,14 @@ export function createRoutes<
       async (c) => {
         const { ids } = c.req.valid("json");
 
-        await action.action({ ids, context: c });
+        try {
+          await action.action({ ids, context: c });
+        } catch (err) {
+          console.error(err);
+          throw new HTTPException(400, {
+            message: "Unable to complete the action!",
+          });
+        }
 
         return c.json(null);
       },

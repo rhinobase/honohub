@@ -1,12 +1,11 @@
 import { FibrProvider, Thread } from "@fibr/react";
 import { Button, Skeleton, Toast } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
-import axios, { AxiosError, isAxiosError } from "axios";
+import { isAxiosError } from "axios";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import urlJoin from "url-join";
 import { ZodError } from "zod";
 import { PageTitle } from "../components";
 import { blocks } from "../fields";
@@ -43,7 +42,7 @@ export function DocumentPage({
   const { data, isLoading } = useQuery({
     queryKey: [slug, id],
     queryFn: () =>
-      endpoint.get(urlJoin(slug, id ?? "")).then((res) => res.data),
+      endpoint.get(`collections/${slug}/${id}`).then((res) => res.data),
     enabled: formType === FormType.EDIT,
   });
 
@@ -76,7 +75,7 @@ export function DocumentPage({
               try {
                 if (formType === FormType.CREATE)
                   await endpoint.post(`/${slug}`, values);
-                else await endpoint.put(urlJoin(slug, id ?? ""), values);
+                else await endpoint.put(`/${slug}/${id}`, values);
 
                 if (
                   document_submit_type_value ===
