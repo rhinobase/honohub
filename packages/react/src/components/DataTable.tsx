@@ -11,7 +11,7 @@ import {
 } from "@rafty/corp";
 import { Text } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
-import { Suspense, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import urlJoin from "url-join";
 import { useServer } from "../providers";
 import type { CollectionType } from "../types";
@@ -105,7 +105,7 @@ function ActionSelect({ actions }: Pick<CollectionType, "actions">) {
   const icons = useMemo(
     () =>
       actions.reduce<Record<string, any>>((prev, { icon, name }) => {
-        if (icon) prev[name] = HeroIcons[icon];
+        prev[name] = HeroIcons[(icon as keyof typeof HeroIcons) ?? "BoltIcon"];
         return prev;
       }, {}),
     [actions],
@@ -116,7 +116,7 @@ function ActionSelect({ actions }: Pick<CollectionType, "actions">) {
       <Combobox options={options} placeholder={{ trigger: "Select an action" }}>
         <ComboboxTrigger />
         <ComboboxContent>
-          {({ index, option }) => {
+          {({ option }) => {
             const val = String(option.value);
 
             const icon = icons[val as keyof typeof icons];
@@ -142,9 +142,7 @@ function CustomOption({
       onSelect={onSelectionChange}
       className="gap-2"
     >
-      <Suspense fallback={<>a</>}>
-        <Icon className="size-3.5 stroke-2" />
-      </Suspense>
+      <Icon className="size-3.5 stroke-2" />
       {label}
     </ComboboxItem>
   );
