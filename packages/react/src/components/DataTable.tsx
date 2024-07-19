@@ -9,10 +9,13 @@ import {
   DataTable as SharedDatatable,
   useComboboxContext,
 } from "@rafty/corp";
-import { Text } from "@rafty/ui";
+import { Text, Toast } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
 import { useCallback, useMemo, useState } from "react";
-import { useServer } from "../providers";
+import toast from "react-hot-toast";
+import { ZodError } from "zod";
+import { useDialogManager, useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { Pagination } from "./Pagination";
 import { SearchField } from "./SearchField";
@@ -47,17 +50,27 @@ export function DataTable<T = unknown>({
         .then((res) => res.data),
   });
 
-  const selected = Object.keys(rowsSelected).length;
+  const selectedRowsLength = Object.keys(rowsSelected).length;
+
+  const selectedRows = Object.keys(rowsSelected).map(
+    (index) => data.results[Number(index)],
+  );
 
   return (
     <>
-      {selected > 0 ? (
+      {selectedRowsLength > 0 ? (
         <div className="w-full min-h-[38px] flex items-center">
           <Text className="text-sm">
-            {selected} {selected > 1 ? "rows" : "row"} selected
+            {selectedRowsLength} {selectedRowsLength > 1 ? "rows" : "row"}{" "}
+            selected
           </Text>
           <div className="flex-1" />
-          <ActionSelect actions={actions} />
+          <ActionSelect
+            actions={actions}
+            slug={slug}
+            selectedRows={selectedRows}
+            onActionComplete={() => setRowsSelected({})}
+          />
         </div>
       ) : (
         <SearchField />
@@ -95,8 +108,21 @@ export function DataTable<T = unknown>({
   );
 }
 
-function ActionSelect({ actions }: Pick<CollectionType, "actions">) {
+function ActionSelect<T>({
+  actions,
+  selectedRows,
+  slug,
+  onActionComplete,
+}: Pick<CollectionType, "actions"> & {
+  slug: string;
+  selectedRows: T[];
+  onActionComplete: () => void;
+}) {
+  const [selected, setSelected] = useState<string | undefined>(undefined);
   const { endpoint } = useServer();
+
+  const { action: actionDialogManager } = useDialogManager();
+
   const options: ComboboxOptionType[] = actions.map(({ label, name }) => ({
     label: label ?? name,
     value: name,
@@ -111,18 +137,75 @@ function ActionSelect({ actions }: Pick<CollectionType, "actions">) {
     [actions],
   );
 
-  const slug = "todos";
-  const ids: string[] = [];
   const fireAction = useCallback(
     (action: string) => {
-      endpoint.post(`/collections/${slug}/actions/${action}`, { ids });
+      try {
+        endpoint.post(`/collections/${slug}/actions/${action}`, {
+          items: selectedRows,
+        });
+      } catch (err) {
+        console.error(err);
+
+        if (isAxiosError(err)) {
+          toast.custom(({ visible }) => (
+            <Toast
+              severity="error"
+              title={`${err.response?.status} ${err.code}`}
+              message={err.response?.statusText}
+              visible={visible}
+            />
+          ));
+        } else
+          toast.custom(({ visible }) => (
+            <Toast
+              severity="error"
+              title="Something went wrong!"
+              visible={visible}
+            />
+          ));
+      }
     },
-    [endpoint],
+    [endpoint, slug, selectedRows],
   );
 
   return (
     <div className="w-[300px]">
-      <Combobox options={options} placeholder={{ trigger: "Select an action" }}>
+      <Combobox
+        options={options}
+        placeholder={{ trigger: "Select an action" }}
+        selected={selected}
+        onSelectionChange={(sel) => {
+          setSelected(sel ? String(sel) : undefined);
+
+          if (sel) {
+            const action = actions.find((action) => action.name === sel);
+
+            if (!action) throw new Error(`Unable to find ${sel} action`);
+
+            const actionHandler = () => {
+              fireAction(action.name);
+              setSelected(undefined);
+              onActionComplete();
+            };
+
+            if (action.level) {
+              let actionPropmt = {
+                title: `Confirm ${action.label ?? action.name} Action`,
+                message: "Are you sure you want to perform this action?",
+              };
+
+              if (typeof action.level !== "boolean")
+                actionPropmt = action.level;
+
+              actionDialogManager.setState({
+                ...actionPropmt,
+                show: true,
+                action: actionHandler,
+              });
+            } else actionHandler();
+          }
+        }}
+      >
         <ComboboxTrigger />
         <ComboboxContent>
           {({ option }) => {

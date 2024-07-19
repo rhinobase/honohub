@@ -95,7 +95,7 @@ export function DocumentPage({
                 console.error(err);
 
                 if (isAxiosError(err)) {
-                  const errorResponse = err.response?.data;
+                  const errorResponse = err.response?.data.error;
 
                   if (
                     errorResponse &&
@@ -123,7 +123,14 @@ export function DocumentPage({
                         visible={visible}
                       />
                     ));
-                }
+                } else
+                  toast.custom(({ visible }) => (
+                    <Toast
+                      severity="error"
+                      title="Something went wrong!"
+                      visible={visible}
+                    />
+                  ));
               }
             })}
             className="space-y-4"

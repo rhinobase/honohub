@@ -19,7 +19,7 @@ export function Pagination({
       {...props}
       size={size}
       className={classNames(
-        "border rounded-lg px-4 py-3 border-secondary-200 dark:border-secondary-800",
+        "border rounded-lg px-4 py-3 border-secondary-300 dark:border-secondary-700",
         className,
       )}
     >

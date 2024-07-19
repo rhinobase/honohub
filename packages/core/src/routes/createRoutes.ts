@@ -7,8 +7,9 @@ import { createInsertSchema } from "drizzle-zod";
 import { type Env, Hono, type Schema } from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { BlankSchema } from "hono/types";
+import { z } from "zod";
 import type { SanitizedCollection, SanitizedHub } from "../types";
-import { actionValidationSchema, queryValidationSchema } from "./validations";
+import { queryValidationSchema } from "./validations";
 
 export function createRoutes<
   Database extends AnyDrizzleDB<any>,
@@ -154,7 +155,7 @@ export function createRoutes<
     const parsedData = await collectionInsertSchema.safeParseAsync(raw);
 
     if (!parsedData.success) {
-      return c.json(parsedData.error, 400);
+      return c.json(parsedData, 400);
     }
 
     let data = parsedData.data;
@@ -257,7 +258,7 @@ export function createRoutes<
     const parsedData = await collectionInsertSchema.safeParseAsync(raw);
 
     if (!parsedData.success) {
-      return c.json(parsedData.error, 400);
+      return c.json(parsedData, 400);
     }
 
     let data = parsedData.data;
@@ -321,12 +322,17 @@ export function createRoutes<
   for (const action of collection.admin.actions ?? []) {
     actionRouter.post(
       `/${action.name}`,
-      zValidator("json", actionValidationSchema),
+      zValidator(
+        "json",
+        z.object({
+          items: z.array(z.any()).min(1).max(100),
+        }),
+      ),
       async (c) => {
-        const { ids } = c.req.valid("json");
+        const { items } = c.req.valid("json");
 
         try {
-          await action.action({ ids, context: c });
+          await action.action({ items, context: c });
         } catch (err) {
           console.error(err);
           throw new HTTPException(400, {

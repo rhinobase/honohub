@@ -65,7 +65,7 @@ export type CollectionAction = {
     P extends string = string,
     I extends Input = Input,
   >(props: {
-    ids: string[];
+    items: unknown[];
     context: Context<E, P, I>;
   }) => Promisify<void>;
   level?: boolean | { title: string; message: string };

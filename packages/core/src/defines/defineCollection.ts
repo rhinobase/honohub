@@ -43,8 +43,8 @@ export function defineCollection<T extends Table>(
           label: "Bulk Delete",
           icon: "TrashIcon",
           level: true,
-          action: (ids) => {
-            console.log(ids);
+          action: ({ items }) => {
+            console.log(items);
           },
         },
       ],
