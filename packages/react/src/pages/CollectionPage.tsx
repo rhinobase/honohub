@@ -43,6 +43,7 @@ export function CollectionPage(props: CollectionPage) {
     });
 
     columns.push({
+      id: "action",
       accessorKey: "id",
       header: "Action",
       cell: getCell("action"),
