@@ -1,8 +1,8 @@
-import type { Column, Table, TableConfig } from "drizzle-orm";
+import type { Column, Table } from "drizzle-orm";
 import type { Context, Env, Hono, Schema } from "hono";
 import type { BlankSchema, Input } from "hono/types";
 import type { JSONValue } from "hono/utils/types";
-import type { Prettify, Promisify, ValueOf } from "./utils";
+import type { Prettify, Promisify } from "./utils";
 
 export type CollectionConfig<T extends Table = Table> = Prettify<
   Partial<Omit<SanitizedCollection<T>, "admin">> & {
