@@ -84,7 +84,7 @@
     "fuse.js": "^7.0.0",
     "graphiql": "^3.3.2",
     "graphql": "^16.9.0",
-    "hono": "4.4.11",
+    "hono": "^4.5.1",
     "mdast-util-to-string": "^4.0.0",
     "mdx-annotations": "^0.1.4",
     "next": "14.2.3",

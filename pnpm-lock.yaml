@@ -22,10 +22,10 @@ dependencies:
     version: 1.12.0
   '@hono/react-renderer':
     specifier: ^0.2.0
-    version: 0.2.0(hono@4.4.11)
+    version: 0.2.0(hono@4.5.1)
   '@hono/zod-validator':
     specifier: ^0.2.2
-    version: 0.2.2(hono@4.4.11)(zod@3.23.8)
+    version: 0.2.2(hono@4.5.1)(zod@3.23.8)
   '@mdx-js/loader':
     specifier: ^3.0.1
     version: 3.0.1(webpack@5.93.0)
@@ -93,8 +93,8 @@ dependencies:
     specifier: ^16.9.0
     version: 16.9.0
   hono:
-    specifier: 4.4.11
-    version: 4.4.11
+    specifier: ^4.5.1
+    version: 4.5.1
   mdast-util-to-string:
     specifier: ^4.0.0
     version: 4.0.0
@@ -2850,22 +2850,22 @@ packages:
     engines: {node: '>=18.14.1'}
     dev: false
 
-  /@hono/react-renderer@0.2.0(hono@4.4.11):
+  /@hono/react-renderer@0.2.0(hono@4.5.1):
     resolution: {integrity: sha512-DGobhlEOfnD3iziSLnZIjY32IBGJay64E/QbphjKx32ldawNe3YVT/88GhtmqowPia+GJrtdrSP9BSCl6r3JPw==}
     engines: {node: '>=18'}
     peerDependencies:
       hono: '*'
     dependencies:
-      hono: 4.4.11
+      hono: 4.5.1
     dev: false
 
-  /@hono/zod-validator@0.2.2(hono@4.4.11)(zod@3.23.8):
+  /@hono/zod-validator@0.2.2(hono@4.5.1)(zod@3.23.8):
     resolution: {integrity: sha512-dSDxaPV70Py8wuIU2QNpoVEIOSzSXZ/6/B/h4xA7eOMz7+AarKTSGV8E6QwrdcCbBLkpqfJ4Q2TmBO0eP1tCBQ==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.19.1
     dependencies:
-      hono: 4.4.11
+      hono: 4.5.1
       zod: 3.23.8
     dev: false
 
@@ -10793,8 +10793,8 @@ packages:
       parse-passwd: 1.0.0
     dev: true
 
-  /hono@4.4.11:
-    resolution: {integrity: sha512-R5RADpjoRsR3/VsnFovpsYNLPnC1f+FgdfsePk3qIgjb4D41Sg7uW5QCj41kzEOwXCjBg0sVvOZMvUNZ0DKB7g==}
+  /hono@4.5.1:
+    resolution: {integrity: sha512-6q8AugoWG5wlrjdGG8OFFiqEsPlPGjODjUik48sEJeko4Tae1UsLS2vUiYHLEJx1gJvOZa4BWkQC+urwDmkEvQ==}
     engines: {node: '>=16.0.0'}
     dev: false
 
@@ -11692,6 +11692,8 @@ packages:
       webpack: '*'
     peerDependenciesMeta:
       webpack:
+        optional: true
+      webpack-sources:
         optional: true
     dependencies:
       webpack: 5.93.0(@swc/core@1.5.29)(esbuild@0.19.12)
