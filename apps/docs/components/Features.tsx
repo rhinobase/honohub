@@ -29,8 +29,7 @@ const FEATURES: Feature[] = [
   },
   {
     name: "Automatic API Generation",
-    description:
-      "Automatically generates RESTful and GraphQL API endpoints from Drizzle schema.",
+    description: "Automatically generates RESTful and GraphQL APIs.",
     icon: BoltIcon,
     pattern: {
       y: -6,
@@ -53,9 +52,8 @@ const FEATURES: Feature[] = [
     },
   },
   {
-    name: "Integrated User Interface",
-    description:
-      "Provides a user-friendly UI for managing and visualizing data, storage, and API endpoints.",
+    name: "Admin Panel",
+    description: "Plugable UI for managing and visualizing your resources.",
     icon: WindowIcon,
     pattern: {
       y: 22,

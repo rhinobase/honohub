@@ -1,4 +1,10 @@
-import { type Table, getTableColumns, getTableName } from "drizzle-orm";
+import {
+  type Table,
+  getTableColumns,
+  getTableName,
+  inArray,
+} from "drizzle-orm";
+import { HTTPException } from "hono/http-exception";
 import type { CollectionConfig, SanitizedCollection } from "../types";
 
 export function defineCollection<T extends Table>(
@@ -37,16 +43,33 @@ export function defineCollection<T extends Table>(
       ...admin,
       label: admin.label ?? slug,
       actions: [
-        ...(admin.actions ?? []),
         {
           name: "bulk_delete",
           label: "Bulk Delete",
           icon: "TrashIcon",
           level: true,
-          action: ({ items }) => {
-            console.log(items);
+          action: ({ items, db, config }) => {
+            const entries = [];
+
+            for (const item of items) {
+              if (
+                item &&
+                typeof item === "object" &&
+                config.queryKey?.name in item
+              )
+                // @ts-expect-error
+                entries.push(item[config.queryKey.name]);
+              else
+                new HTTPException(400, {
+                  message: `Unable to find the query key '${config.queryKey.name}' in the given entries.`,
+                });
+            }
+
+            // @ts-expect-error
+            db.delete(config.schema).where(inArray(config.queryKey, entries));
           },
         },
+        ...(admin.actions ?? []),
       ],
     },
     schema,

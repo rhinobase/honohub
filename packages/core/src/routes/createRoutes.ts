@@ -319,9 +319,9 @@ export function createRoutes<
 
   // Actions
   const actionRouter = new Hono<E, P, I>();
-  for (const action of collection.admin.actions ?? []) {
+  for (const { name, action } of collection.admin.actions ?? []) {
     actionRouter.post(
-      `/${action.name}`,
+      `/${name}`,
       zValidator(
         "json",
         z.object({
@@ -332,7 +332,7 @@ export function createRoutes<
         const { items } = c.req.valid("json");
 
         try {
-          await action.action({ items, context: c });
+          await action({ items, context: c, db, config: collection });
         } catch (err) {
           console.error(err);
           throw new HTTPException(400, {

@@ -1,3 +1,4 @@
+import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { Column, Table } from "drizzle-orm";
 import type { Context, Env, Hono, Schema } from "hono";
 import type { BlankSchema, Input } from "hono/types";
@@ -53,20 +54,23 @@ export type CollectionAdminProps<T extends Table = Table> = {
         description?: string;
       }
   )[];
-  actions?: CollectionAction[];
+  actions?: CollectionAction<T>[];
 };
 
-export type CollectionAction = {
+export type CollectionAction<T extends Table = Table> = {
   name: string;
   label?: string;
   icon?: string;
   action: <
+    Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>,
     E extends Env = Env,
     P extends string = string,
     I extends Input = Input,
   >(props: {
+    db: Database;
     items: unknown[];
     context: Context<E, P, I>;
+    config: SanitizedCollection<T>;
   }) => Promisify<void>;
   level?: boolean | { title: string; message: string };
 };

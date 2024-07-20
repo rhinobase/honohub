@@ -18,7 +18,7 @@ const GUIDES = [
     href: "/development/admin-panel",
     name: "Admin Panel",
     description:
-      "Explore Admin Panel, designed to help you manage your APIs and data.",
+      "Explore Admin Panel, designed to help you manage your resources.",
   },
   {
     href: "/plugins/introduction",
