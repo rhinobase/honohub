@@ -54,10 +54,11 @@ export function CollectionPage(props: CollectionPage) {
 
   return (
     <>
-      <PageHeader className="justify-between">
+      <PageHeader>
         <PageTitle className="capitalize">
           {getPluralLabel(props.label)}
         </PageTitle>
+        <div className="flex-1" />
         <Link to={`/collections/${props.slug}/create`}>
           <Button
             colorScheme="primary"

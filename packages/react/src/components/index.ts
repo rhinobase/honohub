@@ -5,5 +5,7 @@ export { CollectionsWrapper } from "./CollectionsWrapper";
 export { DataTable } from "./DataTable";
 export { PageHeader, PageTitle } from "./Header";
 export { Logo } from "./Logo";
+export { PageWrapper } from "./PageWrapper";
 export { Pagination } from "./Pagination";
+export { PluginWrapper } from "./PluginWrapper";
 export { SearchField } from "./SearchField";

@@ -1,17 +1,19 @@
 import {
   AdjustmentsHorizontalIcon,
   ArchiveBoxIcon,
+  Bars3Icon,
   BoltIcon,
   BugAntIcon,
   LightBulbIcon,
   PuzzlePieceIcon,
   StarIcon,
 } from "@heroicons/react/24/outline";
-import { classNames } from "@rafty/ui";
+import { Button, classNames, eventHandler } from "@rafty/ui";
 import type { ComponentPropsWithoutRef } from "react";
 import { Link, type LinkProps } from "react-router-dom";
 import urlJoin from "url-join";
 import { Logo } from "../components";
+import { useDrawer } from "../providers";
 
 const SOCIALS = [
   {
@@ -51,12 +53,25 @@ export type HomePage = {
 };
 
 export function HomePage({ stats, basePath }: HomePage) {
+  const { setOpen } = useDrawer();
+
+  const handleDrawerOpen = eventHandler(() => setOpen(true));
+
   return (
-    <div className="flex h-full w-full md:justify-center items-center flex-col gap-6 px-4 py-6 xl:px-0 md:py-0 overflow-y-auto">
+    <div className="flex h-full w-full justify-center items-center flex-col gap-3 md:gap-4 lg:gap-5 p-3 md:p-4 lg:p-5 overflow-y-auto">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="md:hidden fixed top-3 left-3"
+        onClick={handleDrawerOpen}
+        onKeyDown={handleDrawerOpen}
+      >
+        <Bars3Icon className="size-[18px] stroke-[3]" />
+      </Button>
       <div className="space-y-1.5">
         <div className="flex items-center">
-          <Logo className="size-14" />
-          <p className="text-5xl font-bold tracking-tight">
+          <Logo className="size-10 lg:size-14" />
+          <p className="text-4xl lg:text-5xl font-bold tracking-tight">
             Hono
             <span className="text-primary-500 dark:text-primary-300">Hub</span>
           </p>
@@ -65,14 +80,14 @@ export function HomePage({ stats, basePath }: HomePage) {
           v{stats.version}
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 w-full max-w-6xl">
+      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-4 lg:gap-5 w-full xl:max-w-6xl">
         <LinkCard
           to="https://github.com/rhinobase/honohub"
           className="grayscale hover:bg-primary-50 dark:hover:bg-primary-950/50 hover:grayscale-0"
           target="_blank"
           rel="noopener"
         >
-          <Logo />
+          <Logo className="size-5 md:size-7" />
         </LinkCard>
         <LinkCard
           to="https://hono.dev/"
@@ -83,7 +98,7 @@ export function HomePage({ stats, basePath }: HomePage) {
           <img
             src="https://hono.dev/images/logo-small.png"
             alt="hono logo"
-            className="size-7"
+            className="size-5 md:size-7"
           />
           <p className="text-sm font-medium">v{stats.hono}</p>
         </LinkCard>
@@ -91,7 +106,7 @@ export function HomePage({ stats, basePath }: HomePage) {
           to="/collections"
           className="text-secondary-500 dark:text-secondary-400 hover:bg-yellow-100/70 dark:hover:bg-yellow-900/30 hover:text-yellow-500 dark:hover:text-yellow-300"
         >
-          <ArchiveBoxIcon className="size-7" />
+          <ArchiveBoxIcon className="size-5 md:size-7" />
           <p className="text-sm font-medium">
             {stats.collections}{" "}
             {stats.collections === 1 ? "collection" : "collections"}
@@ -101,7 +116,7 @@ export function HomePage({ stats, basePath }: HomePage) {
           to=""
           className="text-secondary-500 dark:text-secondary-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-500 dark:hover:text-purple-300"
         >
-          <BoltIcon className="size-7" />
+          <BoltIcon className="size-5 md:size-7" />
           <p className="text-sm font-medium">
             {stats.routes} {stats.routes === 1 ? "route" : "routes"}
           </p>
@@ -110,18 +125,18 @@ export function HomePage({ stats, basePath }: HomePage) {
           to=""
           className="text-secondary-500 dark:text-secondary-400 hover:bg-green-100/70 dark:hover:bg-green-900/20 hover:text-green-500 dark:hover:text-green-300"
         >
-          <PuzzlePieceIcon className="size-7" />
+          <PuzzlePieceIcon className="size-5 md:size-7" />
           <p className="text-sm font-medium">
             {stats.plugins} {stats.plugins === 1 ? "plugin" : "plugins"}
           </p>
         </LinkCard>
       </div>
-      <div className="md:flex gap-5 grid grid-cols-2">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-4 lg:gap-5 w-full md:w-max">
         {SOCIALS.map(({ icon: Icon, label, href, isExternal }) => (
           <a
             href={isExternal ? href : urlJoin(basePath, href)}
             key={label}
-            className="flex items-center gap-1 hover:text-primary-500 dark:hover:text-white text-secondary-500 transition-all text-sm ease-in-out"
+            className="flex w-max items-center gap-1 hover:text-primary-500 dark:hover:text-white text-secondary-500 transition-all text-sm ease-in-out"
             {...(isExternal
               ? { target: "_blank", rel: "noopener" }
               : undefined)}
@@ -142,7 +157,7 @@ function LinkCard({ className, ...props }: LinkProps) {
     <Link
       {...props}
       className={classNames(
-        "rounded-md border border-secondary-200 dark:border-secondary-800 w-full min-h-24 max-h-24 h-24 flex flex-col gap-1 items-center justify-center transition-all ease-in-out duration-300",
+        "rounded md:rounded-md border border-secondary-200 dark:border-secondary-800 w-full min-h-20 max-h-20 h-20 lg:min-h-24 lg:max-h-24 lg:h-24 flex flex-row md:flex-col gap-2 md:gap-1 items-center justify-center transition-all ease-in-out duration-300",
         className,
       )}
     />

@@ -14,7 +14,6 @@ import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { ZodError } from "zod";
 import { useDialogManager, useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { Pagination } from "./Pagination";

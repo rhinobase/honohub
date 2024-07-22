@@ -7,7 +7,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { ZodError } from "zod";
-import { PageTitle } from "../components";
+import { PageHeader, PageTitle } from "../components";
 import { blocks } from "../fields";
 import { useServer } from "../providers";
 import type { CollectionType } from "../types";
@@ -61,10 +61,12 @@ export function DocumentPage({
 
   return (
     <>
-      <PageTitle>
-        {formType === FormType.CREATE ? "Create" : "Edit"}{" "}
-        {getSingularLabel(label)}
-      </PageTitle>
+      <PageHeader>
+        <PageTitle>
+          {formType === FormType.CREATE ? "Create" : "Edit"}{" "}
+          {getSingularLabel(label)}
+        </PageTitle>
+      </PageHeader>
       <FormProvider {...methods}>
         <FibrProvider plugins={blocks}>
           <form

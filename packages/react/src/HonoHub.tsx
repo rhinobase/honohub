@@ -5,7 +5,7 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import { AppWrapper, CollectionsWrapper } from "./components";
+import { AppWrapper, CollectionsWrapper, PluginWrapper } from "./components";
 import "./main.css";
 import * as HeroIcon from "@heroicons/react/24/outline";
 import {
@@ -81,6 +81,10 @@ export function HonoHub({
               },
             ]),
           },
+          {
+            path: "/settings",
+            element: <SettingsPage />,
+          },
           ...(hasPlugins
             ? Object.entries(plugins).map<RouteObject>(([path, plugin]) => ({
                 path,
@@ -95,15 +99,15 @@ export function HonoHub({
                   );
 
                   return {
-                    element: <Panel {...plugin.props} />,
+                    element: (
+                      <PluginWrapper name={plugin.label}>
+                        <Panel {...plugin.props} />
+                      </PluginWrapper>
+                    ),
                   };
                 },
               }))
             : []),
-          {
-            path: "/settings",
-            element: <SettingsPage />,
-          },
         ],
       },
     ],
