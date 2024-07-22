@@ -52,7 +52,7 @@ export type HomePage = {
 
 export function HomePage({ stats, basePath }: HomePage) {
   return (
-    <div className="flex h-full w-full justify-center items-center flex-col gap-6">
+    <div className="flex h-full w-full md:justify-center items-center flex-col gap-6 px-4 py-6 xl:px-0 md:py-0 overflow-y-auto">
       <div className="space-y-1.5">
         <div className="flex items-center">
           <Logo className="size-14" />
@@ -65,7 +65,7 @@ export function HomePage({ stats, basePath }: HomePage) {
           v{stats.version}
         </p>
       </div>
-      <div className="grid grid-cols-5 gap-4 w-full max-w-6xl">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 w-full max-w-6xl">
         <LinkCard
           to="https://github.com/rhinobase/honohub"
           className="grayscale hover:bg-primary-50 dark:hover:bg-primary-950/50 hover:grayscale-0"
@@ -116,7 +116,7 @@ export function HomePage({ stats, basePath }: HomePage) {
           </p>
         </LinkCard>
       </div>
-      <div className="flex gap-5">
+      <div className="md:flex gap-5 grid grid-cols-2">
         {SOCIALS.map(({ icon: Icon, label, href, isExternal }) => (
           <a
             href={isExternal ? href : urlJoin(basePath, href)}
