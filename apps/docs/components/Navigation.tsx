@@ -241,7 +241,6 @@ export const NAVIGATION: NavGroupType[] = [
   {
     title: "⚙️ Setup & Deployment",
     links: [
-      { title: "Installation", href: "/setup/installation" },
       { title: "Project Structure", href: "/setup/structure" },
       { title: "Configuration", href: "/setup/configuration" },
       { title: "Deployment", href: "/setup/deployment" },

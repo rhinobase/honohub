@@ -3,7 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button } from "@rafty/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BsDiscord, BsGithub, BsTwitter } from "react-icons/bs";
+import { BsDiscord, BsGithub, BsTwitterX } from "react-icons/bs";
 import { NAVIGATION } from "./Navigation";
 
 type PageLink = {
@@ -82,7 +82,7 @@ const SOCIALS = [
   {
     name: "Twitter",
     link: "https://x.com/rhinobaseio",
-    icon: BsTwitter,
+    icon: BsTwitterX,
   },
   {
     name: "Github",

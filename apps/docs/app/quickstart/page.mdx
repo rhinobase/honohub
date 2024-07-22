@@ -4,106 +4,99 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 export const metadata = {
   title: "Quickstart",
   description:
-    "This guide will get you all set up and ready to use the Protocol API. We’ll cover how to get started an API client and how to make your first API request.",
+    "In this guide, you'll learn how to set up a new project with HonoHub, define your Drizzle schema, and generate API endpoints effortlessly.",
 };
 
 # Quickstart
 
-This guide will get you all set up and ready to use the Protocol API. We'll cover how to get started using one of our API clients and how to make your first API request. We'll also look at where to go next to find all the information you need to take full advantage of our powerful REST API. {{ className: 'lead' }}
+In this guide, you'll learn how to set up a new project with HonoHub, define your Drizzle schema, and generate API endpoints effortlessly. {{ className: 'lead' }}
 
-<Note>
-  Before you can make requests to the Protocol API, you will need to grab your
-  API key from your dashboard. You find it under [Settings &raquo; API](#).
-</Note>
+## Prerequisites
 
-## Choose your client
+Before setting up HonoHub, ensure you have the following:
 
-Before making your first API request, you need to pick which API client you will use. In addition to good ol' cURL HTTP requests, Protocol offers clients for JavaScript, Python, and PHP. In the following example, you can see how to install each client.
+- A [Hono project](https://hono.dev/docs/getting-started/basic) set up for your preferred runtime.
+- [Drizzle](https://orm.drizzle.team/docs/sql-schema-declaration) configured in your project.
+
+## Setting Up HonoHub
+
+HonoHub is a middleware that seamlessly integrates into your existing setup without imposing any restrictions on your setup or other middlewares. Unlike traditional frameworks, HonoHub provides flexibility, allowing you to customize and extend your application as needed.
+
+### Install HonoHub
+
+Add the `honohub` package to your project using your preferred package manager.
 
 <CodeGroup>
 
-```bash {{ title: 'cURL' }}
-# cURL is most likely already installed on your machine
-curl --version
+```bash {{ title: 'npm' }}
+npm add honohub
 ```
 
-```bash {{ language: 'js' }}
-# Install the Protocol JavaScript SDK
-npm install @example/protocol-api --save
+```bash {{ title: 'yarn' }}
+yarn add honohub
 ```
 
-```bash {{ language: 'python' }}
-# Install the Protocol Python SDK
-pip install protocol_api
+```bash {{ title: 'pnpm' }}
+pnpm add honohub
 ```
 
-```bash {{ language: 'php' }}
-# Install the Protocol PHP SDK
-composer require protocol/sdk
+```bash {{ title: 'bun' }}
+bun add honohub
 ```
 
 </CodeGroup>
 
-<div className="not-prose">
-  <Link
-    href="/sdks"
-    className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 mt-4 flex w-max items-center gap-1.5 font-semibold transition-all"
-  >
-    <p>Check out our list of first-party SDKs</p>
-    <ArrowRightIcon width={16} height={16} className="stroke-2" />
-  </Link>
-</div>
+### Setting Up HonoHub
 
-## Making your first API request
+Create a new file named honohub.config.ts or honohub.config.js in the root of your project and add the following configuration:
 
-After picking your preferred client, you are ready to make your first call to the Protocol API. Below, you can see how to send a GET request to the Conversations endpoint to get a list of all your conversations. In the cURL example, results are limited to ten conversations, the default page length for each client.
+<CodeGroup title="honohub.config.ts">
 
-<CodeGroup tag="GET" label="/v1/conversations">
+```ts
+import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
+import { defineCollection, defineHub } from "honohub";
+import * as schema from "./src/db/schema";
 
-```bash {{ title: 'cURL' }}
-curl -G https://api.protocol.chat/v1/conversations \
-  -H "Authorization: Bearer {token}" \
-  -d limit=10
-```
+const neonSql = neon(process.env.DATABASE_URL!);
 
-```js
-import ApiClient from "@example/protocol-api";
+const db = drizzle(neonSql, { schema });
 
-const client = new ApiClient(token);
-
-await client.conversations.list();
-```
-
-```python
-from protocol_api import ApiClient
-
-client = ApiClient(token)
-
-client.conversations.list()
-```
-
-```php
-$client = new \Protocol\ApiClient($token);
-
-$client->conversations->list();
+export default defineHub({
+  db,
+  serverUrl: "http://localhost:3000/",
+  collections: [
+    defineCollection({
+      slug: "todos",
+      schema: schema.todos,
+      queryKey: schema.todos.id,
+    }),
+  ],
+});
 ```
 
 </CodeGroup>
 
-<div className="not-prose">
-  <Link
-    href="/conversetions"
-    className="text-primary-500 hover:text-primary-500/90 flex w-max items-center gap-1.5 font-semibold"
-  >
-    <p>Get your API key</p>
-    <ArrowRightIcon width={16} height={16} className="stroke-2" />
-  </Link>
-</div>
+### Add HonoHub in your Hono Project
+
+Add HonoHub to your Hono project like any other route:
+
+<CodeGroup title="index.ts">
+
+```ts
+import { Hono } from "hono";
+import { createHub } from "honohub";
+import hubConfig from "../honohub.config";
+
+const app = new Hono().route("/", createHub(hubConfig));
+```
+
+</CodeGroup>
 
 ## What's next?
 
-Great, you're now set up with an API client and have made your first request to the API. Here are a few links that might be handy as you venture further into the Protocol API:
+Great, you made it! So, what's next?
 
-- [Grab your API key from the Protocol dashboard](#)
-- [Check out the Conversations endpoint](/conversations)
-- [Learn about the different error messages in Protocol](/errors)
+- [Customize your HonoHub APIs](/setup/configuration)
+- [Setup and explore the Admin Panel](/development/admin-panel)
+- [Explore Plugins](/plugins/introduction)
