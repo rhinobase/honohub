@@ -21,7 +21,7 @@ const GUIDES = [
       "Explore Admin Panel, designed to help you manage your resources.",
   },
   {
-    href: "/plugins/introduction",
+    href: "/plugins/usage",
     name: "Plugins",
     description:
       "Extend the functionality of your HonoHub application with plugins.",

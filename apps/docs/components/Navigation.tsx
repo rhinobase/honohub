@@ -266,7 +266,6 @@ export const NAVIGATION: NavGroupType[] = [
   {
     title: "🔌 Plugins",
     links: [
-      { title: "Introduction", href: "/plugins/introduction" },
       { title: "Usage", href: "/plugins/usage" },
       { title: "Development", href: "/plugins/development" },
     ],
