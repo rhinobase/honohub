@@ -9,16 +9,16 @@ const GUIDES = [
     description: "Learn how to configure your App and APIs.",
   },
   {
+    href: "/setup/admin-panel",
+    name: "Admin Panel",
+    description:
+      "Explore Admin Panel, designed to help you manage your resources.",
+  },
+  {
     href: "/setup/deployment",
     name: "Deployment",
     description:
       "Learn how to deploy your HonoHub APIs efficiently and securely.",
-  },
-  {
-    href: "/development/admin-panel",
-    name: "Admin Panel",
-    description:
-      "Explore Admin Panel, designed to help you manage your resources.",
   },
   {
     href: "/plugins/usage",

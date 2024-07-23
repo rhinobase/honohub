@@ -242,24 +242,16 @@ export const NAVIGATION: NavGroupType[] = [
     title: "⚙️ Setup & Deployment",
     links: [
       { title: "Configuration", href: "/setup/configuration" },
+      { title: "Admin Panel", href: "/setup/admin-panel" },
       { title: "Deployment", href: "/setup/deployment" },
     ],
   },
   {
     title: "📦 APIs",
     links: [
-      { title: "Introduction", href: "/apis/introduction" },
       { title: "Rest API", href: "/apis/rest" },
       { title: "GraphQL API", href: "/apis/graphql" },
       { title: "Query Engine API", href: "/apis/query-engine" },
-    ],
-  },
-  {
-    title: "🔧 Development",
-    links: [
-      { title: "Admin Panel", href: "/development/admin-panel" },
-      { title: "Backend", href: "/development/backend" },
-      { title: "Providers", href: "/development/providers" },
     ],
   },
   {

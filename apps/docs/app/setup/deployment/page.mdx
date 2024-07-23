@@ -1,6 +1,42 @@
 export const metadata = {
   title: "Deployment",
-  description: "",
+  description: "In this guide, you'll learn how to deploy your HonoHub project to various platforms.",
 };
 
 # Deployment
+
+In this guide, you'll learn how to deploy your HonoHub project to various platforms. {{ className: 'lead' }}
+
+## Deploying APIs
+
+The HonoHub APIs are built to work with [Hono.js](https://hono.dev/), so where ever Hono can be deployed, HonoHub can be deployed.
+
+## Deploying the Admin Panel
+
+The Admin Panel is a React application that can be deployed to any static hosting service like Vercel, Netlify, or AWS S3. You can also deploy the Admin Panel to the same server where the APIs are deployed.
+
+You will first need to build the Admin Panel using `vite`
+
+<CodeGroup>
+
+```bash {{ title: 'npm' }}
+npm run vite:build
+```
+
+```bash {{ title: 'yarn' }}
+yarn run vite:build
+```
+
+```bash {{ title: 'pnpm' }}
+pnpm run vite:build
+```
+
+```bash {{ title: 'bun' }}
+bun run vite:build
+```
+
+</CodeGroup>
+
+All the assets will be built in the `dist` folder. You can now serve them through Hono using `serveStatic` function or deploy them to a static hosting service.
+
+If you haven't set up the Admin Panel yet, refer to the [Admin Panel](/setup/admin-panel) guide.

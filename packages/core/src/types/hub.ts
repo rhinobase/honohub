@@ -3,21 +3,20 @@ import type { Env, Hono, Schema } from "hono";
 import type { BlankSchema } from "hono/types";
 import type { JSONObject } from "hono/utils/types";
 import type { SanitizedCollection } from "./collection";
+import type { Prettify } from "./utils";
 
 export type HubConfig<Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>> =
-  Partial<SanitizedHub<Database>> & {
+  {
     db: Database;
+    serverUrl?: string;
+    collections?: SanitizedCollection<any>[];
+    routes?: RouteOptions[];
+    plugins?: GlobalPlugin<Database>[];
   };
 
 export type SanitizedHub<
   Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>,
-> = {
-  db: Database;
-  serverUrl: string;
-  collections: SanitizedCollection<any>[];
-  routes: RouteOptions[];
-  plugins: GlobalPlugin<Database>[];
-};
+> = Prettify<Required<HubConfig<Database>>>;
 
 export type RouteOptions = {
   label: string;

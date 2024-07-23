@@ -11,9 +11,9 @@ export function defineCollection<T extends Table>(
   config: CollectionConfig<T>,
 ): SanitizedCollection<T> {
   const {
-    slug,
-    admin = {},
     schema,
+    slug = getTableName(schema),
+    admin = {},
     queryKey = findPrimaryKey(schema),
     access = () => true,
     defaultSort,
