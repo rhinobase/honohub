@@ -5,7 +5,7 @@ import type { JSONObject } from "hono/utils/types";
 import type { SanitizedCollection } from "./collection";
 
 export type HubConfig<Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>> =
-  Partial<Omit<SanitizedHub<Database>, "build">> & {
+  Partial<SanitizedHub<Database>> & {
     db: Database;
   };
 

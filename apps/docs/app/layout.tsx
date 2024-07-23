@@ -86,7 +86,7 @@ export default async function RootLayout(props: PropsWithChildren) {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="dark:bg-secondary-950 h-screen w-full bg-white antialiased">
+      <body className="dark:bg-secondary-950 h-screen w-full bg-white selection:bg-[#79ffe1] dark:selection:bg-[#f81ce5] dark:selection:text-white antialiased">
         <Providers>
           <Layout allSections={allSections}>{props.children}</Layout>
         </Providers>

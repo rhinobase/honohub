@@ -11,7 +11,6 @@ import { useGraphQL, useGraphQLPlayground } from "../../packages/graphql/src";
 import * as schema from "./src/db/schema";
 
 const neonSql = neon(process.env.DATABASE_URL ?? "");
-
 const db = drizzle(neonSql, { schema });
 
 const collection = defineCollection({
@@ -21,7 +20,6 @@ const collection = defineCollection({
     fields: ["message", { name: "status", label: "Status", required: false }],
   },
   schema: schema.todos,
-  queryKey: schema.todos.id,
   pagination: {
     defaultLimit: 10,
   },
