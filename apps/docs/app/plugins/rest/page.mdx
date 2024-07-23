@@ -44,14 +44,14 @@ This endpoint will return all the records in the collection. You can enable pagi
       </Property>
     </Properties>
 
+  Either returns all the records in an array if pagination is not enabled or an object with `results` and `count` keys if pagination is enabled.
+
   </Col>
   <Col>
 
 ```bash {{ title: "Request" }}
-curl -G http://localhost:3000/api/collections/todos \
--d limit=3
--d offset=10
-````
+curl -L "http://localhost:3000/todos?limit=3&offset=10"
+```
 
 ```json {{ title: "Response" }}
 {
@@ -62,17 +62,60 @@ curl -G http://localhost:3000/api/collections/todos \
     ],
     "count": 100,
 }
-````
+```
 
   </Col>
 </Row>
 
+<Row>
+<Col>
+
 ### `POST` Create a Record
 
+This endpoint will create a new record in the collection. You need to send the data in the request body. The data should be a valid JSON object that matches the schema of the collection.
+
+</Col>
+
+<Col>
+```bash {{ title: "Request" }}
+curl -L "http://localhost:3000/todos" \
+-H "Content-Type: application/json" \
+-d "{
+    \"status\": false,
+    \"message\": \"The API is working\"
+}"
+```
+
+```json {{ title: "Response" }}
+{
+  ...
+}
+```
+</Col>
+
+</Row>
+
+<Row>
+<Col>
 ### `GET` Get a Record
+</Col>
 
+</Row>
+
+<Row>
+<Col>
 ### `PUT` Update a Record
+</Col>
+</Row>
 
+<Row>
+<Col>
 ### `DELETE` Delete a Record
+</Col>
+</Row>
 
+<Row>
+<Col>
 ### `GET` Count Records
+</Col>
+</Row>
