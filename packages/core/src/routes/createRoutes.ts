@@ -136,7 +136,7 @@ export function createRoutes<
   // List records endpoint
   app.get("/count", async (c) =>
     c.json({
-      totalDocs: await collectionDocumentCount
+      count: await collectionDocumentCount
         .execute()
         .then((records) => records[0].count),
     }),
@@ -185,7 +185,8 @@ export function createRoutes<
     let createdDoc: any = await db
       .insert(collection.schema)
       .values(data)
-      .returning();
+      .returning()
+      .then((res) => res[0]);
 
     for (const hook of collection.hooks.afterChange ?? []) {
       const res = await hook({

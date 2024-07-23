@@ -6,20 +6,18 @@ export const metadata = {
 
 # useRestAPI
 
-This is a default plugin that comes with the `createHub` function. This plugin will add the REST API endpoints for the collections you have defined in your HonoHub config. You can remove this if you want, check out the [createBase](/apis/createBase) function to see how to remove the default plugins, and create barebone HonoHub App.
+This is a default plugin that comes with the `createHub` function. This plugin will add the REST API endpoints for the collections you have defined in your HonoHub config. You can remove this if you want, check out the [createBase](/apis/createBase) function to see how to remove the default plugins, and create barebone HonoHub App. {{ className: 'lead' }}
 
 ---
 
-## API Endpoints
-
 Here is a list of the API endpoints that this plugins adds to your Hono app for each collection you have defined in your HonoHub config. You can use these endpoints to interact with your collections. All of these endpoints are validated using [zod](https://zod.dev/) schemas generated using your Drizzle Schema, so you can be sure that the data you are sending is correct.
 
-In these examples we will use the `todos` collection as an example and the base URL for the API will be `http://localhost:3000/api/`. You can replace `todos` with the name of your collection.
+In these examples we will use the `todos` collection as an example and the base URL for the API will be `/`. You can replace `todos` with the name of your collection.
 
 <Row>
   <Col>
 
-### `GET` List All Records
+## List All Records {{ tag: 'GET', label: '/collections/todos' }}
 
 This endpoint will return all the records in the collection. You can enable pagination and filtering using query parameters.
 
@@ -29,28 +27,32 @@ This endpoint will return all the records in the collection. You can enable pagi
   collection.
 </Note>
 
+### Optional attributes
+
     <Properties>
-      <Property name="search">
-        Search for records using a query string. For example, `search=hello`.
+      <Property name="search" type="string">
+        Search for records using a query string.
       </Property>
-      <Property name="limit">
-        The number of records to return per page. This shouldn't be more then the `maxLimit` defined in your collection schema. For example, `limit=10`.
+      <Property name="limit" type="number">
+        The number of records to return per page. This shouldn't be more then the `maxLimit` defined in your collection schema.
       </Property>
-      <Property name="offset">
-        The number of records to skip. For example, `offset=10`.
+      <Property name="offset" type="number">
+        The number of records to skip.
       </Property>
-      <Property name="sortBy">
+      <Property name="sortBy" type="string">
         The field to sort the records by. You can use `-` to sort in descending order. For example, `sortBy=-createdAt`.
       </Property>
     </Properties>
 
-  Either returns all the records in an array if pagination is not enabled or an object with `results` and `count` keys if pagination is enabled.
+### Response
+
+Either returns all the records in an array if pagination is not enabled or an object with `results` and `count` keys if pagination is enabled.
 
   </Col>
-  <Col>
+  <Col sticky>
 
 ```bash {{ title: "Request" }}
-curl -L "http://localhost:3000/todos?limit=3&offset=10"
+curl -L "http://localhost:3000/collections/todos?limit=3&offset=10"
 ```
 
 ```json {{ title: "Response" }}
@@ -66,56 +68,182 @@ curl -L "http://localhost:3000/todos?limit=3&offset=10"
 
   </Col>
 </Row>
-
+---
 <Row>
-<Col>
+  <Col>
 
-### `POST` Create a Record
+    ## Create a Record {{ tag: 'POST', label: '/collections/todos' }}
 
-This endpoint will create a new record in the collection. You need to send the data in the request body. The data should be a valid JSON object that matches the schema of the collection.
+    This endpoint will create a new record in the collection. You can send the data in the request body. The data will be validated using the schema defined in your Drizzle Schema by generating zod schemas.
 
-</Col>
+    ### Request
 
-<Col>
-```bash {{ title: "Request" }}
-curl -L "http://localhost:3000/todos" \
--H "Content-Type: application/json" \
--d "{
-    \"status\": false,
-    \"message\": \"The API is working\"
-}"
-```
+    Send the data in the request body.
 
-```json {{ title: "Response" }}
-{
-  ...
-}
-```
-</Col>
+    ### Response
 
+    Returns the newly created record. The output will be different for [MySQL DB](https://orm.drizzle.team/docs/insert#insert-returningid)
+
+  </Col>
+  <Col sticky>
+    ```bash {{ title: "Request" }}
+    curl -L "http://localhost:3000/collections/todos" \
+    -H "Content-Type: application/json" \
+    -d "{
+        \"status\": false,
+        \"message\": \"The API is working\"
+    }"
+    ```
+
+    ```json {{ title: "Response" }}
+    {
+      "id": 4,
+      "status": false,
+      "message": "The API is working"
+    }
+    ```
+
+  </Col>
 </Row>
 
-<Row>
-<Col>
-### `GET` Get a Record
-</Col>
+---
 
+<Row>
+  <Col>
+    ## Count Records {{ tag: 'GET', label: '/collections/todos/count' }}
+
+    This endpoint will return the total number of records in the collection.
+
+    ### Response
+
+    Returns an object with the `count` key.
+
+  </Col>
+  <Col sticky>
+    ```bash {{ title: "Request" }}
+    curl -L "http://localhost:3000/collections/todos/count"
+    ```
+
+    ```json {{ title: "Response" }}
+    {
+      "count": 7
+    }
+    ```
+
+  </Col>
 </Row>
 
-<Row>
-<Col>
-### `PUT` Update a Record
-</Col>
-</Row>
+---
 
 <Row>
-<Col>
-### `DELETE` Delete a Record
-</Col>
-</Row>
+  <Col>
+    ## Get a Record {{ tag: 'GET', label: '/collections/todos/:id' }}
 
+    This endpoint will return a single record from the collection matching the `id` parameter.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="id" type="string">
+        The ID of the record to get.
+      </Property>
+    </Properties>
+
+    ### Response
+
+    Returns the record matching the `id` parameter.
+
+  </Col>
+  <Col sticky>
+    ```bash {{ title: "Request" }}
+    curl -L "http://localhost:3000/collections/todos/4"
+    ```
+
+    ```json {{ title: "Response" }}
+    {
+      "id": 4,
+      "status": false,
+      "message": "The API is working",
+    }
+    ```
+
+  </Col>
+</Row>
+---
 <Row>
-<Col>
-### `GET` Count Records
-</Col>
+  <Col>
+    ## Update a Record {{ tag: 'PUT', label: '/collections/todos/:id' }}
+
+    This endpoint will update the records from the collection matching the `id` parameter. You can send the data in the request body. The data will be validated using the schema defined in your Drizzle Schema by generating zod schemas.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="id" type="string">
+        The ID of the record to update.
+      </Property>
+    </Properties>
+
+    ### Response
+
+    Returns the updated records.
+
+  </Col>
+  <Col sticky>
+    ```bash {{ title: "Request" }}
+    curl -L -X PUT "http://localhost:3000/collections/todos/4" \
+    -H "Content-Type: application/json" \
+    -d "{
+        \"message\": \"Update is working\"
+    }"
+    ```
+
+    ```json {{ title: "Response" }}
+    [
+        {
+            "id": 4,
+            "status": false,
+            "message": "Update is working",
+        }
+    ]
+    ```
+
+  </Col>
+</Row>
+---
+<Row>
+  <Col>
+    ## Delete Records {{ tag: 'DELETE', label: '/collections/todos' }}
+
+    This endpoint will delete all the records matching your `queryKey`, and return the deleted records. For unique keys, it will delete only one record.
+
+### Optional attributes
+
+    <Properties>
+      <Property name="id" type="string">
+        The ID of the record to delete.
+      </Property>
+    </Properties>
+
+### Response
+
+Returns an array of the deleted records.
+
+  </Col>
+  <Col sticky>
+    ```bash {{ title: "Request" }}
+    curl -L -X DELETE "http://localhost:3000/collections/todos/4"
+    ```
+
+    ```json {{ title: "Response" }}
+    [
+      {
+        "id": 4,
+        "status": false,
+        "message": "The API is working"
+      }
+    ]
+    ```
+
+  </Col>
 </Row>
