@@ -1,0 +1,78 @@
+export const metadata = {
+  title: "useRestAPI",
+  description:
+    "In this guide, we will talk about what happens when something goes wrong while you work with the API.",
+};
+
+# useRestAPI
+
+This is a default plugin that comes with the `createHub` function. This plugin will add the REST API endpoints for the collections you have defined in your HonoHub config. You can remove this if you want, check out the [createBase](/apis/createBase) function to see how to remove the default plugins, and create barebone HonoHub App.
+
+---
+
+## API Endpoints
+
+Here is a list of the API endpoints that this plugins adds to your Hono app for each collection you have defined in your HonoHub config. You can use these endpoints to interact with your collections. All of these endpoints are validated using [zod](https://zod.dev/) schemas generated using your Drizzle Schema, so you can be sure that the data you are sending is correct.
+
+In these examples we will use the `todos` collection as an example and the base URL for the API will be `http://localhost:3000/api/`. You can replace `todos` with the name of your collection.
+
+<Row>
+  <Col>
+
+### `GET` List All Records
+
+This endpoint will return all the records in the collection. You can enable pagination and filtering using query parameters.
+
+<Note>
+  Pagination only works when you have defined the `pagination` option in your
+  collection schema. If you haven't, you will get all the records in the
+  collection.
+</Note>
+
+    <Properties>
+      <Property name="search">
+        Search for records using a query string. For example, `search=hello`.
+      </Property>
+      <Property name="limit">
+        The number of records to return per page. This shouldn't be more then the `maxLimit` defined in your collection schema. For example, `limit=10`.
+      </Property>
+      <Property name="offset">
+        The number of records to skip. For example, `offset=10`.
+      </Property>
+      <Property name="sortBy">
+        The field to sort the records by. You can use `-` to sort in descending order. For example, `sortBy=-createdAt`.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col>
+
+```bash {{ title: "Request" }}
+curl -G http://localhost:3000/api/collections/todos \
+-d limit=3
+-d offset=10
+````
+
+```json {{ title: "Response" }}
+{
+    "results": [
+        {...},
+        {...},
+        {...},
+    ],
+    "count": 100,
+}
+````
+
+  </Col>
+</Row>
+
+### `POST` Create a Record
+
+### `GET` Get a Record
+
+### `PUT` Update a Record
+
+### `DELETE` Delete a Record
+
+### `GET` Count Records

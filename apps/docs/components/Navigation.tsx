@@ -253,7 +253,10 @@ export const NAVIGATION: NavGroupType[] = [
   },
   {
     title: "🔌 Plugins",
-    links: [{ title: "GraphQL", href: "/plugins/graphql" }],
+    links: [
+      { title: "REST API", href: "/plugins/rest" },
+      { title: "GraphQL", href: "/plugins/graphql" },
+    ],
   },
 ];
 

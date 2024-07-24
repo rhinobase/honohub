@@ -9,7 +9,6 @@ import { HTTPException } from "hono/http-exception";
 import type { BlankSchema } from "hono/types";
 import { z } from "zod";
 import type { SanitizedCollection, SanitizedHub } from "../types";
-import { queryValidationSchema } from "./validations";
 
 export function createRoutes<
   Database extends AnyDrizzleDB<any>,
@@ -50,6 +49,18 @@ export function createRoutes<
     .where(eq(collection.queryKey, sql.placeholder("id")))
     .returning()
     .prepare(`${collection.slug}_delete_query`);
+
+  const maxLimit =
+    (typeof collection.pagination !== "boolean"
+      ? collection.pagination?.maxLimit
+      : undefined) ?? 100;
+
+  const queryValidationSchema = z.object({
+    limit: z.coerce.number().min(0).max(maxLimit).optional(),
+    offset: z.coerce.number().nonnegative().optional().default(0),
+    search: z.string().optional(),
+    sortBy: z.string().optional(),
+  });
 
   // List records endpoint
   app.get("/", zValidator("query", queryValidationSchema), async (c) => {
