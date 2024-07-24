@@ -50,3 +50,7 @@ Update the record with the given `id`. You can pass the data as `json` or `formD
 #### Delete Records - `DELETE /{slug}/{id}`
 
 Delete the record with the given `id`.
+
+## Credits
+
+The `honohub` project's UI is inspired by [Nuxt Devtools](https://github.com/nuxt/devtools).
