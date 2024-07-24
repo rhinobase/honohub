@@ -7,6 +7,12 @@ import {
 import { HTTPException } from "hono/http-exception";
 import type { CollectionConfig, SanitizedCollection } from "../types";
 
+/**
+ * Defines the Collection config
+ *
+ * @param config - The configuration object
+ * @returns The sanitized collection configuration
+ */
 export function defineCollection<T extends Table>(
   config: CollectionConfig<T>,
 ): SanitizedCollection<T> {

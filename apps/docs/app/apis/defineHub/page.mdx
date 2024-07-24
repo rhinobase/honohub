@@ -1,0 +1,76 @@
+import { log } from "console";
+
+export const metadata = {
+  title: "defineHub",
+  description: "Define Hubs configuration for your HonoHub project.",
+};
+
+# defineHub
+
+The `defineHub` function helps you define Hubs configuration for your Hono project. You can create multiple hubs in your project to manage different types of data. This takes an object of type `HubConfig`. You can define the db connector, collections, plugins, and other props. Here's an example of how to define a hub -
+
+<CodeGroup title="hub.config.ts">
+
+```ts
+export default defineHub({
+  db,
+  collections: [...],
+  plugins: [
+    {
+      name: "hono-logger",
+      bootstrap: (props) => new Hono().use("*", logger()).route("/", props.app),
+    },
+    useGraphQL(),
+  ],
+});
+```
+
+</CodeGroup>
+
+The `defineHub` function returns an object of type `SanitizedHub`, which populates the config with default values.
+
+### API
+
+| Property      | Description                     | Type                    | Default |
+| ------------- | ------------------------------- | ----------------------- | ------- |
+| db (required) | Database connector              | Drizzle DB Connector    | -       |
+| serverUrl     | Server URL (For Admin Panel)    | `string`                | `/`     |
+| collections   | Collections to be defined       | `SanitizedCollection[]` | `[]`    |
+| plugins       | Plugins to be used              | `GlobalPlugin[]`        | `[]`    |
+| routes        | Plugin routes (For Admin Panel) | `RouteOptions[]`        | `[]`    |
+
+## Routes Configuration
+
+The `routes` property is used to define routes for the Admin Panel. You wouldn't need to worry about this unless you're creating a custom Admin Panel or a Plugin. The `routes` property takes an array of objects of type `RouteOptions`. Here's an example of how to define routes -
+
+```ts
+const routes: RouteOptions = {
+  icon: "CodeBracketSquareIcon",
+  label: "GraphQL Editor",
+  path: route,
+  import: "@honohub/graphql/playground",
+  props(config) {
+    return {
+      endpoint: `${config.serverUrl}/graphql`,
+    };
+  },
+};
+```
+
+You can use the `props` function to pass props to the component. The `props` function takes a `config` object as an argument and returns a valid JSON object.
+
+## Plugins Configuration
+
+The `plugins` property is used to define plugins for the HonoHub project. You can create custom plugins to add new features, modify existing features, or improve the user experience. The `plugins` property takes an array of objects of type `GlobalPlugin`. Here's an example of how to define plugins -
+
+```ts
+const plugins: GlobalPlugin = {
+  name: "hono-logger",
+  register: (config) => {
+    console.log("Plugin registered", config);
+  },
+  bootstrap: (props) => new Hono().use("*", logger()).route("/", props.app),
+};
+```
+
+You can use the `register` function to update the HonoHub configuration and the `bootstrap` function to update the app / server instance.

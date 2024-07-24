@@ -249,9 +249,10 @@ export const NAVIGATION: NavGroupType[] = [
   {
     title: "📦 APIs",
     links: [
-      { title: "Rest API", href: "/apis/rest" },
-      { title: "GraphQL API", href: "/apis/graphql" },
-      { title: "Query Engine API", href: "/apis/query-engine" },
+      { title: "defineHub", href: "/apis/defineHub" },
+      { title: "defineCollection", href: "/apis/defineCollection" },
+      { title: "createBase", href: "/apis/createBase" },
+      { title: "createHub", href: "/apis/createHub" },
     ],
   },
   {

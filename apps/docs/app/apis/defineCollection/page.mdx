@@ -1,0 +1,40 @@
+export const metadata = {
+  title: "defineCollection",
+  description: "",
+};
+
+# defineCollection
+
+The `defineCollection` function helps you define collections property regarding the APIs and Admin Panel. You can create multiple collections in your project to manage different types of data. This function takes an object of type `CollectionConfig`. You can define the collection's schema, access control, admin settings, and more. Here's an example of how to define a collection -
+
+```ts
+const collection = defineCollection({
+  slug: "todos",
+  schema: schema.todos,
+  access: () => true,
+  admin: {
+    label: { singular: "Todo", plural: "Todos" },
+    fields: ["message", { name: "status", label: "Status", required: false }],
+  },
+  pagination: {
+    defaultLimit: 10,
+  },
+});
+```
+
+You can use the `access` property to define access control for the collection. The access property can be a function that returns a boolean or a promise that resolves to a boolean.
+
+### API
+
+| Property             | Description                                | Type                                 | Default      |
+| -------------------- | ------------------------------------------ | ------------------------------------ | ------------ |
+| slug                 | The collection slug                        | `string`                             | Table's Name |
+| queryKey             | The key to use for querying                | Table Column                         | Table's PK   |
+| schema\*             | The schema for the collection              | Drizzle Table Schema                 | -            |
+| access               | Access control                             | `(c) => boolean \| Promise<boolean>` | -            |
+| defaultSort          | Default sort order                         | `string`                             | -            |
+| listSearchableFields | Fields to be searched via full text search | `TableColumns[]`                     | -            |
+| admin                | Collection admin options                   | `CollectionAdminProps`               | -            |
+| pagination           | Pagination options                         | `defaultLimit` and `maxLimit`        |              |
+| hooks                | Hooks to modify HonoHub functionality      | `CollectionHooks`                    | -            |
+| plugins              | Collection plugins                         | `CollectionPlugin[]`                 | -            |

@@ -31,10 +31,13 @@ export type RouteOptions = {
 };
 
 export type GlobalPlugin<Database extends AnyDrizzleDB<any>> = {
+  // Plugin name
   name: string;
+  // Update the hub configuration
   register?: (
     config: SanitizedHub<Database>,
   ) => SanitizedHub<Database> | undefined;
+  // Update the app instance
   bootstrap?: <
     E extends Env = Env,
     P extends Schema = BlankSchema,
