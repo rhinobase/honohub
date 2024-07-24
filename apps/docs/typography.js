@@ -225,7 +225,7 @@ module.exports = {
           // Tables
           table: {
             width: "100%",
-            tableLayout: "auto",
+            tableLayout: "fixed",
             textAlign: "left",
             marginTop: theme("spacing.8"),
             marginBottom: theme("spacing.8"),
