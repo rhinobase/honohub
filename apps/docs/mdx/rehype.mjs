@@ -11,31 +11,24 @@ function rehypeParseCodeBlocks() {
       if (node.tagName === "code" && node.properties.className) {
         parentNode.properties.language = node.properties.className[0]?.replace(
           /^language-/,
-          "",
+          ""
         );
       }
     });
   };
 }
 
+let highlighter;
+
 function rehypeShiki() {
   return async (tree) => {
-    const highlighter = await getSingletonHighlighter({
-      themes: ["dracula"],
-      // TODO: Remove unused langs
-      langs: [
-        "json",
-        "jsonc",
-        "ts",
-        "js",
-        "jsx",
-        "tsx",
-        "sh",
-        "py",
-        "bash",
-        "php",
-      ],
-    });
+    highlighter =
+      highlighter ??
+      (await getSingletonHighlighter({
+        themes: ["github-light-default", "github-dark-default"],
+        // TODO: Remove unused langs
+        langs: ["json", "ts", "js", "tsx", "sh", "bash"],
+      }));
 
     visit(tree, "element", (node) => {
       if (node.tagName === "pre" && node.children[0]?.tagName === "code") {
@@ -47,7 +40,10 @@ function rehypeShiki() {
         if (node.properties.language) {
           textNode.value = highlighter.codeToHtml(textNode.value, {
             lang: node.properties.language,
-            theme: "dracula",
+            themes: {
+              light: "github-light-default",
+              dark: "github-dark-default",
+            },
           });
         }
       }
