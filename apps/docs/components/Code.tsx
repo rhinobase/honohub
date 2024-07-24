@@ -64,11 +64,11 @@ function CopyButton({ code }: CopyButton) {
   }, [copyCount]);
 
   return (
-    <div className="invisible absolute right-4 top-3.5 rounded-full bg-black/20 backdrop-blur transition-all group-hover:visible">
+    <div className="invisible absolute right-4 top-3.5 rounded-full bg-black/5 dark:bg-white/10 backdrop-blur transition-all group-hover:visible">
       <Button
         variant="ghost"
         size="sm"
-        className="text-secondary-100 rounded-full"
+        className="rounded-full"
         onClick={() =>
           window.navigator.clipboard.writeText(code).then(() => {
             setCopyCount((count) => count + 1);
@@ -76,17 +76,9 @@ function CopyButton({ code }: CopyButton) {
         }
         leftIcon={
           copied ? (
-            <CheckIcon
-              className="text-primary-400 stroke-2"
-              width={16}
-              height={16}
-            />
+            <CheckIcon className="text-primary-400 size-3.5 stroke-2" />
           ) : (
-            <DocumentDuplicateIcon
-              width={16}
-              height={16}
-              className="stroke-2"
-            />
+            <DocumentDuplicateIcon className="size-3.5 stroke-2" />
           )
         }
       >
@@ -114,7 +106,7 @@ function CodePanelHeader({ tag, label }: CodePanelHeader) {
         <span className="bg-secondary-500 size-0.5 rounded-full" />
       )}
       {label && (
-        <span className="text-secondary-400 font-mono text-[0.8125rem] leading-[1.5rem]">
+        <span className="text-secondary-400 dark:text-secondary-600 font-mono text-[0.8125rem] leading-[1.5rem]">
           {label}
         </span>
       )}
@@ -168,11 +160,11 @@ function CodeGroupHeader({ title, children }: CodeGroupHeader) {
   }
 
   return (
-    <div className="border-secondary-700 bg-secondary-800 dark:border-secondary-800 flex border-b px-4 dark:bg-transparent">
+    <div className="border-secondary-200 dark:border-secondary-800 flex border-b px-4">
       {title && (
         <h3
           className={classNames(
-            "dark:text my-auto mr-auto text-[0.8125rem] font-semibold leading-[1.5rem] text-white",
+            "dark:text-white my-auto mr-auto text-[0.8125rem] font-semibold leading-[1.5rem] text-black",
             !hasTabs ? "py-3" : "py-0",
           )}
         >
@@ -184,7 +176,12 @@ function CodeGroupHeader({ title, children }: CodeGroupHeader) {
           {Children.map(children, (child) => (
             <TabTrigger
               value={getPanelTitle(isValidElement(child) ? child.props : {})}
-              className="hover:text-secondary-400 data-[orientation=horizontal]:data-[state=active]:text-primary-400 dark:data-[orientation=horizontal]:data-[state=active]:border-primary-600 dark:data-[orientation=horizontal]:data-[state=active]:text-primary-600 py-3"
+              className={classNames(
+                "py-3",
+                "hover:text-black dark:hover:text-secondary-100",
+                "data-[orientation=horizontal]:data-[state=active]:text-primary-600 dark:data-[orientation=horizontal]:data-[state=active]:text-primary-300",
+                "data-[orientation=horizontal]:data-[state=active]:border-primary-500 dark:data-[orientation=horizontal]:data-[state=active]:border-primary-300",
+              )}
             >
               {isValidElement(child)
                 ? getPanelTitle(child.props || {})
@@ -253,7 +250,7 @@ function usePreventLayoutShift() {
 }
 
 const usePreferredLanguageStore = create<{
-  preferredLanguages: Array<string>;
+  preferredLanguages: string[];
   addPreferredLanguage: (language: string) => void;
 }>()((set) => ({
   preferredLanguages: [],
@@ -268,7 +265,7 @@ const usePreferredLanguageStore = create<{
     })),
 }));
 
-function useTabGroupProps(availableLanguages: Array<string>) {
+function useTabGroupProps(availableLanguages: string[]) {
   const { preferredLanguages, addPreferredLanguage } =
     usePreferredLanguageStore();
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -307,11 +304,11 @@ export function CodeGroup({ children, title, ...props }: CodeGroup) {
       const title = getPanelTitle(isValidElement(child) ? child.props : {});
       return title;
     }) ?? [];
-  const tabGroupProps = useTabGroupProps(languages);
+  const { selectedIndex, onChange } = useTabGroupProps(languages);
   const hasTabs = Children.count(children) > 1;
 
   const containerClassName =
-    "not-prose my-6 overflow-hidden rounded-2xl bg-secondary-900 shadow-md dark:ring-1 dark:ring-white/10";
+    "not-prose my-6 overflow-hidden rounded-2xl bg-white dark:bg-secondary-950 shadow-md ring-1 ring-black/5 dark:ring-white/10";
   const header = <CodeGroupHeader title={title}>{children}</CodeGroupHeader>;
   const panels = <CodeGroupPanels {...props}>{children}</CodeGroupPanels>;
 
@@ -320,7 +317,13 @@ export function CodeGroup({ children, title, ...props }: CodeGroup) {
       {hasTabs ? (
         <Tab
           size="sm"
-          defaultValue={languages[tabGroupProps.selectedIndex]}
+          defaultValue={languages[selectedIndex]}
+          // value={languages[selectedIndex]}
+          // onValueChange={(val) => {
+          //   const index = languages.findIndex((lang) => lang === val);
+
+          //   onChange(index);
+          // }}
           className={containerClassName}
         >
           {header}
