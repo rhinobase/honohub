@@ -48,8 +48,8 @@ export async function generateReactTemplates<
     const pkg = JSON.parse(
       await readFile(join(process.cwd(), "package.json"), "utf-8"),
     );
-    stats.version = pkg.dependencies.honohub;
-    stats.hono = pkg.dependencies.hono;
+    stats.version = getPackageVersion(pkg, "honohub");
+    stats.hono = getPackageVersion(pkg, "hono");
   } catch (e) {
     console.error("Failed to read package.json", e);
   }
@@ -154,3 +154,13 @@ type HTMLTemplateProps = {
 
 const htmlTemplateCode = (props: HTMLTemplateProps) =>
   `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>HonoHub</title></head><body><div id="root" ></div><script type="module" src="${props.module}"></script></body></html>`;
+
+function getPackageVersion(pkgJson: any, pkgName: string) {
+  const version =
+    pkgJson.dependencies?.[pkgName] ??
+    pkgJson.devDependencies?.[pkgName] ??
+    pkgJson.peerDependencies?.[pkgName] ??
+    "0.0.0";
+
+  return version.replace(/^[\^~]/, "");
+}
