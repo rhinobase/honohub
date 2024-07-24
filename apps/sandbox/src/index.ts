@@ -7,19 +7,19 @@ import hubConfig from "../hub.config";
 
 const app = new Hono().use(cors()).route("/", createHub(hubConfig));
 
-// const pathValidationRegex = /^\/[a-zA-Z0-9\/-]*(?<!\.[a-zA-Z0-9]+)$/;
-// app.use(
-//   "/*",
-//   serveStatic({
-//     root: "./apps/sandbox/dist",
-//     rewriteRequestPath: (path) => {
-//       const isPath = pathValidationRegex.test(path);
+const pathValidationRegex = /^\/[a-zA-Z0-9\/-]*(?<!\.[a-zA-Z0-9]+)$/;
+app.use(
+  "/*",
+  serveStatic({
+    root: "./apps/sandbox/dist",
+    rewriteRequestPath: (path) => {
+      const isPath = pathValidationRegex.test(path);
 
-//       if (isPath) return "/";
-//       return path;
-//     },
-//   })
-// );
+      if (isPath) return "/";
+      return path;
+    },
+  }),
+);
 
 const port = 3000;
 console.log(`Server is running on port ${port}`);

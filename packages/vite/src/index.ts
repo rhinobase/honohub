@@ -37,9 +37,7 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
   return {
     name: "honohub-vite-plugin",
     enforce: "pre",
-    async config(config, { command }) {
-      // if (command !== "build") return;
-
+    async config(config) {
       // Configuring the build
       config.root = buildProps.cache;
       config.build = config.build || {};
