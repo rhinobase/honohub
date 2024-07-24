@@ -132,19 +132,23 @@ export function HomePage({ stats, basePath }: HomePage) {
         </LinkCard>
       </div>
       <div className="flex flex-col md:flex-row gap-3 md:gap-4 lg:gap-5 w-full md:w-max">
-        {SOCIALS.map(({ icon: Icon, label, href, isExternal }) => (
-          <a
-            href={isExternal ? href : urlJoin(basePath, href)}
-            key={label}
-            className="flex w-max items-center gap-1 hover:text-primary-500 dark:hover:text-white text-secondary-500 transition-all text-sm ease-in-out"
-            {...(isExternal
-              ? { target: "_blank", rel: "noopener" }
-              : undefined)}
-          >
-            <Icon className="size-4 stroke-2" />
-            {label}
-          </a>
-        ))}
+        {SOCIALS.map(({ icon: Icon, label, href, isExternal }) => {
+          const Component = isExternal ? "a" : Link;
+
+          return (
+            <Component
+              key={label}
+              to={urlJoin(basePath, href)}
+              className="flex w-max items-center gap-1 hover:text-primary-500 dark:hover:text-white text-secondary-500 transition-all text-sm ease-in-out"
+              {...(isExternal
+                ? { target: "_blank", rel: "noopener", href }
+                : undefined)}
+            >
+              <Icon className="size-4 stroke-2" />
+              {label}
+            </Component>
+          );
+        })}
       </div>
     </div>
   );
