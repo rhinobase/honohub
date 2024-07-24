@@ -1,6 +1,26 @@
 export const metadata = {
-  title: "Using Plugins",
+  title: "GraphQL",
   description: "",
 };
 
-# Using Plugins
+# useGraphQL
+
+The `useGraphQL` plugin adds the GraphQL endpoint to the Hono App. You can also enable the GraphQL playground using the `playground` prop. Here's an example of how to use the `useGraphQL` plugin -
+
+```ts
+export default defineHub({
+  db,
+  serverUrl: "http://localhost:3000/",
+  collections: [collection],
+  plugins: [
+    useGraphQL({
+      route: "/graphql",
+      playground: true,
+    }),
+  ],
+});
+```
+
+Here is a screenshot of the GraphQL playground -
+
+![GraphQL Playground](/images/graphql-playground.png)

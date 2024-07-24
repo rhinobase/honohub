@@ -7,15 +7,26 @@ import { graphQLBodyValidation } from "./validation";
 
 export type GraphQLPluginConfig = {
   route?: string;
+  playground?:
+    | boolean
+    | {
+        route?: string;
+        graphQLEndpoint?: string;
+      };
+};
+
+const defaultPlaygroundOptions = {
+  route: "/playground",
+  graphQLEndpoint: "/graphql",
 };
 
 export function useGraphQL<Database extends AnyDrizzleDB<any>>(
-  config: GraphQLPluginConfig = {},
+  options: GraphQLPluginConfig = {},
 ): GlobalPlugin<Database> {
-  const { route = "/graphql" } = config;
+  const { route = "/graphql" } = options;
 
   return {
-    name: "honohub-graphql-api",
+    name: "honohub-graphql",
     bootstrap(props) {
       const { schema } = buildSchema(props.config.db);
 
@@ -36,22 +47,14 @@ export function useGraphQL<Database extends AnyDrizzleDB<any>>(
 
       return props.app;
     },
-  };
-}
-
-export type GraphQLPlaygroundPluginConfig = {
-  route?: string;
-  graphQLEndpoint?: string;
-};
-
-export function useGraphQLPlayground<Database extends AnyDrizzleDB<any>>(
-  config: GraphQLPlaygroundPluginConfig = {},
-): GlobalPlugin<Database> {
-  const { route = "/playground", graphQLEndpoint } = config;
-
-  return {
-    name: "honohub-graphql-playground",
     register(config) {
+      if (!options.playground) return undefined;
+
+      const { route: playgroundRoute, graphQLEndpoint } = {
+        ...defaultPlaygroundOptions,
+        ...(typeof options.playground !== "boolean" ? options.playground : {}),
+      };
+
       return {
         ...config,
         routes: [
@@ -59,7 +62,7 @@ export function useGraphQLPlayground<Database extends AnyDrizzleDB<any>>(
           {
             icon: "CodeBracketSquareIcon",
             label: "GraphQL Editor",
-            path: route,
+            path: playgroundRoute,
             // import: "@honohub/graphql/playground",
             import: "../../graphql/src/playground.tsx",
             props(config): GraphQLEditorProps {

@@ -7,7 +7,7 @@ import {
   defineCollection,
   defineHub,
 } from "../../packages/core/src";
-import { useGraphQL, useGraphQLPlayground } from "../../packages/graphql/src";
+import { useGraphQL } from "../../packages/graphql/src";
 import * as schema from "./src/db/schema";
 
 const neonSql = neon(process.env.DATABASE_URL ?? "");
@@ -38,9 +38,10 @@ export default defineHub({
         return new Hono<E, P, I>().use("*", logger()).route("/", props.app);
       },
     },
-    useGraphQL(),
-    useGraphQLPlayground({
-      graphQLEndpoint: "http://localhost:3000/graphql",
+    useGraphQL({
+      playground: {
+        graphQLEndpoint: "http://localhost:3000/graphql",
+      },
     }),
   ],
 });
