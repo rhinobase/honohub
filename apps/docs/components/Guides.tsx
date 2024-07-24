@@ -4,24 +4,24 @@ import { Heading } from "./Heading";
 
 const GUIDES = [
   {
-    href: "/setup/configuration",
+    href: "/apis/defineHub",
     name: "Configuration",
     description: "Learn how to configure your App and APIs.",
   },
   {
-    href: "/setup/admin-panel",
+    href: "/admin-panel",
     name: "Admin Panel",
     description:
       "Explore Admin Panel, designed to help you manage your resources.",
   },
   {
-    href: "/setup/deployment",
+    href: "/deployment",
     name: "Deployment",
     description:
       "Learn how to deploy your HonoHub APIs efficiently and securely.",
   },
   {
-    href: "/plugins/usage",
+    href: "/plugins/graphql",
     name: "Plugins",
     description:
       "Extend the functionality of your HonoHub application with plugins.",

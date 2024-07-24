@@ -1,6 +1,20 @@
 export const metadata = {
-  title: "GraphQL",
-  description: "",
+  title: "createHub",
+  description: "Create a Hono App with all the default and user defined plugins and collections.",
 };
 
-# GraphQL APIs
+# createHub
+
+The `createHub` function returns a Hono App with all the default and user defined plugins and collections, generating the APIs. Here's an example of how to create a Hono App with the `createHub` function -
+
+```ts
+const hubConfig = {
+  db,
+  plugins: [useGraphQL()],
+  collections: [todos],
+};
+
+const app = new Hono().route("/", createHub(hubConfig));
+```
+
+This will generate an app with Rest APIs and GraphQL endpoints for the `todos` collection. You can add more collections and plugins to the `hubConfig` object to generate more APIs and customize the app.

@@ -1,6 +1,20 @@
 export const metadata = {
-  title: "GraphQL",
-  description: "",
+  title: "createBase",
+  description: "Create a base Hono App with your plugins and endpoints.",
 };
 
-# GraphQL APIs
+# createBase
+
+The `createBase` function is base implmentation which wraps the Hono App with all the plugins and add the endpoints. You can use to remove the default plugins and add your own plugins, like `useRestAPI`.
+
+```ts
+const hubConfig = {
+  db,
+  plugins: [useGraphQL()],
+  collections: [todos],
+};
+
+const app = new Hono().route("/", createBase(hubConfig));
+```
+
+This will generate an app with GraphQL endpoint but not the REST API for the `todos` collection. You can add the REST API by adding the `useRestAPI` plugin. The `createHub` function is a wrapper around the `createBase` function which adds the default plugins.

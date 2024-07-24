@@ -1,0 +1,35 @@
+export const metadata = {
+  title: "Vite Plugin",
+  description: "Create a Hono App with all the default and user defined plugins and collections.",
+};
+
+# @honohub/vite
+
+The `@honohub/vite` plugin is a Vite plugin which adds the HonoHub configurations to the Vite server, enabling the Vite server to serve the Admin Panel. Here is an example of how to use the `@honohub/vite` plugin -
+
+```ts
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import honohub from "@honohub/vite";
+import hubConfig from "./hub.config";
+
+export default defineConfig({
+  plugins: [
+    react(),
+    honohub({
+      config: hubConfig, // Your hub configuration
+      basePath: "/", // Base path for the admin panel
+    }),
+  ],
+});
+```
+
+This will add the HonoHub configurations to the Vite server and serve the Admin Panel at the base path `/`. You can customize the base path and the hub configuration as per your requirements. Out of the box the `@honohub/vite` plugin uses the `@honohub/react` plugin to render the Admin Panel but you can use your own plugin to render the Admin Panel using the `generator` option.
+
+<Note>
+By using custom generator some plugins may not work as expected. The `@honohub/react` plugin is the recommended plugin to render the Admin Panel.
+</Note>
+
+The Admin Panel is utility to help you build and ship your Hono App faster. With plugins like `useGraphQLPlayground` you can add more functionalities and testing utilities to the Admin Panel.
+
+The reason we have made the admin panel as an optional plugin is to give you the flexibility to choose the plugins you want to use in your app. If you don't want to use the admin panel you can simply not use the `@honohub/vite` plugin and the admin panel will not be served. This way you can keep your app lightweight and only use the plugins you need.

@@ -236,14 +236,8 @@ export const NAVIGATION: NavGroupType[] = [
     links: [
       { title: "Introduction", href: "/" },
       { title: "Quick Start Guide", href: "/quickstart" },
-    ],
-  },
-  {
-    title: "⚙️ Setup & Deployment",
-    links: [
-      { title: "Configuration", href: "/setup/configuration" },
-      { title: "Admin Panel", href: "/setup/admin-panel" },
-      { title: "Deployment", href: "/setup/deployment" },
+      { title: "Admin Panel", href: "/admin-panel" },
+      { title: "Deployment", href: "/deployment" },
     ],
   },
   {
@@ -251,16 +245,15 @@ export const NAVIGATION: NavGroupType[] = [
     links: [
       { title: "defineHub", href: "/apis/defineHub" },
       { title: "defineCollection", href: "/apis/defineCollection" },
-      { title: "createBase", href: "/apis/createBase" },
       { title: "createHub", href: "/apis/createHub" },
+      { title: "createBase", href: "/apis/createBase" },
+      { title: "@honohub/vite", href: "/apis/vite" },
+      { title: "@honohub/react", href: "/apis/react" },
     ],
   },
   {
     title: "🔌 Plugins",
-    links: [
-      { title: "Usage", href: "/plugins/usage" },
-      { title: "Development", href: "/plugins/development" },
-    ],
+    links: [{ title: "GraphQL", href: "/plugins/graphql" }],
   },
 ];
 

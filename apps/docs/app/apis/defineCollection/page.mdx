@@ -1,6 +1,6 @@
 export const metadata = {
   title: "defineCollection",
-  description: "",
+  description: "Define a collection in HonoHub.",
 };
 
 # defineCollection
@@ -38,3 +38,62 @@ You can use the `access` property to define access control for the collection. T
 | pagination           | Pagination options                         | `defaultLimit` and `maxLimit`        |              |
 | hooks                | Hooks to modify HonoHub functionality      | `CollectionHooks`                    | -            |
 | plugins              | Collection plugins                         | `CollectionPlugin[]`                 | -            |
+
+## Collection Admin Options
+
+The `admin` property takes an object of type `CollectionAdminProps`. You can define the label for the collection, the fields to be displayed in the admin panel, and more. 
+These properties are used to build the _Admin Panel_ for the collection. These actions will run on the server. Here's an example of how to define admin settings for a collection -
+
+```ts
+const adminOptions: CollectionAdminProps  = {
+    label: { singular: "Todo", plural: "Todos" },
+    fields: ["message", { name: "status", label: "Status", required: false }],
+    actions: [
+        {
+          name: "sendResetPasswordEmail",
+          label: "Send Reset Password Email",
+          icon: "AtSymbolIcon",
+          action: (options) => {
+            // Your action logic here
+          },
+        },
+      ],
+  };
+```
+
+### API
+
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| label    | Collection label | `CollectionLabel` | - |
+| fields   | Fields to be displayed in the admin panel | `AdminField[]` | - |
+| actions  | Actions to be displayed in the admin panel | `AdminAction[]` | - |
+
+## Collection Hooks
+
+The `hooks` property takes an object of type `CollectionHooks`. You can define hooks to run before or after creating, updating, or deleting a record. Here's an example of how to define hooks for a collection -
+
+```ts
+const collection = defineCollection({
+  // ...
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        console.log(doc);
+        return undefined;
+      },
+    ],
+  },
+});
+```
+
+### API
+
+| Property       | Description                           |
+| -------------- | ------------------------------------- |
+| beforeCreate   | Hook to run before creating a record   |
+| afterCreate    | Hook to run after creating a record    |
+| beforeUpdate   | Hook to run before updating a record   |
+| afterUpdate    | Hook to run after updating a record    |
+| beforeDelete   | Hook to run before deleting a record   |
+| afterDelete    | Hook to run after deleting a record    |
