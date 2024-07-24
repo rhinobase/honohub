@@ -1,7 +1,11 @@
 import { classNames } from "@rafty/ui";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Link from "next/link";
-import { type HTMLAttributes, type PropsWithChildren, forwardRef } from "react";
+import Link, { type LinkProps } from "next/link";
+import {
+  type AnchorHTMLAttributes,
+  type HTMLAttributes,
+  forwardRef,
+} from "react";
 import { Logo } from "./Logo";
 import {
   MobileNavigation,
@@ -11,19 +15,22 @@ import { MobileSearch, Search } from "./Search";
 import { ThemeToggle } from "./ThemeToggle";
 import { useDrawerDialog } from "./store";
 
-type TopLevelNavItem = PropsWithChildren<{
-  href: string;
-}>;
+type TopLevelNavItem = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  keyof LinkProps
+> &
+  LinkProps;
 
-function TopLevelNavItem({ href, children }: TopLevelNavItem) {
+function TopLevelNavItem({ className, ...props }: TopLevelNavItem) {
   return (
     <li>
       <Link
-        href={href}
-        className="text-secondary-600 hover:text-secondary-900 dark:text-secondary-400 text-[0.875rem] leading-5 transition dark:hover:text-white"
-      >
-        {children}
-      </Link>
+        {...props}
+        className={classNames(
+          "text-secondary-600 hover:text-primary-500 dark:text-secondary-400 text-[0.875rem] leading-5 transition-all dark:hover:text-primary-300",
+          className,
+        )}
+      />
     </li>
   );
 }
@@ -80,10 +87,18 @@ export const Header = forwardRef<HTMLDivElement, Header>(function Header(
       <div className="flex items-center gap-5">
         <nav className="hidden md:block">
           <ul className="flex items-center gap-8">
-            <TopLevelNavItem href="https://github.com/rhinobase/starter">
+            <TopLevelNavItem
+              href="https://github.com/rhinobase/starter"
+              target="_blank"
+              rel="noopener"
+            >
               Examples
             </TopLevelNavItem>
-            <TopLevelNavItem href="https://github.com/rhinobase/honohub">
+            <TopLevelNavItem
+              href="https://github.com/rhinobase/honohub"
+              target="_blank"
+              rel="noopener"
+            >
               Github
             </TopLevelNavItem>
           </ul>
