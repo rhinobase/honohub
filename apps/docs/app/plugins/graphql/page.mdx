@@ -1,3 +1,7 @@
+import Image from "next/image";
+import GraphqlImage from "../../../public/images/graphql-panel.png";
+import GraphqlDarkImage from "../../../public/images/graphql-panel-dark.png";
+
 export const metadata = {
   title: "GraphQL",
   description: "",
@@ -23,4 +27,5 @@ export default defineHub({
 
 Here is a screenshot of the GraphQL playground -
 
-![GraphQL Playground](/images/graphql-playground.png)
+<Image src={GraphqlImage} alt="GraphQL Panel Image" className="not-prose ring-1 ring-black/5 shadow-lg dark:hidden !mb-0"/>
+<Image src={GraphqlDarkImage} alt="GraphQL Panel Image" className="not-prose ring-1 ring-white/10 hidden dark:block"/>
