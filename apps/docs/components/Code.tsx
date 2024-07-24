@@ -217,38 +217,6 @@ function CodeGroupPanels({ children, ...props }: CodeGroupPanels) {
   return <CodePanel {...props}>{children}</CodePanel>;
 }
 
-function usePreventLayoutShift() {
-  const positionRef = useRef<HTMLElement>(null);
-  const rafRef = useRef<number>();
-
-  useEffect(() => {
-    return () => {
-      if (typeof rafRef.current !== "undefined") {
-        window.cancelAnimationFrame(rafRef.current);
-      }
-    };
-  }, []);
-
-  return {
-    positionRef,
-    preventLayoutShift(callback: () => void) {
-      if (!positionRef.current) {
-        return;
-      }
-
-      const initialTop = positionRef.current.getBoundingClientRect().top;
-
-      callback();
-
-      rafRef.current = window.requestAnimationFrame(() => {
-        const newTop =
-          positionRef.current?.getBoundingClientRect().top ?? initialTop;
-        window.scrollBy(0, newTop - initialTop);
-      });
-    },
-  };
-}
-
 const usePreferredLanguageStore = create<{
   preferredLanguages: string[];
   addPreferredLanguage: (language: string) => void;
@@ -278,17 +246,11 @@ function useTabGroupProps(availableLanguages: string[]) {
     setSelectedIndex(newSelectedIndex);
   }
 
-  const { positionRef, preventLayoutShift } = usePreventLayoutShift();
-
   return {
     as: "div" as const,
-    ref: positionRef,
     selectedIndex,
-    onChange: (newSelectedIndex: number) => {
-      preventLayoutShift(() =>
-        addPreferredLanguage(availableLanguages[newSelectedIndex]),
-      );
-    },
+    onChange: (newSelectedIndex: number) =>
+      addPreferredLanguage(availableLanguages[newSelectedIndex]),
   };
 }
 
@@ -317,13 +279,12 @@ export function CodeGroup({ children, title, ...props }: CodeGroup) {
       {hasTabs ? (
         <Tab
           size="sm"
-          defaultValue={languages[selectedIndex]}
-          // value={languages[selectedIndex]}
-          // onValueChange={(val) => {
-          //   const index = languages.findIndex((lang) => lang === val);
+          value={languages[selectedIndex]}
+          onValueChange={(val) => {
+            const index = languages.findIndex((lang) => lang === val);
 
-          //   onChange(index);
-          // }}
+            onChange(index);
+          }}
           className={containerClassName}
         >
           {header}
