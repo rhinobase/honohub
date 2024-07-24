@@ -1,4 +1,5 @@
 import { mkdir, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { HonoHubProps } from "@honohub/react";
 import type { AnyDrizzleDB } from "drizzle-graphql";
@@ -35,6 +36,24 @@ export async function generateReactTemplates<
   // Creating the dir
   await mkdir(build.cache, { recursive: true });
 
+  const stats = {
+    version: "0.0.0",
+    hono: "0.0.0",
+    collections: config.collections.length,
+    plugins: config.plugins.length,
+    routes: 0,
+  };
+
+  try {
+    const pkg = JSON.parse(
+      await readFile(join(process.cwd(), "package.json"), "utf-8"),
+    );
+    stats.version = pkg.dependencies.honohub;
+    stats.hono = pkg.dependencies.hono;
+  } catch (e) {
+    console.error("Failed to read package.json", e);
+  }
+
   await Promise.all([
     // HTML file
     writeFile(
@@ -54,13 +73,7 @@ export async function generateReactTemplates<
           basePath,
           serverUrl: config.serverUrl,
           plugins: pluginProps,
-          stats: {
-            version: "",
-            hono: "",
-            collections: config.collections.length,
-            plugins: config.plugins.length,
-            routes: 0,
-          },
+          stats,
           collections: config.collections.map((collection) => {
             const columns = getTableColumns(collection.schema);
 
