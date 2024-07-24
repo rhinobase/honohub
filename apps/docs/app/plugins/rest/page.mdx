@@ -34,7 +34,7 @@ This endpoint will return all the records in the collection. You can enable pagi
         Search for records using a query string.
       </Property>
       <Property name="limit" type="number">
-        The number of records to return per page. This shouldn't be more then the `maxLimit` defined in your collection schema.
+        The number of records to return per page. This shouldn't be more than the `maxLimit` defined in your collection schema.
       </Property>
       <Property name="offset" type="number">
         The number of records to skip.
@@ -213,7 +213,7 @@ curl -L "http://localhost:3000/collections/todos?limit=3&offset=10"
 ---
 <Row>
   <Col>
-    ## Delete Records {{ tag: 'DELETE', label: '/collections/todos' }}
+    ## Delete Records {{ tag: 'DELETE', label: '/collections/todos/:id' }}
 
     This endpoint will delete all the records matching your `queryKey`, and return the deleted records. For unique keys, it will delete only one record.
 

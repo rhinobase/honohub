@@ -11,12 +11,24 @@ export function generateMetadata(): Metadata {
     template: "%s | HonoHub",
     default: "HonoHub - Open Source Honojs Headless CMS",
   };
-  const description = "";
+  const description =
+    "HonoHub is an open-source headless CMS library for React and Next.js applications. It is built on top of Honojs, a headless CMS library that provides a simple and flexible way to manage content in your applications.";
 
   return {
     title,
     description,
-    keywords: [],
+    keywords: [
+      "rhinobase",
+      "react",
+      "hono",
+      "drizzle",
+      "headless",
+      "cms",
+      "library",
+      "typescript",
+      "javascript",
+      "web",
+    ],
     metadataBase: new URL("https://www.honohub.dev"),
     authors: [
       {
