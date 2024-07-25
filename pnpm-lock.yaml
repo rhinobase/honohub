@@ -35,6 +35,9 @@ dependencies:
   '@next/mdx':
     specifier: ^14.2.4
     version: 14.2.5(@mdx-js/loader@3.0.1)
+  '@next/third-parties':
+    specifier: ^14.2.5
+    version: 14.2.5(next@14.2.3)(react@18.3.1)
   '@rafty/corp':
     specifier: ^1.0.1
     version: 1.0.1(@internationalized/date@3.5.4)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(prop-types@15.8.1)(react-dom@18.3.1)(react-hook-form@7.52.1)(react@18.3.1)
@@ -3352,6 +3355,17 @@ packages:
     os: [win32]
     requiresBuild: true
     optional: true
+
+  /@next/third-parties@14.2.5(next@14.2.3)(react@18.3.1):
+    resolution: {integrity: sha512-PDRJm8RZ3rnGNporHKjcdCeZqoW8iJ5uP0clo1Z08TqJiQzuntJ66zrGYCJyqTakx62UJNOp73YsQCFo6kbYYg==}
+    peerDependencies:
+      next: ^13.0.0 || ^14.0.0
+      react: ^18.2.0
+    dependencies:
+      next: 14.2.3(@babel/core@7.24.9)(react-dom@18.3.1)(react@18.3.1)
+      react: 18.3.1
+      third-party-capital: 1.0.20
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -16176,6 +16190,10 @@ packages:
     resolution: {integrity: sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==}
     dependencies:
       any-promise: 1.3.0
+
+  /third-party-capital@1.0.20:
+    resolution: {integrity: sha512-oB7yIimd8SuGptespDAZnNkzIz+NWaJCu2RMsbs4Wmp9zSDUM8Nhi3s2OOcqYuv3mN4hitXc8DVx+LyUmbUDiA==}
+    dev: false
 
   /thread-stream@0.15.2:
     resolution: {integrity: sha512-UkEhKIg2pD+fjkHQKyJO3yoIvAP3N6RlNFt2dUhcS1FGvCD1cQa1M/PGknCLFIyZdtJOWQjejp7bdNqmN7zwdA==}

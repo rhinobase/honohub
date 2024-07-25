@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import glob from "fast-glob";
 import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
@@ -86,6 +87,9 @@ export function generateMetadata(): Metadata {
   };
 }
 
+// Google Analytics ID
+const GMT_ID = "G-S4SLS87GGQ";
+
 export default async function RootLayout(props: PropsWithChildren) {
   const pages = await glob("**/*.mdx", { cwd: "./app" });
   const allSectionsEntries = (await Promise.all(
@@ -102,6 +106,7 @@ export default async function RootLayout(props: PropsWithChildren) {
         <Providers>
           <Layout allSections={allSections}>{props.children}</Layout>
         </Providers>
+        <GoogleAnalytics gaId={GMT_ID} />
       </body>
     </html>
   );
