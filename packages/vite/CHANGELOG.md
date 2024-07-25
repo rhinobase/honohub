@@ -1,3 +1,10 @@
+## 0.1.11 (2024-07-25)
+
+
+### 🩹 Fixes
+
+- **vite:** resolved importing error
+
 ## 0.1.10 (2024-07-25)
 
 This was a version bump only for vite to align it with other projects, there were no code changes.
