@@ -43,5 +43,13 @@ export default defineHub({
         graphQLEndpoint: "http://localhost:3000/graphql",
       },
     }),
+    {
+      name: "dev",
+      register: (config) => {
+        config.routes[0].import = "../../graphql/src/playground.tsx";
+
+        return config;
+      },
+    },
   ],
 });
