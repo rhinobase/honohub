@@ -58,9 +58,7 @@ export async function generateReactTemplates<
     // HTML file
     writeFile(
       join(process.cwd(), build.cache, "./index.html"),
-      htmlTemplateCode({
-        module: join(build.cache, "./main.jsx"),
-      }),
+      htmlTemplateCode,
       {
         flag: "w+",
       },
@@ -152,8 +150,7 @@ type HTMLTemplateProps = {
   icon?: string;
 };
 
-const htmlTemplateCode = (props: HTMLTemplateProps) =>
-  `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>HonoHub</title></head><body><div id="root" ></div><script type="module" src="${props.module}"></script></body></html>`;
+const htmlTemplateCode = `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>HonoHub</title></head><body><div id="root" ></div><script type="module" src="./main.jsx"></script></body></html>`;
 
 function getPackageVersion(pkgJson: any, pkgName: string) {
   const version =
