@@ -1,7 +1,7 @@
 {
   "name": "@honohub/vite",
   "description": "Vite plugin for honohub",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "license": "MIT",
   "keywords": [
     "hono",

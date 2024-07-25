@@ -1,3 +1,5 @@
+import { config } from "@swc/core/spack";
+
 export const metadata = {
   title: "Admin Panel",
   description: "Set up the Admin Panel for your HonoHub project.",
@@ -23,19 +25,23 @@ To set up the Admin Panel, you need to add the `@honohub/react` and `@honohub/vi
 <CodeGroup>
 
 ```bash {{ title: 'npm' }}
-npm add @honohub/react @honohub/vite vite react react-dom
+npm add @honohub/react react react-dom
+npm add --save-dev @honohub/vite vite @vitejs/plugin-react
 ```
 
 ```bash {{ title: 'yarn' }}
-yarn add @honohub/react @honohub/vite vite react react-dom
+yarn add @honohub/react react react-dom
+yarn add --dev @honohub/vite vite @vitejs/plugin-react
 ```
 
 ```bash {{ title: 'pnpm' }}
-pnpm add @honohub/react @honohub/vite vite react react-dom
+pnpm add @honohub/react react react-dom
+pnpm add -D @honohub/vite vite @vitejs/plugin-react
 ```
 
 ```bash {{ title: 'bun' }}
-bun add @honohub/react @honohub/vite vite react react-dom
+bun add @honohub/react react react-dom
+bun add --dev @honohub/vite vite @vitejs/plugin-react
 ```
 
 </CodeGroup>
@@ -63,36 +69,7 @@ export default defineConfig({
 
 </CodeGroup>
 
-You will also need to setup Tailwind CSS in your project. You can do this by following the [Tailwind CSS installation guide](https://tailwindcss.com/docs/guides/vite) for vite. This is the Tailwind CSS configuration for the Admin Panel:
-
-<CodeGroup title="tailwind.config.js">
-
-```js
-const { join } = require("node:path");
-const colors = require("tailwindcss/colors");
-
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: "class",
-  content: [
-    join(__dirname, "src/**/*!(*.stories|*.spec).{ts,tsx}"),
-    "./node_modules/@rafty/**/*.js",
-    "./node_modules/@honohub/react/**/*.js",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        primary: colors.sky,
-      },
-    },
-  },
-  plugins: [require("@rafty/plugin")],
-};
-```
-
-</CodeGroup>
-
-We are using `@rafty/ui` as our component lib. You can customize the Tailwind CSS configuration to match your project's design system. Follow the [Rafty UI documentation](https://rafty.rhinobase.io/) for more information.
+We are using `@rafty/ui` as our component lib. You can customize the Tailwind CSS configuration to match your project's design system, just change `primary: colors.sky` to your desired color palette. Follow the [Rafty UI documentation](https://rafty.rhinobase.io/) for more information.
 
 Now add the following script to your `package.json` file:
 
@@ -131,7 +108,42 @@ bun run vite:serve
 
 </CodeGroup>
 
-The Admin Panel will be available at `http://localhost:5173`. You can now start managing your HonoHub project using the Admin Panel.
+The Admin Panel will be available at `http://localhost:5173`. You can now start managing your HonoHub project using the Admin Panel. Now one issue is that the API server is running on a different port, So you will need to do the following:
+
+Update you `hub.config.ts` file by adding `serverUrl` property to the config object.
+
+```ts
+const hubConfig = defineHub({
+  // ...,
+  serverUrl: "http://localhost:3000",
+});
+```
+
+And you will need to enable CORS in your API server. You can do this by adding the following code to your API server:
+
+```ts
+import { cors } from "hono/cors";
+
+const app = new Hono().use(cors()).route("/", createHub(hubConfig));
+```
+
+The reason for why we separated the API server and the Admin Panel is that you can run and deploy your Hono app in the prefered runtime and serve the Admin Panel as a static site. This way you can deploy the Admin Panel to a CDN or serve it using `serveStatic` middleware in your API server.
+
+```ts
+const pathValidationRegex = /^\/[a-zA-Z0-9\/-]*(?<!\.[a-zA-Z0-9]+)$/;
+app.use(
+  "/*",
+  serveStatic({
+    root: "./apps/sandbox/dist",
+    rewriteRequestPath: (path) => {
+      const isPath = pathValidationRegex.test(path);
+
+      if (isPath) return "/";
+      return path;
+    },
+  })
+);
+```
 
 ## Customizing the Admin Panel
 
@@ -160,4 +172,4 @@ And you are not limited to React. Just add the necessary configuration to the `v
 - Use a different CSS framework like Chakra, MUI, or Bulma.
 - Add custom routes and panels to the Admin Panel.
 
-Go crazy!
+Go crazy!import ts from "typescript";

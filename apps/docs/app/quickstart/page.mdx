@@ -48,9 +48,9 @@ bun add honohub
 
 ### Setting Up HonoHub
 
-Create a new file named `honohub.config.ts` or `honohub.config.js` in the root of your project and add the following configuration:
+Create a new file named `hub.config.ts` or `hub.config.js` in the root of your project and add the following configuration:
 
-<CodeGroup title="honohub.config.ts">
+<CodeGroup title="hub.config.ts">
 
 ```ts
 import { neon } from "@neondatabase/serverless";
@@ -58,7 +58,7 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { defineCollection, defineHub } from "honohub";
 import * as schema from "./src/db/schema";
 
-const neonSql = neon(process.env.DATABASE_URL!);
+const neonSql = neon("DATABASE_URL");
 const db = drizzle(neonSql, { schema });
 
 export default defineHub({
@@ -74,6 +74,26 @@ export default defineHub({
 
 </CodeGroup>
 
+Change the `DATABASE_URL` with your database URL.
+
+Here we are assuming that you have a `schema` file in your project that exports a `todos` schema. You can replace this with your own schema. Here is an example of a `schema` file:
+
+<CodeGroup title="schema.ts">
+
+```ts
+import { boolean, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+
+export const todos = pgTable("todos", {
+  id: serial("id").primaryKey(),
+  status: boolean("status").notNull().default(false),
+  message: text("message").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+```
+
+</CodeGroup>
+
 ### Adding HonoHub in your Project
 
 Add HonoHub to your Hono project like any other route:
@@ -83,7 +103,7 @@ Add HonoHub to your Hono project like any other route:
 ```ts
 import { Hono } from "hono";
 import { createHub } from "honohub";
-import hubConfig from "../honohub.config";
+import hubConfig from "../hub.config";
 
 const app = new Hono().route("/", createHub(hubConfig));
 ```

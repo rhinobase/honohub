@@ -9,8 +9,8 @@ import {
 } from "./react";
 
 export type HonoHubViteOptions<Database extends AnyDrizzleDB<any>> = {
-  basePath: string;
   config: SanitizedHub<Database>;
+  basePath?: string;
   override?: string;
   build?: Partial<BuildOptions>;
   generator?: (
@@ -29,7 +29,7 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
   const {
     config: hub,
     build = {},
-    basePath,
+    basePath = "/",
     generator = generateReactTemplates,
   } = options;
 

@@ -9,7 +9,7 @@ module.exports = withNx(
     tsConfig: "./tsconfig.lib.json",
     compiler: "swc",
     external: ["react", "react-dom", "react/jsx-runtime"],
-    format: ["esm"],
+    format: ["cjs", "esm"],
     assets: [{ input: "./packages/react", output: ".", glob: "README.md" }],
   },
   {

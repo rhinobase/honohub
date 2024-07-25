@@ -6,7 +6,7 @@ module.exports = withNx(
     outputPath: "../../dist/packages/vite",
     tsConfig: "./tsconfig.lib.json",
     compiler: "swc",
-    format: ["esm"],
+    format: ["cjs", "esm"],
     assets: [{ input: "./packages/vite", output: ".", glob: "*.md" }],
   },
   {},
