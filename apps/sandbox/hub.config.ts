@@ -46,7 +46,8 @@ export default defineHub({
     {
       name: "dev",
       register: (config) => {
-        config.routes[0].import = "../../graphql/src/playground.tsx";
+        config.routes[0].import =
+          "../../../packages/graphql/src/playground.tsx";
 
         return config;
       },

@@ -35,10 +35,15 @@ export async function generateReactTemplates<
   for (const page in config.routes) {
     const route = config.routes[page];
 
+    const importProps =
+      typeof route.import === "string"
+        ? { module: route.import, component: "default" }
+        : route.import;
+
     pluginProps[route.path] = {
       label: route.label,
       icon: route.icon,
-      import: route.import,
+      import: `import('${importProps.module}').then((mod) => mod.${importProps.component})`,
       props:
         (route.props && typeof route.props === "function"
           ? route.props(config)
@@ -79,69 +84,72 @@ export async function generateReactTemplates<
     // Component file
     writeFile(
       join(process.cwd(), build.cache, "./main.jsx"),
-      jsTemplateCode({
-        importStatement: override,
-        props: {
-          basePath,
-          serverUrl: config.serverUrl,
-          plugins: pluginProps,
-          stats,
-          collections: config.collections.map((collection) => {
-            const columns = getTableColumns(collection.schema);
+      refinePluginImports(
+        jsTemplateCode({
+          importStatement: override,
+          props: {
+            basePath,
+            serverUrl: config.serverUrl,
+            plugins: pluginProps,
+            stats,
+            collections: config.collections.map((collection) => {
+              const columns = getTableColumns(collection.schema);
 
-            const fieldMap: Record<
-              string,
-              {
-                name: string;
-                label: string;
-                type: string;
-                required: boolean;
-              }
-            > = {};
+              const fieldMap: Record<
+                string,
+                {
+                  name: string;
+                  label: string;
+                  type: string;
+                  required: boolean;
+                }
+              > = {};
 
-            for (const [key, column] of Object.entries(columns)) {
-              const { name, notNull, dataType } = column as any;
+              for (const [key, column] of Object.entries(columns)) {
+                const { name, notNull, dataType } = column as any;
 
-              fieldMap[name] = {
-                name: key,
-                label: name,
-                type: dataType,
-                required: notNull,
-              };
-            }
-
-            const collectionColumns =
-              collection.admin.columns?.map((col: any) => {
-                let tmp: ValueOf<typeof fieldMap>;
-                if (typeof col === "string") tmp = fieldMap[String(col)];
-                tmp = { ...fieldMap[String(col.name)], ...col };
-
-                return {
-                  name: tmp.name,
-                  label: tmp.label,
-                  type: tmp.type,
+                fieldMap[name] = {
+                  name: key,
+                  label: name,
+                  type: dataType,
+                  required: notNull,
                 };
-              }) ?? Object.values(fieldMap);
+              }
 
-            const fields =
-              collection.admin.fields?.map((col: any) => {
-                if (typeof col === "string") return fieldMap[String(col)];
-                return { ...fieldMap[String(col.name)], ...col };
-              }) ?? Object.values(fieldMap);
+              const collectionColumns =
+                collection.admin.columns?.map((col: any) => {
+                  let tmp: ValueOf<typeof fieldMap>;
+                  if (typeof col === "string") tmp = fieldMap[String(col)];
+                  tmp = { ...fieldMap[String(col.name)], ...col };
 
-            return {
-              slug: collection.slug,
-              label: collection.admin.label ?? getTableName(collection.schema),
-              columns: collectionColumns,
-              fields: fields,
-              actions:
-                collection.admin.actions?.map(
-                  ({ action, ...props }) => props,
-                ) ?? [],
-            };
-          }),
-        },
-      }),
+                  return {
+                    name: tmp.name,
+                    label: tmp.label,
+                    type: tmp.type,
+                  };
+                }) ?? Object.values(fieldMap);
+
+              const fields =
+                collection.admin.fields?.map((col: any) => {
+                  if (typeof col === "string") return fieldMap[String(col)];
+                  return { ...fieldMap[String(col.name)], ...col };
+                }) ?? Object.values(fieldMap);
+
+              return {
+                slug: collection.slug,
+                label:
+                  collection.admin.label ?? getTableName(collection.schema),
+                columns: collectionColumns,
+                fields: fields,
+                actions:
+                  collection.admin.actions?.map(
+                    ({ action, ...props }) => props,
+                  ) ?? [],
+              };
+            }),
+          },
+        }),
+      ),
       {
         flag: "w+",
       },
@@ -162,12 +170,6 @@ const jsTemplateCode = ({
     props,
   )};ReactDOM.createRoot(document.getElementById("root")).render(<React.StrictMode><HonoHub {...props} /></React.StrictMode>);`;
 
-type HTMLTemplateProps = {
-  module: string;
-  title?: string;
-  icon?: string;
-};
-
 const htmlTemplateCode = `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>HonoHub</title></head><body><div id="root" ></div><script type="module" src="./main.jsx"></script></body></html>`;
 
 function getPackageVersion(pkgJson: any, pkgName: string) {
@@ -178,4 +180,19 @@ function getPackageVersion(pkgJson: any, pkgName: string) {
     "0.0.0";
 
   return version.replace(/^[\^~]/, "");
+}
+
+function refinePluginImports(template: string) {
+  const importRegex = /('|")import\(/gm;
+  const modRegex = /=> mod.*\)('|")/gm;
+
+  const refinedTemplate = template.replace(importRegex, "import(");
+
+  const match = refinedTemplate.match(modRegex);
+
+  if (match) {
+    return refinedTemplate.replace(modRegex, match[0].slice(0, -1));
+  }
+
+  throw new Error("Failed to refine plugin imports");
 }

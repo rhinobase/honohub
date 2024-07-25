@@ -59,7 +59,12 @@ export default function honohub<Database extends AnyDrizzleDB<any>>(
       await mkdir(buildProps.cache, { recursive: true });
 
       // Generating the files
-      await generator?.({ basePath, config: hub, build: buildProps });
+      await generator?.({
+        basePath,
+        config: hub,
+        build: buildProps,
+        override: options.override,
+      });
     },
   };
 }

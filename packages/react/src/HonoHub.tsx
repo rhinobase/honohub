@@ -89,14 +89,7 @@ export function HonoHub({
             ? Object.entries(plugins).map<RouteObject>(([path, plugin]) => ({
                 path,
                 lazy: async () => {
-                  const importProps =
-                    typeof plugin.import === "string"
-                      ? { module: plugin.import, component: "default" }
-                      : plugin.import;
-
-                  const Panel = await import(importProps.module).then(
-                    (mod) => mod[importProps.component],
-                  );
+                  const Panel = (await plugin.import) as any;
 
                   return {
                     element: (
