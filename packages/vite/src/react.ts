@@ -10,13 +10,14 @@ export type TemplateGeneratorProps<Database extends AnyDrizzleDB<any>> = {
   basePath: string;
   build: BuildOptions;
   config: SanitizedHub<Database>;
+  override?: string;
 };
 
 export type BuildOptions = { cache: string; outDir: string };
 
 export async function generateReactTemplates<
   Database extends AnyDrizzleDB<any>,
->({ config, build, basePath }: TemplateGeneratorProps<Database>) {
+>({ config, build, basePath, override }: TemplateGeneratorProps<Database>) {
   const pluginProps: NonNullable<HonoHubProps["plugins"]> = {};
 
   for (const page in config.routes) {
@@ -67,6 +68,7 @@ export async function generateReactTemplates<
     writeFile(
       join(process.cwd(), build.cache, "./main.jsx"),
       jsTemplateCode({
+        importStatement: override,
         props: {
           basePath,
           serverUrl: config.serverUrl,
@@ -136,11 +138,15 @@ export async function generateReactTemplates<
 }
 
 type JSTemplateProps = {
+  importStatement?: string;
   props: HonoHubProps;
 };
 
-const jsTemplateCode = ({ props }: JSTemplateProps) =>
-  `import React from "react";import ReactDOM from "react-dom/client";import {HonoHub} from "@honohub/react";const props=${JSON.stringify(
+const jsTemplateCode = ({
+  props,
+  importStatement = 'import {HonoHub} from "@honohub/react";import "@honohub/react/index.esm.css";',
+}: JSTemplateProps) =>
+  `import React from "react";import ReactDOM from "react-dom/client";${importStatement};const props=${JSON.stringify(
     props,
   )};ReactDOM.createRoot(document.getElementById("root")).render(<React.StrictMode><HonoHub {...props} /></React.StrictMode>);`;
 

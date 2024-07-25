@@ -13,5 +13,11 @@
   },
   "tags": [],
   "// targets": "to see all targets run: nx show project react --web",
-  "targets": {}
+  "targets": {
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
 }
