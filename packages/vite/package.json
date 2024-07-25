@@ -26,12 +26,12 @@
     "url": "https://github.com/rhinobase/honohub/issues"
   },
   "peerDependencies": {
-    "@honohub/react": "^0.1.0",
     "drizzle-orm": "^0.32.0",
     "honohub": "^0.1.2",
     "vite": "^5.3.3"
   },
   "devDependencies": {
+    "@honohub/react": "^0.1.0",
     "drizzle-graphql": "^0.8.4"
   },
   "types": "./index.cjs.d.ts"

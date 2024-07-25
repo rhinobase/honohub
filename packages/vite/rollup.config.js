@@ -6,12 +6,8 @@ module.exports = withNx(
     outputPath: "../../dist/packages/vite",
     tsConfig: "./tsconfig.lib.json",
     compiler: "swc",
-    format: ["cjs", "esm"],
+    format: ["esm"],
     assets: [{ input: "./packages/vite", output: ".", glob: "*.md" }],
   },
-  {
-    // Provide additional rollup configuration here. See: https://rollupjs.org/configuration-options
-    // e.g.
-    // output: { sourcemap: true },
-  },
+  {},
 );

@@ -12,6 +12,7 @@ export default defineConfig({
     honohub({
       config: hubConfig,
       basePath: "/",
+      override: 'import {HonoHub} from "@honohub/react";',
       build: {
         cache: "./apps/sandbox/.honohub",
         outDir: "../dist",

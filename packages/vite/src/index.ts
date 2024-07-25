@@ -10,8 +10,9 @@ import {
 
 export type HonoHubViteOptions<Database extends AnyDrizzleDB<any>> = {
   basePath: string;
-  build?: Partial<BuildOptions>;
   config: SanitizedHub<Database>;
+  override?: string;
+  build?: Partial<BuildOptions>;
   generator?: (
     options: TemplateGeneratorProps<Database>,
   ) => void | Promise<void>;
