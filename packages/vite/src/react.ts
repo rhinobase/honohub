@@ -149,6 +149,7 @@ export async function generateReactTemplates<
             }),
           },
         }),
+        pluginProps,
       ),
       {
         flag: "w+",
@@ -182,21 +183,19 @@ function getPackageVersion(pkgJson: any, pkgName: string) {
   return version.replace(/^[\^~]/, "");
 }
 
-function refinePluginImports(template: string) {
-  const importRegex = /('|")import\(/gm;
-  const modRegex = /=> mod.*\)('|")/gm;
+function refinePluginImports(template: string, plugins: Record<string, any>) {
+  let refinedTemplate = template;
 
-  let refinedTemplate = template.replace(importRegex, "import(");
+  for (const plugin of Object.values(plugins)) {
+    const startIndex = refinedTemplate.indexOf(`"${plugin.import}"`);
 
-  const match = refinedTemplate.match(modRegex);
+    if (startIndex === -1) continue;
 
-  if (match) {
-    for (const m of match) {
-      refinedTemplate = refinedTemplate.replace(modRegex, m.slice(0, -1));
-    }
-
-    return refinedTemplate;
+    refinedTemplate =
+      refinedTemplate.slice(0, startIndex) +
+      plugin.import +
+      refinedTemplate.slice(startIndex + plugin.import.length + 2);
   }
 
-  throw new Error("Failed to refine plugin imports");
+  return refinedTemplate;
 }
