@@ -47,5 +47,6 @@
   },
   "devDependencies": {
     "hono": "^4.5.0"
-  }
+  },
+  "types": "./index.cjs.d.ts"
 }
