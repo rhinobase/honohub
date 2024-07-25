@@ -1,3 +1,7 @@
+## 0.2.4 (2024-07-25)
+
+This was a version bump only for graphql to align it with other projects, there were no code changes.
+
 ## 0.2.3 (2024-07-11)
 
 This was a version bump only for graphql to align it with other projects, there were no code changes.
