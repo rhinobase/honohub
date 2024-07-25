@@ -13,7 +13,19 @@ export type TemplateGeneratorProps<Database extends AnyDrizzleDB<any>> = {
   override?: string;
 };
 
-export type BuildOptions = { cache: string; outDir: string };
+/**
+ * Represents the build options for the HonoHub admin panel.
+ */
+export type BuildOptions = {
+  /**
+   * The cache directory path.
+   */
+  cache: string;
+  /**
+   * The output directory path.
+   */
+  outDir: string;
+};
 
 export async function generateReactTemplates<
   Database extends AnyDrizzleDB<any>,

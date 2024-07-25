@@ -8,6 +8,16 @@ import {
   generateReactTemplates,
 } from "./react";
 
+/**
+ * Options for configuring HonoHub Vite.
+ *
+ * @template Database - The type of the database used by HonoHub.
+ * @property {SanitizedHub<Database>} config - The sanitized configuration for HonoHub.
+ * @property {string} [basePath] - The base path of the admin panel.
+ * @property {string} [override] - The import override option.
+ * @property {Partial<BuildOptions>} [build] - The build options.
+ * @property {(options: TemplateGeneratorProps<Database>) => void | Promise<void>} [generator] - The template generator function.
+ */
 export type HonoHubViteOptions<Database extends AnyDrizzleDB<any>> = {
   config: SanitizedHub<Database>;
   basePath?: string;

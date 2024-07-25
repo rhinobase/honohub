@@ -74,3 +74,11 @@ const plugins: GlobalPlugin = {
 ```
 
 You can use the `register` function to update the HonoHub configuration and the `bootstrap` function to update the app / server instance.
+
+### API
+
+| Property  | Description                    | Type                                     |
+| --------- | ------------------------------ | ---------------------------------------- |
+| name      | Plugin name                    | `string`                                 |
+| register  | Runs before the app is created | `(config) => SanitizedHub \| undefined;` |
+| bootstrap | Runs when bootstraping the app | `({ app, config }) => Hono \| undefined` |

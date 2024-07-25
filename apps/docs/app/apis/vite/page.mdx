@@ -1,6 +1,7 @@
 export const metadata = {
   title: "Vite Plugin",
-  description: "Create a Hono App with all the default and user defined plugins and collections.",
+  description:
+    "Create a Hono App with all the default and user defined plugins and collections.",
 };
 
 # @honohub/vite
@@ -27,9 +28,22 @@ export default defineConfig({
 This will add the HonoHub configurations to the Vite server and serve the Admin Panel at the base path `/`. You can customize the base path and the hub configuration as per your requirements. Out of the box the `@honohub/vite` plugin uses the `@honohub/react` plugin to render the Admin Panel but you can use your own plugin to render the Admin Panel using the `generator` option.
 
 <Note>
-By using custom generator some plugins may not work as expected. The `@honohub/react` plugin is the recommended plugin to render the Admin Panel.
+  By using custom generator some plugins may not work as expected. The
+  `@honohub/react` plugin is the recommended plugin to render the Admin Panel.
 </Note>
 
 The Admin Panel is utility to help you build and ship your Hono App faster. With plugins like `useGraphQLPlayground` you can add more functionalities and testing utilities to the Admin Panel.
 
 The reason we have made the admin panel as an optional plugin is to give you the flexibility to choose the plugins you want to use in your app. If you don't want to use the admin panel you can simply not use the `@honohub/vite` plugin and the admin panel will not be served. This way you can keep your app lightweight and only use the plugins you need.
+
+### API
+
+The `@honohub/vite` plugin has the following options -
+
+| Option    | Type                              | Description                              |
+| --------- | --------------------------------- | ---------------------------------------- |
+| config    | `SanitizedHub<Database>`          | The sanitized configuration for HonoHub. |
+| basePath  | `string`                          | The base path of the admin panel.        |
+| override  | `string`                          | The import override option.              |
+| build     | `Partial<BuildOptions>`           | The build options.                       |
+| generator | `(opts) => void \| Promise<void>` | The template generator function.         |
