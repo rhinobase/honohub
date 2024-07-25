@@ -1,3 +1,10 @@
+## 0.1.9 (2024-07-25)
+
+
+### 🧱 Updated Dependencies
+
+- Updated react to 0.1.5
+
 ## 0.1.8 (2024-07-25)
 
 This was a version bump only for vite to align it with other projects, there were no code changes.
