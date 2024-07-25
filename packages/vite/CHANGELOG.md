@@ -1,3 +1,12 @@
+## 0.1.6 (2024-07-25)
+
+
+### 🩹 Fixes
+
+- updated package versions
+
+- **vite:** missing react file
+
 ## 0.1.5 (2024-07-25)
 
 This was a version bump only for vite to align it with other projects, there were no code changes.
