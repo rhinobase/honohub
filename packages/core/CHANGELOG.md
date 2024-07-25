@@ -1,3 +1,33 @@
+## 0.2.3 (2024-07-25)
+
+
+### 🚀 Features
+
+- major integration improvements
+
+- **vite:** integrated ui component
+
+- **react:** added api endpoints
+
+- **core:** working on actions
+
+- **core:** added actions api
+
+- **react:** made action dialog and completed the bulk action functionality in data table
+
+
+### 🩹 Fixes
+
+- resolved build errors
+
+- minor changes
+
+- **core:** improved routing and plugins
+
+- **react:** resolved zod validation issues
+
+- **core:** implemented actions api
+
 ## 0.2.2 (2024-07-09)
 
 
