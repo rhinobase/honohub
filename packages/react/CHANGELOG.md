@@ -1,3 +1,12 @@
+## 0.1.1 (2024-07-25)
+
+
+### 🩹 Fixes
+
+- updated package versions
+
+- **react:** updated package.json
+
 ## 0.1.0 (2024-07-25)
 
 
