@@ -1,5 +1,6 @@
 {
   "name": "@honohub/graphql",
+  "description": "GraphQL middleware for honohub",
   "version": "0.2.4",
   "license": "MIT",
   "keywords": [
@@ -13,6 +14,7 @@
     "validation",
     "honojs"
   ],
+  "homepage": "https://honohub.dev/",
   "publishConfig": {
     "access": "public"
   },

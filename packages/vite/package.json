@@ -1,5 +1,6 @@
 {
   "name": "@honohub/vite",
+  "description": "Vite plugin for honohub",
   "version": "0.1.5",
   "license": "MIT",
   "keywords": [
@@ -12,6 +13,7 @@
     "vite",
     "honojs"
   ],
+  "homepage": "https://honohub.dev/",
   "publishConfig": {
     "access": "public"
   },

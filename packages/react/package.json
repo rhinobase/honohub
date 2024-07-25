@@ -1,6 +1,30 @@
 {
   "name": "@honohub/react",
+  "description": "React admin panel for honohub",
   "version": "0.1.0",
+  "license": "MIT",
+  "keywords": [
+    "hono",
+    "middleware",
+    "react",
+    "builder",
+    "honohub",
+    "plugin",
+    "vite",
+    "honojs"
+  ],
+  "homepage": "https://honohub.dev/",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhinobase/honohub.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/rhinobase/honohub/issues"
+  },
   "dependencies": {
     "axios": "^1.7.2",
     "@swc/helpers": "^0.5.11",
