@@ -9,15 +9,6 @@ export const metadata = {
 
 The Admin Panel is a React application that provides a user interface to manage your HonoHub project. The Admin Panel is built using [React](https://react.dev/), [Vite](https://vitejs.dev/), and [Tailwind CSS](https://tailwindcss.com/). But for using HonoHub, you don't need the dashboard. You can use the APIs directly, and use it as a headless CMS Solution or better create your own dashboard. But if you want to use the Admin Panel, here's how you can set it up. {{ className: 'lead' }}
 
-## Features
-
-The Admin Panel provides the following features:
-
-- **Dashboard**: View the status of your project, collections, and plugins.
-- **Collections**: Manage your collections, schema, and APIs.
-- **Plugins**: Interactive with your plugins and improve your experience.
-- **Settings**: Manage your panel settings and configurations.
-
 ## Setting Up the Admin Panel
 
 To set up the Admin Panel, you need to add the `@honohub/react` and `@honohub/vite` package to your project. You can do this by running the following command:
@@ -69,7 +60,7 @@ export default defineConfig({
 
 </CodeGroup>
 
-We are using `@rafty/ui` as our component lib. You can customize the Tailwind CSS configuration to match your project's design system, just change `primary: colors.sky` to your desired color palette. Follow the [Rafty UI documentation](https://rafty.rhinobase.io/) for more information.
+We are using `@rafty/ui` as our component lib. Check out [Rafty UI](https://rafty.rhinobase.io/) for more information.
 
 Now add the following script to your `package.json` file:
 
@@ -78,7 +69,7 @@ Now add the following script to your `package.json` file:
 ```json
 {
   "scripts": {
-    "vite:serve": "vite",
+    "vite": "vite",
     "vite:build": "vite build"
   }
 }
@@ -108,7 +99,7 @@ bun run vite:serve
 
 </CodeGroup>
 
-The Admin Panel will be available at `http://localhost:5173`. You can now start managing your HonoHub project using the Admin Panel. Now one issue is that the API server is running on a different port, So you will need to do the following:
+The Admin Panel will be available at `http://localhost:5173`. You can now start managing your HonoHub project using the Admin Panel. Now one issue is that the API server is running on a different port (in this case on port 3000) or it could be deployed on a domain, So you will need to do the following:
 
 Update you `hub.config.ts` file by adding `serverUrl` property to the config object.
 
@@ -172,4 +163,4 @@ And you are not limited to React. Just add the necessary configuration to the `v
 - Use a different CSS framework like Chakra, MUI, or Bulma.
 - Add custom routes and panels to the Admin Panel.
 
-Go crazy!import ts from "typescript";
+Go crazy!

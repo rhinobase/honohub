@@ -40,10 +40,10 @@ The reason we have made the admin panel as an optional plugin is to give you the
 
 The `@honohub/vite` plugin has the following options -
 
-| Option    | Type                              | Description                              |
-| --------- | --------------------------------- | ---------------------------------------- |
-| config    | `SanitizedHub<Database>`          | The sanitized configuration for HonoHub. |
-| basePath  | `string`                          | The base path of the admin panel.        |
-| override  | `string`                          | The import override option.              |
-| build     | `Partial<BuildOptions>`           | The build options.                       |
-| generator | `(opts) => void \| Promise<void>` | The template generator function.         |
+| Option            | Type                              | Description                              |
+| ----------------- | --------------------------------- | ---------------------------------------- |
+| config (required) | `SanitizedHub<Database>`          | The sanitized configuration for HonoHub. |
+| basePath          | `string`, default `/`             | The base path of the admin panel.        |
+| override          | `string`                          | The import override option.              |
+| build             | `Partial<BuildOptions>`           | The build options.                       |
+| generator         | `(opts) => void \| Promise<void>` | The template generator function.         |
