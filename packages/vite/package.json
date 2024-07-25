@@ -1,6 +1,6 @@
 {
   "name": "@honohub/vite",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "license": "MIT",
   "keywords": [
     "hono",
