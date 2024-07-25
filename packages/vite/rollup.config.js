@@ -1,4 +1,5 @@
 const { withNx } = require("@nx/rollup/with-nx");
+const terser = require("@rollup/plugin-terser");
 
 module.exports = withNx(
   {
@@ -9,5 +10,7 @@ module.exports = withNx(
     format: ["cjs", "esm"],
     assets: [{ input: "./packages/vite", output: ".", glob: "*.md" }],
   },
-  {},
+  {
+    plugins: [terser()],
+  },
 );

@@ -186,12 +186,16 @@ function refinePluginImports(template: string) {
   const importRegex = /('|")import\(/gm;
   const modRegex = /=> mod.*\)('|")/gm;
 
-  const refinedTemplate = template.replace(importRegex, "import(");
+  let refinedTemplate = template.replace(importRegex, "import(");
 
   const match = refinedTemplate.match(modRegex);
 
   if (match) {
-    return refinedTemplate.replace(modRegex, match[0].slice(0, -1));
+    for (const m of match) {
+      refinedTemplate = refinedTemplate.replace(modRegex, m.slice(0, -1));
+    }
+
+    return refinedTemplate;
   }
 
   throw new Error("Failed to refine plugin imports");

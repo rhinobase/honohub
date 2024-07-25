@@ -1,6 +1,7 @@
 const { withNx } = require("@nx/rollup/with-nx");
 const url = require("@rollup/plugin-url");
 const svg = require("@svgr/rollup");
+const terser = require("@rollup/plugin-terser");
 
 module.exports = withNx(
   {
@@ -27,6 +28,7 @@ module.exports = withNx(
       url({
         limit: 10000, // 10kB
       }),
+      terser(),
     ],
   },
 );
