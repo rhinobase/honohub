@@ -118,7 +118,9 @@ import { cors } from "hono/cors";
 const app = new Hono().use(cors()).route("/", createHub(hubConfig));
 ```
 
-The reason for why we separated the API server and the Admin Panel is that you can run and deploy your Hono app in the prefered runtime and serve the Admin Panel as a static site. This way you can deploy the Admin Panel to a CDN or serve it using `serveStatic` middleware in your API server.
+Your API Server and Admin Panel are now connected. You can now manage your HonoHub project using the Admin Panel.
+
+You might think why we have taken an approach to separate the API server and the Admin Panel. The reason being so that you can keep developing and deloying your Hono app in the prefered runtime and serve the Admin Panel as a static site. This way you can deploy the Admin Panel to a CDN or serve it using `serveStatic` middleware in your API server.
 
 ```ts
 const pathValidationRegex = /^\/[a-zA-Z0-9\/-]*(?<!\.[a-zA-Z0-9]+)$/;
