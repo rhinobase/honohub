@@ -27,6 +27,12 @@ npm add honohub
 
 Check out the [docs](https://honohub.dev) and [plugins](https://honohub.dev/plugins/graphql) and start building.
 
+## Plugins
+
+| Name                                                                 | Description                                                       |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| [`@honohub/graphql`](https://www.npmjs.com/package/@honohub/graphql) | The `useGraphQL` plugin adds the GraphQL endpoint and playground. |
+
 ## Troubleshooting
 
 If the suggestions here don't work, please try posting questions on [GitHub Discussions](https://github.com/rhinobase/honohub/discussions) or in the #help channel of [Hono Discord](https://discord.gg/xUtamz2vxH).
