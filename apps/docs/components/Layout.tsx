@@ -33,9 +33,12 @@ export function Layout({ children, allSections }: Layout) {
                 className="flex items-center gap-1"
               >
                 <Logo />
-                <span className="text-[1.5rem] font-semibold leading-[2rem]">
-                  HonoHub
-                </span>
+                <p className="text-2xl font-bold tracking-tight">
+                  Hono
+                  <span className="text-primary-500 dark:text-primary-300">
+                    Hub
+                  </span>
+                </p>
               </Link>
             </div>
             <Header />
