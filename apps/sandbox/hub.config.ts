@@ -20,6 +20,7 @@ const collection = defineCollection({
     label: { singular: "Todo", plural: "Todos" },
     fields: ["message", { name: "status", label: "Status", required: false }],
   },
+  listSearchableFields: ["message"],
   pagination: {
     defaultLimit: 10,
   },

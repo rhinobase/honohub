@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import type { AnyDrizzleDB } from "drizzle-graphql";
-import { asc, count, desc, eq, sql } from "drizzle-orm";
+import { asc, count, desc, eq, ilike, or, sql } from "drizzle-orm";
 import type { Table } from "drizzle-orm";
 import type { NeonHttpDatabase } from "drizzle-orm/neon-http";
 import { createInsertSchema } from "drizzle-zod";
@@ -101,8 +101,15 @@ export function createRoutes<
     const records = db.select().from(collection.schema).$dynamic();
     const recordsCount = db.select({ count: count() }).from(collection.schema);
 
-    if (query.search) {
-      // TODO: Implement search
+    if (query.search && collection.listSearchableFields.length > 0) {
+      records.where(
+        or(
+          ...collection.listSearchableFields.map((field) =>
+            // @ts-expect-error
+            ilike(collection.schema[field], `%${query.search}%`),
+          ),
+        ),
+      );
     }
 
     // Sorting the data
