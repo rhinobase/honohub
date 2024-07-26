@@ -1,4 +1,4 @@
-<a href="https://honohub.dev"><img width="100%" src="https://github.com/rhinobase/honohub/blob/main/public/banner.png?raw=true" alt="HonoHub Open-source headless CMS on the Edge" /></a>
+<a href="https://honohub.dev"><img width="100%" src="https://github.com/rhinobase/honohub/blob/main/apps/docs/public/images/banner.png?raw=true" alt="HonoHub Open-source headless CMS on the Edge" /></a>
 <br />
 
 <div align="center">

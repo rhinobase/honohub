@@ -43,11 +43,22 @@ export function generateMetadata(): Metadata {
       card: "summary_large_image",
       title,
       description,
+      creator: "@rhinobaseio",
+      images: {
+        width: 1200,
+        height: 375,
+        url: "/images/banner.png",
+      },
     },
     openGraph: {
       title,
       description,
       siteName: "HonoHub Website",
+      images: {
+        width: 1200,
+        height: 375,
+        url: "/images/banner.png",
+      },
       url: "/",
       locale: "en_US",
       type: "website",
