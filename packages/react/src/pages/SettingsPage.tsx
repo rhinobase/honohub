@@ -47,7 +47,7 @@ function ThemeSelector() {
       type="single"
       size="sm"
       value={theme}
-      onValueChange={setTheme}
+      onValueChange={(val) => val && setTheme(val as ColorMode)}
       className="w-full p-1 gap-1 rounded-md"
     >
       <ToggleGroupItem
