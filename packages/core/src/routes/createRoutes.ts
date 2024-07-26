@@ -32,23 +32,49 @@ export function createRoutes<
   const db = config.db as NeonHttpDatabase;
 
   // Generating the zod validation
-  const collectionInsertSchema = createInsertSchema(collection.schema);
+  let collectionInsertSchema = createInsertSchema(collection.schema);
+
+  if (collection.admin.fields)
+    // @ts-expect-error
+    collectionInsertSchema = collectionInsertSchema.pick(
+      collection.admin.fields.reduce((acc, field) => {
+        let key = field;
+        if (typeof field === "object" && "name" in field) key = field.name;
+
+        // @ts-expect-error
+        acc[key] = true;
+        return acc;
+      }, {}),
+    );
 
   // Prepared queries
+  // Collection Document Count
   const collectionDocumentCount = db
     .select({ count: count() })
     .from(collection.schema)
     .prepare(`${collection.slug}_count_query`);
+
+  // Collection Retrieve Query
   const collectionRetrieveQuery = db
     .select()
     .from(collection.schema)
     .where(eq(collection.queryKey, sql.placeholder("id")))
     .prepare(`${collection.slug}_retrieve_query`);
+
+  // Collection Delete Query
   const collectionDeleteQuery = db
     .delete(collection.schema)
     .where(eq(collection.queryKey, sql.placeholder("id")))
-    .returning()
-    .prepare(`${collection.slug}_delete_query`);
+    .$dynamic();
+
+  if ("$returningId" in collectionDeleteQuery) {
+    // @ts-expect-error
+    collectionDeleteQuery.$returningId?.();
+  } else {
+    collectionDeleteQuery.returning();
+  }
+
+  collectionDeleteQuery.prepare(`${collection.slug}_delete_query`);
 
   const maxLimit =
     (typeof collection.pagination !== "boolean"
@@ -72,10 +98,8 @@ export function createRoutes<
 
     const query = c.req.valid("query");
 
-    let records = db.select().from(collection.schema);
+    const records = db.select().from(collection.schema).$dynamic();
     const recordsCount = db.select({ count: count() }).from(collection.schema);
-
-    records.$dynamic();
 
     if (query.search) {
       // TODO: Implement search
@@ -95,7 +119,7 @@ export function createRoutes<
 
     if (sortBy && sortByInString in collection.schema) {
       // @ts-expect-error
-      records = records.orderBy(order(collection.schema[sortByInString]));
+      records.orderBy(order(collection.schema[sortByInString]));
     }
 
     if (collection.pagination) {
@@ -115,8 +139,10 @@ export function createRoutes<
         .offset(query.offset);
     }
 
-    const results = await records;
-    const totalDocuments = await recordsCount.then((res) => res[0].count);
+    const [results, totalDocuments] = await Promise.all([
+      records.execute(),
+      recordsCount.then((res) => res[0].count),
+    ]);
 
     let payload = { results, count: totalDocuments };
 
@@ -182,11 +208,21 @@ export function createRoutes<
     }
 
     // Saving the record
-    let createdDoc: any = await db
+    const createdDocQuery = db
       .insert(collection.schema)
       .values(data)
-      .returning()
-      .then((res) => res[0]);
+      .$dynamic();
+
+    if (
+      "$returningId" in createdDocQuery &&
+      typeof createdDocQuery.$returningId === "function"
+    ) {
+      createdDocQuery.$returningId?.();
+    } else {
+      createdDocQuery.returning();
+    }
+
+    let createdDoc: any = await createdDocQuery.execute();
 
     for (const hook of collection.hooks.afterChange ?? []) {
       const res = await hook({
@@ -287,12 +323,23 @@ export function createRoutes<
     }
 
     // Updating the record
-    let updatedDoc: any = await db
+    const updatedDocQuery = db
       .update(collection.schema)
       // @ts-expect-error
       .set(data)
       .where(eq(collection.queryKey, c.req.param("id")))
-      .returning();
+      .$dynamic();
+
+    if (
+      "$returningId" in updatedDocQuery &&
+      typeof updatedDocQuery.$returningId === "function"
+    ) {
+      updatedDocQuery.$returningId?.();
+    } else {
+      updatedDocQuery.returning();
+    }
+
+    let updatedDoc: any = await updatedDocQuery.execute();
 
     for (const hook of collection.hooks.afterChange ?? []) {
       const res = await hook({
