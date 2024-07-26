@@ -1,29 +1,41 @@
-# Hono Hub
+<a href="https://honohub.dev"><img width="100%" src="https://github.com/rhinobase/honohub/blob/main/public/banner.png?raw=true" alt="HonoHub Open-source headless CMS on the Edge" /></a>
+<br />
 
-A CMS framework using Hono + Drizzle + Zod + Vite.
+<div align="center">
 
-**HonoHub** is a simple and fast meta-framework for creating CMS for your websites or Apps. It stands on the shoulders of giants; built on [Hono](https://hono.dev/), [Drizzle](https://orm.drizzle.team/), [Zod](https://zod.dev/), and [Vite](https://vitejs.dev/).
+[![npm version](https://img.shields.io/npm/v/honohub.svg)](https://npmjs.org/package/honohub "View this project on NPM")
+[![npm downloads](https://img.shields.io/npm/dm/honohub)](https://www.npmjs.com/package/honohub)
+[![license](https://img.shields.io/npm/l/honohub)](LICENSE)
 
-**Note**: _HonoHub is currently in the "alpha stage". Breaking changes are introduced without following semantic versioning._
+A CMS framework built on [Hono](https://hono.dev/), [Drizzle](https://orm.drizzle.team/), [Zod](https://zod.dev/), and [Vite](https://vitejs.dev/)
 
-## Features
+</div>
 
-- **REST API** - `honohub` provides a powerful and flexible REST API for your applications.
-- **GraphQL Plugin** - Utilize the `@honohub/graphql` plugin for seamless GraphQL integration.
-- **Hooks Support** - Incorporate hooks to manage and extend your application's functionality.
-- **Panel Plugin** - Integrate customizable UI components and panels to enhance your application's user interface and overall experience.
+**HonoHub** is a simple and fast middleware for creating CMS for your websites or Apps.
 
-## Coming Soon
+> [!NOTE]  
+> HonoHub is currently in the "alpha stage". Breaking changes are introduced without following semantic versioning.
 
-- **Search Support** - Future implementation to enable efficient search capabilities.
-- **File Storage** - Upcoming feature for robust file storage solutions.
-
-## Install
+## Quickstart
 
 ```sh
 # Using npm/yarn/pnpm/bun
 npm add honohub
 ```
+
+[Go here for a step-by-step guide](https://honohub.dev/quickstart) on how to get up and running.
+
+Check out the [docs](https://honohub.dev) and [plugins](https://honohub.dev/plugins/graphql) and start building.
+
+## Troubleshooting
+
+If the suggestions here don't work, please try posting questions on [GitHub Discussions](https://github.com/rhinobase/honohub/discussions) or in the #help channel of [Hono Discord](https://discord.gg/xUtamz2vxH).
+
+## Contributing
+
+We would love to have more contributors involved!
+
+To get started, please read our [Contributing Guide](https://github.com/rhinobase/honohub/blob/main/CONTRIBUTING.md).
 
 ## Credits
 
