@@ -1,3 +1,17 @@
+## 0.2.4 (2024-07-26)
+
+
+### 🚀 Features
+
+- **core:** added search
+
+
+### 🩹 Fixes
+
+- updated package versions
+
+- **core:** improved validation and returning fn
+
 ## 0.2.3 (2024-07-25)
 
 
