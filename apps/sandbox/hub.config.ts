@@ -21,9 +21,9 @@ const collection = defineCollection({
     fields: ["message", { name: "status", label: "Status", required: false }],
   },
   listSearchableFields: ["message"],
-  // pagination: {
-  //   defaultLimit: 10,
-  // },
+  pagination: {
+    defaultLimit: 10,
+  },
 });
 
 export default defineHub({

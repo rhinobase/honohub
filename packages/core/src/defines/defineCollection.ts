@@ -72,7 +72,9 @@ export function defineCollection<T extends Table>(
             }
 
             // @ts-expect-error
-            db.delete(config.schema).where(inArray(config.queryKey, entries));
+            db.delete(config.schema)
+              .where(inArray(config.queryKey, entries))
+              .execute();
           },
         },
         ...(admin.actions ?? []),
