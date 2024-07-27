@@ -2,7 +2,7 @@ import { FibrProvider, Thread } from "@fibr/react";
 import { Button, Skeleton, Toast } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
@@ -25,16 +25,9 @@ enum FormType {
 
 const SUBMIT_BUTTON_KEY = "_submit_btn";
 
-export type DocumentPage = Omit<CollectionType, "columns"> & {
-  defaultValues?: any;
-};
+export type DocumentPage = Omit<CollectionType, "columns">;
 
-export function DocumentPage({
-  fields,
-  slug,
-  defaultValues,
-  label,
-}: DocumentPage) {
+export function DocumentPage({ fields, slug, label }: DocumentPage) {
   const { id } = useParams();
   const { endpoint } = useServer();
   const formType = id === "create" ? FormType.CREATE : FormType.EDIT;
@@ -46,15 +39,21 @@ export function DocumentPage({
     enabled: formType === FormType.EDIT,
   });
 
-  const methods = useForm({
-    defaultValues,
-  });
+  const methods = useForm();
 
   const { handleSubmit, reset, setValue, setError } = methods;
 
+  const names = useMemo(
+    () => Object.fromEntries(fields.map(({ name }) => [name, true])),
+    [fields],
+  );
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (data) reset(data);
+    if (data) {
+      const entries = Object.entries(data).filter(([name]) => names[name]);
+      reset(Object.fromEntries(entries));
+    }
   }, [data]);
 
   const navigate = useNavigate();
