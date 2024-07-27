@@ -1,3 +1,14 @@
+## 0.1.6 (2024-07-27)
+
+
+### 🩹 Fixes
+
+- **react:** resolved cancel button issue in action dialog
+
+- **react:** adding data only for the specified fields
+
+- **react:** corrected create and update urls
+
 ## 0.1.5 (2024-07-25)
 
 This was a version bump only for react to align it with other projects, there were no code changes.

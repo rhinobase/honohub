@@ -1,3 +1,12 @@
+## 0.2.6 (2024-07-27)
+
+
+### 🩹 Fixes
+
+- **core:** corrected the bulk delete query
+
+- **core:** improved actions api
+
 ## 0.2.5 (2024-07-27)
 
 
