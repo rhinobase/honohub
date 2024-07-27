@@ -43,6 +43,10 @@ We would love to have more contributors involved!
 
 To get started, please read our [Contributing Guide](https://github.com/rhinobase/honohub/blob/main/CONTRIBUTING.md).
 
+## Disclaimer
+
+HonoHub is not affiliated with [Hono](https://hono.dev/), [Drizzle](https://orm.drizzle.team/), [Zod](https://zod.dev/), or [Vite](https://vitejs.dev/). HonoHub is an independent project developed by [Rhinobase](https://rhinobase.com/).
+
 ## Credits
 
 The `honohub` project's UI is inspired by [Nuxt Devtools](https://github.com/nuxt/devtools) and [Strapi](https://github.com/strapi/strapi).
