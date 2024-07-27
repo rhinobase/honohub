@@ -99,7 +99,15 @@ bun run vite
 
 </CodeGroup>
 
-The Admin Panel will be available at `http://localhost:5173`. You can now start managing your HonoHub project using the Admin Panel. Now one issue is that the API server is running on a different port (in this case on port 3000) or it could be deployed on a domain, So you will need to do the following:
+<Note>
+  To view all the records of a table in the collections table, you will need to
+  enable `pagination`. You can check out
+  [defineCollection](/api/define-collection) for more information.
+</Note>
+
+The Admin Panel will be available at `http://localhost:5173`. You can now start managing your HonoHub project using the Admin Panel.
+
+Now one issue is that the API server is running on a different port (in this case on port 3000) or it could be deployed on a domain, So you will need to do the following:
 
 Update you `hub.config.ts` file by adding `serverUrl` property to the config object.
 
