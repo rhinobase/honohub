@@ -42,7 +42,7 @@ export function DataTable<T = unknown>({
     isFetching,
     isLoading,
   } = useQuery<{ results: T[]; count: number }>({
-    queryKey: ["launches", pageIndex, pageSize],
+    queryKey: ["collections", slug, { pageIndex, pageSize }],
     queryFn: () =>
       endpoint
         .get(`/collections/${slug}?limit=${pageSize}&offset=${offset}`)
@@ -50,7 +50,6 @@ export function DataTable<T = unknown>({
   });
 
   const selectedRowsLength = Object.keys(rowsSelected).length;
-
   const selectedRows = Object.keys(rowsSelected).map(
     (index) => data.results[Number(index)],
   );

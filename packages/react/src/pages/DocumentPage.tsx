@@ -33,7 +33,7 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
   const formType = id === "create" ? FormType.CREATE : FormType.EDIT;
 
   const { data, isLoading } = useQuery({
-    queryKey: [slug, id],
+    queryKey: ["collections", slug, id],
     queryFn: () =>
       endpoint.get(`collections/${slug}/${id}`).then((res) => res.data),
     enabled: formType === FormType.EDIT,
