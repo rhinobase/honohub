@@ -23,7 +23,11 @@ export function ActionDialog() {
     : undefined;
 
   return (
-    <AlertDialog size="sm" open={state.show}>
+    <AlertDialog
+      size="sm"
+      open={state.show}
+      onOpenChange={() => setState({ show: false })}
+    >
       <AlertDialogOverlay />
       <AlertDialogContent className="gap-1 rounded-lg">
         {state.show && (

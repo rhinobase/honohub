@@ -21,7 +21,7 @@ export const DialogManagerProvider = (props: PropsWithChildren) => {
   );
 };
 
-type ActionType =
+export type ActionType =
   | { show: true; title: string; message: string; action: () => void }
   | { show: false };
 
