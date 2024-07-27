@@ -75,8 +75,8 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
 
               try {
                 if (formType === FormType.CREATE)
-                  await endpoint.post(`/${slug}`, values);
-                else await endpoint.put(`/${slug}/${id}`, values);
+                  await endpoint.post(`/collections/${slug}`, values);
+                else await endpoint.put(`/collections/${slug}/${id}`, values);
 
                 if (
                   document_submit_type_value ===
