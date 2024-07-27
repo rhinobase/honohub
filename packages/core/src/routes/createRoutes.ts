@@ -129,6 +129,10 @@ export function createRoutes<
       records.orderBy(order(collection.schema[sortByInString]));
     }
 
+    let results: any[];
+    let totalDocuments: number;
+    let payload: any[] | { results: any[]; count: number };
+
     if (collection.pagination) {
       const limit = query.limit ?? collection.pagination.defaultLimit;
 
@@ -144,14 +148,14 @@ export function createRoutes<
       records
         .limit(query.limit ?? collection.pagination.defaultLimit)
         .offset(query.offset);
-    }
 
-    const [results, totalDocuments] = await Promise.all([
-      records.execute(),
-      recordsCount.then((res) => res[0].count),
-    ]);
+      [results, totalDocuments] = await Promise.all([
+        records.execute(),
+        recordsCount.then((res) => res[0].count),
+      ]);
 
-    let payload = { results, count: totalDocuments };
+      payload = { results, count: totalDocuments };
+    } else payload = await records.execute();
 
     for (const hook of collection.hooks.afterRead ?? []) {
       const res = await hook({
