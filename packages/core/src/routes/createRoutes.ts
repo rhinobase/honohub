@@ -388,34 +388,38 @@ export function createRoutes<
   });
 
   // Actions
-  const actionRouter = new Hono<E, P, I>();
-  for (const { name, action } of collection.admin.actions ?? []) {
-    actionRouter.post(
-      `/${name}`,
-      zValidator(
-        "json",
-        z.object({
-          items: z.array(z.any()).min(1).max(100),
-        }),
-      ),
-      async (c) => {
-        const { items } = c.req.valid("json");
 
-        try {
-          await action({ items, context: c, db, config: collection });
-        } catch (err) {
-          console.error(err);
-          throw new HTTPException(400, {
-            message: "Unable to complete the action!",
-          });
-        }
+  if (collection.admin.actions.length > 0) {
+    const actionRouter = new Hono<E, P, I>();
 
-        return c.json(null);
-      },
-    );
+    for (const { name, action } of collection.admin.actions ?? []) {
+      actionRouter.post(
+        `/${name}`,
+        zValidator(
+          "json",
+          z.object({
+            items: z.array(z.any()).min(1).max(100),
+          }),
+        ),
+        async (c) => {
+          const { items } = c.req.valid("json");
+
+          try {
+            await action({ items, context: c, db, config: collection });
+          } catch (err) {
+            console.error(err);
+            throw new HTTPException(400, {
+              message: "Unable to complete the action!",
+            });
+          }
+
+          return c.json(null);
+        },
+      );
+    }
+
+    app.route("/actions", actionRouter);
   }
-
-  app.route("/actions", actionRouter);
 
   // Applying the plugins
   for (const plugin of collection.plugins) {

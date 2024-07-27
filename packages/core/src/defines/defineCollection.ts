@@ -5,7 +5,11 @@ import {
   inArray,
 } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
-import type { CollectionConfig, SanitizedCollection } from "../types";
+import type {
+  CollectionAction,
+  CollectionConfig,
+  SanitizedCollection,
+} from "../types";
 
 /**
  * Defines the Collection config
@@ -43,42 +47,45 @@ export function defineCollection<T extends Table>(
       throw new Error("maxLimit must be greater than defaultLimit.");
   }
 
+  const actions: CollectionAction<T>[] = [];
+  const bulkDeleteAction: CollectionAction<T> = {
+    name: "bulk_delete",
+    label: "Bulk Delete",
+    icon: "TrashIcon",
+    level: true,
+    action: ({ items, db, config }) => {
+      const entries = [];
+
+      for (const item of items) {
+        if (item && typeof item === "object" && config.queryKey?.name in item)
+          // @ts-expect-error
+          entries.push(item[config.queryKey.name]);
+        else
+          new HTTPException(400, {
+            message: `Unable to find the query key '${config.queryKey.name}' in the given entries.`,
+          });
+      }
+
+      // @ts-expect-error
+      db.delete(config.schema)
+        .where(inArray(config.queryKey, entries))
+        .execute();
+    },
+  };
+
+  if (admin && admin.actions !== false) {
+    actions.push(
+      bulkDeleteAction,
+      ...(Array.isArray(admin.actions) ? admin.actions : []),
+    );
+  }
+
   let sanitizedConfig: SanitizedCollection<T> = {
     slug,
     admin: {
       ...admin,
       label: admin.label ?? slug,
-      actions: [
-        {
-          name: "bulk_delete",
-          label: "Bulk Delete",
-          icon: "TrashIcon",
-          level: true,
-          action: ({ items, db, config }) => {
-            const entries = [];
-
-            for (const item of items) {
-              if (
-                item &&
-                typeof item === "object" &&
-                config.queryKey?.name in item
-              )
-                // @ts-expect-error
-                entries.push(item[config.queryKey.name]);
-              else
-                new HTTPException(400, {
-                  message: `Unable to find the query key '${config.queryKey.name}' in the given entries.`,
-                });
-            }
-
-            // @ts-expect-error
-            db.delete(config.schema)
-              .where(inArray(config.queryKey, entries))
-              .execute();
-          },
-        },
-        ...(admin.actions ?? []),
-      ],
+      actions,
     },
     schema,
     queryKey,

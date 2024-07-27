@@ -61,13 +61,26 @@ const adminOptions: CollectionAdminProps = {
 };
 ```
 
+By default the actions are disabled, you can enable them by passing `true` or an array of actions. It also gets enabled when you pass any value in the `admin` property, to prevent this you can pass `false` in the `actions` property. When enabled it will create a `/actions/{action_name}` endpoint for each action, which will be used to run the action on the server. Here's a default action that is added when enabled -
+
+```ts
+{
+  name: "bulk_delete",
+  label: "Delete",
+  icon: "TrashIcon",
+  action: async ({ ids }) => {
+    // Your action logic here
+  },
+}
+```
+
 ### API
 
-| Property | Description                                | Type              | Default |
-| -------- | ------------------------------------------ | ----------------- | ------- |
-| label    | Collection label                           | `CollectionLabel` | -       |
-| fields   | Fields to be displayed in the admin panel  | `AdminField[]`    | -       |
-| actions  | Actions to be displayed in the admin panel | `AdminAction[]`   | -       |
+| Property | Description                                | Type                         | Default                |
+| -------- | ------------------------------------------ | ---------------------------- | ---------------------- |
+| label    | Collection label                           | `CollectionLabel`            | -                      |
+| fields   | Fields to be displayed in the admin panel  | `AdminField[]`               | -                      |
+| actions  | Actions to be displayed in the admin panel | `boolean` \| `AdminAction[]` | false \| [bulk_delete] |
 
 ## Collection Hooks
 

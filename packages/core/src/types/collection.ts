@@ -74,7 +74,7 @@ export type CollectionConfig<T extends Table = Table> = {
 export type SanitizedCollection<T extends Table = Table> = Prettify<
   Required<Omit<CollectionConfig<T>, "defaultSort" | "admin">> & {
     defaultSort?: TableColumns<T> | `-${TableColumns<T> & string}`;
-    admin: CollectionAdminProps<T>;
+    admin: CollectionAdminProps<T> & { actions: CollectionAction<T>[] };
   }
 >;
 
@@ -102,9 +102,9 @@ export type CollectionAdminProps<T extends Table = Table> = {
   )[];
   /**
    * Quick actions to perform on the collection from the UI
-   * @default [bulk_delete]
+   * @default false
    */
-  actions?: CollectionAction<T>[];
+  actions?: boolean | CollectionAction<T>[];
 };
 
 export type CollectionAction<T extends Table = Table> = {
