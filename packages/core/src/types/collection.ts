@@ -46,23 +46,7 @@ export type CollectionConfig<T extends Table = Table> = {
    * Pagination options
    * @default false
    */
-  pagination?:
-    | {
-        /**
-         * Default limit for pagination
-         * @default 10
-         * @minimum 1
-         * @maximum maxLimit
-         */
-        defaultLimit: number;
-        /**
-         * Maximum limit for pagination
-         * @default 100
-         * @minimum 1
-         */
-        maxLimit?: number;
-      }
-    | false;
+  pagination?: CollectionPagination | false;
   /**
    * Hooks to modify HonoHub functionality
    */
@@ -77,6 +61,23 @@ export type SanitizedCollection<T extends Table = Table> = Prettify<
     admin: CollectionAdminProps<T> & { actions: CollectionAction<T>[] };
   }
 >;
+
+/** Collection pagination options */
+export type CollectionPagination = {
+  /**
+   * Default limit for pagination
+   * @default 10
+   * @minimum 1
+   * @maximum maxLimit
+   */
+  defaultLimit: number;
+  /**
+   * Maximum limit for pagination
+   * @default 100
+   * @minimum 1
+   */
+  maxLimit?: number;
+};
 
 export type CollectionAdminProps<T extends Table = Table> = {
   /**

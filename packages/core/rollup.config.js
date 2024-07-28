@@ -8,9 +8,13 @@ module.exports = withNx(
     tsConfig: "./tsconfig.lib.json",
     compiler: "swc",
     format: ["cjs", "esm"],
-    assets: [{ input: ".", output: ".", glob: "*.md" }],
+    assets: [{ input: ".", output: ".", glob: "README.md" }],
   },
   {
+    input: {
+      index: "./src/index.ts",
+      pagination: "./src/plugins/usePagination.ts",
+    },
     plugins: [terser()],
   },
 );
