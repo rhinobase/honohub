@@ -1,5 +1,5 @@
 import type { JSONObject } from "hono/utils/types";
-import type { CollectionAdminProps } from "honohub";
+import type { CollectionAction, CollectionAdminProps } from "honohub";
 
 type GetObject<T> = T extends string ? never : T;
 
@@ -12,7 +12,7 @@ export type CollectionType = {
   fields: GetObject<
     NonNullable<CollectionAdminProps["fields"]>[0] & { type: string }
   >[];
-  actions: Omit<NonNullable<CollectionAdminProps["actions"]>[0], "action">[];
+  actions: Omit<CollectionAction, "action">[];
 };
 
 export type PluginType = Record<
