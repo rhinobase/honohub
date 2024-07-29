@@ -1,11 +1,14 @@
 import { classNames } from "@rafty/ui";
+import type { ImgHTMLAttributes } from "react";
 
-export function Logo({ className }: { className?: string }) {
+export type Logo = Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "alt">;
+
+export function Logo({ className, ...props }: Logo) {
   return (
     <img
-      src="https://hono.dev/images/logo-small.png"
+      {...props}
+      src="https://honohub.dev/images/logo-small.png"
       alt="honohub logo"
-      style={{ filter: "sepia(100%) hue-rotate(190deg) saturate(500%)" }}
       className={classNames("size-7", className)}
     />
   );
