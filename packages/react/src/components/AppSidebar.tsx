@@ -39,21 +39,23 @@ export const AppSidebar = forwardRef<HTMLDivElement, AppSidebar>(
         ref={forwardedRef}
       >
         <header className="px-3 my-[7.5px]">
-          <Link to="/">
-            {isShrink ? (
-              <Logo className="h-[39px] w-max" />
-            ) : (
-              <div className="flex items-center ml-1 w-max">
-                <Logo className="h-8 w-max" />
-                <p className="text-[26px] font-bold tracking-tight">
-                  Hono
-                  <span className="text-primary-500 dark:text-primary-300">
-                    Hub
-                  </span>
-                </p>
-              </div>
-            )}
-          </Link>
+          <div className="w-max">
+            <Link to="/">
+              {isShrink ? (
+                <Logo className="h-[39px] w-max" />
+              ) : (
+                <div className="flex items-center ml-1 w-max">
+                  <Logo className="h-8 w-max" />
+                  <p className="text-[26px] font-bold tracking-tight">
+                    Hono
+                    <span className="text-primary-500 dark:text-primary-300">
+                      Hub
+                    </span>
+                  </p>
+                </div>
+              )}
+            </Link>
+          </div>
         </header>
         <hr
           className={

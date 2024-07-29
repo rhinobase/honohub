@@ -2,6 +2,7 @@ export { ActionDialog } from "./ActionDialog";
 export { AppWrapper } from "./AppWrapper";
 export { BaseWrapper } from "./BaseWrapper";
 export { CollectionsWrapper } from "./CollectionsWrapper";
+export { CollectionTableActionMenu } from "./CollectionTableActionMenu";
 export { DataTable } from "./DataTable";
 export { PageHeader, PageTitle } from "./Header";
 export { Logo } from "./Logo";

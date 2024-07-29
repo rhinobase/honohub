@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { useDialogManager, useServer } from "../providers";
+import { useDialogManager, usePagination, useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { Pagination } from "./Pagination";
 import { SearchField } from "./SearchField";
@@ -31,10 +31,10 @@ export function DataTable<T = unknown>({
   const { endpoint } = useServer();
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
 
-  const [{ pageIndex, pageSize }, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
-  });
+  const {
+    pagination: { pageIndex, pageSize },
+    setPagination,
+  } = usePagination();
   const offset = pageSize * pageIndex;
 
   const {

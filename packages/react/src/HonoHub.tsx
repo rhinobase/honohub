@@ -15,7 +15,7 @@ import {
   HomePage,
   SettingsPage,
 } from "./pages";
-import { ServerProvider, ThemeProvider } from "./providers";
+import { PaginationProvider, ServerProvider, ThemeProvider } from "./providers";
 import type { HonoHubProps } from "./types";
 
 const CLIENT = new QueryClient();
@@ -73,7 +73,11 @@ export function HonoHub({
             children: collections.flatMap((collection) => [
               {
                 path: collection.slug,
-                element: <CollectionPage {...collection} />,
+                element: (
+                  <PaginationProvider>
+                    <CollectionPage {...collection} />
+                  </PaginationProvider>
+                ),
               },
               {
                 path: `${collection.slug}/:id`,

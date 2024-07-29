@@ -9,7 +9,6 @@ import {
   StarIcon,
 } from "@heroicons/react/24/outline";
 import { Button, classNames, eventHandler } from "@rafty/ui";
-import type { ComponentPropsWithoutRef } from "react";
 import { Link, type LinkProps } from "react-router-dom";
 import urlJoin from "url-join";
 import { Logo } from "../components";
@@ -112,19 +111,13 @@ export function HomePage({ stats, basePath }: HomePage) {
             {stats.collections === 1 ? "collection" : "collections"}
           </p>
         </LinkCard>
-        <LinkCard
-          to=""
-          className="text-secondary-500 dark:text-secondary-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-500 dark:hover:text-purple-300"
-        >
+        <LinkCard className="text-secondary-500 dark:text-secondary-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-500 dark:hover:text-purple-300">
           <BoltIcon className="size-5 md:size-7" />
           <p className="text-sm font-medium">
             {stats.routes} {stats.routes === 1 ? "route" : "routes"}
           </p>
         </LinkCard>
-        <LinkCard
-          to=""
-          className="text-secondary-500 dark:text-secondary-400 hover:bg-green-100/70 dark:hover:bg-green-900/20 hover:text-green-500 dark:hover:text-green-300"
-        >
+        <LinkCard className="text-secondary-500 dark:text-secondary-400 hover:bg-green-100/70 dark:hover:bg-green-900/20 hover:text-green-500 dark:hover:text-green-300">
           <PuzzlePieceIcon className="size-5 md:size-7" />
           <p className="text-sm font-medium">
             {stats.plugins} {stats.plugins === 1 ? "plugin" : "plugins"}
@@ -154,16 +147,21 @@ export function HomePage({ stats, basePath }: HomePage) {
   );
 }
 
-type LinkCard = ComponentPropsWithoutRef<typeof Link>;
+type LinkCard = Omit<LinkProps, "to"> & {
+  to?: string;
+};
 
-function LinkCard({ className, ...props }: LinkProps) {
-  return (
-    <Link
-      {...props}
-      className={classNames(
-        "rounded md:rounded-md border border-secondary-200 dark:border-secondary-800 w-full min-h-20 max-h-20 h-20 lg:min-h-24 lg:max-h-24 lg:h-24 flex flex-row md:flex-col gap-2 md:gap-1 items-center justify-center transition-all ease-in-out duration-300",
-        className,
-      )}
-    />
+function LinkCard({ className, to, children, ...props }: LinkCard) {
+  const classNameProp = classNames(
+    "rounded md:rounded-md cursor-pointer border border-secondary-200 dark:border-secondary-800 w-full min-h-20 max-h-20 h-20 lg:min-h-24 lg:max-h-24 lg:h-24 flex flex-row md:flex-col gap-2 md:gap-1 items-center justify-center transition-all ease-in-out duration-300",
+    className,
   );
+
+  if (to)
+    return (
+      <Link {...props} to={to} className={classNameProp}>
+        {children}
+      </Link>
+    );
+  return <div className={classNameProp}>{children}</div>;
 }
