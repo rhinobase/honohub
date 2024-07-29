@@ -73,7 +73,9 @@ export function HonoHub({
             children: collections.flatMap((collection) => [
               {
                 path: collection.slug,
-                element: <CollectionPage {...collection} />,
+                element: (
+                  <CollectionPage {...collection} serverUrl={serverUrl} />
+                ),
               },
               {
                 path: `${collection.slug}/:id`,

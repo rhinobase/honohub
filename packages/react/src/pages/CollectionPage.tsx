@@ -1,16 +1,19 @@
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { CodeBracketIcon, PlusIcon } from "@heroicons/react/24/outline";
 import type { ColumnType } from "@rafty/corp";
-import { Button, Checkbox } from "@rafty/ui";
+import { Button, Checkbox, useBoolean } from "@rafty/ui";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { getCell } from "../columns";
-import { DataTable, PageHeader, PageTitle } from "../components";
+import { APIReference, DataTable, PageHeader, PageTitle } from "../components";
 import type { CollectionType } from "../types";
 import { getPluralLabel } from "../utils";
 
-export type CollectionPage = Omit<CollectionType, "fields">;
+export type CollectionPage = Omit<CollectionType, "fields"> & {
+  serverUrl: string;
+};
 
 export function CollectionPage(props: CollectionPage) {
+  const [isOpen, toggle] = useBoolean(false);
   const columns = useMemo(() => {
     const columns: ColumnType<unknown>[] = props.columns.map((column) => ({
       id: column.name,
@@ -59,6 +62,13 @@ export function CollectionPage(props: CollectionPage) {
           {getPluralLabel(props.label)}
         </PageTitle>
         <div className="flex-1" />
+        <Button
+          leftIcon={<CodeBracketIcon className="size-4 stroke-2" />}
+          variant="outline"
+          onClick={() => toggle(true)}
+        >
+          API
+        </Button>
         <Link to={`/collections/${props.slug}/create`}>
           <Button
             colorScheme="primary"
@@ -69,6 +79,7 @@ export function CollectionPage(props: CollectionPage) {
         </Link>
       </PageHeader>
       <DataTable columns={columns} slug={props.slug} actions={props.actions} />
+      <APIReference isOpen={isOpen} toggle={toggle} slug={props.slug} />
     </>
   );
 }
