@@ -16,19 +16,84 @@ const main = async () => {
 
     await db.insert(todos).values([
       {
-        id: 1,
         status: true,
-        message: "Complete the API",
+        message: "Test the application",
       },
       {
-        id: 2,
         status: false,
-        message: "Build the example",
+        message: "Fix the bugs",
       },
       {
-        id: 3,
+        status: true,
+        message: "Implement new feature",
+      },
+      {
         status: false,
-        message: "Write the docs",
+        message: "Refactor the code",
+      },
+      {
+        status: true,
+        message: "Optimize performance",
+      },
+      {
+        status: false,
+        message: "Write unit tests",
+      },
+      {
+        status: true,
+        message: "Deploy to production",
+      },
+      {
+        status: false,
+        message: "Create user interface",
+      },
+      {
+        status: true,
+        message: "Add authentication",
+      },
+      {
+        status: false,
+        message: "Improve error handling",
+      },
+      {
+        status: true,
+        message: "Document the code",
+      },
+      {
+        status: false,
+        message: "Fix security vulnerabilities",
+      },
+      {
+        status: true,
+        message: "Optimize database queries",
+      },
+      {
+        status: false,
+        message: "Implement caching",
+      },
+      {
+        status: true,
+        message: "Handle edge cases",
+      },
+      {
+        status: false,
+        message: "Improve user experience",
+      },
+      {
+        status: true,
+        message: "Add logging",
+      },
+      {
+        status: false,
+        message: "Refine user interface",
+      },
+      {
+        status: true,
+        message: "Implement error tracking",
+      },
+      {
+        status: false,
+        message: "Write integration tests",
       },
     ]);
   } catch (error) {
