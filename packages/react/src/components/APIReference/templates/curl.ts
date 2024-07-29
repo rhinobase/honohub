@@ -1,17 +1,11 @@
 export function listRecords(reference: string) {
-  return `
-  curl -L '${reference}'
-  `;
+  return `curl -L '${reference}'`;
 }
 
 export function createRecord(reference: string) {
-  return `
-  curl -L '${reference}' \
-  -H 'Content-Type: application/json' \
-  -d '{
-      ...
-  }'
-`;
+  return `curl -L '${reference}' \\
+  -H 'Content-Type: application/json' \\
+  -d '<PAYLOAD>'`;
 }
 
 export function retrieveRecord(reference: string) {

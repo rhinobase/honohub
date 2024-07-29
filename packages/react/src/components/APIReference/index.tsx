@@ -1,3 +1,4 @@
+import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import {
   Drawer,
   DrawerClose,
@@ -24,28 +25,29 @@ export type APIReference = {
 
 const API_REFERENCE_TEMPLATE = {
   [TemplateType.LIST]: {
-    title: "List",
-    description: "sample",
+    title: "List Records",
+    description:
+      "List all the records in the collection. You can also filter, sort, and paginate the records.",
   },
   [TemplateType.CREATE]: {
-    title: "Create",
-    description: "sample",
+    title: "Create a Record",
+    description: "Create a new record in the collection.",
   },
   [TemplateType.RETRIEVE]: {
-    title: "Retrieve",
-    description: "sample",
+    title: "Retrieve a Record",
+    description: "Retrieve a single record by its ID/queryKey.",
   },
   [TemplateType.UPDATE]: {
-    title: "Update",
-    description: "sample",
+    title: "Update a Record",
+    description: "",
   },
   [TemplateType.DELETE]: {
-    title: "Delete",
-    description: "sample",
+    title: "Delete a Record",
+    description: "",
   },
   [TemplateType.COUNT]: {
-    title: "Count",
-    description: "sample",
+    title: "Count Records",
+    description: "",
   },
 };
 
@@ -55,9 +57,11 @@ export function APIReference({ isOpen, toggle, slug }: APIReference) {
       <ShikiProvider>
         <Drawer open={isOpen} onOpenChange={toggle}>
           <DrawerOverlay />
-          <DrawerContent className="max-w-[500px] flex flex-col pr-0">
-            <DrawerTitle>API Reference</DrawerTitle>
-            <div className="flex-1 overflow-y-auto pr-6">
+          <DrawerContent className="max-w-xl flex flex-col pr-0">
+            <DrawerTitle className="flex items-center gap-2">
+              <CodeBracketIcon className="size-5 stroke-2" /> API Reference
+            </DrawerTitle>
+            <div className="flex-1 overflow-y-auto pr-6 space-y-2">
               {Object.entries(API_REFERENCE_TEMPLATE).map(([type, item]) => (
                 <APIReferenceTemplateRender
                   key={type}
@@ -95,10 +99,12 @@ function APIReferenceTemplateRender({
   });
 
   return (
-    <div className="space-y-5 mt-4">
+    <>
       <div>
-        <h3 className="text-lg font-semibold leading-tight">Add {title}</h3>
-        <p className="leading-tight">{description}</p>
+        <h3 className="text-lg font-semibold leading-tight mt-5">{title}</h3>
+        <p className="leading-tight text-secondary-700 dark:text-secondary-400">
+          {description}
+        </p>
       </div>
       <Wrapper>
         {Object.entries(SupportedLang).map(([_, lang]) => (
@@ -117,6 +123,6 @@ function APIReferenceTemplateRender({
           </TabContent>
         ))}
       </Wrapper>
-    </div>
+    </>
   );
 }
