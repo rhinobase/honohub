@@ -1,4 +1,5 @@
 import { getValue } from "@rafty/ui";
+import type { Prettify } from "honohub";
 import {
   type ZodDefault,
   type ZodLiteral,
@@ -16,7 +17,6 @@ import type {
   FieldProps,
   FieldWrapperProps,
   NumberProps,
-  Prettify,
   SelectProps,
   StringProps,
   TextareaProps,

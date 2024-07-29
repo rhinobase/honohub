@@ -1,7 +1,7 @@
+import type { Prettify } from "honohub";
 import type { ZodObject } from "zod";
 import type { DefaultValue } from "./defaultValue";
 import type { FieldProps } from "./fieldProps";
-import type { Prettify } from "./utils";
 import type { Validation } from "./validation";
 
 export interface ObjectProps<

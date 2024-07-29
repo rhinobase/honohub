@@ -1,5 +1,6 @@
 import { Thread, useThread } from "@fibr/react";
-import type { FieldProps, ObjectProps, Prettify } from "../types";
+import type { Prettify } from "honohub";
+import type { FieldProps, ObjectProps } from "../types";
 
 export function ObjectField<
   T extends Record<string, FieldProps> = Record<string, FieldProps>,
