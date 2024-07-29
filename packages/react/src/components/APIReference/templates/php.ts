@@ -1,6 +1,5 @@
 export function listRecords(reference: string) {
-  return `
-    <?php
+  return `<?php
   require_once 'HTTP/Request2.php';
   $request = new HTTP_Request2();
   $request->setUrl('${reference}');
@@ -20,13 +19,11 @@ export function listRecords(reference: string) {
   }
   catch(HTTP_Request2_Exception $e) {
     echo 'Error: ' . $e->getMessage();
-  }
-  `;
+  }`;
 }
 
 export function createRecord(reference: string) {
-  return `
-  <?php
+  return `<?php
   require_once 'HTTP/Request2.php';
   $request = new HTTP_Request2();
   $request->setUrl('${reference}');
@@ -37,7 +34,7 @@ export function createRecord(reference: string) {
   $request->setHeader(array(
     'Content-Type' => 'application/json'
   ));
-  $request->setBody('{\n    "id": 4,\n    "status": false,\n    "message": "The API is working"\n}');
+  $request->setBody(<PAYLOAD>);
   try {
     $response = $request->send();
     if ($response->getStatus() == 200) {
@@ -50,13 +47,11 @@ export function createRecord(reference: string) {
   }
   catch(HTTP_Request2_Exception $e) {
     echo 'Error: ' . $e->getMessage();
-  }
-  `;
+  }`;
 }
 
 export function retrieveRecord(reference: string) {
-  return `
-  <?php
+  return `<?php
   require_once 'HTTP/Request2.php';
   $request = new HTTP_Request2();
   $request->setUrl('${reference}/:id');
@@ -76,13 +71,11 @@ export function retrieveRecord(reference: string) {
   }
   catch(HTTP_Request2_Exception $e) {
     echo 'Error: ' . $e->getMessage();
-  }
-  `;
+  }`;
 }
 
 export function updateRecord(reference: string) {
-  return `
-  <?php
+  return `<?php
   require_once 'HTTP/Request2.php';
   $request = new HTTP_Request2();
   $request->setUrl('${reference}/:id');
@@ -93,7 +86,7 @@ export function updateRecord(reference: string) {
   $request->setHeader(array(
     'Content-Type' => 'application/json'
   ));
-  $request->setBody('{\n    "message": "Update is working"\n}');
+  $request->setBody(<PAYLOAD>);
   try {
     $response = $request->send();
     if ($response->getStatus() == 200) {
@@ -106,13 +99,11 @@ export function updateRecord(reference: string) {
   }
   catch(HTTP_Request2_Exception $e) {
     echo 'Error: ' . $e->getMessage();
-  }
-  `;
+  }`;
 }
 
 export function deleteRecord(reference: string) {
-  return `
-  <?php
+  return `<?php
   require_once 'HTTP/Request2.php';
   $request = new HTTP_Request2();
   $request->setUrl('http://localhost:3000/collections/todos/55');
@@ -132,13 +123,11 @@ export function deleteRecord(reference: string) {
   }
   catch(HTTP_Request2_Exception $e) {
     echo 'Error: ' . $e->getMessage();
-  }
-  `;
+  }`;
 }
 
 export function countRecords(reference: string) {
-  return `
-  <?php
+  return `<?php
   require_once 'HTTP/Request2.php';
   $request = new HTTP_Request2();
   $request->setUrl('${reference}/count');
@@ -158,6 +147,5 @@ export function countRecords(reference: string) {
   }
   catch(HTTP_Request2_Exception $e) {
     echo 'Error: ' . $e->getMessage();
-  }
-  `;
+  }`;
 }

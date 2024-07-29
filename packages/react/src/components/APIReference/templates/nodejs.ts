@@ -1,6 +1,5 @@
 export function listRecords(reference: string) {
-  return `
-  const axios = require('axios');
+  return `const axios = require('axios');
 
   let config = {
     method: 'get',
@@ -19,18 +18,13 @@ export function listRecords(reference: string) {
     }
   }
 
-  makeRequest();
-  `;
+  makeRequest();`;
 }
 
 export function createRecord(reference: string) {
-  return `
-  const axios = require('axios');
-  let data = JSON.stringify({
-    "id": 4,
-    "status": false,
-    "message": "The API is working"
-  });
+  return `const axios = require('axios');
+
+  let data = JSON.stringify(<PAYLOAD>);
 
   let config = {
     method: 'post',
@@ -52,13 +46,11 @@ export function createRecord(reference: string) {
     }
   }
 
-  makeRequest();
-  `;
+  makeRequest();`;
 }
 
 export function retrieveRecord(reference: string) {
-  return `
-  const axios = require('axios');
+  return `const axios = require('axios');
 
   let config = {
     method: 'get',
@@ -77,16 +69,13 @@ export function retrieveRecord(reference: string) {
     }
   }
 
-  makeRequest();
-  `;
+  makeRequest();`;
 }
 
 export function updateRecord(reference: string) {
-  return `
-  const axios = require('axios');
-  let data = JSON.stringify({
-    "message": "Update is working"
-  });
+  return `const axios = require('axios');
+
+  let data = JSON.stringify(<PAYLOAD>);
 
   let config = {
     method: 'patch',
@@ -108,13 +97,11 @@ export function updateRecord(reference: string) {
     }
   }
 
-  makeRequest();
-  `;
+  makeRequest();`;
 }
 
 export function deleteRecord(reference: string) {
-  return `
-  const axios = require('axios');
+  return `const axios = require('axios');
 
   let config = {
     method: 'delete',
@@ -133,13 +120,11 @@ export function deleteRecord(reference: string) {
     }
   }
 
-  makeRequest();
-  `;
+  makeRequest();`;
 }
 
 export function countRecords(reference: string) {
-  return `
-  const axios = require('axios');
+  return `const axios = require('axios');
 
   let config = {
     method: 'get',
@@ -158,6 +143,5 @@ export function countRecords(reference: string) {
     }
   }
 
-  makeRequest();
-  `;
+  makeRequest();`;
 }

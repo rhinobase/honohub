@@ -1,6 +1,5 @@
 export function listRecords(reference: string) {
-  return `
-  package main
+  return `package main
 
   import (
     "fmt"
@@ -34,13 +33,11 @@ export function listRecords(reference: string) {
       return
     }
     fmt.Println(string(body))
-  }
-  `;
+  }`;
 }
 
 export function createRecord(reference: string) {
-  return `
-  package main
+  return `package main
 
   import (
     "fmt"
@@ -54,11 +51,7 @@ export function createRecord(reference: string) {
     url := "${reference}"
     method := "POST"
 
-    payload := strings.NewReader('{
-      "id": 4,
-      "status": false,
-      "message": "The API is working"
-  }')
+    payload := strings.NewReader(<PAYLOAD>)
 
     client := &http.Client {
     }
@@ -83,13 +76,11 @@ export function createRecord(reference: string) {
       return
     }
     fmt.Println(string(body))
-  }
-  `;
+  }`;
 }
 
 export function retrieveRecord(reference: string) {
-  return `
-  package main
+  return `package main
 
   import (
     "fmt"
@@ -123,13 +114,11 @@ export function retrieveRecord(reference: string) {
       return
     }
     fmt.Println(string(body))
-  }
-  `;
+  }`;
 }
 
 export function updateRecord(reference: string) {
-  return `
-  package main
+  return `package main
 
   import (
     "fmt"
@@ -143,9 +132,7 @@ export function updateRecord(reference: string) {
     url := "${reference}/:id"
     method := "PATCH"
 
-    payload := strings.NewReader('{
-      "message": "Update is working"
-    }')
+    payload := strings.NewReader(<PAYLOAD>)
 
     client := &http.Client {
     }
@@ -170,13 +157,11 @@ export function updateRecord(reference: string) {
       return
     }
     fmt.Println(string(body))
-    }
-  `;
+  }`;
 }
 
 export function deleteRecord(reference: string) {
-  return `
-  package main
+  return `package main
 
   import (
     "fmt"
@@ -210,13 +195,11 @@ export function deleteRecord(reference: string) {
       return
     }
     fmt.Println(string(body))
-  }
-  `;
+  }`;
 }
 
 export function countRecords(reference: string) {
-  return `
-  package main
+  return `package main
 
   import (
     "fmt"
@@ -250,6 +233,5 @@ export function countRecords(reference: string) {
       return
     }
     fmt.Println(string(body))
-  }
-  `;
+  }`;
 }

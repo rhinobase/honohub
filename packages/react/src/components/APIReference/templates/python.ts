@@ -1,6 +1,5 @@
 export function listRecords(reference: string) {
-  return `
-  import requests
+  return `import requests
 
   url = "${reference}"
 
@@ -9,13 +8,11 @@ export function listRecords(reference: string) {
 
   response = requests.request("GET", url, headers=headers, data=payload)
 
-  print(response.text)
-`;
+  print(response.text)`;
 }
 
 export function createRecord(reference: string) {
-  return `
-  import requests
+  return `import requests
   import json
 
   url = "${reference}"
@@ -31,13 +28,11 @@ export function createRecord(reference: string) {
 
   response = requests.request("POST", url, headers=headers, data=payload)
 
-  print(response.text)
-  `;
+  print(response.text)`;
 }
 
 export function retrieveRecord(reference: string) {
-  return `
-  import requests
+  return `import requests
 
   url = "${reference}/:id"
 
@@ -46,33 +41,27 @@ export function retrieveRecord(reference: string) {
 
   response = requests.request("GET", url, headers=headers, data=payload)
 
-  print(response.text)
-  `;
+  print(response.text)`;
 }
 
 export function updateRecord(reference: string) {
-  return `
-  import requests
+  return `import requests
   import json
 
   url = "${reference}/:id"
 
-  payload = json.dumps({
-    "message": "Update is working"
-  })
+  payload = json.dumps(<PAYLOAD>)
   headers = {
     'Content-Type': 'application/json'
   }
 
   response = requests.request("PATCH", url, headers=headers, data=payload)
 
-  print(response.text)
-  `;
+  print(response.text)`;
 }
 
 export function deleteRecord(reference: string) {
-  return `
-  import requests
+  return `import requests
 
   url = "${reference}/:id"
 
@@ -81,13 +70,11 @@ export function deleteRecord(reference: string) {
 
   response = requests.request("DELETE", url, headers=headers, data=payload)
 
-  print(response.text)
-  `;
+  print(response.text)`;
 }
 
 export function countRecords(reference: string) {
-  return `
-  import requests
+  return `import requests
 
   url = "${reference}/count"
 
@@ -96,6 +83,5 @@ export function countRecords(reference: string) {
 
   response = requests.request("GET", url, headers=headers, data=payload)
 
-  print(response.text)
-  `;
+  print(response.text)`;
 }
