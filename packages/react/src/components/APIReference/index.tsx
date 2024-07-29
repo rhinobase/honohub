@@ -14,6 +14,7 @@ import {
   useServer,
 } from "../../providers";
 import { CodeHighlighter } from "./Higlighter";
+import { Tag } from "./Tag";
 import { Wrapper } from "./Wrapper";
 import { TemplateType, getTemplate } from "./templates";
 
@@ -25,29 +26,35 @@ export type APIReference = {
 
 const API_REFERENCE_TEMPLATE = {
   [TemplateType.LIST]: {
+    tag: "GET",
     title: "List Records",
     description:
       "List all the records in the collection. You can also filter, sort, and paginate the records.",
   },
   [TemplateType.CREATE]: {
+    tag: "POST",
     title: "Create a Record",
     description: "Create a new record in the collection.",
   },
   [TemplateType.RETRIEVE]: {
+    tag: "GET",
     title: "Retrieve a Record",
     description: "Retrieve a single record by its ID/queryKey.",
   },
   [TemplateType.UPDATE]: {
+    tag: "PUT",
     title: "Update a Record",
-    description: "",
+    description: "Update a record by its ID/queryKey.",
   },
   [TemplateType.DELETE]: {
+    tag: "DELETE",
     title: "Delete a Record",
-    description: "",
+    description: "Delete a record by its ID/queryKey.",
   },
   [TemplateType.COUNT]: {
+    tag: "GET",
     title: "Count Records",
-    description: "",
+    description: "Count the number of records in the collection.",
   },
 };
 
@@ -80,6 +87,7 @@ export function APIReference({ isOpen, toggle, slug }: APIReference) {
 }
 
 type APIReferenceTemplateRender = {
+  tag: string;
   title: string;
   description: string;
   slug: string;
@@ -91,6 +99,7 @@ function APIReferenceTemplateRender({
   title,
   slug,
   type,
+  tag,
 }: APIReferenceTemplateRender) {
   const { endpoint } = useServer();
 
@@ -101,7 +110,10 @@ function APIReferenceTemplateRender({
   return (
     <>
       <div>
-        <h3 className="text-lg font-semibold leading-tight mt-5">{title}</h3>
+        <div className="flex items-center gap-2 mt-7 mb-1">
+          <Tag>{tag}</Tag>
+          <h3 className="text-lg font-semibold leading-tight">{title}</h3>
+        </div>
         <p className="leading-tight text-secondary-700 dark:text-secondary-400">
           {description}
         </p>

@@ -1,147 +1,109 @@
 export function listRecords(reference: string) {
   return `const axios = require('axios');
 
-  let config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: '${reference}',
-    headers: { }
-  };
-
-  async function makeRequest() {
-    try {
-      const response = await axios.request(config);
-      console.log(JSON.stringify(response.data));
-    }
-    catch (error) {
-      console.log(error);
-    }
+async function makeRequest() {
+  try {
+    const response = await axios.get(
+      "${reference}"
+    );
+    console.log(JSON.stringify(response.data));
   }
+  catch (error) {
+    console.log(error);
+  }
+}
 
-  makeRequest();`;
+makeRequest();`;
 }
 
 export function createRecord(reference: string) {
   return `const axios = require('axios');
 
-  let data = JSON.stringify(<PAYLOAD>);
-
-  let config = {
-    method: 'post',
-    maxBodyLength: Infinity,
-    url: '${reference}',
-    headers: { 
-      'Content-Type': 'application/json'
-    },
-    data : data
-  };
-
-  async function makeRequest() {
-    try {
-      const response = await axios.request(config);
-      console.log(JSON.stringify(response.data));
-    }
-    catch (error) {
-      console.log(error);
-    }
+async function makeRequest() {
+  try {
+    const response = await axios.post(
+      "${reference}",
+      { ... }
+    );
+    console.log(JSON.stringify(response.data));
   }
+  catch (error) {
+    console.log(error);
+  }
+}
 
-  makeRequest();`;
+makeRequest();`;
 }
 
 export function retrieveRecord(reference: string) {
   return `const axios = require('axios');
 
-  let config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: '${reference}/:id',
-    headers: { }
-  };
-
-  async function makeRequest() {
-    try {
-      const response = await axios.request(config);
-      console.log(JSON.stringify(response.data));
-    }
-    catch (error) {
-      console.log(error);
-    }
+async function makeRequest() {
+  try {
+    const response = await axios.get(
+      "${reference}/:id"
+    );
+    console.log(JSON.stringify(response.data));
   }
+  catch (error) {
+    console.log(error);
+  }
+}
 
-  makeRequest();`;
+makeRequest();`;
 }
 
 export function updateRecord(reference: string) {
   return `const axios = require('axios');
 
-  let data = JSON.stringify(<PAYLOAD>);
-
-  let config = {
-    method: 'patch',
-    maxBodyLength: Infinity,
-    url: '${reference}/:id',
-    headers: { 
-      'Content-Type': 'application/json'
-    },
-    data : data
-  };
-
-  async function makeRequest() {
-    try {
-      const response = await axios.request(config);
-      console.log(JSON.stringify(response.data));
-    }
-    catch (error) {
-      console.log(error);
-    }
+async function makeRequest() {
+  try {
+    const response = await axios.put(
+      "${reference}/:id",
+      { ... }
+    );
+    console.log(JSON.stringify(response.data));
   }
+  catch (error) {
+    console.log(error);
+  }
+}
 
-  makeRequest();`;
+makeRequest();`;
 }
 
 export function deleteRecord(reference: string) {
   return `const axios = require('axios');
 
-  let config = {
-    method: 'delete',
-    maxBodyLength: Infinity,
-    url: '${reference}/:id',
-    headers: { }
-  };
-
-  async function makeRequest() {
-    try {
-      const response = await axios.request(config);
-      console.log(JSON.stringify(response.data));
-    }
-    catch (error) {
-      console.log(error);
-    }
+async function makeRequest() {
+  try {
+    const response = await axios.delete(
+      "${reference}/:id"
+    );
+    console.log(JSON.stringify(response.data));
   }
+  catch (error) {
+    console.log(error);
+  }
+}
 
-  makeRequest();`;
+makeRequest();`;
 }
 
 export function countRecords(reference: string) {
   return `const axios = require('axios');
 
-  let config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: '${reference}/count',
-    headers: { }
-  };
-
-  async function makeRequest() {
-    try {
-      const response = await axios.request(config);
-      console.log(JSON.stringify(response.data));
-    }
-    catch (error) {
-      console.log(error);
-    }
+async function makeRequest() {
+  try {
+    const response = await axios.get(
+      "${reference}/count"
+    );
+    console.log(JSON.stringify(response.data));
   }
+  catch (error) {
+    console.log(error);
+  }
+}
 
-  makeRequest();`;
+makeRequest();`;
 }

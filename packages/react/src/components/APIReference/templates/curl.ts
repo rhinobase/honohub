@@ -5,7 +5,7 @@ export function listRecords(reference: string) {
 export function createRecord(reference: string) {
   return `curl -L '${reference}' \\
   -H 'Content-Type: application/json' \\
-  -d '<PAYLOAD>'`;
+  -d '{ ... }'`;
 }
 
 export function retrieveRecord(reference: string) {
@@ -13,9 +13,9 @@ export function retrieveRecord(reference: string) {
 }
 
 export function updateRecord(reference: string) {
-  return `curl -L -X PATCH '${reference}/:id' \\
+  return `curl -L -X PUT '${reference}/:id' \\
   -H 'Content-Type: application/json' \\
-  -d '<PAYLOAD>'`;
+  -d '{ ... }'`;
 }
 
 export function deleteRecord(reference: string) {
