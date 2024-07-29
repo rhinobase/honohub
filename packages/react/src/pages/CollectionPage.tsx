@@ -2,7 +2,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import type { ColumnType } from "@rafty/corp";
 import { Button, Checkbox, Toast } from "@rafty/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { getCell } from "../columns";
@@ -30,7 +30,7 @@ export function CollectionPage(props: CollectionPage) {
       queryClient.setQueryData<{
         results: any[];
         count: number;
-      }>([], (currentPageData) => {
+      }>(["collections", props.slug, pagination], (currentPageData) => {
         const nextPageData = queryClient.getQueryData<{
           results: any[];
           count: number;
@@ -47,7 +47,12 @@ export function CollectionPage(props: CollectionPage) {
 
         const data = {
           count: currentPageData.count,
-          results: [...currentPageData.results.filter((val) => val.id !== id)],
+          results: [
+            ...currentPageData.results.filter((val) => {
+              if (typeof val.id === "number") return val.id !== Number(id);
+              return val.id !== id;
+            }),
+          ],
         };
 
         if (nextPageData) data.results.push(nextPageData.results[0]);
