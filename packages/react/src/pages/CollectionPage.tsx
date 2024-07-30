@@ -1,6 +1,17 @@
-import { CodeBracketIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowPathIcon,
+  CodeBracketIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 import type { ColumnType } from "@rafty/corp";
-import { Button, Checkbox, Toast, useBoolean } from "@rafty/ui";
+import {
+  Button,
+  Checkbox,
+  Toast,
+  classNames,
+  eventHandler,
+  useBoolean,
+} from "@rafty/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
@@ -132,6 +143,10 @@ export function CollectionPage(props: CollectionPage) {
     return columns;
   }, [props.columns, deleteRecord]);
 
+  const isFetching = false;
+  const refetch = () => undefined;
+  const onRefresh = eventHandler(() => refetch());
+
   return (
     <>
       <PageHeader>
@@ -146,14 +161,20 @@ export function CollectionPage(props: CollectionPage) {
         >
           API
         </Button>
-        <Link to={`/collections/${props.slug}/create`}>
-          <Button
-            colorScheme="primary"
-            leftIcon={<PlusIcon className="size-3.5 stroke-[3]" />}
-          >
-            Create
-          </Button>
-        </Link>
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={onRefresh}
+          onKeyDown={onRefresh}
+          className="p-2"
+        >
+          <ArrowPathIcon
+            className={classNames(
+              isFetching && "animate-spin",
+              "size-5 stroke-2",
+            )}
+          />
+        </Button>
       </PageHeader>
       <DataTable columns={columns} slug={props.slug} actions={props.actions} />
       <APIReference isOpen={isOpen} toggle={toggle} slug={props.slug} />

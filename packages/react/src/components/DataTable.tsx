@@ -1,4 +1,5 @@
 import * as HeroIcons from "@heroicons/react/24/outline";
+import { FunnelIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
   type ColumnType,
   Combobox,
@@ -9,12 +10,12 @@ import {
   DataTable as SharedDatatable,
   useComboboxContext,
 } from "@rafty/corp";
-import { Text, Toast } from "@rafty/ui";
+import { Button, Text, Toast } from "@rafty/ui";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useDialogManager, useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { paramsSerializer } from "../utils";
@@ -34,6 +35,7 @@ export function DataTable<T = unknown>({
   const [searchParams, setSearchParams] = useSearchParams();
   const { endpoint } = useServer();
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
+  const [isOpen, setOpen] = useState(false);
 
   const validatedParams = queryValidation.parse(
     Object.fromEntries(searchParams.entries()),
@@ -77,17 +79,57 @@ export function DataTable<T = unknown>({
           />
         </div>
       ) : (
-        <SearchField />
+        <div className="flex items-center  gap-2">
+          <SearchField />
+          <Link to={`/collections/${slug}/create`}>
+            <Button
+              colorScheme="primary"
+              leftIcon={<PlusIcon className="size-4 stroke-[3]" />}
+              className="hidden lg:flex"
+            >
+              Create
+            </Button>
+            <Button colorScheme="primary" className="lg:hidden block p-2">
+              <PlusIcon className="size-5 stroke-2" />
+            </Button>
+          </Link>
+          <Button
+            onClick={() => setOpen(true)}
+            leftIcon={<FunnelIcon className="size-4 stroke-2" />}
+            className="hidden lg:flex"
+          >
+            Filters
+          </Button>
+          <Button className="lg:hidden block p-2">
+            <FunnelIcon className="size-5 stroke-2" />
+          </Button>
+        </div>
       )}
-      <SharedDatatable
-        data={data.results}
-        columns={columns}
-        isFetching={isFetching}
-        isLoading={isLoading}
-        enableRowSelection
-        rowsSelected={rowsSelected}
-        onRowsSelectedChange={setRowsSelected}
-      />
+      <div className="w-full flex gap-4">
+        <SharedDatatable
+          data={data.results}
+          columns={columns}
+          isFetching={isFetching}
+          isLoading={isLoading}
+          enableRowSelection
+          rowsSelected={rowsSelected}
+          onRowsSelectedChange={setRowsSelected}
+        />
+        {isOpen && (
+          <div className="lg:max-w-xs max-w-[100px] min-w-[200px] w-full rounded-md border border-secondary-300 dark:border-secondary-800 p-4 relative">
+            <Button
+              size="icon"
+              variant="ghost"
+              colorScheme="error"
+              className="absolute top-2.5 right-2.5"
+              onClick={() => setOpen(false)}
+            >
+              <XMarkIcon className="size-4" />
+            </Button>
+            hello
+          </div>
+        )}
+      </div>
       <Pagination
         currentPage={pageIndex + 1}
         pageLimit={validatedParams.limit}

@@ -11,7 +11,7 @@ import {
   forwardRef,
 } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { useSidebar } from "../providers";
+import { usePreferences } from "../providers";
 import { Logo } from "./Logo";
 
 type AppSidebarOptionType = {
@@ -26,7 +26,7 @@ export type AppSidebar = {
 
 export const AppSidebar = forwardRef<HTMLDivElement, AppSidebar>(
   function AppSidebar({ className, options, ...props }, forwardedRef) {
-    const { isShrink } = useSidebar();
+    const isShrink = usePreferences((state) => state.isShrink);
 
     return (
       <div
@@ -98,7 +98,8 @@ function SidebarTitle(props: PropsWithChildren) {
 type SidebarItem = AppSidebarOptionType;
 
 function SidebarItem({ label, icon, path }: SidebarItem) {
-  const { isShrink } = useSidebar();
+  const isShrink = usePreferences((state) => state.isShrink);
+
   const Icon = icon ?? PuzzlePieceIcon;
 
   return (
@@ -124,7 +125,10 @@ function SidebarItem({ label, icon, path }: SidebarItem) {
 }
 
 function SidebarShrinkButton() {
-  const { isShrink, setShrink } = useSidebar();
+  const { isShrink, setShrink } = usePreferences((state) => ({
+    isShrink: state.isShrink,
+    setShrink: state.setShrink,
+  }));
 
   const Icon = isShrink ? ChevronRightIcon : ChevronLeftIcon;
 
