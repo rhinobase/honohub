@@ -11,6 +11,8 @@ import {
   DrawerOverlay,
   DrawerTitle,
   TabContent,
+  classNames,
+  eventHandler,
   useBoolean,
 } from "@rafty/ui";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
@@ -121,10 +123,11 @@ function APIReferenceTemplateRender({
     return () => clearTimeout(timeoutId);
   }, [copied, toggle]);
 
-  const handleCopy = (content: string) => {
-    copyToClipboard(content);
-    toggle(true);
-  };
+  const handleCopy = (content: string) =>
+    eventHandler(() => {
+      copyToClipboard(content);
+      toggle(true);
+    });
 
   return (
     <>
@@ -133,7 +136,7 @@ function APIReferenceTemplateRender({
           <Tag>{tag}</Tag>
           <h3 className="text-lg font-semibold leading-tight">{title}</h3>
         </div>
-        <p className="leading-tight text-secondary-700 dark:text-secondary-400">
+        <p className="leading-tight text-secondary-600 dark:text-secondary-400">
           {description}
         </p>
       </div>
@@ -144,6 +147,8 @@ function APIReferenceTemplateRender({
             lang,
           })(reference);
 
+          const Icon = copied ? CheckIcon : DocumentDuplicateIcon;
+
           return (
             <TabContent
               key={lang}
@@ -152,16 +157,18 @@ function APIReferenceTemplateRender({
             >
               <CodeHighlighter content={content} language={lang} />
               <Button
-                className="right-1 top-1 absolute"
+                className={classNames(
+                  "right-2 top-2 absolute",
+                  copied
+                    ? "text-green-500 dark:text-green-300"
+                    : "hover:text-black dark:hover:text-white",
+                )}
                 size="icon"
                 variant="ghost"
-                onClick={() => handleCopy(content)}
+                onClick={handleCopy(content)}
+                onKeyDown={handleCopy(content)}
               >
-                {copied ? (
-                  <CheckIcon className="stroke-[3] text-green-400 size-4" />
-                ) : (
-                  <DocumentDuplicateIcon className="text-secondary-400 stroke-2 size-4 dark:text-secondary-400" />
-                )}
+                <Icon className="stroke-2 size-4" />
               </Button>
             </TabContent>
           );
