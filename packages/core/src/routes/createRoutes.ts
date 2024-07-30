@@ -76,13 +76,13 @@ export function createRoutes<
 
   collectionDeleteQuery.prepare(`${collection.slug}_delete_query`);
 
-  const maxLimit =
+  const defaultLimit =
     (typeof collection.pagination !== "boolean"
-      ? collection.pagination?.maxLimit
-      : undefined) ?? 100;
+      ? collection.pagination?.defaultLimit
+      : undefined) ?? 10;
 
   const queryValidationSchema = z.object({
-    limit: z.coerce.number().nonnegative().max(maxLimit).optional(),
+    limit: z.coerce.number().nonnegative().optional().default(defaultLimit),
     offset: z.coerce.number().nonnegative().optional().default(0),
     search: z.string().optional(),
     sortBy: z.string().optional(),
@@ -134,20 +134,15 @@ export function createRoutes<
     let payload: any[] | { results: any[]; count: number };
 
     if (collection.pagination) {
-      const limit = query.limit ?? collection.pagination.defaultLimit;
-
       if (
         collection.pagination.maxLimit &&
-        limit > collection.pagination.maxLimit
-      ) {
+        query.limit > collection.pagination.maxLimit
+      )
         throw new HTTPException(400, {
           message: "The limit value exceeds the maximum allowed limit.",
         });
-      }
 
-      records
-        .limit(query.limit ?? collection.pagination.defaultLimit)
-        .offset(query.offset);
+      records.limit(query.limit).offset(query.offset);
 
       [results, totalDocuments] = await Promise.all([
         records.execute(),

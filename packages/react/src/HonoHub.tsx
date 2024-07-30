@@ -1,3 +1,4 @@
+import * as HeroIcon from "@heroicons/react/24/outline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import {
@@ -7,7 +8,6 @@ import {
 } from "react-router-dom";
 import { AppWrapper, CollectionsWrapper, PluginWrapper } from "./components";
 import "./main.css";
-import * as HeroIcon from "@heroicons/react/24/outline";
 import {
   CollectionPage,
   DocumentPage,
@@ -15,7 +15,7 @@ import {
   HomePage,
   SettingsPage,
 } from "./pages";
-import { PaginationProvider, ServerProvider, ThemeProvider } from "./providers";
+import { ServerProvider, ThemeProvider } from "./providers";
 import type { HonoHubProps } from "./types";
 
 const CLIENT = new QueryClient();
@@ -73,11 +73,7 @@ export function HonoHub({
             children: collections.flatMap((collection) => [
               {
                 path: collection.slug,
-                element: (
-                  <PaginationProvider>
-                    <CollectionPage {...collection} />
-                  </PaginationProvider>
-                ),
+                element: <CollectionPage {...collection} />,
               },
               {
                 path: `${collection.slug}/:id`,

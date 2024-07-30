@@ -1,16 +1,16 @@
+import axios, { type CreateAxiosDefaults } from "axios";
 import {
   type PropsWithChildren,
   createContext,
   useContext,
   useMemo,
 } from "react";
-import { createEndpoint } from "../utils";
 
 export type ServerContextType = ReturnType<typeof useServerManager>;
 
 const ServerContext = createContext<ServerContextType | null>(null);
 
-export type ServerProvider = { baseURL: string };
+export type ServerProvider = CreateAxiosDefaults;
 
 export const ServerProvider = ({
   children,
@@ -24,10 +24,7 @@ export const ServerProvider = ({
 };
 
 function useServerManager(props: ServerProvider) {
-  const endpoint = useMemo(
-    () => createEndpoint(props.baseURL),
-    [props.baseURL],
-  );
+  const endpoint = useMemo(() => axios.create(props), [props]);
 
   return {
     endpoint,
