@@ -1,12 +1,13 @@
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { CodeBracketIcon, PlusIcon } from "@heroicons/react/24/outline";
 import type { ColumnType } from "@rafty/corp";
-import { Button, Checkbox, Toast } from "@rafty/ui";
+import { Button, Checkbox, Toast, useBoolean } from "@rafty/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
 import { Link, useSearchParams } from "react-router-dom";
 import { getCell } from "../columns";
 import {
+  APIReference,
   CollectionTableActionMenu,
   DataTable,
   PageHeader,
@@ -20,6 +21,7 @@ import { queryValidation } from "../validations";
 export type CollectionPage = Omit<CollectionType, "fields">;
 
 export function CollectionPage(props: CollectionPage) {
+  const [isOpen, toggle] = useBoolean(false);
   const { endpoint } = useServer();
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
@@ -137,6 +139,13 @@ export function CollectionPage(props: CollectionPage) {
           {getPluralLabel(props.label)}
         </PageTitle>
         <div className="flex-1" />
+        <Button
+          leftIcon={<CodeBracketIcon className="size-4 stroke-2" />}
+          variant="outline"
+          onClick={() => toggle(true)}
+        >
+          API
+        </Button>
         <Link to={`/collections/${props.slug}/create`}>
           <Button
             colorScheme="primary"
@@ -147,6 +156,7 @@ export function CollectionPage(props: CollectionPage) {
         </Link>
       </PageHeader>
       <DataTable columns={columns} slug={props.slug} actions={props.actions} />
+      <APIReference isOpen={isOpen} toggle={toggle} slug={props.slug} />
     </>
   );
 }

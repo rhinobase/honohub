@@ -10,3 +10,4 @@ export { PageWrapper } from "./PageWrapper";
 export { Pagination } from "./Pagination";
 export { PluginWrapper } from "./PluginWrapper";
 export { SearchField } from "./SearchField";
+export { APIReference } from "./APIReference";
