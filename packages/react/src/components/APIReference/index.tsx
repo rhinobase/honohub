@@ -60,29 +60,27 @@ const API_REFERENCE_TEMPLATE = {
 
 export function APIReference({ isOpen, toggle, slug }: APIReference) {
   return (
-    <PreferencesProvider>
-      <ShikiProvider>
-        <Drawer open={isOpen} onOpenChange={toggle}>
-          <DrawerOverlay />
-          <DrawerContent className="max-w-xl flex flex-col pr-0">
-            <DrawerTitle className="flex items-center gap-2">
-              <CodeBracketIcon className="size-5 stroke-2" /> API Reference
-            </DrawerTitle>
-            <div className="flex-1 overflow-y-auto pr-6 space-y-2">
-              {Object.entries(API_REFERENCE_TEMPLATE).map(([type, item]) => (
-                <APIReferenceTemplateRender
-                  key={type}
-                  slug={slug}
-                  {...item}
-                  type={type as TemplateType}
-                />
-              ))}
-            </div>
-            <DrawerClose />
-          </DrawerContent>
-        </Drawer>
-      </ShikiProvider>
-    </PreferencesProvider>
+    <ShikiProvider>
+      <Drawer open={isOpen} onOpenChange={toggle}>
+        <DrawerOverlay />
+        <DrawerContent className="max-w-xl flex flex-col pr-0">
+          <DrawerTitle className="flex items-center gap-2">
+            <CodeBracketIcon className="size-5 stroke-2" /> API Reference
+          </DrawerTitle>
+          <div className="flex-1 overflow-y-auto pr-6 space-y-2">
+            {Object.entries(API_REFERENCE_TEMPLATE).map(([type, item]) => (
+              <APIReferenceTemplateRender
+                key={type}
+                slug={slug}
+                {...item}
+                type={type as TemplateType}
+              />
+            ))}
+          </div>
+          <DrawerClose />
+        </DrawerContent>
+      </Drawer>
+    </ShikiProvider>
   );
 }
 

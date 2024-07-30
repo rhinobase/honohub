@@ -15,7 +15,11 @@ import {
   HomePage,
   SettingsPage,
 } from "./pages";
-import { ServerProvider, ThemeProvider } from "./providers";
+import {
+  PreferencesProvider,
+  ServerProvider,
+  ThemeProvider,
+} from "./providers";
 import type { HonoHubProps } from "./types";
 
 const CLIENT = new QueryClient();
@@ -113,7 +117,9 @@ export function HonoHub({
     <QueryClientProvider client={CLIENT}>
       <ThemeProvider>
         <ServerProvider baseURL={serverUrl}>
-          <RouterProvider router={router} />
+          <PreferencesProvider>
+            <RouterProvider router={router} />
+          </PreferencesProvider>
           <Toaster />
         </ServerProvider>
       </ThemeProvider>

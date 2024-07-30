@@ -9,7 +9,7 @@ export function CodeHighlighter({ content, language }: CodeHighlighter) {
 
   if (!highlighter)
     return (
-      <div className="h-full space-y-2 py-3">
+      <div className="h-full space-y-2 p-4">
         <Skeleton className="h-5 w-1/2 rounded" />
         <Skeleton className="h-5 w-full rounded" />
         <Skeleton className="h-5 w-full rounded" />
