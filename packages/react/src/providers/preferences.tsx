@@ -8,9 +8,6 @@ import {
 export enum SupportedLang {
   NODEJS = "js",
   PYTHON = "py",
-  RUBY = "ruby",
-  GO = "go",
-  PHP = "php",
   CURL = "bash",
 }
 

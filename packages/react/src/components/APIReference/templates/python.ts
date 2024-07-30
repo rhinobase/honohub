@@ -1,87 +1,61 @@
 export function listRecords(reference: string) {
   return `import requests
 
-  url = "${reference}"
+response = requests.get(
+  "${reference}"
+)
 
-  payload = {}
-  headers = {}
-
-  response = requests.request("GET", url, headers=headers, data=payload)
-
-  print(response.text)`;
+print(response.json())`;
 }
 
 export function createRecord(reference: string) {
   return `import requests
-  import json
 
-  url = "${reference}"
+response = requests.post(
+  "${reference}",
+  data={ ... }
+)
 
-  payload = json.dumps({
-    "id": 4,
-    "status": False,
-    "message": "The API is working"
-  })
-  headers = {
-    'Content-Type': 'application/json'
-  }
-
-  response = requests.request("POST", url, headers=headers, data=payload)
-
-  print(response.text)`;
+print(response.json())`;
 }
 
 export function retrieveRecord(reference: string) {
   return `import requests
 
-  url = "${reference}/:id"
+response = requests.get(
+  "${reference}/:id"
+)
 
-  payload = {}
-  headers = {}
-
-  response = requests.request("GET", url, headers=headers, data=payload)
-
-  print(response.text)`;
+print(response.json())`;
 }
 
 export function updateRecord(reference: string) {
   return `import requests
-  import json
 
-  url = "${reference}/:id"
+response = requests.put(
+  "${reference}/:id",
+  data={ ... }
+)
 
-  payload = json.dumps(<PAYLOAD>)
-  headers = {
-    'Content-Type': 'application/json'
-  }
-
-  response = requests.request("PATCH", url, headers=headers, data=payload)
-
-  print(response.text)`;
+print(response.json())`;
 }
 
 export function deleteRecord(reference: string) {
   return `import requests
 
-  url = "${reference}/:id"
+response = requests.delete(
+  "${reference}/:id"
+)
 
-  payload = {}
-  headers = {}
-
-  response = requests.request("DELETE", url, headers=headers, data=payload)
-
-  print(response.text)`;
+print(response.json())`;
 }
 
 export function countRecords(reference: string) {
   return `import requests
 
-  url = "${reference}/count"
+response = requests.get(
+  "${reference}/count"
+)
 
-  payload = {}
-  headers = {}
-
-  response = requests.request("GET", url, headers=headers, data=payload)
-
-  print(response.text)`;
+print(response.json())`;
 }

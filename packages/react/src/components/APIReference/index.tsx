@@ -110,7 +110,7 @@ function APIReferenceTemplateRender({
   return (
     <>
       <div>
-        <div className="flex items-center gap-2 mt-7 mb-1">
+        <div className="flex items-center gap-2 mt-8 mb-1">
           <Tag>{tag}</Tag>
           <h3 className="text-lg font-semibold leading-tight">{title}</h3>
         </div>
