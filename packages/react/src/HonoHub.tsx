@@ -38,7 +38,10 @@ export function HonoHub({
       {
         icon: HeroIcon.ArchiveBoxIcon,
         label: "Collections",
-        path: "/collections",
+        path:
+          collections.length > 0
+            ? `/collections/${collections[0].slug}`
+            : "/collections",
       },
     ],
     ...(hasPlugins
