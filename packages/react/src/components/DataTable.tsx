@@ -14,8 +14,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { useDialogManager, usePagination, useServer } from "../providers";
+import { useSearchParams } from "react-router-dom";
+import { useDialogManager, useServer } from "../providers";
 import type { CollectionType } from "../types";
+import { paramsSerializer } from "../utils";
+import { queryValidation } from "../validations";
 import { Pagination } from "./Pagination";
 import { SearchField } from "./SearchField";
 
@@ -28,24 +31,27 @@ export function DataTable<T = unknown>({
   slug,
   actions,
 }: DataTable<T>) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { endpoint } = useServer();
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
 
-  const {
-    pagination: { pageIndex, pageSize },
-    setPagination,
-  } = usePagination();
-  const offset = pageSize * pageIndex;
+  const validatedParams = queryValidation.parse(
+    Object.fromEntries(searchParams.entries()),
+  );
+  const pageIndex = validatedParams.offset / validatedParams.limit;
 
   const {
     data = { results: [], count: 0 },
     isFetching,
     isLoading,
   } = useQuery<{ results: T[]; count: number }>({
-    queryKey: ["collections", slug, { pageIndex, pageSize }],
+    queryKey: ["collections", slug, validatedParams],
     queryFn: () =>
       endpoint
-        .get(`/collections/${slug}?limit=${pageSize}&offset=${offset}`)
+        .get(`/collections/${slug}`, {
+          params: validatedParams,
+          paramsSerializer,
+        })
         .then((res) => res.data),
   });
 
@@ -84,21 +90,22 @@ export function DataTable<T = unknown>({
       />
       <Pagination
         currentPage={pageIndex + 1}
-        pageLimit={pageSize}
-        pages={Math.ceil(data.count / pageSize)}
-        onChange={(page, pageSize) =>
-          setPagination({
-            pageIndex: page - 1,
-            pageSize,
-          })
-        }
+        pageLimit={validatedParams.limit}
+        pages={Math.ceil(data.count / validatedParams.limit)}
+        onChange={(page, limit) => {
+          setSearchParams({
+            limit: String(limit),
+            offset: String((page - 1) * limit),
+          });
+        }}
       >
         <p className="text-secondary-700 dark:text-secondary-300">
-          {pageIndex * pageSize + 1}
+          {pageIndex * validatedParams.limit + 1}
           &nbsp;-&nbsp;
-          {pageSize + pageIndex * pageSize > data.count
+          {validatedParams.limit + pageIndex * validatedParams.limit >
+          data.count
             ? data.count
-            : pageSize + pageIndex * pageSize}
+            : validatedParams.limit + pageIndex * validatedParams.limit}
           &nbsp;of&nbsp;{data.count}
         </p>
       </Pagination>

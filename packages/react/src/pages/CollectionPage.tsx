@@ -4,7 +4,7 @@ import { Button, Checkbox, Toast } from "@rafty/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { getCell } from "../columns";
 import {
   CollectionTableActionMenu,
@@ -12,16 +12,21 @@ import {
   PageHeader,
   PageTitle,
 } from "../components";
-import { usePagination, useServer } from "../providers";
+import { useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { getPluralLabel } from "../utils";
+import { queryValidation } from "../validations";
 
 export type CollectionPage = Omit<CollectionType, "fields">;
 
 export function CollectionPage(props: CollectionPage) {
   const { endpoint } = useServer();
-  const { pagination } = usePagination();
   const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
+
+  const validatedParams = queryValidation.parse(
+    Object.fromEntries(searchParams.entries()),
+  );
 
   const { mutate: deleteRecord } = useMutation({
     mutationFn: (id: string) =>
@@ -30,7 +35,7 @@ export function CollectionPage(props: CollectionPage) {
       queryClient.setQueryData<{
         results: any[];
         count: number;
-      }>(["collections", props.slug, pagination], (currentPageData) => {
+      }>(["collections", props.slug, validatedParams], (currentPageData) => {
         const nextPageData = queryClient.getQueryData<{
           results: any[];
           count: number;
@@ -38,8 +43,8 @@ export function CollectionPage(props: CollectionPage) {
           "collections",
           props.slug,
           {
-            pageIndex: pagination.pageIndex + 1,
-            pageSize: pagination.pageSize,
+            offset: validatedParams.offset + 1,
+            limit: validatedParams.limit,
           },
         ]);
 
@@ -62,7 +67,7 @@ export function CollectionPage(props: CollectionPage) {
     },
     onSettled: () =>
       queryClient.refetchQueries({
-        queryKey: ["collections", props.slug, pagination],
+        queryKey: ["collections", props.slug, validatedParams],
       }),
     onError: (err, id) => {
       console.error(err);
