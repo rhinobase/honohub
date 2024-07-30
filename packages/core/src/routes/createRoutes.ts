@@ -82,8 +82,8 @@ export function createRoutes<
       : undefined) ?? 10;
 
   const queryValidationSchema = z.object({
-    limit: z.coerce.number().nonnegative().optional().default(defaultLimit),
-    offset: z.coerce.number().nonnegative().optional().default(0),
+    limit: z.coerce.number().nonnegative().default(defaultLimit),
+    offset: z.coerce.number().nonnegative().default(0),
     search: z.string().optional(),
     sortBy: z.string().optional(),
   });
