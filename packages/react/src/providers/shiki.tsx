@@ -10,9 +10,9 @@ import {
   type BundledLanguage,
   type BundledTheme,
   type HighlighterGeneric,
-  bundledLanguages,
-  getHighlighter,
+  getSingletonHighlighter,
 } from "shiki";
+import { SupportedLang } from "./preferences";
 
 const ShikiContext = createContext<ReturnType<typeof useHighlighter> | null>(
   null,
@@ -35,23 +35,22 @@ function useHighlighter() {
     const controller = new AbortController();
     try {
       new Promise((resolve, reject) => {
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         const abortListener = ({ target }: any) => {
           controller.signal.removeEventListener("abort", abortListener);
           reject(target.reason);
         };
         controller.signal.addEventListener("abort", abortListener);
 
-        getHighlighter({
+        getSingletonHighlighter({
           themes: ["github-light-default", "github-dark-default"],
-          langs: Object.keys(bundledLanguages),
+          langs: Object.values(SupportedLang),
         }).then((highlighter) => {
           setHighlighter(highlighter);
           resolve(highlighter);
         });
       });
-    } catch {
-      /* Catching all the abort errors */
+    } catch (err) {
+      console.error("Failed to load shiki", err);
     }
 
     return () => {

@@ -1,8 +1,6 @@
 import { Tab, TabList, TabTrigger } from "@rafty/ui";
-import type { PropsWithChildren } from "react";
+import { type PropsWithChildren, memo } from "react";
 import { SupportedLang, usePreferences } from "../../providers";
-
-const LANGUAGES = ["Node.js", "Python", "cURL"];
 
 export function Wrapper({ children }: PropsWithChildren) {
   const { lang, setLang } = usePreferences();
@@ -13,14 +11,26 @@ export function Wrapper({ children }: PropsWithChildren) {
       onValueChange={(value) => setLang(value as SupportedLang)}
       className="border rounded-xl border-secondary-200 dark:border-secondary-700"
     >
-      <TabList>
-        {Object.values(SupportedLang).map((lang, index) => (
-          <TabTrigger value={lang} key={lang}>
-            {LANGUAGES[index]}
-          </TabTrigger>
-        ))}
-      </TabList>
+      <SupportedLanguagesTabs />
       {children}
     </Tab>
   );
 }
+
+const LANGUAGES = {
+  [SupportedLang.NODEJS]: "Node.js",
+  [SupportedLang.PYTHON]: "Python",
+  [SupportedLang.CURL]: "cURL",
+};
+
+const SupportedLanguagesTabs = memo(function LanguagesTabs() {
+  return (
+    <TabList>
+      {Object.values(SupportedLang).map((lang) => (
+        <TabTrigger value={lang} key={lang}>
+          {LANGUAGES[lang]}
+        </TabTrigger>
+      ))}
+    </TabList>
+  );
+});
