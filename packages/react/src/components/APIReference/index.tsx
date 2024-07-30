@@ -68,11 +68,11 @@ export function APIReference({ isOpen, toggle, slug }: APIReference) {
     <ShikiProvider>
       <Drawer open={isOpen} onOpenChange={toggle}>
         <DrawerOverlay />
-        <DrawerContent className="max-w-xl flex flex-col pr-0 pb-0">
+        <DrawerContent className="max-w-xl flex flex-col pr-0 pb-0 dark:bg-secondary-900">
           <DrawerTitle className="flex items-center gap-2">
             <CodeBracketIcon className="size-5 stroke-2" /> API Reference
           </DrawerTitle>
-          <div className="flex-1 overflow-y-auto pr-6 space-y-2 pb-6">
+          <div className="flex-1 overflow-y-auto pr-6 space-y-8 pt-4 pb-6">
             {Object.entries(API_REFERENCE_TEMPLATE).map(([type, item]) => (
               <APIReferenceTemplateRender
                 key={type}
@@ -130,16 +130,14 @@ function APIReferenceTemplateRender({
     });
 
   return (
-    <>
-      <div>
-        <div className="flex items-center gap-2 mt-8 mb-1">
-          <Tag>{tag}</Tag>
-          <h3 className="text-lg font-semibold leading-tight">{title}</h3>
-        </div>
-        <p className="leading-tight text-secondary-600 dark:text-secondary-400">
-          {description}
-        </p>
+    <div>
+      <div className="flex items-center gap-2">
+        <Tag>{tag}</Tag>
+        <h3 className="text-lg font-semibold">{title}</h3>
       </div>
+      <p className="text-secondary-600 dark:text-secondary-400 mb-3">
+        {description}
+      </p>
       <Wrapper>
         {Object.entries(SupportedLang).map(([_, lang]) => {
           const content = getTemplate({
@@ -174,6 +172,6 @@ function APIReferenceTemplateRender({
           );
         })}
       </Wrapper>
-    </>
+    </div>
   );
 }
