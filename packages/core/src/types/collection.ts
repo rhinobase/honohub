@@ -73,7 +73,6 @@ export type CollectionPagination = {
   defaultLimit: number;
   /**
    * Maximum limit for pagination
-   * @default 100
    * @minimum 1
    */
   maxLimit?: number;

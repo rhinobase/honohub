@@ -1,3 +1,4 @@
+import * as HeroIcon from "@heroicons/react/24/outline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import {
@@ -7,7 +8,6 @@ import {
 } from "react-router-dom";
 import { AppWrapper, CollectionsWrapper, PluginWrapper } from "./components";
 import "./main.css";
-import * as HeroIcon from "@heroicons/react/24/outline";
 import {
   CollectionPage,
   DocumentPage,

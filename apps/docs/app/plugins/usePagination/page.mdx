@@ -1,0 +1,31 @@
+export const metadata = {
+  title: "usePagination",
+  description:
+    "The usePagination plugin adds pagination to all the collections in your HonoHub app.",
+};
+
+# usePagination
+
+Automatically add pagination to all collections in your HonoHub app. {{ className: 'lead' }}
+
+It is a part of the `honohub` package, so you don't need to install any additional packages. This is useful when you have multiple collections in your app and don't want to add pagination to each collection manually.
+
+If you want to have custom pagination for a specific collection, you can just add the `pagination` option to the collection configuration.
+
+## Usage
+
+Here's an example of how to use the `usePagination` plugin -
+
+```ts
+import { usePagination } from "honohub/pagination";
+
+export default defineHub({
+  ...,
+  plugins: [
+    usePagination({
+      defaultLimit: 10;
+      maxLimit: 100;
+    }),
+  ],
+});
+```

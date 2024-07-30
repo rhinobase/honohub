@@ -1,9 +1,9 @@
+import type { Prettify } from "honohub";
 import type {
   DateFieldProps,
   DatetimeFieldProps,
   DefaultValue,
   FieldProps,
-  Prettify,
 } from "./types";
 
 export const getObjectDefaultValue = <T extends Record<string, FieldProps>>(

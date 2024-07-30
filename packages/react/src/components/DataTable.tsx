@@ -10,12 +10,15 @@ import {
   useComboboxContext,
 } from "@rafty/corp";
 import { Text, Toast } from "@rafty/ui";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
+import { useSearchParams } from "react-router-dom";
 import { useDialogManager, useServer } from "../providers";
 import type { CollectionType } from "../types";
+import { paramsSerializer } from "../utils";
+import { queryValidation } from "../validations";
 import { Pagination } from "./Pagination";
 import { SearchField } from "./SearchField";
 
@@ -28,24 +31,27 @@ export function DataTable<T = unknown>({
   slug,
   actions,
 }: DataTable<T>) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { endpoint } = useServer();
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
 
-  const [{ pageIndex, pageSize }, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
-  });
-  const offset = pageSize * pageIndex;
+  const validatedParams = queryValidation.parse(
+    Object.fromEntries(searchParams.entries()),
+  );
+  const pageIndex = validatedParams.offset / validatedParams.limit;
 
   const {
     data = { results: [], count: 0 },
     isFetching,
     isLoading,
   } = useQuery<{ results: T[]; count: number }>({
-    queryKey: ["collections", slug, { pageIndex, pageSize }],
+    queryKey: ["collections", slug, validatedParams],
     queryFn: () =>
       endpoint
-        .get(`/collections/${slug}?limit=${pageSize}&offset=${offset}`)
+        .get(`/collections/${slug}`, {
+          params: validatedParams,
+          paramsSerializer,
+        })
         .then((res) => res.data),
   });
 
@@ -84,21 +90,22 @@ export function DataTable<T = unknown>({
       />
       <Pagination
         currentPage={pageIndex + 1}
-        pageLimit={pageSize}
-        pages={Math.ceil(data.count / pageSize)}
-        onChange={(page, pageSize) =>
-          setPagination({
-            pageIndex: page - 1,
-            pageSize,
-          })
-        }
+        pageLimit={validatedParams.limit}
+        pages={Math.ceil(data.count / validatedParams.limit)}
+        onChange={(page, limit) => {
+          setSearchParams({
+            limit: String(limit),
+            offset: String((page - 1) * limit),
+          });
+        }}
       >
         <p className="text-secondary-700 dark:text-secondary-300">
-          {pageIndex * pageSize + 1}
+          {pageIndex * validatedParams.limit + 1}
           &nbsp;-&nbsp;
-          {pageSize + pageIndex * pageSize > data.count
+          {validatedParams.limit + pageIndex * validatedParams.limit >
+          data.count
             ? data.count
-            : pageSize + pageIndex * pageSize}
+            : validatedParams.limit + pageIndex * validatedParams.limit}
           &nbsp;of&nbsp;{data.count}
         </p>
       </Pagination>
@@ -118,6 +125,7 @@ function ActionSelect<T>({
 }) {
   const [selected, setSelected] = useState<string | undefined>(undefined);
   const { endpoint } = useServer();
+  const queryClient = useQueryClient();
 
   const { action: actionDialogManager } = useDialogManager();
 
@@ -135,36 +143,35 @@ function ActionSelect<T>({
     [actions],
   );
 
-  const fireAction = useCallback(
-    (action: string) => {
-      try {
-        endpoint.post(`/collections/${slug}/actions/${action}`, {
-          items: selectedRows,
-        });
-      } catch (err) {
-        console.error(err);
+  const { mutate: fireAction } = useMutation({
+    mutationFn: (action: string) =>
+      endpoint.post(`/collections/${slug}/actions/${action}`, {
+        items: selectedRows,
+      }),
+    onSuccess: () =>
+      queryClient.refetchQueries({ queryKey: ["collections", slug] }),
+    onError: (err, action) => {
+      console.error(err);
 
-        if (isAxiosError(err)) {
-          toast.custom(({ visible }) => (
-            <Toast
-              severity="error"
-              title={`${err.response?.status} ${err.code}`}
-              message={err.response?.statusText}
-              visible={visible}
-            />
-          ));
-        } else
-          toast.custom(({ visible }) => (
-            <Toast
-              severity="error"
-              title="Something went wrong!"
-              visible={visible}
-            />
-          ));
-      }
+      if (isAxiosError(err)) {
+        toast.custom(({ visible }) => (
+          <Toast
+            severity="error"
+            title={`${err.response?.status} ${err.code}`}
+            message={err.response?.statusText}
+            visible={visible}
+          />
+        ));
+      } else
+        toast.custom(({ visible }) => (
+          <Toast
+            severity="error"
+            title={`Unable to run action - ${action}`}
+            visible={visible}
+          />
+        ));
     },
-    [endpoint, slug, selectedRows],
-  );
+  });
 
   return (
     <div className="w-[300px]">
