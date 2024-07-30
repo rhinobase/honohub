@@ -8,9 +8,7 @@ import { APIReference, DataTable, PageHeader, PageTitle } from "../components";
 import type { CollectionType } from "../types";
 import { getPluralLabel } from "../utils";
 
-export type CollectionPage = Omit<CollectionType, "fields"> & {
-  serverUrl: string;
-};
+export type CollectionPage = Omit<CollectionType, "fields">;
 
 export function CollectionPage(props: CollectionPage) {
   const [isOpen, toggle] = useBoolean(false);
