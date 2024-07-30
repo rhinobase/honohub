@@ -1,18 +1,21 @@
-import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import {
+  CheckIcon,
+  CodeBracketIcon,
+  DocumentDuplicateIcon,
+} from "@heroicons/react/24/outline";
+import {
+  Button,
   Drawer,
   DrawerClose,
   DrawerContent,
   DrawerOverlay,
   DrawerTitle,
   TabContent,
+  useBoolean,
 } from "@rafty/ui";
-import {
-  PreferencesProvider,
-  ShikiProvider,
-  SupportedLang,
-  useServer,
-} from "../../providers";
+import { useCopyToClipboard } from "@uidotdev/usehooks";
+import { useEffect } from "react";
+import { ShikiProvider, SupportedLang, useServer } from "../../providers";
 import { CodeHighlighter } from "./Higlighter";
 import { Tag } from "./Tag";
 import { Wrapper } from "./Wrapper";
@@ -63,11 +66,11 @@ export function APIReference({ isOpen, toggle, slug }: APIReference) {
     <ShikiProvider>
       <Drawer open={isOpen} onOpenChange={toggle}>
         <DrawerOverlay />
-        <DrawerContent className="max-w-xl flex flex-col pr-0">
+        <DrawerContent className="max-w-xl flex flex-col pr-0 pb-0">
           <DrawerTitle className="flex items-center gap-2">
             <CodeBracketIcon className="size-5 stroke-2" /> API Reference
           </DrawerTitle>
-          <div className="flex-1 overflow-y-auto pr-6 space-y-2">
+          <div className="flex-1 overflow-y-auto pr-6 space-y-2 pb-6">
             {Object.entries(API_REFERENCE_TEMPLATE).map(([type, item]) => (
               <APIReferenceTemplateRender
                 key={type}
@@ -99,11 +102,29 @@ function APIReferenceTemplateRender({
   type,
   tag,
 }: APIReferenceTemplateRender) {
+  const [, copyToClipboard] = useCopyToClipboard();
+  const [copied, toggle] = useBoolean();
+
   const { endpoint } = useServer();
 
   const reference = endpoint.getUri({
     url: `/collections/${slug}`,
   });
+
+  useEffect(() => {
+    if (!copied) return;
+
+    const timeoutId = setTimeout(() => {
+      toggle(false);
+    }, 1500);
+
+    return () => clearTimeout(timeoutId);
+  }, [copied, toggle]);
+
+  const handleCopy = (content: string) => {
+    copyToClipboard(content);
+    toggle(true);
+  };
 
   return (
     <>
@@ -117,21 +138,34 @@ function APIReferenceTemplateRender({
         </p>
       </div>
       <Wrapper>
-        {Object.entries(SupportedLang).map(([_, lang]) => (
-          <TabContent
-            key={lang}
-            value={lang}
-            className="data-[orientation=horizontal]:py-0 overflow-auto rounded-b-xl max-h-[450px] h-full"
-          >
-            <CodeHighlighter
-              content={getTemplate({
-                type,
-                lang,
-              })(reference)}
-              language={lang}
-            />
-          </TabContent>
-        ))}
+        {Object.entries(SupportedLang).map(([_, lang]) => {
+          const content = getTemplate({
+            type,
+            lang,
+          })(reference);
+
+          return (
+            <TabContent
+              key={lang}
+              value={lang}
+              className="data-[orientation=horizontal]:py-0 overflow-auto rounded-b-xl max-h-[450px] h-full relative"
+            >
+              <CodeHighlighter content={content} language={lang} />
+              <Button
+                className="right-1 top-1 absolute"
+                size="icon"
+                variant="ghost"
+                onClick={() => handleCopy(content)}
+              >
+                {copied ? (
+                  <CheckIcon className="stroke-[3] text-green-400 size-4" />
+                ) : (
+                  <DocumentDuplicateIcon className="text-secondary-400 stroke-2 size-4 dark:text-secondary-400" />
+                )}
+              </Button>
+            </TabContent>
+          );
+        })}
       </Wrapper>
     </>
   );
