@@ -10,11 +10,11 @@ import {
   useComboboxContext,
 } from "@rafty/corp";
 import { Text, Toast } from "@rafty/ui";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { useDialogManager, useServer } from "../providers";
+import { useDialogManager, usePagination, useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { Pagination } from "./Pagination";
 import { SearchField } from "./SearchField";
@@ -31,10 +31,10 @@ export function DataTable<T = unknown>({
   const { endpoint } = useServer();
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
 
-  const [{ pageIndex, pageSize }, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
-  });
+  const {
+    pagination: { pageIndex, pageSize },
+    setPagination,
+  } = usePagination();
   const offset = pageSize * pageIndex;
 
   const {
@@ -118,6 +118,7 @@ function ActionSelect<T>({
 }) {
   const [selected, setSelected] = useState<string | undefined>(undefined);
   const { endpoint } = useServer();
+  const queryClient = useQueryClient();
 
   const { action: actionDialogManager } = useDialogManager();
 
@@ -135,36 +136,35 @@ function ActionSelect<T>({
     [actions],
   );
 
-  const fireAction = useCallback(
-    (action: string) => {
-      try {
-        endpoint.post(`/collections/${slug}/actions/${action}`, {
-          items: selectedRows,
-        });
-      } catch (err) {
-        console.error(err);
+  const { mutate: fireAction } = useMutation({
+    mutationFn: (action: string) =>
+      endpoint.post(`/collections/${slug}/actions/${action}`, {
+        items: selectedRows,
+      }),
+    onSuccess: () =>
+      queryClient.refetchQueries({ queryKey: ["collections", slug] }),
+    onError: (err, action) => {
+      console.error(err);
 
-        if (isAxiosError(err)) {
-          toast.custom(({ visible }) => (
-            <Toast
-              severity="error"
-              title={`${err.response?.status} ${err.code}`}
-              message={err.response?.statusText}
-              visible={visible}
-            />
-          ));
-        } else
-          toast.custom(({ visible }) => (
-            <Toast
-              severity="error"
-              title="Something went wrong!"
-              visible={visible}
-            />
-          ));
-      }
+      if (isAxiosError(err)) {
+        toast.custom(({ visible }) => (
+          <Toast
+            severity="error"
+            title={`${err.response?.status} ${err.code}`}
+            message={err.response?.statusText}
+            visible={visible}
+          />
+        ));
+      } else
+        toast.custom(({ visible }) => (
+          <Toast
+            severity="error"
+            title={`Unable to run action - ${action}`}
+            visible={visible}
+          />
+        ));
     },
-    [endpoint, slug, selectedRows],
-  );
+  });
 
   return (
     <div className="w-[300px]">

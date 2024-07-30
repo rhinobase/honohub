@@ -1,16 +1,81 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import type { ColumnType } from "@rafty/corp";
-import { Button, Checkbox } from "@rafty/ui";
+import { Button, Checkbox, Toast } from "@rafty/ui";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { getCell } from "../columns";
-import { DataTable, PageHeader, PageTitle } from "../components";
+import {
+  CollectionTableActionMenu,
+  DataTable,
+  PageHeader,
+  PageTitle,
+} from "../components";
+import { usePagination, useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { getPluralLabel } from "../utils";
 
 export type CollectionPage = Omit<CollectionType, "fields">;
 
 export function CollectionPage(props: CollectionPage) {
+  const { endpoint } = useServer();
+  const { pagination } = usePagination();
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteRecord } = useMutation({
+    mutationFn: (id: string) =>
+      endpoint.delete(`/collections/${props.slug}/${id}`),
+    onMutate: (id) => {
+      queryClient.setQueryData<{
+        results: any[];
+        count: number;
+      }>(["collections", props.slug, pagination], (currentPageData) => {
+        const nextPageData = queryClient.getQueryData<{
+          results: any[];
+          count: number;
+        }>([
+          "collections",
+          props.slug,
+          {
+            pageIndex: pagination.pageIndex + 1,
+            pageSize: pagination.pageSize,
+          },
+        ]);
+
+        if (!currentPageData) return;
+
+        const data = {
+          count: currentPageData.count,
+          results: [
+            ...currentPageData.results.filter((val) => {
+              if (typeof val.id === "number") return val.id !== Number(id);
+              return val.id !== id;
+            }),
+          ],
+        };
+
+        if (nextPageData) data.results.push(nextPageData.results[0]);
+
+        return data;
+      });
+    },
+    onSettled: () =>
+      queryClient.refetchQueries({
+        queryKey: ["collections", props.slug, pagination],
+      }),
+    onError: (err, id) => {
+      console.error(err);
+      toast.custom((t) => (
+        <Toast
+          severity="error"
+          title={`Unable to delete record - ${id}`}
+          visible={t.visible}
+        />
+      ));
+    },
+  });
+
   const columns = useMemo(() => {
     const columns: ColumnType<unknown>[] = props.columns.map((column) => ({
       id: column.name,
@@ -46,11 +111,19 @@ export function CollectionPage(props: CollectionPage) {
       id: "action",
       accessorKey: "id",
       header: "Action",
-      cell: getCell("action"),
+      cell: (data) => {
+        const id = String(data?.getValue());
+        return (
+          <CollectionTableActionMenu
+            id={id}
+            onDelete={() => deleteRecord(id)}
+          />
+        );
+      },
     });
 
     return columns;
-  }, [props.columns]);
+  }, [props.columns, deleteRecord]);
 
   return (
     <>
