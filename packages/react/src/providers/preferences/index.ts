@@ -1,2 +1,2 @@
 export * from "./provider";
-export * from "./store";
+export { SupportedLang } from "./store";
