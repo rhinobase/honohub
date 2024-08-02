@@ -1,3 +1,19 @@
+## 0.3.0 (2024-08-02)
+
+
+### 🚀 Features
+
+- **core:** added usePagination plugin
+
+
+### 🩹 Fixes
+
+- **core:** updated query validation schema
+
+- **core:** corrected the pagination validation
+
+- **core:** removed .optional from query validation
+
 ## 0.2.6 (2024-07-27)
 
 

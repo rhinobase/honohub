@@ -1,3 +1,29 @@
+## 0.2.0 (2024-08-02)
+
+
+### 🚀 Features
+
+- **react:** added api reference features
+
+- **react:** added copy button in api reference
+
+
+### 🩹 Fixes
+
+- **react:** updated queryKey
+
+- **vite:** type bug
+
+- **react:** working on individual record delete functionality
+
+- **react:** issue of data refresh when bulk action
+
+- **react:** corrected the onMutation function for delete
+
+- **react:** code improvements
+
+- **react:** updated the collections link
+
 ## 0.1.6 (2024-07-27)
 
 
