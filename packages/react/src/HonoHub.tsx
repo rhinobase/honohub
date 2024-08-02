@@ -1,3 +1,4 @@
+import * as HeroIcon from "@heroicons/react/24/outline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import {
@@ -7,7 +8,6 @@ import {
 } from "react-router-dom";
 import { AppWrapper, CollectionsWrapper, PluginWrapper } from "./components";
 import "./main.css";
-import * as HeroIcon from "@heroicons/react/24/outline";
 import {
   CollectionPage,
   DocumentPage,
@@ -15,7 +15,11 @@ import {
   HomePage,
   SettingsPage,
 } from "./pages";
-import { ServerProvider, ThemeProvider } from "./providers";
+import {
+  PreferencesProvider,
+  ServerProvider,
+  ThemeProvider,
+} from "./providers";
 import type { HonoHubProps } from "./types";
 
 const CLIENT = new QueryClient();
@@ -34,7 +38,10 @@ export function HonoHub({
       {
         icon: HeroIcon.ArchiveBoxIcon,
         label: "Collections",
-        path: "/collections",
+        path:
+          collections.length > 0
+            ? `/collections/${collections[0].slug}`
+            : "/collections",
       },
     ],
     ...(hasPlugins
@@ -111,7 +118,9 @@ export function HonoHub({
     <QueryClientProvider client={CLIENT}>
       <ThemeProvider>
         <ServerProvider baseURL={serverUrl}>
-          <RouterProvider router={router} />
+          <PreferencesProvider>
+            <RouterProvider router={router} />
+          </PreferencesProvider>
           <Toaster />
         </ServerProvider>
       </ThemeProvider>

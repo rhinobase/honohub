@@ -7,7 +7,6 @@ export type { ObjectProps } from "./object";
 export type { SelectProps } from "./select";
 export type { StringProps } from "./string";
 export type { TextareaProps } from "./textarea";
-export type { Prettify, Promisify } from "./utils";
 export type {
   FieldWrapperProps,
   GeneralWrapperProps,

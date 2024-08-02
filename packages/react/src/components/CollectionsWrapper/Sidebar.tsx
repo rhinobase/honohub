@@ -85,8 +85,8 @@ export function CollectionSidebar({ options }: CollectionSidebar) {
       <>
         <ButtomBar className="fixed z-30 bottom-0" />
         <Drawer open={isDrawerOpen} onOpenChange={setDrawerOpen}>
-          <DrawerOverlay className="z-40" />
-          <DrawerContent className="h-max z-40 max-h-[60%] flex flex-col bottom-0 top-auto animate-none dark:bg-secondary-900 p-0">
+          <DrawerOverlay className="z-40 bg-black/5" />
+          <DrawerContent className="h-max z-40 max-h-[60%] flex flex-col bottom-0 top-auto !animate-none dark:bg-secondary-900 p-0 shadow-[0_-8px_10px_-5px_rgb(0,0,0,0.1)] dark:shadow-none">
             <SidebarRender options={options} />
             <ButtomBar />
           </DrawerContent>
