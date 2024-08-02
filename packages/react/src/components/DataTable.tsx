@@ -17,7 +17,6 @@ import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
 import { useDialogManager, useServer } from "../providers";
 import type { CollectionType } from "../types";
-import { paramsSerializer } from "../utils";
 import { queryValidation } from "../validations";
 import { Pagination } from "./Pagination";
 import { SearchField } from "./SearchField";
@@ -50,7 +49,6 @@ export function DataTable<T = unknown>({
       endpoint
         .get(`/collections/${slug}`, {
           params: validatedParams,
-          paramsSerializer,
         })
         .then((res) => res.data),
   });

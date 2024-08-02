@@ -5,6 +5,7 @@ import {
   useContext,
   useMemo,
 } from "react";
+import { paramsSerializer } from "../utils";
 
 export type ServerContextType = ReturnType<typeof useServerManager>;
 
@@ -24,7 +25,10 @@ export const ServerProvider = ({
 };
 
 function useServerManager(props: ServerProvider) {
-  const endpoint = useMemo(() => axios.create(props), [props]);
+  const endpoint = useMemo(
+    () => axios.create({ ...props, paramsSerializer }),
+    [props],
+  );
 
   return {
     endpoint,
