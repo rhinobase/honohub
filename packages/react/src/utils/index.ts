@@ -12,7 +12,7 @@ export function getPluralLabel(
   return label.plural;
 }
 
-export function paramsSerializer(params: Record<string, any>) {
+export function paramsSerializer(params: Record<string, unknown>) {
   return Object.entries(params)
     .map(([key, value]) => {
       if (!value) return undefined;
