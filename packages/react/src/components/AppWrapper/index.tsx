@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
-import { DialogManagerProvider, DrawerProvider } from "../providers";
+import { DialogManagerProvider, DrawerProvider } from "../../providers";
+import { BaseWrapper } from "../BaseWrapper";
 import { ActionDialog } from "./ActionDialog";
-import { AppSidebar } from "./AppSidebar";
-import { BaseWrapper } from "./BaseWrapper";
 import { SidebarDrawer } from "./Drawer";
+import { AppSidebar } from "./Sidebar";
 
 export type AppWrapper = Pick<AppSidebar, "options">;
 

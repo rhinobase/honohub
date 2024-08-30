@@ -11,8 +11,8 @@ import {
   forwardRef,
 } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { usePreferences } from "../providers";
-import { Logo } from "./Logo";
+import { usePreferences } from "../../providers";
+import { Logo } from "../Logo";
 
 type AppSidebarOptionType = {
   label: string;

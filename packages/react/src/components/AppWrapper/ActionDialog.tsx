@@ -8,7 +8,7 @@ import {
   Button,
   eventHandler,
 } from "@rafty/ui";
-import { useDialogManager } from "../providers";
+import { useDialogManager } from "../../providers";
 
 export function ActionDialog() {
   const {

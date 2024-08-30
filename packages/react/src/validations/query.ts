@@ -1,4 +1,4 @@
-import { z } from "zod";
+import z from "zod";
 
 export const queryValidation = z.object({
   limit: z.coerce.number().nonnegative().default(10),
