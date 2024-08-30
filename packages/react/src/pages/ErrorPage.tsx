@@ -1,5 +1,5 @@
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
-import { BaseWrapper } from "../components";
+import { BaseWrapper } from "../components/BaseWrapper";
 
 export function ErrorPage() {
   const error = useRouteError() as Error;

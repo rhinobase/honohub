@@ -1,14 +1,21 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { Menu, MenuContent, MenuItem, MenuTrigger } from "@rafty/ui";
+import {
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuTrigger,
+  eventHandler,
+} from "@rafty/ui";
 import { Link, useLocation } from "react-router-dom";
 
-export type CollectionTableActionMenu = { id: string; onDelete: () => void };
+export type ActionMenu = { id: string; onDelete: () => void };
 
-export function CollectionTableActionMenu({
-  id,
-  onDelete,
-}: CollectionTableActionMenu) {
+export function ActionMenu({ id, onDelete }: ActionMenu) {
   const { pathname } = useLocation();
+
+  const handleDeleteCollection = eventHandler(() => {
+    onDelete();
+  });
 
   return (
     <Menu>
@@ -20,8 +27,8 @@ export function CollectionTableActionMenu({
           <MenuItem>Edit</MenuItem>
         </Link>
         <MenuItem
-          onClick={onDelete}
-          onKeyDown={onDelete}
+          onClick={handleDeleteCollection}
+          onKeyDown={handleDeleteCollection}
           className="focus:text-red-500 focus:bg-red-200/40 dark:focus:text-red-300 dark:focus:bg-red-300/10"
         >
           Delete

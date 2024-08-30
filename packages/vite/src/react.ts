@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { HonoHubProps } from "@honohub/react";
+import type { HonoHub } from "@honohub/react";
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import { getTableColumns, getTableName } from "drizzle-orm";
 import type { SanitizedHub, ValueOf } from "honohub";
@@ -30,7 +30,7 @@ export type BuildOptions = {
 export async function generateReactTemplates<
   Database extends AnyDrizzleDB<any>,
 >({ config, build, basePath, override }: TemplateGeneratorProps<Database>) {
-  const pluginProps: NonNullable<HonoHubProps["plugins"]> = {};
+  const pluginProps: NonNullable<HonoHub["plugins"]> = {};
 
   for (const page in config.routes) {
     const route = config.routes[page];
@@ -161,7 +161,7 @@ export async function generateReactTemplates<
 
 type JSTemplateProps = {
   importStatement?: string;
-  props: HonoHubProps;
+  props: HonoHub;
 };
 
 const jsTemplateCode = ({

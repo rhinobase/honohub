@@ -6,7 +6,9 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import { AppWrapper, CollectionsWrapper, PluginWrapper } from "./components";
+import { AppWrapper } from "./components/AppWrapper";
+import { CollectionsWrapper } from "./components/CollectionsWrapper";
+import { PluginWrapper } from "./components/PluginWrapper";
 import "./main.css";
 import {
   CollectionPage,
@@ -20,9 +22,23 @@ import {
   ServerProvider,
   ThemeProvider,
 } from "./providers";
-import type { HonoHubProps } from "./types";
+import type { CollectionType, PluginType } from "./types";
 
 const CLIENT = new QueryClient();
+
+export type HonoHub = {
+  basePath: string;
+  serverUrl: string;
+  plugins?: PluginType;
+  collections: CollectionType[];
+  stats: {
+    version: string;
+    hono: string;
+    collections: number;
+    plugins: number;
+    routes: number;
+  };
+};
 
 export function HonoHub({
   plugins,
@@ -30,7 +46,7 @@ export function HonoHub({
   collections,
   serverUrl,
   stats,
-}: HonoHubProps) {
+}: HonoHub) {
   const hasPlugins = plugins && Object.keys(plugins).length > 0;
 
   const appWrapperOptions = {

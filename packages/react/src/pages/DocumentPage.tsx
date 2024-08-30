@@ -7,7 +7,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { ZodError } from "zod";
-import { PageHeader, PageTitle } from "../components";
+import { PageHeader, PageTitle } from "../components/Header";
 import { blocks } from "../fields";
 import { useServer } from "../providers";
 import type { CollectionType } from "../types";

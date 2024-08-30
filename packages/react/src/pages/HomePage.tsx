@@ -11,7 +11,7 @@ import {
 import { Button, classNames, eventHandler } from "@rafty/ui";
 import { Link, type LinkProps } from "react-router-dom";
 import urlJoin from "url-join";
-import { Logo } from "../components";
+import { Logo } from "../components/Logo";
 import { useDrawer } from "../providers";
 
 export type HomePage = LinksGrid & Socials;

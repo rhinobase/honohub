@@ -1,8 +1,8 @@
 import { Drawer, DrawerClose, DrawerContent, DrawerOverlay } from "@rafty/ui";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useDrawer } from "../providers";
-import { AppSidebar } from "./AppSidebar";
+import { useDrawer } from "../../providers";
+import { AppSidebar } from "./Sidebar";
 
 export type SidebarDrawer = Pick<AppSidebar, "options">;
 
