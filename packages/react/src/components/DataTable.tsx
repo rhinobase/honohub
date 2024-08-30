@@ -1,5 +1,5 @@
 import * as HeroIcons from "@heroicons/react/24/outline";
-import { FunnelIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import {
   type ColumnType,
   Combobox,
@@ -35,7 +35,6 @@ export function DataTable<T = unknown>({
   const [searchParams, setSearchParams] = useSearchParams();
   const { endpoint } = useServer();
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
-  const [isOpen, setOpen] = useState(false);
 
   const validatedParams = queryValidation.parse(
     Object.fromEntries(searchParams.entries()),
@@ -79,7 +78,7 @@ export function DataTable<T = unknown>({
           />
         </div>
       ) : (
-        <div className="flex items-center  gap-2">
+        <div className="flex items-center gap-2">
           <SearchField />
           <Link to={`/collections/${slug}/create`}>
             <Button
@@ -93,43 +92,17 @@ export function DataTable<T = unknown>({
               <PlusIcon className="size-5 stroke-2" />
             </Button>
           </Link>
-          <Button
-            onClick={() => setOpen(true)}
-            leftIcon={<FunnelIcon className="size-4 stroke-2" />}
-            className="hidden lg:flex"
-          >
-            Filters
-          </Button>
-          <Button className="lg:hidden block p-2">
-            <FunnelIcon className="size-5 stroke-2" />
-          </Button>
         </div>
       )}
-      <div className="w-full flex gap-4">
-        <SharedDatatable
-          data={data.results}
-          columns={columns}
-          isFetching={isFetching}
-          isLoading={isLoading}
-          enableRowSelection
-          rowsSelected={rowsSelected}
-          onRowsSelectedChange={setRowsSelected}
-        />
-        {isOpen && (
-          <div className="lg:max-w-xs max-w-[100px] min-w-[200px] w-full rounded-md border border-secondary-300 dark:border-secondary-800 p-4 relative">
-            <Button
-              size="icon"
-              variant="ghost"
-              colorScheme="error"
-              className="absolute top-2.5 right-2.5"
-              onClick={() => setOpen(false)}
-            >
-              <XMarkIcon className="size-4" />
-            </Button>
-            hello
-          </div>
-        )}
-      </div>
+      <SharedDatatable
+        data={data.results}
+        columns={columns}
+        isFetching={isFetching}
+        isLoading={isLoading}
+        enableRowSelection
+        rowsSelected={rowsSelected}
+        onRowsSelectedChange={setRowsSelected}
+      />
       <Pagination
         currentPage={pageIndex + 1}
         pageLimit={validatedParams.limit}
