@@ -18,7 +18,7 @@ export function CollectionsWrapper({ options }: CollectionsWrapper) {
   return (
     <>
       <CollectionSidebar options={options} />
-      <PageWrapper>
+      <PageWrapper className="[&>div]:h-full">
         <Outlet />
       </PageWrapper>
     </>
