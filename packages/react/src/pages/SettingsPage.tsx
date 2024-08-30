@@ -8,8 +8,6 @@ import {
   CardContent,
   CardHeader,
   Label,
-  Select,
-  SelectItem,
   ToggleGroup,
   ToggleGroupItem,
 } from "@rafty/ui";
@@ -17,8 +15,6 @@ import { PageHeader, PageTitle, PageWrapper } from "../components";
 import { ColorMode, useTheme } from "../providers";
 
 export function SettingsPage() {
-  const { theme, setTheme } = useTheme();
-
   return (
     <PageWrapper>
       <PageHeader>
