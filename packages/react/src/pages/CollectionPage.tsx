@@ -1,8 +1,4 @@
-import {
-  ArrowPathIcon,
-  CodeBracketIcon,
-  PlusIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowPathIcon, CodeBracketIcon } from "@heroicons/react/24/outline";
 import type { ColumnType } from "@rafty/corp";
 import {
   Button,
@@ -15,7 +11,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { getCell } from "../columns";
 import {
   APIReference,
@@ -33,6 +29,8 @@ export type CollectionPage = Omit<CollectionType, "fields">;
 
 export function CollectionPage(props: CollectionPage) {
   const [isOpen, toggle] = useBoolean(false);
+  const [isFetching, setFetching] = useBoolean(false);
+
   const { endpoint } = useServer();
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
@@ -143,9 +141,14 @@ export function CollectionPage(props: CollectionPage) {
     return columns;
   }, [props.columns, deleteRecord]);
 
-  const isFetching = false;
-  const refetch = () => undefined;
-  const onRefresh = eventHandler(() => refetch());
+  const onRefresh = eventHandler(async () => {
+    setFetching(true);
+
+    await queryClient.refetchQueries({
+      queryKey: ["collections", props.slug, validatedParams],
+    });
+    setFetching(false);
+  });
 
   return (
     <>
