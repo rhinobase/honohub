@@ -3,7 +3,10 @@ import { type PropsWithChildren, memo } from "react";
 import { SupportedLang, usePreferences } from "../../providers";
 
 export function Wrapper({ children }: PropsWithChildren) {
-  const { lang, setLang } = usePreferences();
+  const { lang, setLang } = usePreferences((state) => ({
+    lang: state.lang,
+    setLang: state.setLang,
+  }));
 
   return (
     <Tab

@@ -1,4 +1,5 @@
 import * as HeroIcons from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import {
   type ColumnType,
   Combobox,
@@ -9,12 +10,12 @@ import {
   DataTable as SharedDatatable,
   useComboboxContext,
 } from "@rafty/corp";
-import { Text, Toast } from "@rafty/ui";
+import { Button, Text, Toast } from "@rafty/ui";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useDialogManager, useServer } from "../../../providers";
 import type { CollectionType } from "../../../types";
 import { queryValidation } from "../../../validations";
@@ -75,7 +76,21 @@ export function CollectionDataTable<T = unknown>({
           />
         </div>
       ) : (
-        <SearchField />
+        <div className="flex items-center gap-2">
+          <SearchField />
+          <Link to={`/collections/${slug}/create`}>
+            <Button
+              colorScheme="primary"
+              leftIcon={<PlusIcon className="size-4 stroke-[3]" />}
+              className="hidden lg:flex"
+            >
+              Create
+            </Button>
+            <Button colorScheme="primary" className="lg:hidden p-2">
+              <PlusIcon className="size-5 stroke-2" />
+            </Button>
+          </Link>
+        </div>
       )}
       <SharedDatatable
         data={data.results}

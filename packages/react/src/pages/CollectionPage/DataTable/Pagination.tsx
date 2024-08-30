@@ -26,7 +26,7 @@ export function Pagination({
       {children}
       <div className="flex-1" />
       <div className="flex items-center gap-1">
-        <div className="text-secondary-700 dark:text-secondary-300 hidden md:block">
+        <div className="text-secondary-700 dark:text-secondary-300 hidden lg:block">
           Rows per page :
         </div>
         <PageSizeSelect className="dark:bg-secondary-950" />

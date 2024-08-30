@@ -1,10 +1,17 @@
-import { CodeBracketIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon, CodeBracketIcon } from "@heroicons/react/24/outline";
 import type { ColumnType } from "@rafty/corp";
-import { Button, Checkbox, Toast, eventHandler, useBoolean } from "@rafty/ui";
+import {
+  Button,
+  Checkbox,
+  Toast,
+  classNames,
+  eventHandler,
+  useBoolean,
+} from "@rafty/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { getCell } from "../../columns";
 import { APIReferenceDrawer } from "../../components/APIReference";
 import { PageHeader, PageTitle } from "../../components/Header";
@@ -23,6 +30,7 @@ export function CollectionPage(props: CollectionPage) {
   const [searchParams] = useSearchParams();
 
   const [isApiRefDrawerOpen, setApiRefDrawerOpen] = useBoolean();
+  const [isFetching, setFetching] = useBoolean();
 
   const validatedParams = queryValidation.parse(
     Object.fromEntries(searchParams.entries()),
@@ -128,6 +136,13 @@ export function CollectionPage(props: CollectionPage) {
   const handleApiRefDrawerOpen = eventHandler(() => {
     setApiRefDrawerOpen(true);
   });
+  const handleRefresh = eventHandler(async () => {
+    setFetching(true);
+    await queryClient.refetchQueries({
+      queryKey: ["collections", props.slug, validatedParams],
+    });
+    setFetching(false);
+  });
 
   return (
     <>
@@ -144,14 +159,21 @@ export function CollectionPage(props: CollectionPage) {
         >
           API
         </Button>
-        <Link to={`/collections/${props.slug}/create`}>
-          <Button
-            colorScheme="primary"
-            leftIcon={<PlusIcon className="size-3.5 stroke-[3]" />}
-          >
-            Create
-          </Button>
-        </Link>
+        <Button
+          size="icon"
+          variant="ghost"
+          isDisabled={isFetching}
+          onClick={handleRefresh}
+          onKeyDown={handleRefresh}
+          className="p-2"
+        >
+          <ArrowPathIcon
+            className={classNames(
+              isFetching && "animate-spin",
+              "size-5 stroke-2",
+            )}
+          />
+        </Button>
       </PageHeader>
       <CollectionDataTable
         columns={columns}

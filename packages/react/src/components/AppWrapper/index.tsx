@@ -1,9 +1,5 @@
 import { Outlet } from "react-router-dom";
-import {
-  DialogManagerProvider,
-  DrawerProvider,
-  SidebarProvider,
-} from "../../providers";
+import { DialogManagerProvider, DrawerProvider } from "../../providers";
 import { BaseWrapper } from "../BaseWrapper";
 import { ActionDialog } from "./ActionDialog";
 import { SidebarDrawer } from "./Drawer";
@@ -15,17 +11,15 @@ export function AppWrapper({ options }: AppWrapper) {
   return (
     <DialogManagerProvider>
       <DrawerProvider>
-        <SidebarProvider>
-          <BaseWrapper>
-            <AppSidebar
-              options={options}
-              className="hidden md:flex border-r border-secondary-200 dark:border-secondary-800"
-            />
-            <Outlet />
-            <ActionDialog />
-            <SidebarDrawer options={options} />
-          </BaseWrapper>
-        </SidebarProvider>
+        <BaseWrapper>
+          <AppSidebar
+            options={options}
+            className="hidden md:flex border-r border-secondary-200 dark:border-secondary-800"
+          />
+          <Outlet />
+          <ActionDialog />
+          <SidebarDrawer options={options} />
+        </BaseWrapper>
       </DrawerProvider>
     </DialogManagerProvider>
   );

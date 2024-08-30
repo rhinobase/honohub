@@ -14,10 +14,7 @@ export const PageHeader = forwardRef<HTMLElement, PageHeader>(
     return (
       <header
         {...props}
-        className={classNames(
-          "flex items-center gap-2 md:gap-3 lg:gap-4",
-          className,
-        )}
+        className={classNames("flex items-center gap-2", className)}
         ref={forwardedRef}
       >
         <Button
