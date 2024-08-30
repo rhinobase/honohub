@@ -29,7 +29,7 @@ export type CollectionPage = Omit<CollectionType, "fields">;
 
 export function CollectionPage(props: CollectionPage) {
   const [isOpen, toggle] = useBoolean(false);
-  const [isFetching, setFetching] = useBoolean(false);
+  const [isFetching, setFetching] = useBoolean();
 
   const { endpoint } = useServer();
   const queryClient = useQueryClient();
@@ -141,9 +141,8 @@ export function CollectionPage(props: CollectionPage) {
     return columns;
   }, [props.columns, deleteRecord]);
 
-  const onRefresh = eventHandler(async () => {
+  const handleRefresh = eventHandler(async () => {
     setFetching(true);
-
     await queryClient.refetchQueries({
       queryKey: ["collections", props.slug, validatedParams],
     });
@@ -167,8 +166,9 @@ export function CollectionPage(props: CollectionPage) {
         <Button
           size="icon"
           variant="ghost"
-          onClick={onRefresh}
-          onKeyDown={onRefresh}
+          isDisabled={isFetching}
+          onClick={handleRefresh}
+          onKeyDown={handleRefresh}
           className="p-2"
         >
           <ArrowPathIcon

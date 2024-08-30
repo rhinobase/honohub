@@ -88,7 +88,7 @@ export function DataTable<T = unknown>({
             >
               Create
             </Button>
-            <Button colorScheme="primary" className="lg:hidden block p-2">
+            <Button colorScheme="primary" className="lg:hidden p-2">
               <PlusIcon className="size-5 stroke-2" />
             </Button>
           </Link>
