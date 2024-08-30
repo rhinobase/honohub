@@ -96,6 +96,7 @@ export function DataTable<T = unknown>({
             offset: String((page - 1) * limit),
           });
         }}
+        className="mb-14 md:mb-0"
       >
         <p className="text-secondary-700 dark:text-secondary-300">
           {pageIndex * validatedParams.limit + 1}
