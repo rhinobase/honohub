@@ -17,6 +17,10 @@
       "name": "react:                anything react specific"
     },
     {
+      "value": "shared",
+      "name": "shared:               anything shared specific"
+    },
+    {
       "value": "sandbox",
       "name": "sandbox:              anything sandbox specific"
     },
