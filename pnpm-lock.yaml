@@ -91,7 +91,7 @@ dependencies:
     version: 7.0.0
   graphiql:
     specifier: ^3.3.2
-    version: 3.3.2(@codemirror/language@6.10.2)(@types/node@18.16.9)(@types/react-dom@18.3.0)(@types/react@18.3.1)(graphql@16.9.0)(react-dom@18.3.1)(react@18.3.1)
+    version: 3.3.2(@codemirror/language@6.0.0)(@types/node@18.16.9)(@types/react-dom@18.3.0)(@types/react@18.3.1)(graphql@16.9.0)(react-dom@18.3.1)(react@18.3.1)
   graphql:
     specifier: ^16.9.0
     version: 16.9.0
@@ -2128,8 +2128,8 @@ packages:
     dev: true
     optional: true
 
-  /@codemirror/language@6.10.2:
-    resolution: {integrity: sha512-kgbTYTo0Au6dCSc/TFy7fK3fpJmgHDv1sG1KNQKJXVi+xBTEeBPY/M30YXiU6mMXeH+YIDLsbrT4ZwNRdtF+SA==}
+  /@codemirror/language@6.0.0:
+    resolution: {integrity: sha512-rtjk5ifyMzOna1c7PBu7J1VCt0PvA5wy3o8eMVnxMKb7z8KA7JFecvD04dSn14vj/bBaAbqRsGed5OjtofEnLA==}
     dependencies:
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.33.0
@@ -2921,7 +2921,7 @@ packages:
     resolution: {integrity: sha512-dWO2pw8hhi+WrXq1YJy2yCuWoL20PddgGaqTgVe4cOS9Q6qklXCiA1tJEqX6BEwRNSCP84/afac9hd4MS+zEUA==}
     dev: false
 
-  /@graphiql/react@0.22.4(@codemirror/language@6.10.2)(@types/node@18.16.9)(@types/react-dom@18.3.0)(@types/react@18.3.1)(graphql@16.9.0)(react-dom@18.3.1)(react@18.3.1):
+  /@graphiql/react@0.22.4(@codemirror/language@6.0.0)(@types/node@18.16.9)(@types/react-dom@18.3.0)(@types/react@18.3.1)(graphql@16.9.0)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-FsupNjAUJ17qhdyCjKo150wpNH7gr0ScAm/Rmk7VHP4Mh0Osid+1bKLPtXEOjGI+InuTPSKhJw3Zbm8dD3+o1A==}
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0
@@ -2937,7 +2937,7 @@ packages:
       '@types/codemirror': 5.60.15
       clsx: 1.2.1
       codemirror: 5.65.16
-      codemirror-graphql: 2.0.12(@codemirror/language@6.10.2)(codemirror@5.65.16)(graphql@16.9.0)
+      codemirror-graphql: 2.0.12(@codemirror/language@6.0.0)(codemirror@5.65.16)(graphql@16.9.0)
       copy-to-clipboard: 3.3.3
       framer-motion: 6.5.1(react-dom@18.3.1)(react@18.3.1)
       graphql: 16.9.0
@@ -8608,14 +8608,14 @@ packages:
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
     dev: true
 
-  /codemirror-graphql@2.0.12(@codemirror/language@6.10.2)(codemirror@5.65.16)(graphql@16.9.0):
+  /codemirror-graphql@2.0.12(@codemirror/language@6.0.0)(codemirror@5.65.16)(graphql@16.9.0):
     resolution: {integrity: sha512-5UCqhWzck1jClCmRewFb8aSiabnAqiaRfsvIPfmbf6WJvOb8oiefJeHilclPPiZBzY8v/Et6EBMtOeKnWCoyng==}
     peerDependencies:
       '@codemirror/language': 6.0.0
       codemirror: ^5.65.3
       graphql: ^15.5.0 || ^16.0.0
     dependencies:
-      '@codemirror/language': 6.10.2
+      '@codemirror/language': 6.0.0
       '@types/codemirror': 0.0.90
       codemirror: 5.65.16
       graphql: 16.9.0
@@ -10869,14 +10869,14 @@ packages:
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  /graphiql@3.3.2(@codemirror/language@6.10.2)(@types/node@18.16.9)(@types/react-dom@18.3.0)(@types/react@18.3.1)(graphql@16.9.0)(react-dom@18.3.1)(react@18.3.1):
+  /graphiql@3.3.2(@codemirror/language@6.0.0)(@types/node@18.16.9)(@types/react-dom@18.3.0)(@types/react@18.3.1)(graphql@16.9.0)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-LJ8Q6UM3kUzTXvybud9a4sj/QBEVHwHWd5Oc3OjLp9DQiKjqVY/2P/Q3RdPQD/MihwaO+6eC69R4MYnPQGd2Hw==}
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0
       react: ^16.8.0 || ^17 || ^18
       react-dom: ^16.8.0 || ^17 || ^18
     dependencies:
-      '@graphiql/react': 0.22.4(@codemirror/language@6.10.2)(@types/node@18.16.9)(@types/react-dom@18.3.0)(@types/react@18.3.1)(graphql@16.9.0)(react-dom@18.3.1)(react@18.3.1)
+      '@graphiql/react': 0.22.4(@codemirror/language@6.0.0)(@types/node@18.16.9)(@types/react-dom@18.3.0)(@types/react@18.3.1)(graphql@16.9.0)(react-dom@18.3.1)(react@18.3.1)
       '@graphiql/toolkit': 0.9.1(@types/node@18.16.9)(graphql@16.9.0)
       graphql: 16.9.0
       graphql-language-service: 5.2.1(graphql@16.9.0)
