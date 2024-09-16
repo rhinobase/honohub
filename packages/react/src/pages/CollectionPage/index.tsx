@@ -9,10 +9,10 @@ import {
   useBoolean,
 } from "@rafty/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { DuckField } from "duck-form";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
-import { getCell } from "../../columns";
 import { APIReferenceDrawer } from "../../components/APIReference";
 import { PageHeader, PageTitle } from "../../components/Header";
 import { useServer } from "../../providers";
@@ -94,7 +94,13 @@ export function CollectionPage(props: CollectionPage) {
       id: column.name,
       header: column.label,
       accessorKey: column.name,
-      cell: getCell(column.type),
+      cell: (props) => (
+        <DuckField
+          id={column.name}
+          type={column.type}
+          value={props.getValue()}
+        />
+      ),
     }));
 
     columns.unshift({

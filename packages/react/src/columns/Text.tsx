@@ -1,7 +1,12 @@
-import { CellWrapper } from "./CellWrapper";
+import { Text } from "@rafty/ui";
+import { useField } from "duck-form";
 
-export function Text({ cell }: any) {
-  const value = String(cell.getValue());
+export function TextCell() {
+  const { value } = useField<{ value: string }>();
 
-  return <CellWrapper value={value}>{value}</CellWrapper>;
+  return (
+    <Text className="truncate" title={value}>
+      {value}
+    </Text>
+  );
 }

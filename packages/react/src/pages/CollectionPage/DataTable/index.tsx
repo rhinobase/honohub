@@ -13,9 +13,11 @@ import {
 import { Button, Text, Toast } from "@rafty/ui";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
+import { Blueprint, DuckForm } from "duck-form";
 import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useSearchParams } from "react-router-dom";
+import { COLUMN_HEADER_COMPONENTS, FibrCellWrapper } from "../../../columns";
 import { useDialogManager, useServer } from "../../../providers";
 import type { CollectionType } from "../../../types";
 import { queryValidation } from "../../../validations";
@@ -92,15 +94,19 @@ export function CollectionDataTable<T = unknown>({
           </Link>
         </div>
       )}
-      <SharedDatatable
-        data={data.results}
-        columns={columns}
-        isFetching={isFetching}
-        isLoading={isLoading}
-        enableRowSelection
-        rowsSelected={rowsSelected}
-        onRowsSelectedChange={setRowsSelected}
-      />
+      <DuckForm components={COLUMN_HEADER_COMPONENTS}>
+        <Blueprint wrapper={FibrCellWrapper}>
+          <SharedDatatable
+            data={data.results}
+            columns={columns}
+            isFetching={isFetching}
+            isLoading={isLoading}
+            enableRowSelection
+            rowsSelected={rowsSelected}
+            onRowsSelectedChange={setRowsSelected}
+          />
+        </Blueprint>
+      </DuckForm>
       <Pagination
         currentPage={pageIndex + 1}
         pageLimit={validatedParams.limit}

@@ -1,9 +1,10 @@
+import { useField } from "duck-form";
 import type { PropsWithChildren } from "react";
 
-export type CellWrapper<T> = PropsWithChildren<{ value?: T }>;
+export function FibrCellWrapper(props: PropsWithChildren) {
+  const { value } = useField();
 
-export function CellWrapper<T>({ children, value }: CellWrapper<T>) {
-  if (value === undefined) return "N/A";
+  if (value == null) return "N/A";
 
-  return children;
+  return props.children;
 }

@@ -1,7 +1,8 @@
 "use client";
-import { FibrProvider, Thread, WeaverProvider } from "@fibr/react";
+import type { FieldProps } from "@duck-form/fields";
 import { type ColumnType, DataTable as RaftyDataTable } from "@rafty/corp";
 import { Checkbox, Text, useQueryParams } from "@rafty/ui";
+import { Blueprint, DuckField, DuckForm } from "duck-form";
 import {
   type PropsWithChildren,
   type ReactNode,
@@ -38,6 +39,7 @@ export type DataTable = Pick<ActionSelect, "actions"> &
     fibrCellWrapper: (props: PropsWithChildren) => ReactNode;
     findColumnHeaderType: (props: { name: string; type: string }) => any;
     onActionComplete: (name: string, row: any) => void | Promise<void>;
+    schema?: Record<string, FieldProps>;
   };
 
 export function DataTable({
@@ -57,6 +59,7 @@ export function DataTable({
   isActionLoading,
   paramName,
   onActionComplete,
+  schema,
   ...props
 }: DataTable) {
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
@@ -76,7 +79,7 @@ export function DataTable({
       header: column.header,
       accessorKey: column.accessorKey,
       cell: (props) => (
-        <Thread
+        <DuckField
           id={column.id ?? column.accessorKey}
           type={findColumnHeaderType({
             name: column.accessorKey,
@@ -160,8 +163,8 @@ export function DataTable({
       )}
       {/* this div is to manage the styling of empty data state */}
       <div className="flex flex-col overflow-hidden">
-        <FibrProvider plugins={columnHeaderComponent}>
-          <WeaverProvider wrapper={fibrCellWrapper}>
+        <DuckForm components={columnHeaderComponent}>
+          <Blueprint schema={schema} wrapper={fibrCellWrapper}>
             <RaftyDataTable
               {...props}
               columns={columns}
@@ -170,8 +173,8 @@ export function DataTable({
               rowsSelected={rowsSelected}
               enableRowSelection={enableRowSelection}
             />
-          </WeaverProvider>
-        </FibrProvider>
+          </Blueprint>
+        </DuckForm>
       </div>
       {enablePagination && (
         <Pagination

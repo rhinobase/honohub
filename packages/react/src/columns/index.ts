@@ -1,19 +1,16 @@
-import type { ReactNode } from "react";
 import { BooleanCell } from "./Boolean";
 import { DateCell } from "./Date";
-import { Datetime } from "./Datetime";
-import { Text } from "./Text";
+import { DatetimeCell } from "./Datetime";
+import { TextCell } from "./Text";
 
-const CELLS: Record<string, (props: any) => ReactNode> = {
+export { FibrCellWrapper } from "./CellWrapper";
+
+export const COLUMN_HEADER_COMPONENTS = {
   date: DateCell,
   boolean: BooleanCell,
-  datetime: Datetime,
-  string: Text,
-  number: Text,
+  datetime: DatetimeCell,
+  string: TextCell,
+  number: TextCell,
 };
 
-export function getCell(type: string) {
-  if (type in CELLS) return CELLS[type];
-
-  return undefined;
-}
+export type ColumnType = keyof typeof COLUMN_HEADER_COMPONENTS;

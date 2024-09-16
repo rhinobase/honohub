@@ -1,14 +1,14 @@
-import { FibrProvider, Thread } from "@fibr/react";
+import { BlockWrapper, quackFields } from "@duck-form/fields";
 import { Button, Skeleton, Toast } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
+import { Blueprint, DuckField, DuckForm } from "duck-form";
 import { useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { ZodError } from "zod";
 import { PageHeader, PageTitle } from "../components/Header";
-import { blocks } from "../fields";
 import { useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { getSingularLabel } from "../utils";
@@ -67,7 +67,10 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
         </PageTitle>
       </PageHeader>
       <FormProvider {...methods}>
-        <FibrProvider plugins={blocks}>
+        <DuckForm
+          components={quackFields}
+          generateId={(_, props) => (props ? String(props.id) : undefined)}
+        >
           <form
             onSubmit={handleSubmit(async (values) => {
               const document_submit_type_value = values[SUBMIT_BUTTON_KEY];
@@ -137,16 +140,17 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
             className="space-y-4"
           >
             <div className="space-y-3 max-w-4xl py-4 mx-auto">
-              {isLoading
-                ? Array.from({ length: 8 }, (_, i) => (
-                    <Skeleton
-                      key={`${i}-${"loading"}`}
-                      className="w-full h-10"
-                    />
-                  ))
-                : fields.map((props) => (
-                    <Thread key={props.name} id={props.name} {...props} />
+              {isLoading ? (
+                Array.from({ length: 8 }, (_, i) => (
+                  <Skeleton key={`${i}-${"loading"}`} className="w-full h-10" />
+                ))
+              ) : (
+                <Blueprint wrapper={BlockWrapper}>
+                  {fields.map((props) => (
+                    <DuckField key={props.name} id={props.name} {...props} />
                   ))}
+                </Blueprint>
+              )}
             </div>
             <div className="flex justify-end gap-4 p-2 bg-secondary-100 dark:bg-secondary-900 rounded-md">
               <Button
@@ -173,7 +177,7 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
               </Button>
             </div>
           </form>
-        </FibrProvider>
+        </DuckForm>
       </FormProvider>
     </>
   );
