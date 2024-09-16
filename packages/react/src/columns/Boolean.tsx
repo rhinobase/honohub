@@ -1,23 +1,21 @@
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { classNames } from "@rafty/ui";
-import { CellWrapper } from "./CellWrapper";
+import { useField } from "duck-form";
 
-export function BooleanCell({ cell }: any) {
-  const value = Boolean(cell.getValue());
+export function BooleanCell() {
+  const { value } = useField<{ value: boolean }>();
   const Icon = value ? CheckIcon : XMarkIcon;
 
   return (
-    <CellWrapper value={value}>
-      <Icon
-        height={16}
-        width={16}
-        className={classNames(
-          value
-            ? "text-green-500 dark:text-green-300"
-            : "text-red-500 dark:text-red-300",
-          "mx-auto stroke-[3]",
-        )}
-      />
-    </CellWrapper>
+    <Icon
+      height={16}
+      width={16}
+      className={classNames(
+        value
+          ? "text-green-500 dark:text-green-300"
+          : "text-red-500 dark:text-red-300",
+        "mx-auto stroke-[3]",
+      )}
+    />
   );
 }

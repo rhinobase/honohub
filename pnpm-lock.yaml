@@ -8,9 +8,9 @@ dependencies:
   '@algolia/autocomplete-core':
     specifier: ^1.17.2
     version: 1.17.4(@algolia/client-search@5.4.0)(algoliasearch@5.4.0)(search-insights@2.17.2)
-  '@fibr/react':
-    specifier: ^0.6.3
-    version: 0.6.3(react@18.3.1)
+  '@duck-form/fields':
+    specifier: ^0.1.0
+    version: 0.1.1(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(duck-form@0.1.4)(prop-types@15.8.1)(react-dom@18.3.1)(react@18.3.1)
   '@graphiql/toolkit':
     specifier: ^0.9.1
     version: 0.9.1(@types/node@18.16.9)(graphql@16.9.0)
@@ -40,10 +40,10 @@ dependencies:
     version: 14.2.5(next@14.2.9)(react@18.3.1)
   '@rafty/corp':
     specifier: ^1.0.4
-    version: 1.0.4(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(prop-types@15.8.1)(react-dom@18.3.1)(react-hook-form@7.52.1)(react@18.3.1)
+    version: 1.0.4(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(prop-types@15.8.1)(react-dom@18.3.1)(react-hook-form@7.53.0)(react@18.3.1)
   '@rafty/ui':
     specifier: ^1.7.5
-    version: 1.7.5(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(react-dom@18.3.1)(react-hook-form@7.52.1)(react@18.3.1)
+    version: 1.7.5(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(react-dom@18.3.1)(react-hook-form@7.53.0)(react@18.3.1)
   '@sindresorhus/slugify':
     specifier: ^2.2.1
     version: 2.2.1
@@ -65,9 +65,9 @@ dependencies:
   axios:
     specifier: ^1.7.7
     version: 1.7.7
-  dateformat:
-    specifier: ^5.0.3
-    version: 5.0.3
+  dayjs:
+    specifier: ^1.11.13
+    version: 1.11.13
   drizzle-graphql:
     specifier: ^0.8.4
     version: 0.8.4(drizzle-orm@0.31.4)(graphql@16.9.0)
@@ -77,6 +77,9 @@ dependencies:
   drizzle-zod:
     specifier: ^0.5.1
     version: 0.5.1(drizzle-orm@0.31.4)(zod@3.23.8)
+  duck-form:
+    specifier: ^0.1.4
+    version: 0.1.4(react@18.3.1)
   fast-glob:
     specifier: ^3.3.2
     version: 3.3.2
@@ -120,8 +123,8 @@ dependencies:
     specifier: ^0.20.0
     version: 0.20.0(react@18.3.1)
   react-hook-form:
-    specifier: ^7.52.1
-    version: 7.52.1(react@18.3.1)
+    specifier: ^7.53.0
+    version: 7.53.0(react@18.3.1)
   react-hot-toast:
     specifier: ^2.4.1
     version: 2.4.1(csstype@3.1.3)(react-dom@18.3.1)(react@18.3.1)
@@ -211,9 +214,6 @@ devDependencies:
   '@swc/helpers':
     specifier: ~0.5.11
     version: 0.5.12
-  '@types/dateformat':
-    specifier: ^5.0.2
-    version: 5.0.2
   '@types/node':
     specifier: 18.16.9
     version: 18.16.9
@@ -2182,6 +2182,28 @@ packages:
       uuid: 8.3.2
     dev: true
 
+  /@duck-form/fields@0.1.1(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(duck-form@0.1.4)(prop-types@15.8.1)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-GEgQFqzQT/CRAbrZtYunY/YZjwpdDyHoeYe8Ne3jP0vu31q8L343la/+tr4vLBYgvAftxqobmssb63BOzppZMA==}
+    peerDependencies:
+      duck-form: ^0.1.0
+      react: ^18.2.0
+    dependencies:
+      '@heroicons/react': 2.1.5(react@18.3.1)
+      '@rafty/corp': 1.0.4(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(prop-types@15.8.1)(react-dom@18.3.1)(react-hook-form@7.53.0)(react@18.3.1)
+      '@rafty/ui': 1.7.5(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(react-dom@18.3.1)(react-hook-form@7.53.0)(react@18.3.1)
+      duck-form: 0.1.4(react@18.3.1)
+      react: 18.3.1
+      react-hook-form: 7.53.0(react@18.3.1)
+    transitivePeerDependencies:
+      - '@internationalized/date'
+      - '@types/react'
+      - '@types/react-dom'
+      - date-fns
+      - prop-types
+      - react-dom
+      - react-native
+    dev: false
+
   /@emnapi/core@1.2.0:
     resolution: {integrity: sha512-E7Vgw78I93we4ZWdYCb4DGAwRROGkMIXk7/y87UmANR+J6qsWusmC3gLt0H+O0KOt5e6O38U8oJamgbudrES/w==}
     dependencies:
@@ -3019,7 +3041,7 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@hookform/error-message@2.0.1(react-dom@18.3.1)(react-hook-form@7.52.1)(react@18.3.1):
+  /@hookform/error-message@2.0.1(react-dom@18.3.1)(react-hook-form@7.53.0)(react@18.3.1):
     resolution: {integrity: sha512-U410sAr92xgxT1idlu9WWOVjndxLdgPUHEB8Schr27C9eh7/xUnITWpCMF93s+lGiG++D4JnbSnrb5A21AdSNg==}
     peerDependencies:
       react: '>=16.8.0'
@@ -3028,7 +3050,7 @@ packages:
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-hook-form: 7.52.1(react@18.3.1)
+      react-hook-form: 7.53.0(react@18.3.1)
     dev: false
 
   /@humanwhocodes/module-importer@1.0.1:
@@ -5492,14 +5514,14 @@ packages:
     resolution: {integrity: sha512-A9+lCBZoaMJlVKcRBz2YByCG+Cp2t6nAnMnNba+XiWxnj6r4JUFqfsgwocMBZU9LPtdxC6wB56ySYpc7LQIoJg==}
     dev: false
 
-  /@rafty/corp@1.0.4(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(prop-types@15.8.1)(react-dom@18.3.1)(react-hook-form@7.52.1)(react@18.3.1):
+  /@rafty/corp@1.0.4(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(prop-types@15.8.1)(react-dom@18.3.1)(react-hook-form@7.53.0)(react@18.3.1):
     resolution: {integrity: sha512-e3iNowvUE79ud/2F95QKIeIKBbQN3ROaGIo22RFPI2lobmCXRX419lgtkwHW1qIOuCT8bHASTwopmDt9X6pgYw==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
       '@ark-ui/react': 3.5.0(@internationalized/date@3.5.5)(react-dom@18.3.1)(react@18.3.1)
       '@heroicons/react': 2.1.5(react@18.3.1)
-      '@rafty/ui': 1.7.5(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(react-dom@18.3.1)(react-hook-form@7.52.1)(react@18.3.1)
+      '@rafty/ui': 1.7.5(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(react-dom@18.3.1)(react-hook-form@7.53.0)(react@18.3.1)
       '@swc/helpers': 0.5.12
       '@tanstack/react-table': 8.19.3(react-dom@18.3.1)(react@18.3.1)
       class-variance-authority: 0.7.0
@@ -5528,7 +5550,7 @@ packages:
       tailwindcss-animate: 1.0.7(tailwindcss@3.4.10)
     dev: true
 
-  /@rafty/ui@1.7.5(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(react-dom@18.3.1)(react-hook-form@7.52.1)(react@18.3.1):
+  /@rafty/ui@1.7.5(@internationalized/date@3.5.5)(@types/react-dom@18.3.0)(@types/react@18.3.1)(date-fns@3.6.0)(react-dom@18.3.1)(react-hook-form@7.53.0)(react@18.3.1):
     resolution: {integrity: sha512-7wLsyCD+hzNFd0Hmoa5jNSDEssXYAAyj3UnM5dFJ7uyb8uAKpIeURleJaAZCAwzitoaB+nf4MHEn17mIs/YCAA==}
     peerDependencies:
       react: ^18.2.0
@@ -5536,7 +5558,7 @@ packages:
       '@ark-ui/react': 3.5.0(@internationalized/date@3.5.5)(react-dom@18.3.1)(react@18.3.1)
       '@fibr/react': 0.6.3(react@18.3.1)
       '@heroicons/react': 2.1.5(react@18.3.1)
-      '@hookform/error-message': 2.0.1(react-dom@18.3.1)(react-hook-form@7.52.1)(react@18.3.1)
+      '@hookform/error-message': 2.0.1(react-dom@18.3.1)(react-hook-form@7.53.0)(react@18.3.1)
       '@radix-ui/react-accordion': 1.2.0(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
       '@radix-ui/react-alert-dialog': 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
       '@radix-ui/react-checkbox': 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
@@ -6422,10 +6444,6 @@ packages:
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
     dependencies:
       '@types/node': 18.16.9
-    dev: true
-
-  /@types/dateformat@5.0.2:
-    resolution: {integrity: sha512-M95hNBMa/hnwErH+a+VOD/sYgTmo15OTYTM2Hr52/e0OdOuY+Crag+kd3/ioZrhg0WGbl9Sm3hR7UU+MH6rfOw==}
     dev: true
 
   /@types/debug@4.1.12:
@@ -9221,6 +9239,10 @@ packages:
     resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
     dev: true
 
+  /dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
+    dev: false
+
   /debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
     peerDependencies:
@@ -9631,6 +9653,14 @@ packages:
     dependencies:
       drizzle-orm: 0.31.4(@neondatabase/serverless@0.9.5)(@types/react@18.3.1)(react@18.3.1)
       zod: 3.23.8
+    dev: false
+
+  /duck-form@0.1.4(react@18.3.1):
+    resolution: {integrity: sha512-2NQk5Dg67G4+0k5LwuyM4KrejKw9OkbkvQpn34OrZUUX28TUmAHpb5geWqwkUlYuuqaFNCKQn3p4NTo+pWN7nw==}
+    peerDependencies:
+      react: ^18.3.1
+    dependencies:
+      react: 18.3.1
     dev: false
 
   /duplexer@0.1.2:
@@ -14912,9 +14942,9 @@ packages:
       react: 18.3.1
     dev: false
 
-  /react-hook-form@7.52.1(react@18.3.1):
-    resolution: {integrity: sha512-uNKIhaoICJ5KQALYZ4TOaOLElyM+xipord+Ha3crEFhTntdLvWZqVY49Wqd/0GiVCA/f9NjemLeiNPjG7Hpurg==}
-    engines: {node: '>=12.22.0'}
+  /react-hook-form@7.53.0(react@18.3.1):
+    resolution: {integrity: sha512-M1n3HhqCww6S2hxLxciEXy2oISPnAzxY7gvwVPrtlczTM/1dDadXgUxDpHMrMTblDOcm/AXtXxHwZ3jpg1mqKQ==}
+    engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
     dependencies:

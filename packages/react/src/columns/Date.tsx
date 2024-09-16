@@ -1,14 +1,10 @@
-import dateFormat from "dateformat";
-import { CellWrapper } from "./CellWrapper";
+import dayjs from "dayjs";
+import { useField } from "duck-form";
 
-export type DateCell = {
-  format?: string;
-  cell: any;
-};
+export function DateCell() {
+  const { value } = useField<{ value: string }>();
 
-export function DateCell({ cell, format = "mediumDate" }: DateCell) {
-  const value = String(cell.getValue() ?? "");
-  const date = dateFormat(new Date(value), format);
+  const date = new Date(String(value));
 
-  return <CellWrapper value={value}>{date}</CellWrapper>;
+  return dayjs(date).format("D MMM YYYY");
 }
