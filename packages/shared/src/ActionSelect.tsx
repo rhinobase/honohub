@@ -10,7 +10,7 @@ import {
 } from "@rafty/corp";
 import { Skeleton, Spinner } from "@rafty/ui";
 import { useMemo, useState } from "react";
-import { ErrorComponent } from "../ErrorComponent";
+import { ErrorComponent } from "./ErrorComponent";
 
 export type ActionType = {
   name: string;
