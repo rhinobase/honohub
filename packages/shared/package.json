@@ -1,4 +1,18 @@
 {
   "name": "@honohub/shared",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    "duck-form": "^0.1.4",
+    "@duck-form/fields": "0.1.0",
+    "fuse.js": "^7.0.0",
+    "@heroicons/react": "^2.1.5",
+    "@rafty/ui": "^1.7.6",
+    "@rafty/corp": "^1.0.4",
+    "react-hook-form": "^7.53.0",
+    "@uidotdev/usehooks": "^2.4.1",
+    "zod": "^3.23.8"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
+  }
 }
