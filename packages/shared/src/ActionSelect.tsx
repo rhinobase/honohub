@@ -9,13 +9,13 @@ import {
   useComboboxContext,
 } from "@rafty/corp";
 import { Skeleton, Spinner } from "@rafty/ui";
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { ErrorComponent } from "./ErrorComponent";
 
 export type ActionType = {
   name: string;
-  icon: string;
-  label: string;
+  icon: ReactNode;
+  label?: string;
 };
 
 export type ActionSelect = {
@@ -35,7 +35,7 @@ export function ActionSelect({
 
   const [options, icons] = useMemo(() => {
     const options: ComboboxOptionType[] = [];
-    const icons: Record<string, string> = {};
+    const icons: Record<string, ReactNode> = {};
 
     for (const action of actions) {
       options.push({
@@ -75,10 +75,7 @@ export function ActionSelect({
         <ComboboxContent showArrow={false}>
           {({ option }) => {
             const val = String(option.value);
-
-            const icon = icons?.[val];
-
-            if (icon) return <CustomOption {...option} icon={icon} />;
+            return <CustomOption {...option} icon={icons[val]} />;
           }}
         </ComboboxContent>
       </Combobox>
@@ -104,7 +101,7 @@ function CustomOption({
   label,
   value,
   icon,
-}: ComboboxOptionType & { icon: string }) {
+}: ComboboxOptionType & { icon: ReactNode }) {
   const { onSelectionChange } = useComboboxContext();
 
   return (
@@ -113,7 +110,7 @@ function CustomOption({
       onSelect={onSelectionChange}
       className="gap-2"
     >
-      <span className="material-icons-round !text-base">{icon}</span>
+      {icon}
       {label}
     </ComboboxItem>
   );

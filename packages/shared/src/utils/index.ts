@@ -1,6 +1,6 @@
 export enum FormMode {
-  ADD = "add",
-  EDIT = "edit",
+  CREATE = "create",
+  UPDATE = "update",
 }
 
 export enum DocumentSubmitType {
