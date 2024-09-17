@@ -1,4 +1,5 @@
 "use client";
+import * as HeroIcons from "@heroicons/react/24/outline";
 import {
   Combobox,
   ComboboxContent,
@@ -53,7 +54,7 @@ export function ActionSelect({
   if (isError) return <ErrorComponent className="w-max" />;
 
   return (
-    <div className="w-[300px]">
+    <div style={{ width: 300 }}>
       <Combobox
         options={options}
         placeholder={{ trigger: "Select an action" }}
@@ -107,13 +108,19 @@ function CustomOption({
 }: ComboboxOptionType & { icon: string }) {
   const { onSelectionChange } = useComboboxContext();
 
+  const Icon = useMemo(() => HeroIcons[icon as keyof typeof HeroIcons], [icon]);
+
   return (
     <ComboboxItem
       value={String(value)}
       onSelect={onSelectionChange}
       className="gap-2"
     >
-      <span className="material-icons-round !text-base">{icon}</span>
+      {icon === icon.toLowerCase() ? (
+        <span className="material-icons-round !text-base">{icon}</span>
+      ) : (
+        <Icon className="size-4" />
+      )}
       {label}
     </ComboboxItem>
   );

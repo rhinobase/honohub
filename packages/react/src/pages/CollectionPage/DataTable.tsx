@@ -64,8 +64,17 @@ export function CollectionDataTable<T = unknown>({
       endpoint.post(`/collections/${slug}/actions/${action}`, {
         items: selectedRows,
       }),
-    onSuccess: () =>
-      queryClient.refetchQueries({ queryKey: ["collections", slug] }),
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["collections", slug] });
+
+      toast.custom(({ visible }) => (
+        <Toast
+          severity="success"
+          title="Action executed successfully."
+          visible={visible}
+        />
+      ));
+    },
     onError: (err, action) => {
       console.error(err);
 
@@ -87,6 +96,7 @@ export function CollectionDataTable<T = unknown>({
           />
         ));
     },
+    onSettled: () => setRowsSelected({}),
   });
 
   return (
@@ -104,10 +114,7 @@ export function CollectionDataTable<T = unknown>({
 
               if (!action) throw new Error(`Unable to find ${name} action`);
 
-              const actionHandler = () => {
-                fireAction(action.name);
-                setRowsSelected({});
-              };
+              const actionHandler = () => fireAction(action.name);
 
               if (action.level) {
                 let actionPropmt = {
