@@ -1,8 +1,9 @@
+import BoltIcon from "@heroicons/react/24/outline/BoltIcon";
 import { ActionSelect as SharedActionSelect } from "@honohub/shared";
 import { Toast } from "@rafty/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
-import { useCallback } from "react";
+import { Suspense, lazy, useCallback, useMemo } from "react";
 import toast from "react-hot-toast";
 import { useDialogManager, useServer } from "../../providers";
 import type { CollectionType } from "../../types";
@@ -22,6 +23,37 @@ export function ActionSelect<T>({
   const { endpoint } = useServer();
   const queryClient = useQueryClient();
   const { action: actionDialogManager } = useDialogManager();
+
+  const actionsWithIcon = useMemo(
+    () =>
+      actions.map((action, index) => {
+        let component = (
+          <BoltIcon key={`${action.name}-${index}`} className="size-4" />
+        );
+
+        const actionIcon = action.icon;
+
+        if (actionIcon != null) {
+          const Icon = lazy(() =>
+            import("@heroicons/react/24/outline").then((mod) => ({
+              default: mod[actionIcon] as typeof BoltIcon,
+            })),
+          );
+
+          component = (
+            <Suspense fallback={"loading..."}>
+              <Icon className="size-4" />
+            </Suspense>
+          );
+        }
+
+        return {
+          ...action,
+          icon: component,
+        };
+      }),
+    [actions],
+  );
 
   const { mutate: fireAction } = useMutation({
     mutationFn: (action: string) =>
@@ -89,5 +121,5 @@ export function ActionSelect<T>({
     [actions, fireAction, actionDialogManager],
   );
 
-  return <SharedActionSelect handler={handler} actions={actions} />;
+  return <SharedActionSelect handler={handler} actions={actionsWithIcon} />;
 }

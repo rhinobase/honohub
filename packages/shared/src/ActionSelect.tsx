@@ -1,5 +1,4 @@
 "use client";
-import * as HeroIcons from "@heroicons/react/24/outline";
 import {
   Combobox,
   ComboboxContent,
@@ -10,12 +9,12 @@ import {
   useComboboxContext,
 } from "@rafty/corp";
 import { Skeleton, Spinner } from "@rafty/ui";
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { ErrorComponent } from "./ErrorComponent";
 
 export type ActionType = {
   name: string;
-  icon?: string;
+  icon: ReactNode;
   label?: string;
 };
 
@@ -36,14 +35,14 @@ export function ActionSelect({
 
   const [options, icons] = useMemo(() => {
     const options: ComboboxOptionType[] = [];
-    const icons: Record<string, string> = {};
+    const icons: Record<string, ReactNode> = {};
 
     for (const action of actions) {
       options.push({
         label: action.label ?? action.name,
         value: action.name,
       });
-      icons[action.name] = action.icon ?? "BoltIcon";
+      icons[action.name] = action.icon;
     }
 
     return [options, icons];
@@ -76,10 +75,7 @@ export function ActionSelect({
         <ComboboxContent showArrow={false}>
           {({ option }) => {
             const val = String(option.value);
-
-            const icon = icons?.[val];
-
-            if (icon) return <CustomOption {...option} icon={icon} />;
+            return <CustomOption {...option} icon={icons[val]} />;
           }}
         </ComboboxContent>
       </Combobox>
@@ -105,10 +101,8 @@ function CustomOption({
   label,
   value,
   icon,
-}: ComboboxOptionType & { icon: string }) {
+}: ComboboxOptionType & { icon: ReactNode }) {
   const { onSelectionChange } = useComboboxContext();
-
-  const Icon = useMemo(() => HeroIcons[icon as keyof typeof HeroIcons], [icon]);
 
   return (
     <ComboboxItem
@@ -116,11 +110,7 @@ function CustomOption({
       onSelect={onSelectionChange}
       className="gap-2"
     >
-      {icon === icon.toLowerCase() ? (
-        <span className="material-icons-round !text-base">{icon}</span>
-      ) : (
-        <Icon className="size-4" />
-      )}
+      {icon}
       {label}
     </ComboboxItem>
   );
