@@ -174,6 +174,7 @@ export function CollectionDataTable<T = unknown>({
         }}
         count={data.count}
         pageIndex={pageIndex}
+        className="mb-14"
       />
     </>
   );
