@@ -54,7 +54,7 @@ export function ActionSelect({
   if (isError) return <ErrorComponent className="w-max" />;
 
   return (
-    <div style={{ width: 300 }}>
+    <div className="w-[300px]">
       <Combobox
         options={options}
         placeholder={{ trigger: "Select an action" }}

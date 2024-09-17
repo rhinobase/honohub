@@ -6,6 +6,7 @@ module.exports = {
   darkMode: "class",
   content: [
     join(__dirname, "src/**/*!(*.stories|*.spec).{ts,tsx}"),
+    join(__dirname, "../shared/src/**/*!(*.stories|*.spec).{ts,tsx}"),
     "../../node_modules/@rafty/**/*.js",
     "./node_modules/@rafty/**/*.js",
   ],

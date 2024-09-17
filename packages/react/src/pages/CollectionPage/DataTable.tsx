@@ -1,12 +1,10 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { ActionSelect, Pagination, Searchbar } from "@honohub/shared";
+import { Pagination, Searchbar } from "@honohub/shared";
 import { type ColumnType, DataTable as SharedDatatable } from "@rafty/corp";
-import { Button, Text, Toast } from "@rafty/ui";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { isAxiosError } from "axios";
+import { Button, Text } from "@rafty/ui";
+import { useQuery } from "@tanstack/react-query";
 import { Blueprint, DuckForm } from "duck-form";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import {
   Link,
   useLocation,
@@ -14,9 +12,10 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { COLUMN_HEADER_COMPONENTS, FibrCellWrapper } from "../../columns";
-import { useDialogManager, useServer } from "../../providers";
+import { useServer } from "../../providers";
 import type { CollectionType } from "../../types";
 import { queryValidation } from "../../validations";
+import { ActionSelect } from "./ActionSelect";
 
 export type CollectionDataTable<T> = {
   columns: ColumnType<T>[];
@@ -27,11 +26,9 @@ export function CollectionDataTable<T = unknown>({
   slug,
   actions,
 }: CollectionDataTable<T>) {
-  const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
   const { endpoint } = useServer();
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
-  const { action: actionDialogManager } = useDialogManager();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -59,46 +56,6 @@ export function CollectionDataTable<T = unknown>({
     (index) => data.results[Number(index)],
   );
 
-  const { mutate: fireAction } = useMutation({
-    mutationFn: (action: string) =>
-      endpoint.post(`/collections/${slug}/actions/${action}`, {
-        items: selectedRows,
-      }),
-    onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: ["collections", slug] });
-
-      toast.custom(({ visible }) => (
-        <Toast
-          severity="success"
-          title="Action executed successfully."
-          visible={visible}
-        />
-      ));
-    },
-    onError: (err, action) => {
-      console.error(err);
-
-      if (isAxiosError(err)) {
-        toast.custom(({ visible }) => (
-          <Toast
-            severity="error"
-            title={`${err.response?.status} ${err.code}`}
-            message={err.response?.statusText}
-            visible={visible}
-          />
-        ));
-      } else
-        toast.custom(({ visible }) => (
-          <Toast
-            severity="error"
-            title={`Unable to run action - ${action}`}
-            visible={visible}
-          />
-        ));
-    },
-    onSettled: () => setRowsSelected({}),
-  });
-
   return (
     <>
       {selectedRowsLength > 0 ? (
@@ -109,30 +66,10 @@ export function CollectionDataTable<T = unknown>({
           </Text>
           <div className="flex-1" />
           <ActionSelect
-            handler={(name) => {
-              const action = actions.find((action) => action.name === name);
-
-              if (!action) throw new Error(`Unable to find ${name} action`);
-
-              const actionHandler = () => fireAction(action.name);
-
-              if (action.level) {
-                let actionPropmt = {
-                  title: `Confirm ${action.label ?? action.name} Action`,
-                  message: "Are you sure you want to perform this action?",
-                };
-
-                if (typeof action.level !== "boolean")
-                  actionPropmt = action.level;
-
-                actionDialogManager.setState({
-                  ...actionPropmt,
-                  show: true,
-                  action: actionHandler,
-                });
-              } else actionHandler();
-            }}
             actions={actions}
+            selectedRows={selectedRows}
+            slug={slug}
+            onActionComplete={() => setRowsSelected({})}
           />
         </div>
       ) : (

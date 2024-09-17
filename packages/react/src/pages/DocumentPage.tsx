@@ -24,13 +24,13 @@ export type DocumentPage = Omit<CollectionType, "columns">;
 export function DocumentPage({ fields, slug, label }: DocumentPage) {
   const { id } = useParams();
   const { endpoint } = useServer();
-  const formType = id === "create" ? FormMode.ADD : FormMode.EDIT;
+  const formType = id === "create" ? FormMode.CREATE : FormMode.UPDATE;
 
   const { data, isLoading } = useQuery({
     queryKey: ["collections", slug, id],
     queryFn: () =>
       endpoint.get(`collections/${slug}/${id}`).then((res) => res.data),
-    enabled: formType === FormMode.EDIT,
+    enabled: formType === FormMode.UPDATE,
   });
 
   const methods = useForm();
@@ -56,7 +56,7 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
     <>
       <PageHeader>
         <PageTitle>
-          {formType === FormMode.ADD ? "Create" : "Edit"}{" "}
+          {formType === FormMode.CREATE ? "Create" : "Update"}{" "}
           {getSingularLabel(label)}
         </PageTitle>
       </PageHeader>
@@ -71,7 +71,7 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
               values[SUBMIT_BUTTON_KEY] = undefined;
 
               try {
-                if (formType === FormMode.ADD)
+                if (formType === FormMode.CREATE)
                   await endpoint.post(`/collections/${slug}`, values);
                 else await endpoint.put(`/collections/${slug}/${id}`, values);
 
