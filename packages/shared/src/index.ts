@@ -6,3 +6,5 @@ export * from "./LoadingComponent";
 export * from "./PageHeader";
 export * from "./rowSelectionColumn";
 export * from "./utils";
+export * from "./Pagination";
+export * from "./Searchbar";

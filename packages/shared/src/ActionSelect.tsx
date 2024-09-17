@@ -14,8 +14,8 @@ import { ErrorComponent } from "./ErrorComponent";
 
 export type ActionType = {
   name: string;
-  icon: string;
-  label: string;
+  icon?: string;
+  label?: string;
 };
 
 export type ActionSelect = {
@@ -42,7 +42,7 @@ export function ActionSelect({
         label: action.label ?? action.name,
         value: action.name,
       });
-      icons[action.name] = action.icon;
+      icons[action.name] = action.icon ?? "BoltIcon";
     }
 
     return [options, icons];
