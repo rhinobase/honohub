@@ -20,15 +20,15 @@ export const SUBMIT_BUTTON_KEY = "__submit_btn";
 
 export type FormFooter =
   | {
-      mode?: FormMode.ADD;
+      mode?: FormMode.CREATE;
     }
   | {
-      mode?: FormMode.EDIT;
+      mode?: FormMode.UPDATE;
       onDelete?: () => Promise<void>;
     };
 
 export function FormFooter(props: FormFooter) {
-  const { mode = FormMode.ADD } = props;
+  const { mode = FormMode.CREATE } = props;
   const [isDeleting, setDeleting] = useBoolean();
 
   const {
@@ -49,13 +49,13 @@ export function FormFooter(props: FormFooter) {
   return (
     <>
       <div className="flex gap-3 p-3 bg-secondary-100 dark:bg-secondary-900 rounded-md mb-3 md:mb-4 lg:mb-5 xl:mb-6">
-        {mode === FormMode.EDIT && (
+        {mode === FormMode.UPDATE && (
           <DeleteButton
             isLoading={isDeleting}
             isDisabled={isDisabled}
             onDelete={async () => {
               setDeleting(true);
-              if (props.mode === FormMode.EDIT) props.onDelete?.();
+              if (props.mode === FormMode.UPDATE) props.onDelete?.();
               setDeleting(false);
             }}
           />
