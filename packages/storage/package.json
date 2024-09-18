@@ -1,16 +1,16 @@
 {
-  "name": "@honohub/shared",
+  "name": "@honohub/storage",
   "version": "0.0.1",
   "dependencies": {
-    "@duck-form/fields": "0.1.0",
     "@heroicons/react": "^2.1.5",
+    "@hookform/resolvers": "^3.9.0",
+    "@honohub/shared": "^0.1.0",
     "@rafty/ui": "^1.7.6",
-    "@rafty/corp": "^1.0.4",
-    "@uidotdev/usehooks": "^2.4.1",
-    "duck-form": "^0.1.4",
-    "fuse.js": "^7.0.0",
+    "@tanstack/react-query": "^5.56.2",
+    "dayjs": "^1.11.13",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
+    "react-pdf": "^9.1.1",
     "zod": "^3.23.8"
   },
   "peerDependencies": {
