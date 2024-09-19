@@ -18,21 +18,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@honohub/graphql": [
-        "packages/graphql/src/index.ts"
-      ],
-      "@honohub/react": [
-        "packages/react/src/index.ts"
-      ],
-      "@honohub/shared": [
-        "packages/shared/src/index.ts"
-      ],
-      "@honohub/vite": [
-        "packages/vite/src/index.ts"
-      ],
-      "honohub": [
-        "packages/core/src/index.ts"
-      ]
+      "@honohub/graphql": ["packages/graphql/src/index.ts"],
+      "@honohub/react": ["packages/react/src/index.ts"],
+      "@honohub/shared": ["packages/shared/src/index.ts"],
+      "@honohub/storage": ["packages/storage/src/index.ts"],
+      "@honohub/vite": ["packages/vite/src/index.ts"],
+      "honohub": ["packages/core/src/index.ts"]
     }
   },
   "exclude": [
