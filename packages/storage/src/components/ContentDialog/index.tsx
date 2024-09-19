@@ -14,16 +14,19 @@ import {
   DialogClose,
   DialogContent,
   DialogOverlay,
+  classNames,
   eventHandler,
 } from "@rafty/ui";
-import { useStorageActions } from "../../providers";
+import { useStorage, useStorageActions } from "../../providers";
 import type { StorageDataType } from "../../types";
+import { getStorageItemIcon } from "../../utils";
 import { StorageContextMenu } from "../ContextMenu";
 import { ImageDisplay } from "./ImageDisplay";
 import { PdfDisplay } from "./PdfDisplay";
 import { VideoDisplay } from "./VideoDisplay";
 
 export function ContentDialog() {
+  const { generateURL } = useStorage();
   const { view } = useStorageActions();
   const { findContent, getNext, getPrevious } = useContentProps();
 
@@ -36,6 +39,8 @@ export function ContentDialog() {
 
   const handleGoToNext = eventHandler(() => view.set(nextContentId));
   const handleGoToPrevious = eventHandler(() => view.set(previousContentId));
+
+  const Icon = getStorageItemIcon(content);
 
   return (
     <Dialog
@@ -73,9 +78,7 @@ export function ContentDialog() {
         )}
         <div className="h-full w-full flex flex-col">
           <div className="flex items-center gap-2 px-3 py-2.5">
-            <span className="material-icons-round text-white">
-              {getStorageItemIcon(content)}
-            </span>
+            <Icon className="size-6 stroke-2 text-white" />
             <p className="truncate text-xl font-medium text-white">
               {`${content.public_id.split("/").pop()}.${content.format}`}
             </p>
@@ -84,7 +87,7 @@ export function ContentDialog() {
               download={`${content.public_id.split("/").pop()}.${
                 content.format
               }`}
-              href={getCloudinaryURL(content)}
+              href={generateURL({ content })}
               target="_blank"
               rel="noreferrer"
             >
@@ -102,8 +105,13 @@ export function ContentDialog() {
               </Button>
             </DialogClose>
           </div>
-          <div className="w-full h-full overflow-y-auto">
-            <div className="max-w-5xl mx-auto w-max">
+          <div className="w-full h-full flex overflow-y-auto">
+            <div
+              className={classNames(
+                content.format === "pdf" ? "w-max" : "w-full",
+                "max-w-5xl mx-auto mb-3",
+              )}
+            >
               {findDisplay(content)}
             </div>
           </div>

@@ -7,6 +7,7 @@
     "@honohub/shared": "^0.1.0",
     "@rafty/ui": "^1.7.6",
     "@tanstack/react-query": "^5.56.2",
+    "axios": "^1.7.7",
     "dayjs": "^1.11.13",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",

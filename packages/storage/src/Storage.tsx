@@ -9,10 +9,25 @@ import {
   RenameDialog,
   StorageItem,
 } from "./components";
-import { StorageActionsProvider } from "./providers";
-import { type StorageDataType, StorageLayout } from "./types";
+import {
+  StorageActionsProvider,
+  StorageLayout,
+  StoragePreferenceProvider,
+  useStoragePreference,
+} from "./providers";
+import type { StorageDataType } from "./types";
 
-export type Storage = {
+export type Storage = StorageRender;
+
+export function Storage(props: Storage) {
+  return (
+    <StoragePreferenceProvider>
+      <StorageRender {...props} />
+    </StoragePreferenceProvider>
+  );
+}
+
+type StorageRender = {
   data:
     | InfiniteData<
         {
@@ -28,29 +43,26 @@ export type Storage = {
   lastElementRef: (node: HTMLDivElement) => void;
 };
 
-export function Storage({
+function StorageRender({
   data,
-  lastElementRef,
   isError,
   isFetching,
   isLoading,
-}: Storage) {
-  const {
-    storage: { value: layout },
-  } = usePreference();
+  lastElementRef,
+}: StorageRender) {
+  const { value: layout } = useStoragePreference();
 
   const files: StorageDataType[] = data
     ? Array().concat(...data.pages.map((item) => item.results))
     : [];
 
-  const isEmpty = files.length === 0;
+  const isEmpty = data?.pages[0]?.results.length === 0;
 
   const isListView = layout === StorageLayout.LIST;
 
   let Icon: typeof InboxIcon | undefined;
   if (isError) Icon = ExclamationCircleIcon;
   else if (isEmpty) Icon = InboxIcon;
-
   return (
     <>
       <div

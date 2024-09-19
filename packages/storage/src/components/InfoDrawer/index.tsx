@@ -1,3 +1,4 @@
+import { DocumentIcon, PlayCircleIcon } from "@heroicons/react/24/outline";
 import {
   Drawer,
   DrawerClose,
@@ -8,11 +9,12 @@ import {
   TooltipTrigger,
   classNames,
 } from "@rafty/ui";
-import { useStorageActions } from "../../providers";
+import { useStorage, useStorageActions } from "../../providers";
 import { getStorageItemIcon } from "../../utils";
 import { PropertiesTable } from "./PropertiesTable";
 
 export function InfoDrawer() {
+  const { generateURL } = useStorage();
   const { info } = useStorageActions();
   const { findContent } = useContentProps();
 
@@ -23,6 +25,8 @@ export function InfoDrawer() {
   let resourceName = content.public_id.split("/").pop();
   if (content.format) resourceName += `.${content.format}`;
 
+  const Icon = getStorageItemIcon(content);
+
   return (
     <Drawer
       side="right"
@@ -30,11 +34,9 @@ export function InfoDrawer() {
       onOpenChange={(open) => !open && info.set(undefined)}
     >
       <DrawerOverlay className="z-[60]" />
-      <DrawerContent className="max-w-full md:max-w-md z-[60]">
+      <DrawerContent className="max-w-full md:max-w-md z-[60] dark:bg-secondary-900">
         <div className="mb-5 flex items-center">
-          <span className="material-icons-round mr-2 text-xl">
-            {getStorageItemIcon(content)}
-          </span>
+          <Icon className="size-6 stroke-2 mr-2" />
           <Tooltip>
             <TooltipTrigger asChild>
               <p className="w-[320px] truncate font-medium">{resourceName}</p>
@@ -44,30 +46,27 @@ export function InfoDrawer() {
             </TooltipContent>
           </Tooltip>
         </div>
-        <div
-          className={classNames(
-            content.resource_type === "raw" && "bg-white",
-            "relative mb-5 h-[260px] overflow-hidden rounded-lg",
-          )}
-        >
+        <div className="relative mb-5 h-[260px] overflow-hidden rounded-lg bg-secondary-100 dark:bg-secondary-800">
           {content.resource_type !== "raw" && (
             <img
-              src={getCloudinaryURL(content, {
-                filters: ["c_thumb", "h_260", "q_75", "w_600"],
+              src={generateURL({
+                content,
+                filters: {
+                  crop: "thumb",
+                  height: 260,
+                  quality: 75,
+                  width: 600,
+                },
               })}
               alt={content.public_id}
               className="h-[260px] w-full object-cover"
             />
           )}
           {content.resource_type === "video" && (
-            <span className="material-icons-round !text-6xl text-secondary-600 dark:text-secondary-400 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              play_circle_outline
-            </span>
+            <PlayCircleIcon className="size-16 stroke-2 stroke-secondary-600 dark:stroke-secondary-400 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
           )}
           {content.resource_type === "raw" && (
-            <span className="material-icons-round !text-6xl text-secondary-600 dark:text-secondary-400 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              raw_on
-            </span>
+            <DocumentIcon className="size-16 stroke-2 stroke-secondary-600 dark:stroke-secondary-400 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
           )}
         </div>
         <PropertiesTable {...content} />

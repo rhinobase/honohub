@@ -1,7 +1,11 @@
 import { eventHandler } from "@rafty/ui";
 import { forwardRef } from "react";
-import { useStorageActions } from "../../providers";
-import { type StorageDataType, StorageLayout } from "../../types";
+import {
+  StorageLayout,
+  useStorageActions,
+  useStoragePreference,
+} from "../../providers";
+import type { StorageDataType } from "../../types";
 import { GridCard } from "./GridCard";
 import { ListCard } from "./ListCard";
 
@@ -9,9 +13,7 @@ export type StorageItem = StorageDataType;
 
 export const StorageItem = forwardRef<HTMLDivElement, StorageItem>(
   function StorageItem(props, forwardedRef) {
-    const {
-      storage: { value },
-    } = usePreference();
+    const { value } = useStoragePreference();
     const { view } = useStorageActions();
 
     const handleDialogOpen = eventHandler(() => {
@@ -25,20 +27,16 @@ export const StorageItem = forwardRef<HTMLDivElement, StorageItem>(
     if (value === StorageLayout.LIST)
       return (
         <ListCard
+          {...props}
           name={resourceName}
-          type={props.resource_type}
-          publicId={props.public_id}
-          isPrivate={props.private ?? false}
           handleDialogOpen={handleDialogOpen}
           ref={forwardedRef}
         />
       );
     return (
       <GridCard
+        {...props}
         name={resourceName}
-        type={props.resource_type}
-        publicId={props.public_id}
-        isPrivate={props.private ?? false}
         handleDialogOpen={handleDialogOpen}
         ref={forwardedRef}
       />

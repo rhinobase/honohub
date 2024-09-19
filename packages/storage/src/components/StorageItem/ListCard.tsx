@@ -1,17 +1,21 @@
+import { DocumentIcon, PlayCircleIcon } from "@heroicons/react/24/outline";
 import type { eventHandler } from "@rafty/ui";
 import { forwardRef } from "react";
+import { useStorage } from "../../providers";
+import type { StorageDataType } from "../../types";
 import { StorageContextMenu } from "../ContextMenu";
 
-export type ListCard = {
+export type ListCard = StorageDataType & {
   name: string;
-  type: string;
   handleDialogOpen: ReturnType<typeof eventHandler>;
-} & Omit<StorageContextMenu, "className">;
+};
 
 export const ListCard = forwardRef<HTMLDivElement, ListCard>(function ListCard(
-  { name, type, publicId, isPrivate, handleDialogOpen },
+  { name, handleDialogOpen, ...props },
   forwardedRef,
 ) {
+  const { generateURL } = useStorage();
+
   return (
     <div
       className="flex w-full items-center gap-2 overflow-hidden rounded-lg border border-secondary-200 dark:border-secondary-800"
@@ -22,30 +26,27 @@ export const ListCard = forwardRef<HTMLDivElement, ListCard>(function ListCard(
         onClick={handleDialogOpen}
         onKeyDown={handleDialogOpen}
       >
-        {type !== "raw" && (
+        {props.resource_type !== "raw" && (
           <img
-            src={getCloudinaryURL(props, {
-              filters: ["c_thumb", "h_64", "q_75", "w_64"],
+            src={generateURL({
+              content: props,
+              filters: { crop: "thumb", height: 64, quality: 75, width: 64 },
             })}
-            alt={publicId}
+            alt={props.public_id}
             className="h-16 w-16 object-cover transition-all ease-in-out hover:opacity-80"
           />
         )}
-        {type === "video" && (
-          <span className="material-icons-round !text-3xl text-secondary-600 dark:text-secondary-400 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            play_circle_outline
-          </span>
+        {props.resource_type === "video" && (
+          <PlayCircleIcon className="size-9 stroke-2 stroke-secondary-600 dark:stroke-secondary-400 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
         )}
-        {type === "raw" && (
-          <span className="material-icons-round !text-[40px] text-secondary-600 dark:text-secondary-400 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            raw_on
-          </span>
+        {props.resource_type === "raw" && (
+          <DocumentIcon className="size-9 stroke-2 stroke-secondary-600 dark:stroke-secondary-400 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
         )}
       </div>
       <div className="flex w-full items-center gap-2 px-3 py-2">
         <p className="truncate text-sm">{name}</p>
         <div className="flex-1" />
-        <StorageContextMenu publicId={publicId} isPrivate={isPrivate} />
+        <StorageContextMenu {...props} />
       </div>
     </div>
   );

@@ -1,24 +1,37 @@
 export type StorageDataType = {
   _id: string;
+  _type?: string;
+  _ref?: string;
   asset_id: string;
   public_id: string;
-  format?: string;
   version: number;
-  resource_type: string;
   type: string;
   created_at: string;
-  created_by?: {
-    email: string;
-    displayName: string;
+  created_by: {
+    _ref: string;
+    _type: "users";
+    email?: string;
+    displayName?: string;
   };
   bytes: number;
-  width?: number;
-  height?: number;
   private?: boolean;
-  pages?: number;
-};
-
-export enum StorageLayout {
-  GRID = "G",
-  LIST = "L",
-}
+  organisation: { _ref: string; _type: "organisations" };
+} & (
+  | ({
+      resource_type: "image";
+      width: number;
+      height: number;
+    } & ({ format: "png" | "jpg" } | { format: "pdf"; pages: number }))
+  | {
+      resource_type: "video";
+      width: number;
+      height: number;
+      format: "mp4";
+    }
+  | {
+      resource_type: "raw";
+      width: null;
+      height: null;
+      format: null;
+    }
+);

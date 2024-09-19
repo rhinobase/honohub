@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import z from "zod";
-import { useStorageActions } from "../../providers";
+import { useStorage, useStorageActions } from "../../providers";
 import type { StorageDataType } from "../../types";
 
 const schema = z.object({
@@ -35,7 +35,7 @@ export function RenameForm() {
     resolver: zodResolver(schema),
   });
 
-  const { update } = useStorage();
+  const { update, handleError } = useStorage();
 
   const {
     register,
@@ -121,7 +121,7 @@ export function RenameForm() {
         }
         return data;
       });
-      handleError(error, setError);
+      handleError?.({ error, setError });
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey, exact: true });

@@ -17,38 +17,32 @@ import {
 } from "@rafty/ui";
 import type { HTMLAttributes } from "react";
 import toast from "react-hot-toast";
-import { useStorageActions } from "../providers";
+import { useStorage, useStorageActions } from "../providers";
+import type { StorageDataType } from "../types";
 
-export type StorageContextMenu = {
+export type StorageContextMenu = StorageDataType & {
   className?: HTMLAttributes<HTMLDivElement>["className"];
-  publicId: string;
-  isPrivate: boolean;
 };
 
 export function StorageContextMenu({
-  publicId,
-  isPrivate,
   className,
+  ...props
 }: StorageContextMenu) {
+  const { generateURL } = useStorage();
   const { info, rename, remove } = useStorageActions();
 
-  const handleInfoDrawerOpen = () => info.set(publicId);
+  const handleInfoDrawerOpen = () => info.set(props.public_id);
 
-  const PrivateFileIcon = isPrivate ? LockOpenIcon : LockClosedIcon;
+  const PrivateFileIcon = props.private ? LockOpenIcon : LockClosedIcon;
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(
-      getCloudinaryURL(props, {
-        filters: [],
-        raw: true,
-      }),
-    );
+    navigator.clipboard.writeText(generateURL({ content: props, raw: true }));
     toast.success("Resource link copied!");
   };
 
-  const handleRename = () => rename.set(publicId);
+  const handleRename = () => rename.set(props.public_id);
 
-  const handleRemove = () => remove.set(publicId);
+  const handleRemove = () => remove.set(props.public_id);
 
   return (
     <Menu>
@@ -65,7 +59,7 @@ export function StorageContextMenu({
         </MenuItem>
         <MenuItem disabled>
           <PrivateFileIcon className="size-4 stroke-2" />
-          Make file {isPrivate ? "public" : "private"}
+          Make file {props.private ? "public" : "private"}
         </MenuItem>
         <MenuItem onClick={handleCopyLink} onKeyDown={handleCopyLink}>
           <LinkIcon className="size-4 stroke-2" />

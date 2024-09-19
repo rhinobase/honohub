@@ -15,7 +15,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { useStorageActions } from "../providers";
+import { useStorage, useStorageActions } from "../providers";
 import type { StorageDataType } from "../types";
 
 export function DeleteDialog() {
@@ -27,7 +27,7 @@ export function DeleteDialog() {
     .passthrough()
     .parse(Object.fromEntries(searchParams.entries()));
 
-  const { remove: removeFile } = useStorage();
+  const { remove: removeFile, handleError } = useStorage();
   const { remove } = useStorageActions();
   const { findContent } = useContentProps();
 
@@ -127,7 +127,7 @@ export function DeleteDialog() {
           },
         );
 
-      handleError(error);
+      handleError?.({ error });
     },
     onSettled: () => {
       setLoading(false);
