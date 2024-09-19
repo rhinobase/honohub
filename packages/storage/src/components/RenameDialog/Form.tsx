@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import z from "zod";
+import { useContentProps } from "../../hooks";
 import { useStorage, useStorageActions } from "../../providers";
 import type { StorageDataType } from "../../types";
 
@@ -17,19 +18,13 @@ const schema = z.object({
 });
 
 export function RenameForm() {
-  const { org } = useParams();
-  const { findContent } = useContentProps();
-  const searchParams = useSearchParams();
-  const { search } = queryValidation
-    .passthrough()
-    .parse(Object.fromEntries(searchParams.entries()));
+  const queryClient = useQueryClient();
 
+  const { queryKey } = useStorage();
+  const { findContent } = useContentProps();
   const { rename } = useStorageActions();
 
   const content = findContent(rename.value);
-
-  const queryClient = useQueryClient();
-  const queryKey = ["spaces", org, search];
 
   const methods = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),

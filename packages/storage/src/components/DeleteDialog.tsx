@@ -15,26 +15,22 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { useContentProps } from "../hooks";
 import { useStorage, useStorageActions } from "../providers";
 import type { StorageDataType } from "../types";
 
 export function DeleteDialog() {
+  const queryClient = useQueryClient();
+
   const [isLoading, setLoading] = useBoolean();
 
-  const { org } = useParams();
-  const searchParams = useSearchParams();
-  const { search } = queryValidation
-    .passthrough()
-    .parse(Object.fromEntries(searchParams.entries()));
-
+  const { queryKey, usage } = useStorage();
   const { remove: removeFile, handleError } = useStorage();
   const { remove } = useStorageActions();
   const { findContent } = useContentProps();
 
   const content = findContent(remove.value);
 
-  const queryClient = useQueryClient();
-  const queryKey = ["spaces", org, search];
   const mutation = useMutation({
     mutationFn: (public_id: string) => removeFile(public_id),
     onMutate: async (public_id) => {
@@ -73,22 +69,7 @@ export function DeleteDialog() {
       });
 
       // Updating the orgainzation's storage usage
-      if (content != null)
-        queryClient.setQueryData<OrganizationType[]>(
-          ["organisations", ""],
-          (items) => {
-            if (items)
-              return items.map((item) => {
-                if (item.slug === org)
-                  return {
-                    ...item,
-                    used: item.used - (content?.bytes ?? 0),
-                  };
-                return item;
-              });
-            return items;
-          },
-        );
+      if (content != null) usage.set(content.bytes);
 
       return { page_index, index, content };
     },
@@ -110,22 +91,7 @@ export function DeleteDialog() {
       });
 
       // Updating the orgainzation's storage usage
-      if (content != null)
-        queryClient.setQueryData<OrganizationType[]>(
-          ["organisations", ""],
-          (items) => {
-            if (items)
-              return items.map((item) => {
-                if (item.slug === org)
-                  return {
-                    ...item,
-                    used: item.used + (content?.bytes ?? 0),
-                  };
-                return item;
-              });
-            return items;
-          },
-        );
+      if (content != null) usage.set(content.bytes);
 
       handleError?.({ error });
     },

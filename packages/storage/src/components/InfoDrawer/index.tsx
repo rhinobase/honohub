@@ -9,6 +9,7 @@ import {
   TooltipTrigger,
   classNames,
 } from "@rafty/ui";
+import { useContentProps } from "../../hooks";
 import { useStorage, useStorageActions } from "../../providers";
 import { getStorageItemIcon } from "../../utils";
 import { PropertiesTable } from "./PropertiesTable";

@@ -17,6 +17,7 @@ import {
   classNames,
   eventHandler,
 } from "@rafty/ui";
+import { useContentProps } from "../../hooks";
 import { useStorage, useStorageActions } from "../../providers";
 import type { StorageDataType } from "../../types";
 import { getStorageItemIcon } from "../../utils";

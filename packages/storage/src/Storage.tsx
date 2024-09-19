@@ -1,7 +1,11 @@
 import { ExclamationCircleIcon, InboxIcon } from "@heroicons/react/24/outline";
 import { LoadingComponent } from "@honohub/shared";
 import { classNames } from "@rafty/ui";
-import type { InfiniteData } from "@tanstack/react-query";
+import {
+  type InfiniteData,
+  useIsFetching,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   ContentDialog,
   DeleteDialog,
@@ -13,6 +17,7 @@ import {
   StorageActionsProvider,
   StorageLayout,
   StoragePreferenceProvider,
+  useStorage,
   useStoragePreference,
 } from "./providers";
 import type { StorageDataType } from "./types";
@@ -28,29 +33,25 @@ export function Storage(props: Storage) {
 }
 
 type StorageRender = {
-  data:
-    | InfiniteData<
-        {
-          results: unknown[];
-          count: number;
-        },
-        unknown
-      >
-    | undefined;
-  isLoading: boolean;
-  isFetching: boolean;
-  isError: boolean;
   lastElementRef: (node: HTMLDivElement) => void;
 };
 
-function StorageRender({
-  data,
-  isError,
-  isFetching,
-  isLoading,
-  lastElementRef,
-}: StorageRender) {
+function StorageRender({ lastElementRef }: StorageRender) {
+  const { queryKey } = useStorage();
   const { value: layout } = useStoragePreference();
+
+  const queryClient = useQueryClient();
+
+  const data =
+    queryClient.getQueryData<
+      InfiniteData<{ results: StorageDataType[]; count: number }>
+    >(queryKey);
+
+  const dataState = queryClient.getQueryState(queryKey);
+
+  const isLoading = dataState?.status === "pending";
+  const isError = dataState?.status === "error";
+  const isFetching = useIsFetching({ queryKey, exact: true });
 
   const files: StorageDataType[] = data
     ? Array().concat(...data.pages.map((item) => item.results))

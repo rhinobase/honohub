@@ -1,10 +1,14 @@
-export { Storage } from "./Storage";
+export { CancelUploadDialog, UploadDialog } from "./components";
+export { useContentProps, useUpload } from "./hooks";
 export {
-  useStorageActions,
-  useStoragePreference,
   StorageLayout,
   StorageProvider,
+  UploadProvider,
   useStorage,
+  useStorageActions,
+  useStoragePreference,
+  useUploadContext,
 } from "./providers";
-export * from "./types";
-export * from "./utils";
+export { Storage } from "./Storage";
+export { StorageDataType } from "./types";
+export { formatBytes, getStorageItemIcon } from "./utils";
