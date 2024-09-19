@@ -1,23 +1,19 @@
 "use client";
 import type { AxiosRequestConfig } from "axios";
-import { type PropsWithChildren, createContext, useContext } from "react";
+import {
+  type PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import type { UseFormSetError } from "react-hook-form";
 import type { StorageDataType } from "../types";
 
 type StorageFunctions = {
-  list: <T>(options: {
-    org: string;
-    limit?: number;
-    offset?: number;
-    search?: string;
-  }) => Promise<{
-    results: T[];
-    count: number;
-  }>;
-  signature: (options: {
-    org: string;
-    file: File;
-  }) => Promise<Record<string, string>>;
+  queryKey: string[];
+  signature: (file: File) => Promise<Record<string, string>>;
   create: <T>(options: {
     signature: Record<string, string>;
     file: File;
@@ -34,17 +30,41 @@ type StorageFunctions = {
     error: unknown;
     setError?: UseFormSetError<T>;
   }) => void;
+  usage: number;
+  onUsageChange: (usage: number) => void;
 };
 
-const StorageContext = createContext<StorageFunctions | null>(null);
+const StorageContext = createContext<ReturnType<
+  typeof useStorageManager
+> | null>(null);
 
 export function StorageProvider({
   children,
   ...props
 }: PropsWithChildren<StorageFunctions>) {
+  const value = useStorageManager(props);
+
   return (
-    <StorageContext.Provider value={props}>{children}</StorageContext.Provider>
+    <StorageContext.Provider value={value}>{children}</StorageContext.Provider>
   );
+}
+
+function useStorageManager({
+  usage: _usage,
+  onUsageChange,
+  ...funcs
+}: StorageFunctions) {
+  const [usage, setUsage] = useState<number>(_usage);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    onUsageChange(usage);
+  }, [usage]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  const storageFuncs = useMemo(() => funcs, []);
+
+  return { usage: { value: usage, set: setUsage }, ...storageFuncs };
 }
 
 export const useStorage = () => {
