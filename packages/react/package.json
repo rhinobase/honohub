@@ -31,6 +31,7 @@
     "@rafty/ui": "^1.7.0",
     "@rafty/corp": "^1.0.1",
     "@heroicons/react": "^2.1.5",
+    "@honohub/shared": "0.1.0",
     "fuse.js": "^7.0.0",
     "@duck-form/fields": "^0.1.0",
     "duck-form": "^0.1.4",

@@ -1,5 +1,11 @@
 import { BlockWrapper, quackFields } from "@duck-form/fields";
-import { Button, Skeleton, Toast } from "@rafty/ui";
+import {
+  DocumentSubmitType,
+  FormFooter,
+  FormMode,
+  SUBMIT_BUTTON_KEY,
+} from "@honohub/shared";
+import { Skeleton, Toast } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { Blueprint, DuckField, DuckForm } from "duck-form";
@@ -13,35 +19,23 @@ import { useServer } from "../providers";
 import type { CollectionType } from "../types";
 import { getSingularLabel } from "../utils";
 
-enum DocumentSubmitType {
-  SAVE_AND_ADD_ANOTHER = 1,
-  SAVE = 2,
-}
-
-enum FormType {
-  CREATE = 1,
-  EDIT = 2,
-}
-
-const SUBMIT_BUTTON_KEY = "_submit_btn";
-
 export type DocumentPage = Omit<CollectionType, "columns">;
 
 export function DocumentPage({ fields, slug, label }: DocumentPage) {
   const { id } = useParams();
   const { endpoint } = useServer();
-  const formType = id === "create" ? FormType.CREATE : FormType.EDIT;
+  const formType = id === "create" ? FormMode.CREATE : FormMode.UPDATE;
 
   const { data, isLoading } = useQuery({
     queryKey: ["collections", slug, id],
     queryFn: () =>
       endpoint.get(`collections/${slug}/${id}`).then((res) => res.data),
-    enabled: formType === FormType.EDIT,
+    enabled: formType === FormMode.UPDATE,
   });
 
   const methods = useForm();
 
-  const { handleSubmit, reset, setValue, setError } = methods;
+  const { handleSubmit, reset, setError } = methods;
 
   const names = useMemo(
     () => Object.fromEntries(fields.map(({ name }) => [name, true])),
@@ -62,7 +56,7 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
     <>
       <PageHeader>
         <PageTitle>
-          {formType === FormType.CREATE ? "Create" : "Edit"}{" "}
+          {formType === FormMode.CREATE ? "Create" : "Update"}{" "}
           {getSingularLabel(label)}
         </PageTitle>
       </PageHeader>
@@ -77,7 +71,7 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
               values[SUBMIT_BUTTON_KEY] = undefined;
 
               try {
-                if (formType === FormType.CREATE)
+                if (formType === FormMode.CREATE)
                   await endpoint.post(`/collections/${slug}`, values);
                 else await endpoint.put(`/collections/${slug}/${id}`, values);
 
@@ -152,30 +146,7 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
                 </Blueprint>
               )}
             </div>
-            <div className="flex justify-end gap-4 p-2 bg-secondary-100 dark:bg-secondary-900 rounded-md">
-              <Button
-                type="submit"
-                variant="ghost"
-                colorScheme="primary"
-                onClick={() =>
-                  setValue(
-                    SUBMIT_BUTTON_KEY,
-                    DocumentSubmitType.SAVE_AND_ADD_ANOTHER,
-                  )
-                }
-              >
-                Save and add another
-              </Button>
-              <Button
-                type="submit"
-                colorScheme="primary"
-                onClick={() =>
-                  setValue(SUBMIT_BUTTON_KEY, DocumentSubmitType.SAVE)
-                }
-              >
-                Submit
-              </Button>
-            </div>
+            <FormFooter mode={formType} onDelete={async () => undefined} />
           </form>
         </DuckForm>
       </FormProvider>

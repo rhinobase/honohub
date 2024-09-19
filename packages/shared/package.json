@@ -1,6 +1,21 @@
 {
   "name": "@honohub/shared",
-  "version": "0.0.1",
+  "description": "HonoHub shared components",
+  "version": "0.1.0",
+  "license": "MIT",
+  "keywords": ["hono", "components", "react"],
+  "homepage": "https://honohub.dev/",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhinobase/honohub.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/rhinobase/honohub/issues"
+  },
   "dependencies": {
     "@duck-form/fields": "0.1.0",
     "@heroicons/react": "^2.1.5",

@@ -1,4 +1,5 @@
 import { ArrowPathIcon, CodeBracketIcon } from "@heroicons/react/24/outline";
+import { rowSelectionColumn } from "@honohub/shared";
 import type { ColumnType } from "@rafty/corp";
 import {
   Button,
@@ -103,28 +104,7 @@ export function CollectionPage(props: CollectionPage) {
       ),
     }));
 
-    columns.unshift({
-      id: "_select",
-      header: ({ table }: any) => (
-        <Checkbox
-          checked={
-            table.getIsAllRowsSelected()
-              ? true
-              : table.getIsSomeRowsSelected()
-                ? "indeterminate"
-                : false
-          }
-          onCheckedChange={() => table.toggleAllRowsSelected()}
-        />
-      ),
-      cell: ({ row }: any) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={() => row.toggleSelected()}
-        />
-      ),
-      size: 30,
-    });
+    columns.unshift(rowSelectionColumn());
 
     columns.push({
       id: "action",

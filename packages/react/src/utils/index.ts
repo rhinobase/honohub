@@ -14,15 +14,20 @@ export function getPluralLabel(
 
 export function paramsSerializer(params: Record<string, unknown>) {
   return Object.entries(params)
-    .map(([key, value]) => {
-      if (!value) return undefined;
-      // if (key === "fields") return `fields=${value.join("&fields=")}`;
-      // if (key === "filters")
-      //   return Object.keys(value)
-      //     .map((_k) => `${_k}=${value[_k]}`)
-      //     .join("&");
-      return `${key}=${value}`;
-    })
-    .filter((item) => item)
+    .reduce<string[]>((prev, [key, value]) => {
+      if (value) {
+        if (Array.isArray(value))
+          prev.push(...value.map((val) => `${key}=${val}`));
+        else if (typeof value === "object")
+          prev.push(
+            ...Object.entries(value).map(
+              ([_key, _value]) => `${_key}=${_value}`,
+            ),
+          );
+        else prev.push(`${key}=${value}`);
+      }
+
+      return prev;
+    }, [])
     .join("&");
 }

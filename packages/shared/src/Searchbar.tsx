@@ -17,7 +17,7 @@ export function Searchbar({
   const defaultValue = searchParams.get(paramName) ?? undefined;
 
   const [value, setValue] = useState(defaultValue);
-  const search = useDebounce(value, 150);
+  const search = useDebounce(value?.trim(), 150);
 
   const { setQueryParams } = useQueryParams({
     onChange,
