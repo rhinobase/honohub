@@ -1,3 +1,4 @@
 export * from "./storage";
 export * from "./storage-actions";
-export * from "./strorage-preference";
+export * from "./storage-preference";
+export * from "./upload";
