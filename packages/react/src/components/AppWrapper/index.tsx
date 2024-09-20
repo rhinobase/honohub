@@ -2,23 +2,34 @@ import { Outlet } from "react-router-dom";
 import { DialogManagerProvider, DrawerProvider } from "../../providers";
 import { BaseWrapper } from "../BaseWrapper";
 import { ActionDialog } from "./ActionDialog";
+import { AppHeader } from "./AppHeader";
 import { SidebarDrawer } from "./Drawer";
-import { AppSidebar } from "./Sidebar";
 
-export type AppWrapper = Pick<AppSidebar, "options">;
+export type OptionType = {
+  path: string;
+  label: string;
+};
 
-export function AppWrapper({ options }: AppWrapper) {
+const OPTIONS: OptionType[] = [
+  {
+    path: "/collections",
+    label: "Collections",
+  },
+  {
+    path: "/plugins",
+    label: "Plugins",
+  },
+];
+
+export function AppWrapper() {
   return (
     <DialogManagerProvider>
       <DrawerProvider>
         <BaseWrapper>
-          <AppSidebar
-            options={options}
-            className="hidden md:flex border-r border-secondary-200 dark:border-secondary-800"
-          />
+          <AppHeader options={OPTIONS} />
           <Outlet />
           <ActionDialog />
-          <SidebarDrawer options={options} />
+          <SidebarDrawer options={OPTIONS} />
         </BaseWrapper>
       </DrawerProvider>
     </DialogManagerProvider>

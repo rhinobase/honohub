@@ -1,25 +1,22 @@
 import {
   AdjustmentsHorizontalIcon,
   ArchiveBoxIcon,
-  Bars3Icon,
   BoltIcon,
   BugAntIcon,
   LightBulbIcon,
   PuzzlePieceIcon,
   StarIcon,
 } from "@heroicons/react/24/outline";
-import { Button, classNames, eventHandler } from "@rafty/ui";
+import { classNames } from "@rafty/ui";
 import { Link, type LinkProps } from "react-router-dom";
 import urlJoin from "url-join";
 import { Logo } from "../components/Logo";
-import { useDrawer } from "../providers";
 
 export type HomePage = LinksGrid & Socials;
 
 export function HomePage({ stats, basePath }: HomePage) {
   return (
     <div className="flex h-full w-full justify-center items-center flex-col gap-3 md:gap-4 lg:gap-5 p-3 md:p-4 lg:p-5 overflow-y-auto">
-      <DrawerButton />
       <div className="space-y-1.5">
         <div className="flex items-center">
           <Logo className="size-10 lg:size-14" />
@@ -35,24 +32,6 @@ export function HomePage({ stats, basePath }: HomePage) {
       <LinksGrid stats={stats} />
       <Socials basePath={basePath} />
     </div>
-  );
-}
-
-function DrawerButton() {
-  const { setOpen } = useDrawer();
-
-  const handleDrawerOpen = eventHandler(() => setOpen(true));
-
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="md:hidden fixed top-3 left-3"
-      onClick={handleDrawerOpen}
-      onKeyDown={handleDrawerOpen}
-    >
-      <Bars3Icon className="size-[18px] stroke-[3]" />
-    </Button>
   );
 }
 

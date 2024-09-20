@@ -17,15 +17,6 @@ export const PageHeader = forwardRef<HTMLElement, PageHeader>(
         className={classNames("flex items-center gap-2", className)}
         ref={forwardedRef}
       >
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          onClick={handleDrawerOpen}
-          onKeyDown={handleDrawerOpen}
-        >
-          <Bars3Icon className="size-[18px] stroke-[3]" />
-        </Button>
         {children}
       </header>
     );
