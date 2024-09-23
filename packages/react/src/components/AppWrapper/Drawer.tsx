@@ -1,13 +1,13 @@
 import { Drawer, DrawerClose, DrawerContent, DrawerOverlay } from "@rafty/ui";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import type { OptionType } from ".";
 import { useDrawer } from "../../providers";
+import type { HeaderOptionType } from "../../types";
 import { HeaderItem } from "./AppHeader";
 import { Logo } from "./Logo";
 
 export type SidebarDrawer = {
-  options: OptionType[];
+  options: HeaderOptionType[];
 };
 
 export function SidebarDrawer({ options }: SidebarDrawer) {
@@ -24,18 +24,12 @@ export function SidebarDrawer({ options }: SidebarDrawer) {
       <DrawerOverlay className="z-[100]">
         <DrawerClose className="top-2 right-2" />
       </DrawerOverlay>
-      <DrawerContent className="w-max p-0 z-[100] dark:bg-secondary-900">
-        <div className="flex h-full relative flex-col flex-shrink-0 flex-grow-0 w-[250px] min-w-[250px] max-w-[250px]">
-          <header className="px-3 my-[7.5px]">
-            <div className="w-max">
-              <Logo />
-            </div>
-          </header>
-          <div className="mt-[15px] space-y-2 px-3 overflow-x-hidden overflow-y-auto h-full">
-            {options.map((item) => (
-              <HeaderItem key={item.label} {...item} />
-            ))}
-          </div>
+      <DrawerContent className="w-[250px] z-[100] dark:bg-secondary-900 flex flex-col p-3 gap-3">
+        <Logo />
+        <div className="space-y-1.5 overflow-x-hidden overflow-y-auto h-full">
+          {options.map((item) => (
+            <HeaderItem key={item.label} {...item} />
+          ))}
         </div>
       </DrawerContent>
     </Drawer>

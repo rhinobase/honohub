@@ -1,4 +1,3 @@
-import { Text } from "@rafty/ui";
 import { Link } from "react-router-dom";
 import type { CollectionType } from "../types";
 
@@ -14,9 +13,9 @@ export function CollectionCard(props: CollectionCard) {
         <h3 className="text-sm md:text-base lg:text-lg font-medium leading-tight md:leading-none lg:leading-none">
           {label}
         </h3>
-        <Text className="line-clamp-1 italic text-secondary-500 text-xs md:text-sm dark:text-secondary-400">
+        <p className="line-clamp-1 italic text-secondary-500 text-xs md:text-sm dark:text-secondary-400">
           ({props.slug})
-        </Text>
+        </p>
       </div>
     </Link>
   );

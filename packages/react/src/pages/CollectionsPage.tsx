@@ -1,4 +1,8 @@
+import { useLocation } from "react-router-dom";
 import { CollectionCard } from "../components/CollectionCard";
+import { CollectionsWrapper } from "../components/CollectionsWrapper";
+import { PageHeader, PageTitle } from "../components/Header";
+import { PageWrapper } from "../components/PageWrapper";
 import type { CollectionType } from "../types";
 
 export type CollectionsPage = {
@@ -6,14 +10,22 @@ export type CollectionsPage = {
 };
 
 export function CollectionsPage({ options }: CollectionsPage) {
-  return (
-    <div className="mx-auto max-w-6xl w-full flex flex-col gap-3 md:gap-4 lg:gap-5 px-3 py-3 md:px-4 md:py-4 lg:px-5 lg:py-5 xl:py-6">
-      <h2 className="text-2xl md:text-3xl font-semibold">Collections</h2>
-      <div className="grid grid-cols-1 gap-2 md:gap-4 lg:gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {options.map((collection, index) => (
-          <CollectionCard {...collection} key={`${index}-${"collection"}`} />
-        ))}
-      </div>
-    </div>
-  );
+  const location = useLocation();
+
+  console.log(location.pathname);
+
+  if (location.pathname === "/collections")
+    return (
+      <PageWrapper>
+        <PageHeader>
+          <PageTitle>Collections</PageTitle>
+        </PageHeader>
+        <div className="grid grid-cols-1 gap-3 md:gap-4 lg:gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {options.map((collection, index) => (
+            <CollectionCard {...collection} key={`${index}-${"collection"}`} />
+          ))}
+        </div>
+      </PageWrapper>
+    );
+  return <CollectionsWrapper options={options} />;
 }

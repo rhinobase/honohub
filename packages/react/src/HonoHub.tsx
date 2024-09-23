@@ -50,36 +50,6 @@ export function HonoHub({
 }: HonoHub) {
   const hasPlugins = plugins && Object.keys(plugins).length > 0;
 
-  // const appWrapperOptions = {
-  //   collections: [
-  //     {
-  //       icon: HeroIcon.ArchiveBoxIcon,
-  //       label: "Collections",
-  //       path:
-  //         collections.length > 0
-  //           ? `/collections/${collections[0].slug}`
-  //           : "/collections",
-  //     },
-  //   ],
-  //   ...(hasPlugins
-  //     ? {
-  //         plugins: Object.entries(plugins).map(([path, { label, icon }]) => ({
-  //           // @ts-expect-error
-  //           icon: icon ? HeroIcon[icon] : undefined,
-  //           label,
-  //           path,
-  //         })),
-  //       }
-  //     : {}),
-  //   general: [
-  //     {
-  //       icon: HeroIcon.Cog6ToothIcon,
-  //       label: "Settings",
-  //       path: "/settings",
-  //     },
-  //   ],
-  // };
-
   const router = createBrowserRouter(
     [
       {
@@ -94,10 +64,6 @@ export function HonoHub({
           {
             path: "/collections",
             element: <CollectionsPage options={collections} />,
-          },
-          {
-            path: "/collections",
-            element: <CollectionsWrapper options={collections} />,
             children: collections.flatMap((collection) => [
               {
                 path: collection.slug,

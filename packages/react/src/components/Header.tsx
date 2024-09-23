@@ -1,16 +1,10 @@
-import { Bars3Icon } from "@heroicons/react/24/outline";
-import { Button, classNames, eventHandler } from "@rafty/ui";
+import { classNames } from "@rafty/ui";
 import { type HTMLAttributes, forwardRef } from "react";
-import { useDrawer } from "../providers";
 
 export type PageHeader = HTMLAttributes<HTMLElement>;
 
 export const PageHeader = forwardRef<HTMLElement, PageHeader>(
   function PageHeader({ className, children, ...props }, forwardedRef) {
-    const { setOpen } = useDrawer();
-
-    const handleDrawerOpen = eventHandler(() => setOpen(true));
-
     return (
       <header
         {...props}
@@ -35,7 +29,7 @@ export const PageTitle = forwardRef<HTMLHeadingElement, PageTitle>(
       <Component
         {...props}
         className={classNames(
-          "text-2xl md:text-3xl font-bold dark:text-secondary-100 leading-tight",
+          "text-xl md:text-2xl lg:text-3xl font-bold text-secondary-700 dark:text-secondary-300 leading-tight",
           className,
         )}
         ref={forwardedRef}

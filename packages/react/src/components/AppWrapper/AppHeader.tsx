@@ -1,19 +1,13 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { Button, Text, classNames, eventHandler } from "@rafty/ui";
 import { NavLink } from "react-router-dom";
-import type { OptionType } from ".";
 import { useDrawer } from "../../providers";
+import type { HeaderOptionType } from "../../types";
 import { ProfileMenu } from "../ProfileMenu";
 import { Logo } from "./Logo";
 
-export type HeaderOptionType = {
-  label: string;
-  icon?: any;
-  path: string;
-};
-
 export type AppHeader = {
-  options: OptionType[];
+  options: HeaderOptionType[];
 };
 
 export function AppHeader({ options }: AppHeader) {
@@ -26,14 +20,14 @@ export function AppHeader({ options }: AppHeader) {
       <Button
         variant="ghost"
         size="icon"
-        className="md:hidden ml-auto"
+        className="md:hidden"
         onClick={handleDrawerOpen}
         onKeyDown={handleDrawerOpen}
       >
-        <Bars3Icon className="size-[18px] stroke-[3]" />
+        <Bars3Icon className="size-[18px] stroke-2" />
       </Button>
       <Logo />
-      <span className="text-secondary-200 dark:text-secondary-800">|</span>
+      <span className="h-[60%] w-px bg-secondary-200 dark:bg-secondary-800 md:block hidden" />
       <div className="items-center gap-2 hidden md:flex">
         {options.map((item, index) => (
           <HeaderItem key={`${index}-${item.label}`} {...item} />
