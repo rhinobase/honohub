@@ -3,16 +3,18 @@ import { SearchField, useQueryParams } from "@rafty/ui";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 
-export type Searchbar = Omit<useQueryParams, "searchParams"> & {
-  searchParams: URLSearchParams;
-  paramName?: string;
-};
+export type Searchbar = SearchField &
+  Omit<useQueryParams, "searchParams"> & {
+    searchParams: URLSearchParams;
+    paramName?: string;
+  };
 
 export function Searchbar({
   onChange,
   pathname,
   searchParams,
   paramName = "search",
+  ...props
 }: Searchbar) {
   const defaultValue = searchParams.get(paramName) ?? undefined;
 
@@ -31,5 +33,5 @@ export function Searchbar({
     else onChange(pathname);
   }, [search]);
 
-  return <SearchField value={value} onValueChange={setValue} />;
+  return <SearchField {...props} value={value} onValueChange={setValue} />;
 }
