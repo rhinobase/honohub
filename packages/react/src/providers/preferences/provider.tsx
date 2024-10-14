@@ -1,9 +1,7 @@
-import { useBreakpointValue } from "@rafty/ui";
 import {
   type PropsWithChildren,
   createContext,
   useContext,
-  useEffect,
   useRef,
 } from "react";
 import { useStore } from "zustand";
@@ -18,31 +16,9 @@ export function PreferencesProvider({ children }: PropsWithChildren) {
 
   return (
     <PreferencesContext.Provider value={value}>
-      <AutoSidebarLayouter />
       {children}
     </PreferencesContext.Provider>
   );
-}
-
-function AutoSidebarLayouter() {
-  const { setShrink } = usePreferences((state) => ({
-    setShrink: state.setShrink,
-  }));
-
-  const breakPointValue =
-    useBreakpointValue({
-      sm: false,
-      md: true,
-      lg: true,
-      xl: false,
-    }) ?? false;
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    setShrink(breakPointValue);
-  }, [breakPointValue]);
-
-  return <></>;
 }
 
 export function usePreferences<T>(selector: (state: PreferencesStore) => T): T {

@@ -1,4 +1,3 @@
-import * as HeroIcon from "@heroicons/react/24/outline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import {
@@ -12,9 +11,11 @@ import { PluginWrapper } from "./components/PluginWrapper";
 import "./main.css";
 import {
   CollectionPage,
+  CollectionsPage,
   DocumentPage,
   ErrorPage,
   HomePage,
+  PluginsPage,
   SettingsPage,
 } from "./pages";
 import {
@@ -49,41 +50,11 @@ export function HonoHub({
 }: HonoHub) {
   const hasPlugins = plugins && Object.keys(plugins).length > 0;
 
-  const appWrapperOptions = {
-    collections: [
-      {
-        icon: HeroIcon.ArchiveBoxIcon,
-        label: "Collections",
-        path:
-          collections.length > 0
-            ? `/collections/${collections[0].slug}`
-            : "/collections",
-      },
-    ],
-    ...(hasPlugins
-      ? {
-          plugins: Object.entries(plugins).map(([path, { label, icon }]) => ({
-            // @ts-expect-error
-            icon: icon ? HeroIcon[icon] : undefined,
-            label,
-            path,
-          })),
-        }
-      : {}),
-    general: [
-      {
-        icon: HeroIcon.Cog6ToothIcon,
-        label: "Settings",
-        path: "/settings",
-      },
-    ],
-  };
-
   const router = createBrowserRouter(
     [
       {
         path: "/",
-        element: <AppWrapper options={appWrapperOptions} />,
+        element: <AppWrapper />,
         errorElement: <ErrorPage />,
         children: [
           {
@@ -92,7 +63,7 @@ export function HonoHub({
           },
           {
             path: "/collections",
-            element: <CollectionsWrapper options={collections} />,
+            element: <CollectionsPage options={collections} />,
             children: collections.flatMap((collection) => [
               {
                 path: collection.slug,
@@ -105,12 +76,16 @@ export function HonoHub({
             ]),
           },
           {
+            path: "/plugins",
+            element: <PluginsPage options={plugins} />,
+          },
+          {
             path: "/settings",
             element: <SettingsPage />,
           },
           ...(hasPlugins
             ? Object.entries(plugins).map<RouteObject>(([path, plugin]) => ({
-                path,
+                path: `/plugins${path}`,
                 lazy: async () => {
                   const Panel = (await plugin.import) as any;
 
