@@ -1,3 +1,10 @@
+## 0.3.0 (2024-10-16)
+
+
+### 🩹 Fixes
+
+- **shared:** updated searchbar types
+
 ## 0.2.0 (2024-10-16)
 
 
