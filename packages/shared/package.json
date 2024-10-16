@@ -1,7 +1,7 @@
 {
   "name": "@honohub/shared",
   "description": "HonoHub shared components",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "keywords": ["hono", "components", "react"],
   "homepage": "https://honohub.dev/",
