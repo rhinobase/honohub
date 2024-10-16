@@ -55,7 +55,7 @@ export function Searchbar(props: Searchbar) {
 
   return (
     <SearchField
-      {...props}
+      {...componentProps}
       value={value ?? undefined}
       onValueChange={setValue}
     />
