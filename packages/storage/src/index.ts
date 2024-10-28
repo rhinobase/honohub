@@ -10,5 +10,5 @@ export {
   useUploadContext,
 } from "./providers";
 export { Storage } from "./Storage";
-export { StorageDataType } from "./types";
+export type { StorageDataType } from "./types";
 export { formatBytes, getStorageItemIcon } from "./utils";

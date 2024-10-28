@@ -1,6 +1,5 @@
 import { ExclamationCircleIcon, InboxIcon } from "@heroicons/react/24/outline";
-import { LoadingComponent } from "@honohub/shared";
-import { classNames } from "@rafty/ui";
+import { classNames, Spinner } from "@rafty/ui";
 import {
   type InfiniteData,
   useIsFetching,
@@ -71,7 +70,7 @@ function StorageRender({ lastElementRef }: StorageRender) {
           isListView
             ? "mx-auto max-w-4xl space-y-2 md:space-y-3"
             : "grid grid-cols-1 gap-3 md:gap-4 lg:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6",
-          "w-full",
+          "w-full"
         )}
       >
         <StorageActionsProvider>
@@ -94,18 +93,28 @@ function StorageRender({ lastElementRef }: StorageRender) {
             "flex h-full w-full items-center justify-center gap-1.5 select-none",
             isError
               ? "text-red-500 dark:text-red-300"
-              : "text-secondary-600 dark:text-secondary-400",
+              : "text-secondary-600 dark:text-secondary-400"
           )}
         >
           {Icon && <Icon className="size-5 stroke-2" />}
           <p className="text-sm">No data found</p>
         </div>
       )}
-      {isLoading && <LoadingComponent>Loading content...</LoadingComponent>}
+      {isLoading && (
+        <div className="size-full flex items-center justify-center gap-1.5">
+          <Spinner />
+          <p className="text-secondary-600 dark:text-secondary-400 text-sm">
+            Loading content...
+          </p>
+        </div>
+      )}
       {isFetching && !isLoading && (
-        <LoadingComponent className="h-max py-10">
-          Loading more data...
-        </LoadingComponent>
+        <div className="w-full flex items-center justify-center gap-1.5 py-10">
+          <Spinner />
+          <p className="text-secondary-600 dark:text-secondary-400 text-sm">
+            Loading more data...
+          </p>
+        </div>
       )}
     </>
   );

@@ -34,7 +34,6 @@ export type UploadFileItem = {
 
 export function UploadFileItem({ id }: UploadFileItem) {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
 
   const { queryKey, usage } = useStorage();
 
@@ -42,15 +41,7 @@ export function UploadFileItem({ id }: UploadFileItem) {
   const file = uploadedFiles[id].file;
 
   function onSuccess(data: StorageDataType) {
-    const content: StorageDataType = {
-      ...data,
-      created_by: {
-        _type: "users",
-        _ref: user?.uid ?? "",
-        email: user?.email ?? "",
-        displayName: user?.displayName ?? "",
-      },
-    };
+    const content: StorageDataType = data;
 
     // Adding the asset to the cache
     queryClient.setQueryData<
