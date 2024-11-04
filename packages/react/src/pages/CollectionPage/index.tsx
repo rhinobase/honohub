@@ -1,14 +1,7 @@
 import { ArrowPathIcon, CodeBracketIcon } from "@heroicons/react/24/outline";
 import { rowSelectionColumn } from "@honohub/shared";
 import type { ColumnType } from "@rafty/corp";
-import {
-  Button,
-  Checkbox,
-  Toast,
-  classNames,
-  eventHandler,
-  useBoolean,
-} from "@rafty/ui";
+import { Button, Toast, classNames, eventHandler, useBoolean } from "@rafty/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DuckField } from "duck-form";
 import { useMemo } from "react";
@@ -16,11 +9,13 @@ import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
 import { APIReferenceDrawer } from "../../components/APIReference";
 import { PageHeader, PageTitle } from "../../components/Header";
+import { FiltersPanelToggleButton } from "../../components/filters";
 import { useServer } from "../../providers";
 import type { CollectionType } from "../../types";
 import { getPluralLabel } from "../../utils";
 import { queryValidation } from "../../validations";
 import { ActionMenu } from "./ActionMenu";
+import { CollectionFilter } from "./CollectionFilter";
 import { CollectionDataTable } from "./DataTable";
 
 export type CollectionPage = Omit<CollectionType, "fields">;
@@ -29,6 +24,7 @@ export function CollectionPage(props: CollectionPage) {
   const { endpoint } = useServer();
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
+  const [isFilterOpen, setFilterOpen] = useBoolean();
 
   const [isApiRefDrawerOpen, setApiRefDrawerOpen] = useBoolean();
   const [isFetching, setFetching] = useBoolean();
@@ -145,6 +141,10 @@ export function CollectionPage(props: CollectionPage) {
         >
           API
         </Button>
+        <FiltersPanelToggleButton
+          isActive={isFilterOpen}
+          onInteract={setFilterOpen}
+        />
         <Button
           size="icon"
           variant="ghost"
@@ -161,11 +161,16 @@ export function CollectionPage(props: CollectionPage) {
           />
         </Button>
       </PageHeader>
-      <CollectionDataTable
-        columns={columns}
-        slug={props.slug}
-        actions={props.actions}
-      />
+      <div className="flex h-full gap-3 md:gap-4 lg:gap-5 xl:gap-6 overflow-x-auto overflow-y-hidden">
+        <div className="w-full flex h-full flex-col gap-3 md:gap-4 lg:gap-5 xl:gap-6">
+          <CollectionDataTable
+            columns={columns}
+            slug={props.slug}
+            actions={props.actions}
+          />
+        </div>
+        {isFilterOpen && <CollectionFilter />}
+      </div>
       <APIReferenceDrawer
         open={isApiRefDrawerOpen}
         onOpenChange={setApiRefDrawerOpen}
