@@ -15,7 +15,6 @@ import {
 import {
   StorageActionsProvider,
   StorageLayout,
-  StoragePreferenceProvider,
   useStorage,
   useStoragePreference,
 } from "./providers";
