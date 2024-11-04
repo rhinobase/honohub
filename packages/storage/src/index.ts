@@ -7,6 +7,7 @@ export {
   useStorage,
   useStorageActions,
   useUploadContext,
+  StoragePreferenceProvider,
   useStoragePreference,
 } from "./providers";
 export { Storage } from "./Storage";

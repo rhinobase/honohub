@@ -21,21 +21,11 @@ import {
 } from "./providers";
 import type { StorageDataType } from "./types";
 
-export type Storage = StorageRender;
-
-export function Storage(props: Storage) {
-  return (
-    <StoragePreferenceProvider>
-      <StorageRender {...props} />
-    </StoragePreferenceProvider>
-  );
-}
-
-type StorageRender = {
+export type Storage = {
   lastElementRef: (node: HTMLDivElement) => void;
 };
 
-function StorageRender({ lastElementRef }: StorageRender) {
+export function Storage(props: Storage) {
   const { queryKey } = useStorage();
   const layout = useStoragePreference((state) => state.value);
 
@@ -77,7 +67,9 @@ function StorageRender({ lastElementRef }: StorageRender) {
           {files.map((file, index) => (
             <StorageItem
               key={file._id}
-              ref={files.length === index + 1 ? lastElementRef : undefined}
+              ref={
+                files.length === index + 1 ? props.lastElementRef : undefined
+              }
               {...file}
             />
           ))}
