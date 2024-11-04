@@ -34,6 +34,8 @@ export const ListCard = forwardRef<HTMLDivElement, ListCard>(function ListCard(
             })}
             alt={props.public_id}
             className="size-16 object-cover transition-all ease-in-out hover:opacity-80"
+            height={64}
+            width={64}
           />
         )}
         {props.resource_type === "video" && (

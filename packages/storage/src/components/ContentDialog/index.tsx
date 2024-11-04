@@ -107,14 +107,7 @@ export function ContentDialog() {
             </DialogClose>
           </div>
           <div className="w-full h-full flex overflow-y-auto">
-            <div
-              className={classNames(
-                content.format === "pdf" ? "w-max" : "w-full",
-                "max-w-5xl mx-auto mb-3",
-              )}
-            >
-              {findDisplay(content)}
-            </div>
+            <div className="max-w-5xl mx-auto mb-3">{findDisplay(content)}</div>
           </div>
         </div>
       </DialogContent>

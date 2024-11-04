@@ -60,6 +60,8 @@ export function InfoDrawer() {
               })}
               alt={content.public_id}
               className="h-[260px] w-full object-cover"
+              height={260}
+              width={600}
             />
           )}
           {content.resource_type === "video" && (

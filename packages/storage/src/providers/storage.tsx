@@ -32,11 +32,13 @@ type StorageFunctions = {
     setError?: UseFormSetError<T>;
   }) => void;
   usage: number;
-  onUsageChange: (usage: number) => void;
+  onUsageChange?: (usage: number) => void;
   imageRender?: (props: {
     src: string;
     alt: string;
     className?: string;
+    height?: number;
+    width?: number;
   }) => ReactNode;
 };
 
@@ -66,7 +68,7 @@ function useStorageManager({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    onUsageChange(usage);
+    onUsageChange?.(usage);
   }, [usage]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

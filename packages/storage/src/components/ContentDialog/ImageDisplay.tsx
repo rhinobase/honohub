@@ -14,7 +14,9 @@ export function ImageDisplay(props: StorageDataType) {
         filters,
       })}
       alt={props.public_id}
-      className="h-full object-contain"
+      className="size-full object-contain"
+      width={1000}
+      height={1000}
     />
   );
 }

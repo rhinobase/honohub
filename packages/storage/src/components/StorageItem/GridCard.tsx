@@ -41,6 +41,8 @@ export const GridCard = forwardRef<HTMLDivElement, GridCard>(function GridCard(
             })}
             alt={props.public_id}
             className="h-[258px] w-full object-cover transition-all ease-in-out hover:opacity-80"
+            height={260}
+            width={260}
           />
         )}
         {props.resource_type === "video" && (
