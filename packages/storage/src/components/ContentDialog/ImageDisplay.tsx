@@ -2,13 +2,13 @@ import { useStorage } from "../../providers";
 import type { StorageDataType } from "../../types";
 
 export function ImageDisplay(props: StorageDataType) {
-  const { generateURL } = useStorage();
+  const { generateURL, imageRender: Img } = useStorage();
 
   const filters: Record<string, number> = {};
   if (props.width && props.width > 1080) filters.width = 1080;
 
   return (
-    <img
+    <Img
       src={generateURL({
         content: props,
         filters,

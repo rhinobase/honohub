@@ -2,6 +2,7 @@
 import type { AxiosRequestConfig } from "axios";
 import {
   type PropsWithChildren,
+  type ReactNode,
   createContext,
   useContext,
   useEffect,
@@ -32,6 +33,11 @@ type StorageFunctions = {
   }) => void;
   usage: number;
   onUsageChange: (usage: number) => void;
+  imageRender?: (props: {
+    src: string;
+    alt: string;
+    className?: string;
+  }) => ReactNode;
 };
 
 const StorageContext = createContext<ReturnType<
@@ -52,6 +58,8 @@ export function StorageProvider({
 function useStorageManager({
   usage: _usage,
   onUsageChange,
+  queryKey,
+  imageRender = (props) => <img {...props} alt={props.alt} />,
   ...funcs
 }: StorageFunctions) {
   const [usage, setUsage] = useState<number>(_usage);
@@ -64,7 +72,12 @@ function useStorageManager({
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const storageFuncs = useMemo(() => funcs, []);
 
-  return { usage: { value: usage, set: setUsage }, ...storageFuncs };
+  return {
+    usage: { value: usage, set: setUsage },
+    queryKey,
+    imageRender,
+    ...storageFuncs,
+  };
 }
 
 export const useStorage = () => {

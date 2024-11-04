@@ -20,7 +20,7 @@ export const GridCard = forwardRef<HTMLDivElement, GridCard>(function GridCard(
   { name, handleDialogOpen, ...props },
   forwardedRef,
 ) {
-  const { generateURL } = useStorage();
+  const { generateURL, imageRender: Img } = useStorage();
   const Icon = getStorageItemIcon(props);
 
   return (
@@ -34,7 +34,7 @@ export const GridCard = forwardRef<HTMLDivElement, GridCard>(function GridCard(
         onKeyDown={handleDialogOpen}
       >
         {props.resource_type !== "raw" && (
-          <img
+          <Img
             src={generateURL({
               content: props,
               filters: { crop: "thumb", height: 260, quality: 75, width: 260 },
@@ -58,7 +58,6 @@ export const GridCard = forwardRef<HTMLDivElement, GridCard>(function GridCard(
           </TooltipTrigger>
           <TooltipContent className="max-w-none">{name}</TooltipContent>
         </Tooltip>
-        <div className="flex-1" />
         <StorageContextMenu {...props} />
       </div>
     </div>

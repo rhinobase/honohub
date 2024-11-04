@@ -14,7 +14,7 @@ export const ListCard = forwardRef<HTMLDivElement, ListCard>(function ListCard(
   { name, handleDialogOpen, ...props },
   forwardedRef,
 ) {
-  const { generateURL } = useStorage();
+  const { generateURL, imageRender: Img } = useStorage();
 
   return (
     <div
@@ -27,13 +27,13 @@ export const ListCard = forwardRef<HTMLDivElement, ListCard>(function ListCard(
         onKeyDown={handleDialogOpen}
       >
         {props.resource_type !== "raw" && (
-          <img
+          <Img
             src={generateURL({
               content: props,
               filters: { crop: "thumb", height: 64, quality: 75, width: 64 },
             })}
             alt={props.public_id}
-            className="h-16 w-16 object-cover transition-all ease-in-out hover:opacity-80"
+            className="size-16 object-cover transition-all ease-in-out hover:opacity-80"
           />
         )}
         {props.resource_type === "video" && (
@@ -44,8 +44,7 @@ export const ListCard = forwardRef<HTMLDivElement, ListCard>(function ListCard(
         )}
       </div>
       <div className="flex w-full items-center gap-2 px-3 py-2">
-        <p className="truncate text-sm">{name}</p>
-        <div className="flex-1" />
+        <p className="w-full truncate text-sm">{name}</p>
         <StorageContextMenu {...props} />
       </div>
     </div>

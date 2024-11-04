@@ -7,7 +7,6 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-  classNames,
 } from "@rafty/ui";
 import { useContentProps } from "../../hooks";
 import { useStorage, useStorageActions } from "../../providers";
@@ -15,7 +14,7 @@ import { getStorageItemIcon } from "../../utils";
 import { PropertiesTable } from "./PropertiesTable";
 
 export function InfoDrawer() {
-  const { generateURL } = useStorage();
+  const { generateURL, imageRender: Img } = useStorage();
   const { info } = useStorageActions();
   const { findContent } = useContentProps();
 
@@ -49,7 +48,7 @@ export function InfoDrawer() {
         </div>
         <div className="relative mb-5 h-[260px] overflow-hidden rounded-lg bg-secondary-100 dark:bg-secondary-800">
           {content.resource_type !== "raw" && (
-            <img
+            <Img
               src={generateURL({
                 content,
                 filters: {
