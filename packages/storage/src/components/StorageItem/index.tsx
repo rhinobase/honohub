@@ -13,7 +13,7 @@ export type StorageItem = StorageDataType;
 
 export const StorageItem = forwardRef<HTMLDivElement, StorageItem>(
   function StorageItem(props, forwardedRef) {
-    const { value } = useStoragePreference();
+    const value = useStoragePreference((state) => state.value);
     const { view } = useStorageActions();
 
     const handleDialogOpen = eventHandler(() => {

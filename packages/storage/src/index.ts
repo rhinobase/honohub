@@ -6,8 +6,8 @@ export {
   UploadProvider,
   useStorage,
   useStorageActions,
-  useStoragePreference,
   useUploadContext,
+  useStoragePreference,
 } from "./providers";
 export { Storage } from "./Storage";
 export type { StorageDataType } from "./types";

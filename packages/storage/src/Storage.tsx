@@ -1,5 +1,5 @@
 import { ExclamationCircleIcon, InboxIcon } from "@heroicons/react/24/outline";
-import { classNames, Spinner } from "@rafty/ui";
+import { Spinner, classNames } from "@rafty/ui";
 import {
   type InfiniteData,
   useIsFetching,
@@ -37,7 +37,7 @@ type StorageRender = {
 
 function StorageRender({ lastElementRef }: StorageRender) {
   const { queryKey } = useStorage();
-  const { value: layout } = useStoragePreference();
+  const layout = useStoragePreference((state) => state.value);
 
   const queryClient = useQueryClient();
 
@@ -70,7 +70,7 @@ function StorageRender({ lastElementRef }: StorageRender) {
           isListView
             ? "mx-auto max-w-4xl space-y-2 md:space-y-3"
             : "grid grid-cols-1 gap-3 md:gap-4 lg:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6",
-          "w-full"
+          "w-full",
         )}
       >
         <StorageActionsProvider>
@@ -93,7 +93,7 @@ function StorageRender({ lastElementRef }: StorageRender) {
             "flex h-full w-full items-center justify-center gap-1.5 select-none",
             isError
               ? "text-red-500 dark:text-red-300"
-              : "text-secondary-600 dark:text-secondary-400"
+              : "text-secondary-600 dark:text-secondary-400",
           )}
         >
           {Icon && <Icon className="size-5 stroke-2" />}
