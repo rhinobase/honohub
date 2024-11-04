@@ -53,12 +53,13 @@ export function Storage(props: Storage) {
   let Icon: typeof InboxIcon | undefined;
   if (isError) Icon = ExclamationCircleIcon;
   else if (isEmpty) Icon = InboxIcon;
+
   return (
     <>
       <div
         className={classNames(
           isListView
-            ? "mx-auto max-w-4xl space-y-2 md:space-y-3"
+            ? "mx-auto max-w-4xl flex flex-col gap-2 md:gap-3"
             : "grid grid-cols-1 gap-3 md:gap-4 lg:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6",
           "w-full",
         )}
