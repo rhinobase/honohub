@@ -1,6 +1,11 @@
-import { Button, eventHandler, useQueryParams } from "@rafty/ui";
+import { Button, eventHandler } from "@rafty/ui";
 import { Blueprint, DuckField, DuckForm } from "duck-form";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  parseAsArrayOf,
+  parseAsBoolean,
+  parseAsString,
+  useQueryStates,
+} from "nuqs";
 import { FILTER_COMPONENTS, FiltersPanel } from "../../components/filters";
 
 const FILTERS = [
@@ -22,36 +27,17 @@ const FILTERS = [
 ];
 
 export function CollectionFilter() {
-  const { pathname } = useLocation();
-  const navigation = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  const { setQueryParams } = useQueryParams({
-    onChange: navigation,
-    pathname,
-    searchParams: searchParams.toString(),
+  const [query, setQuery] = useQueryStates({
+    status: parseAsBoolean,
+    name: parseAsArrayOf(parseAsString),
   });
 
   const handleClearAllFilters = eventHandler(() =>
-    setQueryParams({
-      status: undefined,
-      name: undefined,
+    setQuery({
+      status: null,
+      name: null,
     }),
   );
-
-  const updateFilters = (type: string, id: string, arr?: string[]) => {
-    if (id)
-      if (arr) {
-        const index = arr.findIndex((item) => item === id);
-
-        if (index >= 0) arr.splice(index, 1);
-        else arr.push(id);
-
-        if (arr.length > 0) setQueryParams({ [type]: arr });
-        else setQueryParams({ [type]: undefined });
-      } else setQueryParams({ [type]: id });
-    else setQueryParams({ [type]: undefined });
-  };
 
   return (
     <DuckForm
@@ -60,7 +46,7 @@ export function CollectionFilter() {
     >
       <FiltersPanel
         clearAllButton={
-          searchParams.size > 0 && (
+          (query.name || query.status) && (
             <Button
               variant="ghost"
               size="sm"
@@ -74,26 +60,9 @@ export function CollectionFilter() {
         }
       >
         <Blueprint>
-          {Object.values(FILTERS).map((items) => {
-            const isBoolean = items.type === "boolean";
-
-            const arr = !isBoolean
-              ? searchParams.get(items.name)?.split(",")
-              : undefined;
-
-            return (
-              <DuckField
-                key={items.name}
-                {...items}
-                filter={
-                  isBoolean
-                    ? searchParams.get(items.name)
-                    : searchParams.get(items.name)?.split(",")
-                }
-                onChange={(val: string) => updateFilters(items.name, val, arr)}
-              />
-            );
-          })}
+          {FILTERS.map((items) => (
+            <DuckField key={items.name} {...items} />
+          ))}
         </Blueprint>
       </FiltersPanel>
     </DuckForm>

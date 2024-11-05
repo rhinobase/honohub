@@ -10,6 +10,7 @@ import {
   eventHandler,
 } from "@rafty/ui";
 import { useField } from "duck-form";
+import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 
 export type SelectFilter = {
   name: string;
@@ -18,13 +19,15 @@ export type SelectFilter = {
     label: string;
     value: string;
   }[];
-  filter?: string[];
-  onChange: (val?: string) => void;
 };
 
 export function SelectFilter() {
   const props = useField<SelectFilter>();
-  const handleClearFilter = eventHandler(() => props.onChange());
+  const [query, setQuery] = useQueryState(
+    props.name,
+    parseAsArrayOf(parseAsString),
+  );
+  const handleClearFilter = eventHandler(() => setQuery(null));
 
   return (
     <AccordionItem value={props.name} className="flex flex-col">
@@ -34,7 +37,7 @@ export function SelectFilter() {
       >
         <ChevronDownIcon className="stroke-secondary-600 group-data-[state=open]:stroke-black dark:stroke-secondary-400 dark:group-data-[state=open]:stroke-white shrink-0 -rotate-90 stroke-[2.5] transition-transform duration-200 group-data-[state=open]:rotate-0 size-3.5" />
         {props.label}
-        {props.filter && props.filter.length > 0 && (
+        {query && query.length > 0 && (
           <>
             <div className="flex-1" />
             <div
@@ -51,7 +54,18 @@ export function SelectFilter() {
         <div className="w-full max-h-[250px] p-1 overflow-y-auto">
           {props.options.map((item) => {
             const handleInteract = eventHandler(() =>
-              props.onChange(item.value),
+              setQuery((values) => {
+                const tmp = values ? [...values] : [];
+
+                const index = tmp.findIndex((value) => value === item.value);
+
+                if (index > -1) tmp.splice(index, 1);
+                else tmp.push(item.value);
+
+                if (tmp.length === 0) return null;
+
+                return tmp;
+              }),
             );
 
             return (
@@ -62,7 +76,7 @@ export function SelectFilter() {
                 onKeyDown={handleInteract}
               >
                 <p className="text-xs">{item.label}</p>
-                {props.filter?.includes(item.value) && (
+                {query?.includes(item.value) && (
                   <CheckIcon className="size-3.5 stroke-2 stroke-primary-500 dark:stroke-primary-300" />
                 )}
               </div>

@@ -12,6 +12,7 @@ import {
   eventHandler,
 } from "@rafty/ui";
 import { useField } from "duck-form";
+import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import type { ReferenceType } from "../../types";
 
 export type ReferenceFilter = {
@@ -23,15 +24,17 @@ export type ReferenceFilter = {
   data: ReferenceType[] | undefined;
   isLoading: boolean;
   isFetching: boolean;
-  filter?: string[];
-  onChange: (id?: string) => void;
   onSearchChange: (search?: string) => void;
   lastElementRef: (node: HTMLDivElement) => void;
 };
 
 export function ReferenceFilter() {
   const props = useField<ReferenceFilter>();
-  const handleClearFilter = eventHandler(() => props.onChange(undefined));
+  const [query, setQuery] = useQueryState(
+    props.name,
+    parseAsArrayOf(parseAsString),
+  );
+  const handleClearFilter = eventHandler(() => setQuery(null));
 
   return (
     <AccordionItem value={props.name} className="flex flex-col">
@@ -41,7 +44,7 @@ export function ReferenceFilter() {
       >
         <ChevronDownIcon className="stroke-secondary-600 group-data-[state=open]:stroke-black dark:stroke-secondary-400 dark:group-data-[state=open]:stroke-white shrink-0 -rotate-90 stroke-[2.5] transition-transform duration-200 group-data-[state=open]:rotate-0 size-3.5" />
         {props.label.plural}
-        {props.filter && props.filter.length > 0 && (
+        {query && query.length > 0 && (
           <>
             <div className="flex-1" />
             <div
@@ -68,7 +71,20 @@ export function ReferenceFilter() {
               <div className="w-full max-h-[250px] overflow-y-auto">
                 {props.data.map((item) => {
                   const handleInteract = eventHandler(() =>
-                    props.onChange(item._ref),
+                    setQuery((values) => {
+                      const tmp = values ? [...values] : [];
+
+                      const index = tmp.findIndex(
+                        (value) => value === item._ref,
+                      );
+
+                      if (index > -1) tmp.splice(index, 1);
+                      else tmp.push(item._ref);
+
+                      if (tmp.length === 0) return null;
+
+                      return tmp;
+                    }),
                   );
 
                   return (
@@ -80,7 +96,7 @@ export function ReferenceFilter() {
                       ref={props.lastElementRef}
                     >
                       <p className="text-xs">{item.title}</p>
-                      {props.filter?.includes(item._ref) && (
+                      {query?.includes(item._ref) && (
                         <CheckIcon className="size-3.5 stroke-2 stroke-primary-500 dark:stroke-primary-300" />
                       )}
                     </div>

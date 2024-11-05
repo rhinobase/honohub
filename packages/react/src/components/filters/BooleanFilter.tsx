@@ -8,17 +8,18 @@ import {
   eventHandler,
 } from "@rafty/ui";
 import { useField } from "duck-form";
+import { parseAsBoolean, useQueryState } from "nuqs";
 
 export type BooleanFilter = {
   name: string;
   label: string;
-  filter?: string;
-  onChange: (val?: string) => void;
 };
 
 export function BooleanFilter() {
   const props = useField<BooleanFilter>();
-  const handleClearFilter = eventHandler(() => props.onChange(undefined));
+  const [query, setQuery] = useQueryState(props.name, parseAsBoolean);
+
+  const handleClearFilter = eventHandler(() => setQuery(null));
 
   return (
     <AccordionItem value={props.name} className="flex flex-col">
@@ -28,7 +29,7 @@ export function BooleanFilter() {
       >
         <ChevronDownIcon className="stroke-secondary-600 group-data-[state=open]:stroke-black dark:stroke-secondary-400 dark:group-data-[state=open]:stroke-white shrink-0 -rotate-90 stroke-[2.5] transition-transform duration-200 group-data-[state=open]:rotate-0 size-3.5" />
         {props.label}
-        {props.filter && (
+        {query && (
           <>
             <div className="flex-1" />
             <div
@@ -44,13 +45,13 @@ export function BooleanFilter() {
       <AccordionContent className="h-full px-0">
         <div className="h-full px-2 py-1.5">
           <RadioGroup
-            value={props.filter}
-            onValueChange={(val) => props.onChange(val)}
+            value={query != null ? String(Number(query)) : undefined}
+            onValueChange={(val) => setQuery(Boolean(Number(val)))}
           >
-            <RadioGroupItem id={`${props.name}.0`} value="true">
+            <RadioGroupItem id={`${props.name}.0`} value="1">
               True
             </RadioGroupItem>
-            <RadioGroupItem id={`${props.name}.1`} value="false">
+            <RadioGroupItem id={`${props.name}.1`} value="0">
               False
             </RadioGroupItem>
           </RadioGroup>

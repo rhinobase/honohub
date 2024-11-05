@@ -4,17 +4,12 @@ import { type ColumnType, DataTable as SharedDatatable } from "@rafty/corp";
 import { Button, Text } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
 import { Blueprint, DuckForm } from "duck-form";
+import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
 import { useState } from "react";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { COLUMN_HEADER_COMPONENTS, FibrCellWrapper } from "../../columns";
 import { useServer } from "../../providers";
 import type { CollectionType } from "../../types";
-import { queryValidation } from "../../validations";
 import { ActionSelect } from "./ActionSelect";
 
 export type CollectionDataTable<T> = {
@@ -26,27 +21,25 @@ export function CollectionDataTable<T = unknown>({
   slug,
   actions,
 }: CollectionDataTable<T>) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [queryParams, setQueryParams] = useQueryStates({
+    limit: parseAsInteger.withDefault(10),
+    offset: parseAsInteger.withDefault(0),
+    search: parseAsString,
+  });
   const { endpoint } = useServer();
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
 
-  const validatedParams = queryValidation.parse(
-    Object.fromEntries(searchParams.entries()),
-  );
-  const pageIndex = validatedParams.offset / validatedParams.limit;
+  const pageIndex = queryParams.offset / queryParams.limit;
 
-  const {
-    data = { results: [], count: 0 },
-    isFetching,
-    isLoading,
-  } = useQuery<{ results: T[]; count: number }>({
-    queryKey: ["collections", slug, validatedParams],
+  const { data = { results: [], count: 0 }, isLoading } = useQuery<{
+    results: T[];
+    count: number;
+  }>({
+    queryKey: ["collections", slug, queryParams],
     queryFn: () =>
       endpoint
         .get(`/collections/${slug}`, {
-          params: validatedParams,
+          params: queryParams,
         })
         .then((res) => res.data),
   });
@@ -74,11 +67,7 @@ export function CollectionDataTable<T = unknown>({
         </div>
       ) : (
         <div className="flex items-center gap-2">
-          <Searchbar
-            onChange={navigate}
-            pathname={pathname}
-            searchParams={searchParams}
-          />
+          <Searchbar />
           <Link to={`/collections/${slug}/create`}>
             <Button
               colorScheme="primary"
@@ -98,7 +87,6 @@ export function CollectionDataTable<T = unknown>({
           <SharedDatatable
             data={data.results}
             columns={columns}
-            isFetching={isFetching}
             isLoading={isLoading}
             enableRowSelection
             rowsSelected={rowsSelected}
@@ -108,12 +96,12 @@ export function CollectionDataTable<T = unknown>({
       </DuckForm>
       <Pagination
         currentPage={pageIndex + 1}
-        pageLimit={validatedParams.limit}
-        pages={Math.ceil(data.count / validatedParams.limit)}
+        pageLimit={queryParams.limit}
+        pages={Math.ceil(data.count / queryParams.limit)}
         onChange={(page, limit) => {
-          setSearchParams({
-            limit: String(limit),
-            offset: String((page - 1) * limit),
+          setQueryParams({
+            limit: limit,
+            offset: (page - 1) * limit,
           });
         }}
         count={data.count}
