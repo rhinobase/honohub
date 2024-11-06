@@ -1,11 +1,6 @@
 import { Button, eventHandler } from "@rafty/ui";
 import { Blueprint, DuckField, DuckForm } from "duck-form";
-import {
-  parseAsArrayOf,
-  parseAsBoolean,
-  parseAsString,
-  useQueryStates,
-} from "nuqs";
+import { type ParserBuilder, parseAsString, useQueryStates } from "nuqs";
 import { FILTER_COMPONENTS, FiltersPanel } from "../../components/filters";
 
 const FILTERS = [
@@ -27,17 +22,19 @@ const FILTERS = [
 ];
 
 export function CollectionFilter() {
-  const [query, setQuery] = useQueryStates({
-    status: parseAsBoolean,
-    name: parseAsArrayOf(parseAsString),
-  });
+  const defaultFilterQuery = FILTERS.reduce<
+    Record<string, ParserBuilder<string>>
+  >((prev, cur) => {
+    prev[cur.name] = parseAsString;
+    return prev;
+  }, {});
 
-  const handleClearAllFilters = eventHandler(() =>
-    setQuery({
-      status: null,
-      name: null,
-    }),
-  );
+  const [query, setQuery] = useQueryStates(defaultFilterQuery);
+
+  const handleClearAllFilters = eventHandler(() => setQuery(null));
+
+  const showClearButton =
+    Object.values(query).filter((val) => val != null).length > 0;
 
   return (
     <DuckForm
@@ -46,7 +43,7 @@ export function CollectionFilter() {
     >
       <FiltersPanel
         clearAllButton={
-          (query.name || query.status) && (
+          showClearButton && (
             <Button
               variant="ghost"
               size="sm"
