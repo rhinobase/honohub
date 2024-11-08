@@ -2,47 +2,34 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import { Pagination, Searchbar } from "@honohub/shared";
 import { type ColumnType, DataTable as SharedDatatable } from "@rafty/corp";
 import { Button, Text } from "@rafty/ui";
-import { useQuery } from "@tanstack/react-query";
 import { Blueprint, DuckForm } from "duck-form";
-import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
+import { parseAsInteger, useQueryStates } from "nuqs";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { COLUMN_HEADER_COMPONENTS, FibrCellWrapper } from "../../columns";
-import { useServer } from "../../providers";
+import { useCollectionTableData } from "../../queries/collections/useCollectionTableData";
 import type { CollectionType } from "../../types";
 import { ActionSelect } from "./ActionSelect";
 
-export type CollectionDataTable<T> = {
-  columns: ColumnType<T>[];
+export type CollectionDataTable = {
+  columns: ColumnType<unknown>[];
 } & Pick<CollectionType, "slug" | "actions">;
 
-export function CollectionDataTable<T = unknown>({
+export function CollectionDataTable({
   columns,
   slug,
   actions,
-}: CollectionDataTable<T>) {
+}: CollectionDataTable) {
   const [queryParams, setQueryParams] = useQueryStates({
     limit: parseAsInteger.withDefault(10),
     offset: parseAsInteger.withDefault(0),
-    search: parseAsString,
   });
-  const { endpoint } = useServer();
   const [rowsSelected, setRowsSelected] = useState<Record<string, boolean>>({});
 
   const pageIndex = queryParams.offset / queryParams.limit;
 
-  const { data = { results: [], count: 0 }, isLoading } = useQuery<{
-    results: T[];
-    count: number;
-  }>({
-    queryKey: ["collections", slug, queryParams],
-    queryFn: () =>
-      endpoint
-        .get(`/collections/${slug}`, {
-          params: queryParams,
-        })
-        .then((res) => res.data),
-  });
+  const { data = { results: [], count: 0 }, isLoading } =
+    useCollectionTableData({ slug });
 
   const selectedRowsLength = Object.keys(rowsSelected).length;
   const selectedRows = Object.keys(rowsSelected).map(
@@ -85,12 +72,13 @@ export function CollectionDataTable<T = unknown>({
       <DuckForm components={COLUMN_HEADER_COMPONENTS}>
         <Blueprint wrapper={FibrCellWrapper}>
           <SharedDatatable
-            data={data.results}
+            data={data?.results}
             columns={columns}
             isLoading={isLoading}
             enableRowSelection
             rowsSelected={rowsSelected}
             onRowsSelectedChange={setRowsSelected}
+            className="h-max flex flex-col overflow-hidden"
           />
         </Blueprint>
       </DuckForm>
@@ -106,7 +94,7 @@ export function CollectionDataTable<T = unknown>({
         }}
         count={data.count}
         pageIndex={pageIndex}
-        className="mb-14"
+        className="mb-14 md:mb-0"
       />
     </>
   );
