@@ -48,7 +48,7 @@ export function FormFooter(props: FormFooter) {
 
   return (
     <>
-      <div className="flex gap-3 p-3 bg-secondary-100 dark:bg-secondary-900 rounded-md mb-3 md:mb-4 lg:mb-5 xl:mb-6">
+      <div className="flex flex-col-reverse sm:flex-row gap-2 md:gap-2.5 lg:gap-3 p-2 md:p-2.5 lg:p-3 bg-secondary-100 dark:bg-secondary-900 rounded-md sm:rounded-lg mb-3 md:mb-4 lg:mb-5 xl:mb-6">
         {mode === FormMode.UPDATE && (
           <DeleteButton
             isLoading={isDeleting}
@@ -60,7 +60,7 @@ export function FormFooter(props: FormFooter) {
             }}
           />
         )}
-        <div className="flex-1" />
+        <div className="flex-1 hidden sm:block" />
         <Button
           type="submit"
           variant="ghost"
@@ -68,6 +68,7 @@ export function FormFooter(props: FormFooter) {
           isDisabled={isDisabled}
           onClick={handleSaveAndAddAnother}
           onKeyDown={handleSaveAndAddAnother}
+          className="rounded sm:rounded-md"
         >
           Save and add another
         </Button>
@@ -77,6 +78,7 @@ export function FormFooter(props: FormFooter) {
           colorScheme="primary"
           onClick={handleSave}
           onKeyDown={handleSave}
+          className="rounded sm:rounded-md"
         >
           Submit
         </Button>
@@ -102,6 +104,7 @@ function DeleteButton({ onDelete, isDisabled, isLoading }: DeleteButton) {
           isLoading={isLoading}
           leftIcon={<TrashIcon className="size-4 stroke-2" />}
           colorScheme="error"
+          className="rounded sm:rounded-md"
         >
           Delete
         </Button>
