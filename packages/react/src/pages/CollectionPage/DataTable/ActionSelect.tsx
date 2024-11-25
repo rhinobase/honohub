@@ -5,8 +5,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { Suspense, lazy, useCallback, useMemo } from "react";
 import toast from "react-hot-toast";
-import { useDialogManager, useServer } from "../../providers";
-import type { CollectionType } from "../../types";
+import { useDialogManager, useServer } from "../../../providers";
+import type { CollectionType } from "../../../types";
 
 export type ActionSelect<T> = {
   selectedRows: T[];

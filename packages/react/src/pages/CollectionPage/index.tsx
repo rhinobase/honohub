@@ -1,12 +1,20 @@
-import { ArrowPathIcon, CodeBracketIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { rowSelectionColumn } from "@honohub/shared";
 import type { ColumnType } from "@rafty/corp";
-import { Button, Toast, classNames, eventHandler, useBoolean } from "@rafty/ui";
+import {
+  Button,
+  Toast,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  classNames,
+  eventHandler,
+  useBoolean,
+} from "@rafty/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DuckField } from "duck-form";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
 import { PageHeader, PageTitle } from "../../components/Header";
 import { FiltersPanelToggleButton } from "../../components/filters";
 import { useQueryParams } from "../../hooks";
@@ -129,35 +137,31 @@ export function CollectionPage(props: CollectionPage) {
         <PageTitle className="capitalize">
           {getPluralLabel(props.label)}
         </PageTitle>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="fab"
+              variant="ghost"
+              isDisabled={isFetching}
+              onClick={handleRefresh}
+              onKeyDown={handleRefresh}
+              className="p-2"
+            >
+              <ArrowPathIcon
+                className={classNames(
+                  isFetching && "animate-spin",
+                  "size-5 stroke-2",
+                )}
+              />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Refresh</TooltipContent>
+        </Tooltip>
         <div className="flex-1" />
-        {/*TODO: Add link*/}
-        <Link to="">
-          <Button
-            leftIcon={<CodeBracketIcon className="size-4 stroke-2" />}
-            variant="outline"
-          >
-            API
-          </Button>
-        </Link>
         <FiltersPanelToggleButton
           isActive={isFilterOpen}
           onInteract={setFilterOpen}
         />
-        <Button
-          size="icon"
-          variant="ghost"
-          isDisabled={isFetching}
-          onClick={handleRefresh}
-          onKeyDown={handleRefresh}
-          className="p-2"
-        >
-          <ArrowPathIcon
-            className={classNames(
-              isFetching && "animate-spin",
-              "size-5 stroke-2",
-            )}
-          />
-        </Button>
       </PageHeader>
       <div className="flex h-full gap-3 md:gap-4 lg:gap-5 xl:gap-6 overflow-x-auto overflow-y-hidden">
         <div className="w-full flex h-full flex-col gap-3 md:gap-4 lg:gap-5 xl:gap-6">

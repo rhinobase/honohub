@@ -6,9 +6,9 @@ import { Blueprint, DuckForm } from "duck-form";
 import { parseAsInteger, useQueryStates } from "nuqs";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { COLUMN_HEADER_COMPONENTS, FibrCellWrapper } from "../../columns";
-import { useCollectionTableData } from "../../queries/collections/useCollectionTableData";
-import type { CollectionType } from "../../types";
+import { COLUMN_HEADER_COMPONENTS, FibrCellWrapper } from "../../../columns";
+import { useCollectionTableData } from "../../../queries/collections/useCollectionTableData";
+import type { CollectionType } from "../../../types";
 import { ActionSelect } from "./ActionSelect";
 
 export type CollectionDataTable = {
