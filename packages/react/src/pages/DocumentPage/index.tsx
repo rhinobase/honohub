@@ -1,12 +1,11 @@
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import { FormMode } from "@honohub/shared";
 import { Button, eventHandler, useBoolean } from "@rafty/ui";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { PageHeader, PageTitle } from "../../components/Header";
-import { useServer } from "../../providers";
+import { useCollectionFormData } from "../../queries/collections/useCollectionFormData";
 import type { CollectionType } from "../../types";
 import { getSingularLabel } from "../../utils";
 import { DevToolPanel } from "./DevToolPanel";
@@ -17,7 +16,6 @@ export type DocumentPage = Omit<CollectionType, "columns">;
 export function DocumentPage({ fields, slug, label }: DocumentPage) {
   const [isDevToolOpen, setDevToolOpen] = useBoolean();
   const { id } = useParams();
-  const { endpoint } = useServer();
   const methods = useForm();
 
   const formType = id === "create" ? FormMode.CREATE : FormMode.UPDATE;
@@ -27,12 +25,7 @@ export function DocumentPage({ fields, slug, label }: DocumentPage) {
     [fields],
   );
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["collections", slug, id],
-    queryFn: () =>
-      endpoint.get(`collections/${slug}/${id}`).then((res) => res.data),
-    enabled: formType === FormMode.UPDATE,
-  });
+  const { data, isLoading } = useCollectionFormData({ slug });
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {

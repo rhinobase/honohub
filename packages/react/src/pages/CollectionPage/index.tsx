@@ -1,26 +1,21 @@
 import { ArrowPathIcon, CodeBracketIcon } from "@heroicons/react/24/outline";
 import { rowSelectionColumn } from "@honohub/shared";
 import type { ColumnType } from "@rafty/corp";
-import {
-  Button,
-  Checkbox,
-  Toast,
-  classNames,
-  eventHandler,
-  useBoolean,
-} from "@rafty/ui";
+import { Button, Toast, classNames, eventHandler, useBoolean } from "@rafty/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DuckField } from "duck-form";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
-import { useSearchParams } from "react-router-dom";
-import { APIReferenceDrawer } from "../../components/APIReference";
+import { Link } from "react-router-dom";
 import { PageHeader, PageTitle } from "../../components/Header";
+import { FiltersPanelToggleButton } from "../../components/filters";
+import { useQueryParams } from "../../hooks";
 import { useServer } from "../../providers";
+import { getCollectionTableQueryKey } from "../../queries/collections/useCollectionTableData";
 import type { CollectionType } from "../../types";
 import { getPluralLabel } from "../../utils";
-import { queryValidation } from "../../validations";
 import { ActionMenu } from "./ActionMenu";
+import { CollectionFilter } from "./CollectionFilter";
 import { CollectionDataTable } from "./DataTable";
 
 export type CollectionPage = Omit<CollectionType, "fields">;
@@ -28,14 +23,15 @@ export type CollectionPage = Omit<CollectionType, "fields">;
 export function CollectionPage(props: CollectionPage) {
   const { endpoint } = useServer();
   const queryClient = useQueryClient();
-  const [searchParams] = useSearchParams();
-
-  const [isApiRefDrawerOpen, setApiRefDrawerOpen] = useBoolean();
+  const [isFilterOpen, setFilterOpen] = useBoolean();
   const [isFetching, setFetching] = useBoolean();
 
-  const validatedParams = queryValidation.parse(
-    Object.fromEntries(searchParams.entries()),
-  );
+  const validatedParams = useQueryParams();
+
+  const queryKey = getCollectionTableQueryKey({
+    slug: props.slug,
+    ...validatedParams,
+  });
 
   const { mutate: deleteRecord } = useMutation({
     mutationFn: (id: string) =>
@@ -44,7 +40,7 @@ export function CollectionPage(props: CollectionPage) {
       queryClient.setQueryData<{
         results: any[];
         count: number;
-      }>(["collections", props.slug, validatedParams], (currentPageData) => {
+      }>(queryKey, (currentPageData) => {
         const nextPageData = queryClient.getQueryData<{
           results: any[];
           count: number;
@@ -76,7 +72,7 @@ export function CollectionPage(props: CollectionPage) {
     },
     onSettled: () =>
       queryClient.refetchQueries({
-        queryKey: ["collections", props.slug, validatedParams],
+        queryKey,
       }),
     onError: (err, id) => {
       console.error(err);
@@ -119,9 +115,6 @@ export function CollectionPage(props: CollectionPage) {
     return columns;
   }, [props.columns, deleteRecord]);
 
-  const handleApiRefDrawerOpen = eventHandler(() => {
-    setApiRefDrawerOpen(true);
-  });
   const handleRefresh = eventHandler(async () => {
     setFetching(true);
     await queryClient.refetchQueries({
@@ -137,14 +130,19 @@ export function CollectionPage(props: CollectionPage) {
           {getPluralLabel(props.label)}
         </PageTitle>
         <div className="flex-1" />
-        <Button
-          leftIcon={<CodeBracketIcon className="size-4 stroke-2" />}
-          variant="outline"
-          onClick={handleApiRefDrawerOpen}
-          onKeyDown={handleApiRefDrawerOpen}
-        >
-          API
-        </Button>
+        {/*TODO: Add link*/}
+        <Link to="">
+          <Button
+            leftIcon={<CodeBracketIcon className="size-4 stroke-2" />}
+            variant="outline"
+          >
+            API
+          </Button>
+        </Link>
+        <FiltersPanelToggleButton
+          isActive={isFilterOpen}
+          onInteract={setFilterOpen}
+        />
         <Button
           size="icon"
           variant="ghost"
@@ -161,16 +159,16 @@ export function CollectionPage(props: CollectionPage) {
           />
         </Button>
       </PageHeader>
-      <CollectionDataTable
-        columns={columns}
-        slug={props.slug}
-        actions={props.actions}
-      />
-      <APIReferenceDrawer
-        open={isApiRefDrawerOpen}
-        onOpenChange={setApiRefDrawerOpen}
-        slug={props.slug}
-      />
+      <div className="flex h-full gap-3 md:gap-4 lg:gap-5 xl:gap-6 overflow-x-auto overflow-y-hidden">
+        <div className="w-full flex h-full flex-col gap-3 md:gap-4 lg:gap-5 xl:gap-6">
+          <CollectionDataTable
+            columns={columns}
+            slug={props.slug}
+            actions={props.actions}
+          />
+        </div>
+        {isFilterOpen && <CollectionFilter />}
+      </div>
     </>
   );
 }

@@ -1,5 +1,6 @@
 import * as HeroIcon from "@heroicons/react/24/outline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { NuqsAdapter } from "nuqs/adapters/react-router";
 import { Toaster } from "react-hot-toast";
 import {
   type RouteObject,
@@ -135,7 +136,9 @@ export function HonoHub({
       <ThemeProvider>
         <ServerProvider baseURL={serverUrl}>
           <PreferencesProvider>
-            <RouterProvider router={router} />
+            <NuqsAdapter>
+              <RouterProvider router={router} />
+            </NuqsAdapter>
           </PreferencesProvider>
           <Toaster />
         </ServerProvider>

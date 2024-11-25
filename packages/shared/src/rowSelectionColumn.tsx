@@ -22,6 +22,6 @@ export function rowSelectionColumn<T>(): ColumnType<T> {
         onCheckedChange={() => row.toggleSelected()}
       />
     ),
-    size: 30,
+    size: 36,
   };
 }
