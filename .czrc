@@ -21,6 +21,10 @@
       "name": "shared:               anything shared specific"
     },
     {
+      "value": "storage",
+      "name": "storage:               anything storage specific"
+    },
+    {
       "value": "sandbox",
       "name": "sandbox:              anything sandbox specific"
     },

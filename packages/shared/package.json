@@ -17,12 +17,16 @@
     "url": "https://github.com/rhinobase/honohub/issues"
   },
   "dependencies": {
-    "fuse.js": "^7.0.0",
+    "@duck-form/fields": "0.1.0",
     "@heroicons/react": "^2.1.5",
     "@rafty/ui": "^1.7.6",
     "@rafty/corp": "^1.0.4",
+    "@uidotdev/usehooks": "^2.4.1",
+    "duck-form": "^0.1.4",
+    "fuse.js": "^7.0.0",
     "react-hook-form": "^7.53.0",
-    "@uidotdev/usehooks": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "zod": "^3.23.8"
   },
   "peerDependencies": {
     "react": "^18.3.1"
