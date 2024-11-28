@@ -31,6 +31,10 @@
     {
       "value": "docs",
       "name": "docs:                 anything docs specific"
+    },
+    {
+      "value": "sample",
+      "name": "sample:                 anything sample specific"
     }
   ],
   "scopesSearchValue": true,
