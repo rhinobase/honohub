@@ -5,7 +5,9 @@
     "version": {
       "preVersionCommand": "pnpm dlx nx run-many -t build"
     },
-    "projects": ["*"],
+    "projects": [
+      "*"
+    ],
     "changelog": {
       "projectChangelogs": {
         "renderOptions": {
@@ -35,7 +37,10 @@
   "targetDefaults": {
     "@nx/vite:test": {
       "cache": true,
-      "inputs": ["default", "^default"]
+      "inputs": [
+        "default",
+        "^default"
+      ]
     }
   },
   "generators": {
