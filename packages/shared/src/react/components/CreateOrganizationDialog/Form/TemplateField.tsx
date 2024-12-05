@@ -1,5 +1,3 @@
-import { useOrganization } from "../../../providers";
-import { getCloudinaryURL } from "../../../utils";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import {
   Avatar,
@@ -12,6 +10,8 @@ import {
 } from "@rafty/ui";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { useOrganization } from "../../../providers";
+import { getCloudinaryURL } from "../../../utils";
 
 const FIELD_NAME = "template.organisation";
 

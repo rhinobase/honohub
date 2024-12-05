@@ -1,12 +1,12 @@
 "use client";
+import { PencilIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxIcon } from "@heroicons/react/24/solid";
 import {
   IDValidator,
   PageHeader,
-  useManageDocument,
   StaticCollection,
+  useManageDocument,
 } from "@honohub/shared";
-import { PencilIcon } from "@heroicons/react/24/outline";
-import { ArchiveBoxIcon } from "@heroicons/react/24/solid";
 import { Button } from "@rafty/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

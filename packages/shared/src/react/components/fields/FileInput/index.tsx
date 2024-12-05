@@ -27,7 +27,7 @@ export function FileInputField() {
   const autoId = useId();
   const customId = useMemo(
     () => generateId?.(schema, props),
-    [generateId, schema, props]
+    [generateId, schema, props],
   );
 
   const id = customId ?? autoId;
@@ -87,7 +87,7 @@ export function FileInputField() {
               content={content}
               onRemove={() => deleteUploaded(index)}
             />
-          )
+          ),
         )}
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
-import { endpoint } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { endpoint } from "../utils";
 
 const getCollectionIndexesQueryKey = (options: {
   org: string | string[];
@@ -21,7 +21,7 @@ export function useCollectionIndexesData() {
           `/organisations/${org}/collections/${col}/dev/indexes`,
           {
             signal,
-          }
+          },
         )
         .then((res) => res.data),
   });

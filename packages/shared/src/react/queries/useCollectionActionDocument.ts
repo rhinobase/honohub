@@ -1,9 +1,9 @@
 "use client";
-import { endpoint } from "../utils";
-import type { collectionActionValidation } from "../validations";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import type z from "zod";
+import { endpoint } from "../utils";
+import type { collectionActionValidation } from "../validations";
 
 export const getCollectionActionDocumentQueryKey = (options: {
   org: string | string[];
@@ -23,7 +23,7 @@ export function useCollectionActionDocument() {
           `/organisations/${org}/collections/${col}/dev/actions/${id}`,
           {
             signal,
-          }
+          },
         )
         .then((res) => res.data),
   });

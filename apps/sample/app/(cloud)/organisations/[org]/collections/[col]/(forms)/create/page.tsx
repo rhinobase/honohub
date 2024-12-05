@@ -1,6 +1,6 @@
 "use client";
-import { PageHeader, useAuth, useCollection, FormMode } from "@honohub/shared";
 import { CodeBracketIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { FormMode, PageHeader, useAuth, useCollection } from "@honohub/shared";
 import { Button, eventHandler, useBoolean } from "@rafty/ui";
 import { CollectionForm } from "../CollectionForm";
 

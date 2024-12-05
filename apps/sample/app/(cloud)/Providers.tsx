@@ -1,6 +1,6 @@
 import {
-  LoadingComponent,
   CollectionProvider,
+  LoadingComponent,
   OrganizationProvider,
   PreferencesProvider,
 } from "@honohub/shared";

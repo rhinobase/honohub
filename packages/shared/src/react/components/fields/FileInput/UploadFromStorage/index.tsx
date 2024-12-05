@@ -1,5 +1,3 @@
-import { useStorageData } from "../../../../queries";
-import type { StorageDataType } from "../../../../../storage";
 import {
   CloudIcon,
   ExclamationCircleIcon,
@@ -20,6 +18,8 @@ import { useField } from "duck-form";
 import { useCallback, useRef, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { LoadingComponent } from "../../../../../shared";
+import type { StorageDataType } from "../../../../../storage";
+import { useStorageData } from "../../../../queries";
 import { UploadFromCard } from "../UploadFromCard";
 import type { FileInputFieldProps } from "../types";
 import { UploadFromStorageItem } from "./Item";
@@ -50,7 +50,6 @@ export function UploadFromStorage({
 
   const isEmpty = data?.pages[0]?.results.length === 0;
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const observer = useRef<any>();
   const lastImageElementRef = useCallback(
     (node: HTMLDivElement) => {
@@ -61,7 +60,7 @@ export function UploadFromStorage({
       });
       if (node) observer.current.observe(node);
     },
-    [isFetching, hasNextPage, fetchNextPage]
+    [isFetching, hasNextPage, fetchNextPage],
   );
 
   const handleDialogOpen = eventHandler(() => setOpen(true));
@@ -131,7 +130,7 @@ export function UploadFromStorage({
               const isSelected = Boolean(
                 selectedFiles &&
                   selectedFiles.findIndex((item) => item._id === file._id) !==
-                    -1
+                    -1,
               );
 
               const handleSelect = eventHandler(() => {
@@ -144,7 +143,7 @@ export function UploadFromStorage({
                     const tmp = [...(prev ?? [])];
                     tmp?.splice(
                       tmp.findIndex((item) => item._id === file._id),
-                      1
+                      1,
                     );
                     return tmp;
                   });

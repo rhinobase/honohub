@@ -1,18 +1,18 @@
 "use client";
 import {
-  PageHeader,
-  useOrganization,
-  type useStorageData,
-  StorageLayout,
-  formatBytes,
-  useStoragePreference,
-  useUploadContext,
-} from "@honohub/shared";
-import {
   ArrowUpTrayIcon,
   ListBulletIcon,
   Squares2X2Icon,
 } from "@heroicons/react/24/outline";
+import {
+  PageHeader,
+  StorageLayout,
+  formatBytes,
+  useOrganization,
+  type useStorageData,
+  useStoragePreference,
+  useUploadContext,
+} from "@honohub/shared";
 import {
   Button,
   Skeleton,
@@ -97,7 +97,7 @@ function UploadButton({ data, isLoading, isError }: QueryProps) {
               file,
               uploaded: false,
             },
-          ])
+          ]),
         ),
       }));
     };

@@ -33,14 +33,14 @@ export default function StorageWrapper(props: PropsWithChildren) {
                     file,
                     uploaded: false,
                   },
-                ])
+                ]),
               ),
             }));
             setFilesEntered(false);
           }}
           className={classNames(
             !isFilesEntered && "hidden",
-            "absolute inset-0 z-[100] opacity-0"
+            "absolute inset-0 z-[100] opacity-0",
           )}
         />
         {props.children}

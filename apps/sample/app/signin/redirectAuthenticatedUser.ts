@@ -5,7 +5,7 @@ import type z from "zod";
 import type { redirectURLValidation } from "./validation";
 
 export async function redirectAuthenticatedUser(
-  redirectURL: z.infer<typeof redirectURLValidation>
+  redirectURL: z.infer<typeof redirectURLValidation>,
 ) {
   const cookieStore = cookies();
   const cookieToken = cookieStore.get(COOKIE_TOKEN_KEY);

@@ -1,8 +1,8 @@
-import { CollectionPermission } from "../../utils";
 import { Spinner } from "@rafty/ui";
 import type { PropsWithChildren } from "react";
-import { PageHeader } from "../PageHeader";
 import { HasCrudPermission, HasDevPermission } from "../../permissions";
+import { CollectionPermission } from "../../utils";
+import { PageHeader } from "../PageHeader";
 import { AddButton } from "./AddButton";
 import { IDCopyButton } from "./IDCopyButton";
 import { OptionsMenu } from "./OptionsMenu";

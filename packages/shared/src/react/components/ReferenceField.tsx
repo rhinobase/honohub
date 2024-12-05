@@ -1,7 +1,4 @@
 "use client";
-import { useAuth } from "../providers";
-import type { PaginatedResponse } from "../types";
-import { endpoint } from "../utils";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import {
   Combobox,
@@ -18,6 +15,9 @@ import dayjs from "dayjs";
 import { useParams } from "next/navigation";
 import { forwardRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { useAuth } from "../providers";
+import type { PaginatedResponse } from "../types";
+import { endpoint } from "../utils";
 
 const PAGE_SIZE = 10;
 
@@ -29,15 +29,13 @@ export type ReferenceFieldComponent = {
   };
   initialValue?: string | (() => string);
   options?: {
-    filter: // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    | any
+    filter:
+      | any
       | ((params: {
           document: object;
           parent?: object;
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
           value: any;
           currentUser: object;
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         }) => any);
     filterParams?: Record<string, unknown>;
   };
@@ -45,7 +43,7 @@ export type ReferenceFieldComponent = {
     value: unknown,
     form: unknown,
     user: Record<string, unknown>,
-    endpoint: AxiosInstance
+    endpoint: AxiosInstance,
   ) => void;
 } & Pick<Combobox, "isDisabled" | "isInvalid" | "isLoading" | "isReadOnly">;
 
@@ -97,7 +95,7 @@ export function ReferenceFieldComponent({
               search,
               ...props.options?.filterParams,
             },
-          }
+          },
         )
         .then((res) => res.data),
     getNextPageParam: (lastPage, pages) => {
@@ -139,7 +137,7 @@ export function ReferenceFieldComponent({
                 methods,
                 // @ts-expect-error: Legacy Code
                 user,
-                () => endpoint
+                () => endpoint,
               );
               onChange({
                 _ref: value,
@@ -218,7 +216,7 @@ const ReferenceFieldItem = forwardRef<HTMLDivElement, ReferenceFieldItem>(
 
         return prev;
       },
-      []
+      [],
     );
 
     return (
@@ -248,5 +246,5 @@ const ReferenceFieldItem = forwardRef<HTMLDivElement, ReferenceFieldItem>(
         )}
       </ComboboxItem>
     );
-  }
+  },
 );

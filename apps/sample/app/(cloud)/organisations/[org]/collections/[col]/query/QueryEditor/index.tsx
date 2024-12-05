@@ -20,7 +20,7 @@ export function QueryEditor() {
       endpoint
         .post(
           `/organisations/${org}/collections/${col}/dev/aggregator`,
-          value.editor
+          value.editor,
         )
         .then((res) => res.data),
     onError: (error) => {

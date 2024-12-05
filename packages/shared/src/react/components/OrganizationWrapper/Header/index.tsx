@@ -13,7 +13,7 @@ export function Header() {
       className={classNames(
         pathname === `/organisations/${org}/reports/${id}` &&
           "hide-on-fullscreen",
-        "flex items-center gap-1.5 p-1.5 border-b border-secondary-200 dark:border-secondary-800"
+        "flex items-center gap-1.5 p-1.5 border-b border-secondary-200 dark:border-secondary-800",
       )}
     >
       <OrganizationSelector />

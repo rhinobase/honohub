@@ -28,8 +28,8 @@ function paramsSerializer(params: Record<string, unknown>) {
         else if (typeof value === "object")
           prev.push(
             ...Object.entries(value).map(
-              ([_key, _value]) => `${_key}=${_value}`
-            )
+              ([_key, _value]) => `${_key}=${_value}`,
+            ),
           );
         else prev.push(`${key}=${value}`);
       }
@@ -43,7 +43,7 @@ const CLOUDINARY_DOMAIN = "res.cloudinary.com";
 const RHINOBASE_CLOUD_NAME = "rhinobase";
 export function getCloudinaryURL(
   props: StorageDataType,
-  options?: { filters?: string[]; raw?: boolean }
+  options?: { filters?: string[]; raw?: boolean },
 ) {
   let params = "";
 

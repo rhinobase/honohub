@@ -38,6 +38,6 @@ export const createPreferencesStore = (props: Partial<PreferencesStore> = {}) =>
       {
         name: "preferences",
         storage: createJSONStorage(() => localStorage),
-      }
-    )
+      },
+    ),
   );

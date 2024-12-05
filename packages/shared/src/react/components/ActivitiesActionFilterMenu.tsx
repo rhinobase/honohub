@@ -1,5 +1,4 @@
 "use client";
-import { HistoryAction } from "../types";
 import { Bars3BottomRightIcon } from "@heroicons/react/24/outline";
 import {
   Menu,
@@ -9,6 +8,7 @@ import {
   eventHandler,
 } from "@rafty/ui";
 import { parseAsArrayOf, parseAsStringLiteral, useQueryState } from "nuqs";
+import { HistoryAction } from "../types";
 
 const FILTERS = {
   create: HistoryAction.CREATE,
@@ -22,7 +22,7 @@ const FILTER_NAME = Object.values(FILTERS);
 export function ActivitiesActionFilterMenu() {
   const [queryParam, setQueryParam] = useQueryState(
     "action",
-    parseAsArrayOf(parseAsStringLiteral(FILTER_NAME))
+    parseAsArrayOf(parseAsStringLiteral(FILTER_NAME)),
   );
 
   return (
@@ -46,7 +46,7 @@ export function ActivitiesActionFilterMenu() {
               if (tmp.length === 0) return null;
 
               return tmp;
-            })
+            }),
           );
 
           return (

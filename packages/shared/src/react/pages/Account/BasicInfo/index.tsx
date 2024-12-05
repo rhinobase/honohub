@@ -1,6 +1,6 @@
 "use client";
-import { useAuth } from "../../../providers";
 import { Avatar, Skeleton } from "@rafty/ui";
+import { useAuth } from "../../../providers";
 import { AccountPageCard } from "../Card";
 import { EditNameDialog } from "./EditNameDialog";
 

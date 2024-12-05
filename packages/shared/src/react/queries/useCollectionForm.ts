@@ -1,8 +1,8 @@
 "use client";
-import type { CollectionFieldType } from "../types";
-import { endpoint } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import type { CollectionFieldType } from "../types";
+import { endpoint } from "../utils";
 
 const getCollectionFormQueryKey = (options: {
   org: string | string[];
@@ -21,7 +21,7 @@ export function useCollectionForm() {
           `organisations/${org}/collections/${col}/fields`,
           {
             signal,
-          }
+          },
         )
         .then((res) => res.data),
     enabled: org !== undefined && col !== undefined,

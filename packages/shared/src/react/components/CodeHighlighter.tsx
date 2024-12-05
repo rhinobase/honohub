@@ -1,7 +1,7 @@
 "use client";
-import { useShiki } from "../providers";
 import { Skeleton } from "@rafty/ui";
 import { useTheme } from "next-themes";
+import { useShiki } from "../providers";
 
 export type CodeHighlighter = { content: string; language: string };
 

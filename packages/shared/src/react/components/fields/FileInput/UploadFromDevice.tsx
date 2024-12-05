@@ -1,7 +1,7 @@
-import { useUploadContext } from "../../../../storage";
 import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
 import { eventHandler } from "@rafty/ui";
 import { nanoid } from "nanoid";
+import { useUploadContext } from "../../../../storage";
 import { UploadFromCard } from "./UploadFromCard";
 
 export type UploadFromDevice = {
@@ -25,7 +25,7 @@ export function UploadFromDevice({ handleDialogClose }: UploadFromDevice) {
               file,
               uploaded: false,
             },
-          ])
+          ]),
         ),
       }));
       handleDialogClose();

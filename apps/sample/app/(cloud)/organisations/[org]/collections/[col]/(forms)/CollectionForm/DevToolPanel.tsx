@@ -1,6 +1,6 @@
 "use client";
-import { CopyButton } from "@honohub/shared";
 import type { FieldProps } from "@duck-form/fields";
+import { CopyButton } from "@honohub/shared";
 import { JSONExplorer } from "@rafty/corp";
 import { Tab, TabContent, TabList, TabTrigger } from "@rafty/ui";
 import { useFormContext, useWatch } from "react-hook-form";

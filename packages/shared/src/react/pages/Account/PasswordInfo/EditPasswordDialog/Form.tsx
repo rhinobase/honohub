@@ -1,11 +1,11 @@
 "use client";
-import { useAuth } from "../../../../providers";
-import { handleError } from "../../../../utils";
-import { userPasswordValidation as schema } from "../../../../validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, DialogFooter, FieldWrapper, PasswordField } from "@rafty/ui";
 import { FormProvider, useForm } from "react-hook-form";
 import type z from "zod";
+import { useAuth } from "../../../../providers";
+import { handleError } from "../../../../utils";
+import { userPasswordValidation as schema } from "../../../../validations";
 
 export type EditPasswordForm = {
   onSubmit?: () => void;

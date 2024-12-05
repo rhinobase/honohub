@@ -1,20 +1,20 @@
 "use client";
-import { firebaseClient } from "../config/firebase/client";
 import {
-  CancelUploadDialog,
-  UploadDialog,
-  ShikiProvider,
-  UploadProvider,
   AuthProvider,
+  CancelUploadDialog,
   OrganizationProvider,
+  ShikiProvider,
+  UploadDialog,
+  UploadProvider,
 } from "@honohub/shared";
 import { Toast } from "@rafty/ui";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { Suspense, type PropsWithChildren } from "react";
+import { type PropsWithChildren, Suspense } from "react";
 import toast, { Toaster, resolveValue } from "react-hot-toast";
+import { firebaseClient } from "../config/firebase/client";
 import { StorageProvider } from "../providers";
 
 // Creating the query client

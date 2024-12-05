@@ -1,11 +1,11 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import type z from "zod";
 import { useQueryParams } from "../hooks";
 import type { PaginatedResponse } from "../types";
 import { endpoint } from "../utils";
 import { queryValidationWithFields } from "../validations";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import type z from "zod";
 
 export const getCollectionQueryKey = ({
   org,

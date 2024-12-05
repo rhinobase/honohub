@@ -109,7 +109,7 @@ export default function RootLayout(props: PropsWithChildren) {
       <body
         className={classNames(
           inter.className,
-          "h-screen w-full bg-white dark:bg-secondary-950 text-black dark:text-white selection:bg-[#79ffe1] dark:selection:bg-[#f81ce5] dark:selection:text-white selection:text-secondary-700"
+          "h-screen w-full bg-white dark:bg-secondary-950 text-black dark:text-white selection:bg-[#79ffe1] dark:selection:bg-[#f81ce5] dark:selection:text-white selection:text-secondary-700",
         )}
       >
         <Providers>{props.children}</Providers>

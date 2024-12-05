@@ -1,11 +1,11 @@
 "use client";
-import { useActionDialog } from "../../providers";
-import { useCollectionActions } from "../../queries";
-import { endpoint, handleError } from "../../utils";
 import { ActionSelect as SharedActionSelect } from "@honohub/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
 import toast from "react-hot-toast";
+import { useActionDialog } from "../../providers";
+import { useCollectionActions } from "../../queries";
+import { endpoint, handleError } from "../../utils";
 
 export type ActionSelect = {
   selectedRows?: Record<string, unknown>[];
@@ -47,7 +47,7 @@ export function ActionSelect({
           icon: component,
         };
       }),
-    [actions]
+    [actions],
   );
 
   const { mutateAsync } = useMutation({
@@ -92,7 +92,7 @@ export function ActionSelect({
         });
       } else actionHandler();
     },
-    [mutateAsync, actions, setAction]
+    [mutateAsync, actions, setAction],
   );
 
   return (

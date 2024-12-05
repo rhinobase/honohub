@@ -1,9 +1,9 @@
 "use client";
-import type { CollectionType } from "../types";
-import { endpoint } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import pluralize from "pluralize";
+import type { CollectionType } from "../types";
+import { endpoint } from "../utils";
 
 const getAllCollectionsQueryKey = (options: { org: string | string[] }) => [
   "organisations",
@@ -25,7 +25,7 @@ export function useAllCollections() {
           {
             signal,
             params: { order: 1 },
-          }
+          },
         )
         .then((res) =>
           res.data?.map((collection) => ({
@@ -36,7 +36,7 @@ export function useAllCollections() {
                 ? collection.name
                 : pluralize(collection.name),
             },
-          }))
+          })),
         ),
     enabled: !!org,
   });

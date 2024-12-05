@@ -139,7 +139,7 @@ export function RenameForm() {
               name,
               old_public_id: content?.public_id ?? "",
             }),
-          console.error
+          console.error,
         )}
       >
         <FieldWrapper name="name" label="Enter new name" isRequired>

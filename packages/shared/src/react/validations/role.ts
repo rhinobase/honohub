@@ -1,5 +1,5 @@
-import { userValidation } from "./user";
 import z from "zod";
+import { userValidation } from "./user";
 
 export const roleValidation = z
   .object({

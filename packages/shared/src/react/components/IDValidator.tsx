@@ -1,8 +1,8 @@
 "use client";
-import { mongoIDValidation } from "../validations";
 import { ErrorComponent } from "@honohub/shared";
 import { useParams } from "next/navigation";
 import type { PropsWithChildren } from "react";
+import { mongoIDValidation } from "../validations";
 
 export function IDValidator(props: PropsWithChildren) {
   const { id: docID } = useParams();

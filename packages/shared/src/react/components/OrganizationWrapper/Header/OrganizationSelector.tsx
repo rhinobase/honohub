@@ -1,6 +1,4 @@
 "use client";
-import { useOrganization } from "../../../providers";
-import { getCloudinaryURL } from "../../../utils";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import {
   Avatar,
@@ -12,6 +10,8 @@ import {
   Skeleton,
 } from "@rafty/ui";
 import Link from "next/link";
+import { useOrganization } from "../../../providers";
+import { getCloudinaryURL } from "../../../utils";
 
 export function OrganizationSelector() {
   const { organisations, current: currentOrganization } = useOrganization();

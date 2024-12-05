@@ -1,18 +1,18 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
+import type z from "zod";
 import { useQueryParams } from "../hooks";
 import { useAuth } from "../providers/auth";
 import type { OrganizationType } from "../types";
 import { endpoint } from "../utils";
 import { baseQueryValidation } from "../validations";
-import { useQuery } from "@tanstack/react-query";
-import { usePathname } from "next/navigation";
-import type z from "zod";
 
 export const getOrganisationsQueryKey = (
-  options?: z.infer<typeof baseQueryValidation>
+  options?: z.infer<typeof baseQueryValidation>,
 ) =>
   ["organisations", options?.search, options?.order, options?.orderBy].filter(
-    (val) => val != null
+    (val) => val != null,
   );
 
 export function useOrganisationsData() {

@@ -1,15 +1,15 @@
 "use client";
 import {
-  LoadingSkeletons,
-  getCollectionActionDocumentQueryKey,
-  getCollectionActionsQueryKey,
-  endpoint,
-  handleError,
-  collectionActionValidation,
-  submitButtonValidation,
   DocumentSubmitType,
   FormMode,
+  LoadingSkeletons,
   SUBMIT_BUTTON_KEY,
+  collectionActionValidation,
+  endpoint,
+  getCollectionActionDocumentQueryKey,
+  getCollectionActionsQueryKey,
+  handleError,
+  submitButtonValidation,
 } from "@honohub/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldWrapper, InputField } from "@rafty/ui";
@@ -74,12 +74,12 @@ export function CollectionActionForm(props: CollectionActionForm) {
       if (id)
         return await endpoint.put(
           `/organisations/${org}/collections/${col}/dev/actions/${id}`,
-          data
+          data,
         );
 
       return await endpoint.post(
         `/organisations/${org}/collections/${col}/dev/actions`,
-        data
+        data,
       );
     },
     onSuccess: (_, values) => {
@@ -112,7 +112,7 @@ export function CollectionActionForm(props: CollectionActionForm) {
       <form
         onSubmit={handleSubmit(
           (values) => mutation.mutateAsync(values),
-          console.error
+          console.error,
         )}
         className="w-full flex flex-col gap-3 md:gap-4 lg:gap-5 xl:gap-6"
       >

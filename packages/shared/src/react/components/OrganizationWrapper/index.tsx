@@ -2,8 +2,8 @@ import type { PropsWithChildren } from "react";
 import { HasOrganisationPermission } from "../../permissions";
 import { ActionDialogProvider } from "../../providers";
 import { ActionDialog } from "./ActionDialog";
-import { OrganizationSidebar } from "./Sidebar";
 import { Header } from "./Header";
+import { OrganizationSidebar } from "./Sidebar";
 
 export function OrganizationWrapper(props: PropsWithChildren) {
   return (

@@ -33,7 +33,7 @@ export function PasswordForm() {
           try {
             await endpoint.post(
               `/organisations/${org}/manage/users/${id}/password`,
-              values
+              values,
             );
 
             toast.success("Operation successfully completed");

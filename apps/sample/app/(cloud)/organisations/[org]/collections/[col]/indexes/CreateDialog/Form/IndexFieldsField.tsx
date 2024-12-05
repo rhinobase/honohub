@@ -1,8 +1,8 @@
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import {
   CollectionIndexFieldType,
   type collectionIndexValidation as schema,
 } from "@honohub/shared";
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import {
   Button,
   FieldWrapper,
@@ -35,7 +35,7 @@ export function IndexFieldsField() {
         {fields.map((field, index, arr) => {
           const handleAdd = eventHandler(() =>
             // @ts-expect-error
-            insert(index + 1, { name: "", type: "" })
+            insert(index + 1, { name: "", type: "" }),
           );
 
           const handleRemove = eventHandler(() => remove(index));

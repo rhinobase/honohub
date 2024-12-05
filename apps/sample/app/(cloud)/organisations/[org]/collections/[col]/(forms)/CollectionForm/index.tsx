@@ -1,19 +1,19 @@
 "use client";
+import { BlockWrapper, quackFields } from "@duck-form/fields";
 import {
-  LoadingSkeletons,
+  CollectionPermission,
   FileInputField,
+  LoadingSkeletons,
   ReferenceField,
   RichTextField,
-  useAuth,
-  getCollectionQueryKey,
-  useCollectionForm,
-  getCollectionDocumentQueryKey,
-  CollectionPermission,
   endpoint,
+  getCollectionDocumentQueryKey,
+  getCollectionQueryKey,
   handleError,
   schemaBuilder,
+  useAuth,
+  useCollectionForm,
 } from "@honohub/shared";
-import { BlockWrapper, quackFields } from "@duck-form/fields";
 import {
   DocumentSubmitType,
   FormMode,
@@ -31,7 +31,6 @@ import { Footer } from "./Footer";
 export type CollectionForm = (
   | {
       mode: FormMode.UPDATE;
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       data?: Record<string, any>;
       isLoading?: boolean;
     }
@@ -98,12 +97,12 @@ export function CollectionForm(props: CollectionForm) {
       if (id)
         return await endpoint.put(
           `/organisations/${org}/collections/${col}/${id}`,
-          data
+          data,
         );
 
       return await endpoint.post(
         `/organisations/${org}/collections/${col}`,
-        data
+        data,
       );
     },
     onSuccess: (_, values) => {
@@ -147,7 +146,7 @@ export function CollectionForm(props: CollectionForm) {
           <form
             onSubmit={handleSubmit(
               (values) => mutation.mutateAsync(values),
-              console.error
+              console.error,
             )}
             className="w-full flex flex-col gap-3 md:gap-4 lg:gap-5 xl:gap-6 overflow-y-auto rounded-b-lg"
           >

@@ -1,11 +1,11 @@
 "use client";
+import { ArrowPathIcon, PlusIcon, TagIcon } from "@heroicons/react/24/outline";
 import {
   DataTable,
   PageHeader,
   useCollection,
   useCollectionIndexesData,
 } from "@honohub/shared";
-import { ArrowPathIcon, PlusIcon, TagIcon } from "@heroicons/react/24/outline";
 import { Button, eventHandler, useBoolean } from "@rafty/ui";
 import { CreateIndexDialog } from "./CreateDialog";
 

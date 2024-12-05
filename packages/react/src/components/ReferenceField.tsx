@@ -27,15 +27,13 @@ export type ReferenceField = {
   };
   initialValue?: string | (() => string);
   options?: {
-    filter: // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    filter:
       | any
       | ((params: {
           document: object;
           parent?: object;
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
           value: any;
           currentUser: object;
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         }) => any);
     filterParams?: Record<string, unknown>;
   };

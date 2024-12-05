@@ -1,15 +1,15 @@
 "use client";
+import { CodeBracketIcon, PencilIcon } from "@heroicons/react/24/outline";
+import {
+  ArchiveBoxIcon,
+  ArrowTopRightOnSquareIcon,
+} from "@heroicons/react/24/solid";
 import {
   PageHeader,
   useAuth,
   useCollection,
   useCollectionDocumentData,
 } from "@honohub/shared";
-import { CodeBracketIcon, PencilIcon } from "@heroicons/react/24/outline";
-import {
-  ArchiveBoxIcon,
-  ArrowTopRightOnSquareIcon,
-} from "@heroicons/react/24/solid";
 import { FormMode } from "@honohub/shared";
 import { Button, eventHandler, useBoolean } from "@rafty/ui";
 import Link from "next/link";

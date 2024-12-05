@@ -28,7 +28,7 @@ export function SearchbarComponent(props: SearchbarComponent) {
     componentProps = searchFieldProps;
   }
 
-  const defaultValue = !props.local ? props.paramName ?? "search" : "";
+  const defaultValue = !props.local ? (props.paramName ?? "search") : "";
 
   const [query, setQuery] = useQueryState(defaultValue);
   const [value, setValue] = useState(query);

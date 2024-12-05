@@ -1,16 +1,16 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import type z from "zod";
 import { useQueryParams } from "../hooks";
 import type { History, PaginatedResponse } from "../types";
 import { endpoint } from "../utils";
 import { activitiesQueryValidation } from "../validations";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import type z from "zod";
 
 const getOrganizationActivitiesQueryKey = (
   options: {
     org: string | string[];
-  } & z.infer<typeof activitiesQueryValidation>
+  } & z.infer<typeof activitiesQueryValidation>,
 ) => {
   const key: unknown[] = [
     "organisations",
@@ -37,7 +37,7 @@ export function useOrganizationActivitiesData(options?: {
   const { org } = useParams();
 
   const { user, collection, ...queryParams } = useQueryParams(
-    activitiesQueryValidation
+    activitiesQueryValidation,
   );
 
   const queryKey = getOrganizationActivitiesQueryKey({

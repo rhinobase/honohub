@@ -1,4 +1,3 @@
-import { useCollection } from "../../providers";
 import {
   ArrowTopRightOnSquareIcon,
   PencilIcon,
@@ -7,6 +6,7 @@ import { Button } from "@rafty/ui";
 import { useField } from "duck-form";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
+import { useCollection } from "../../providers";
 import type { ColumnThreadProps } from "./types";
 
 export function CollectionActionCell() {

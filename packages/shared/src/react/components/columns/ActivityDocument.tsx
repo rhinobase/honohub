@@ -1,10 +1,10 @@
 "use client";
-import type { History } from "../../types";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { Button } from "@rafty/ui";
 import { useField } from "duck-form";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import type { History } from "../../types";
 import type { ColumnThreadProps } from "./types";
 
 export function ActivityDocument() {

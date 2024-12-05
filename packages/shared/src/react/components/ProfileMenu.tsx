@@ -1,5 +1,4 @@
 "use client";
-import { useAuth } from "../providers";
 import {
   ArrowUpTrayIcon,
   Cog6ToothIcon,
@@ -23,6 +22,7 @@ import {
 } from "@rafty/ui";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { useAuth } from "../providers";
 
 export function ProfileMenu() {
   const { user, profile, isProfileLoading, isProfileError, signout } =
@@ -100,7 +100,7 @@ function ThemeSelector() {
             className={classNames(
               theme === name &&
                 "bg-primary-50/70 focus:bg-primary-50/70 text-primary-500 dark:bg-primary-500/30 dark:focus:bg-primary-500/30 dark:text-white",
-              "capitalize"
+              "capitalize",
             )}
             onClick={() => setTheme(name)}
             onKeyDown={() => setTheme(name)}

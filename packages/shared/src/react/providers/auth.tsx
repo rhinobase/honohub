@@ -1,6 +1,4 @@
 "use client";
-import { useProfile } from "../queries/useProfile";
-import { type userPasswordValidation, userValidation } from "../validations";
 import { useBoolean } from "@rafty/ui";
 import { useQueryClient } from "@tanstack/react-query";
 import { type User, browserLocalPersistence, getAuth } from "firebase/auth";
@@ -15,7 +13,9 @@ import {
 import { useCookies } from "react-cookie";
 import toast from "react-hot-toast";
 import type z from "zod";
+import { useProfile } from "../queries/useProfile";
 import { COOKIE_TOKEN_KEY, endpoint } from "../utils";
+import { type userPasswordValidation, userValidation } from "../validations";
 
 const nameValidation = userValidation.pick({
   first_name: true,
@@ -23,7 +23,7 @@ const nameValidation = userValidation.pick({
 });
 
 const AuthContext = createContext<ReturnType<typeof useAuthManager> | null>(
-  null
+  null,
 );
 
 export function AuthProvider({ children }: PropsWithChildren) {

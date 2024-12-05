@@ -1,6 +1,6 @@
 "use client";
-import { useAuth } from "@honohub/shared";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { useAuth } from "@honohub/shared";
 import { Skeleton } from "@rafty/ui";
 import type { Metadata } from "next";
 import Link from "next/link";

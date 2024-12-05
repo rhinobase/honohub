@@ -21,7 +21,7 @@ export function useStorageData() {
   const { org } = useParams();
   const searchParams = useSearchParams();
   const { search } = queryValidation.parse(
-    Object.fromEntries(searchParams.entries())
+    Object.fromEntries(searchParams.entries()),
   );
 
   const queryKey = getStorageQueryKey({ org, search });

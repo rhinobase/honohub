@@ -1,8 +1,8 @@
 "use client";
-import type { History, PaginatedResponse } from "../types";
-import { endpoint, type StaticCollection } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import type { History, PaginatedResponse } from "../types";
+import { type StaticCollection, endpoint } from "../utils";
 
 const getManageHistoryQueryKey = (options: {
   org: string | string[];
@@ -30,7 +30,7 @@ export function useManageHistory(options: { slug: StaticCollection }) {
           `organisations/${org}/manage/${slug}/${id}/history`,
           {
             signal,
-          }
+          },
         )
         .then((res) => res.data),
   });

@@ -19,7 +19,7 @@ export function RichText() {
   const autoId = useId();
   const customId = useMemo(
     () => generateId?.(schema, props),
-    [generateId, schema, props]
+    [generateId, schema, props],
   );
 
   const id = customId ?? autoId;
@@ -53,7 +53,7 @@ export function RichText() {
           },
           onChange: (api) =>
             api.saver.save().then((data) => setValue(id, data)),
-        })
+        }),
       );
     }
   }, [initialized]);

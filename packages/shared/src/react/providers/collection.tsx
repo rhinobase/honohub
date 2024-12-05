@@ -1,6 +1,4 @@
 "use client";
-import { useAllCollections } from "../queries";
-import type { CollectionType } from "../types";
 import { useParams } from "next/navigation";
 import {
   type PropsWithChildren,
@@ -8,6 +6,8 @@ import {
   useContext,
   useMemo,
 } from "react";
+import { useAllCollections } from "../queries";
+import type { CollectionType } from "../types";
 
 const CollectionContext = createContext<ReturnType<
   typeof useCollectionManager

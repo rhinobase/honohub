@@ -1,21 +1,4 @@
 import type {
-  FileInputFieldProps,
-  ReferenceFieldProps,
-  RichTextProps,
-} from "../components/fields";
-import type {
-  CollectionArrayField,
-  CollectionBasicField,
-  CollectionCheckboxGroupField,
-  CollectionCommonField,
-  CollectionFieldSchema,
-  CollectionFieldType,
-  CollectionFileField,
-  CollectionObjectField,
-  CollectionPinField,
-  CollectionReferenceField,
-} from "../types";
-import type {
   ArrayProps,
   CheckboxGroupProps,
   CheckboxProps,
@@ -32,13 +15,30 @@ import type {
   TagFieldProps,
   TextareaProps,
 } from "@duck-form/fields";
+import type {
+  FileInputFieldProps,
+  ReferenceFieldProps,
+  RichTextProps,
+} from "../components/fields";
+import type {
+  CollectionArrayField,
+  CollectionBasicField,
+  CollectionCheckboxGroupField,
+  CollectionCommonField,
+  CollectionFieldSchema,
+  CollectionFieldType,
+  CollectionFileField,
+  CollectionObjectField,
+  CollectionPinField,
+  CollectionReferenceField,
+} from "../types";
 
 export function schemaBuilder(
   collectionConfig: CollectionFieldType,
   options?: {
     isDev?: boolean;
     isReadonly?: boolean;
-  }
+  },
 ): Record<string, FieldProps> {
   const updatedSchema: [string, FieldProps][] = [];
 
@@ -114,7 +114,7 @@ export function schemaBuilder(
 }
 
 function transformCheckboxGroupField(
-  field: CollectionCheckboxGroupField & FieldWrapperProps
+  field: CollectionCheckboxGroupField & FieldWrapperProps,
 ): FieldWrapperProps & CheckboxGroupProps {
   return {
     ...field,
@@ -129,7 +129,7 @@ function transformCheckboxGroupField(
 }
 
 function transformPinField(
-  field: CollectionPinField & FieldWrapperProps
+  field: CollectionPinField & FieldWrapperProps,
 ): FieldWrapperProps & PinInputProps {
   return {
     ...field,
@@ -140,7 +140,7 @@ function transformPinField(
 
 function transformObjectField(
   field: CollectionObjectField & FieldWrapperProps,
-  options: CollectionFieldType
+  options: CollectionFieldType,
 ): FieldWrapperProps & ObjectProps {
   return {
     ...field,
@@ -157,7 +157,7 @@ function transformObjectField(
 }
 
 function transformSimpleField(
-  field: CollectionCommonField & FieldWrapperProps
+  field: CollectionCommonField & FieldWrapperProps,
 ): FieldWrapperProps &
   (
     | DateFieldProps
@@ -176,7 +176,7 @@ function transformSimpleField(
 }
 
 function transformBasicField(
-  field: CollectionBasicField & FieldWrapperProps
+  field: CollectionBasicField & FieldWrapperProps,
 ): FieldWrapperProps &
   (
     | (StringProps & InputWrapperProps)
@@ -227,7 +227,7 @@ function transformBasicField(
 }
 
 function transformFileField(
-  field: CollectionFileField & FieldWrapperProps
+  field: CollectionFileField & FieldWrapperProps,
 ): FieldWrapperProps & FileInputFieldProps {
   return {
     ...field,
@@ -238,7 +238,7 @@ function transformFileField(
 
 function transformArrayField(
   field: CollectionArrayField & FieldWrapperProps,
-  options: CollectionFieldType
+  options: CollectionFieldType,
 ): FieldWrapperProps & ArrayProps {
   const ofSchema = schemaBuilder({
     ...options,
@@ -253,7 +253,7 @@ function transformArrayField(
 }
 
 function transformReferenceField(
-  field: CollectionReferenceField & FieldWrapperProps
+  field: CollectionReferenceField & FieldWrapperProps,
 ): FieldWrapperProps & ReferenceFieldProps {
   return {
     ...field,

@@ -1,11 +1,11 @@
 "use client";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import type z from "zod";
 import { useQueryParams } from "../hooks";
 import type { PaginatedResponse, ReferenceType } from "../types";
 import { endpoint } from "../utils";
 import { referenceQueryValidation } from "../validations";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import type z from "zod";
 
 const PAGE_SIZE = 10;
 
@@ -13,7 +13,7 @@ const getManageRoleReferenceDataQueryKey = (
   options: {
     org: string | string[];
     search?: string;
-  } & z.infer<typeof referenceQueryValidation>
+  } & z.infer<typeof referenceQueryValidation>,
 ) =>
   [
     "organisations",
@@ -27,7 +27,7 @@ const getManageRoleReferenceDataQueryKey = (
   ].filter((val) => val != null);
 
 export function useManageRoleReferenceTypeData(
-  options: { search?: string } = {}
+  options: { search?: string } = {},
 ) {
   const { org } = useParams();
   const queryParams = useQueryParams(referenceQueryValidation);
@@ -51,7 +51,7 @@ export function useManageRoleReferenceTypeData(
               ...queryParams,
               offset: pageParam * PAGE_SIZE,
             },
-          }
+          },
         )
         .then((res) => res.data),
     getNextPageParam: (lastPage, pages) => {

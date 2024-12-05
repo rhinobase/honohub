@@ -1,5 +1,5 @@
 "use client";
-import { CopyButton, CodeHighlighter, useCollection } from "@honohub/shared";
+import { CodeHighlighter, CopyButton, useCollection } from "@honohub/shared";
 import {
   Dialog,
   DialogContent,

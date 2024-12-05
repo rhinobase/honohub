@@ -1,8 +1,8 @@
 "use client";
-import type { Profile } from "../types";
-import { endpoint } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { getAuth } from "firebase/auth";
+import type { Profile } from "../types";
+import { endpoint } from "../utils";
 
 export const getProfileQueryKey = () => ["profile"];
 

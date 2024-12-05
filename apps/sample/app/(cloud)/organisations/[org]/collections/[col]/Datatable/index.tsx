@@ -1,11 +1,11 @@
 "use client";
 import {
   DataTable,
+  ImageHeaderProvider,
   getCollectionQueryKey,
+  queryValidation,
   useCollectionData,
   useCollectionHeaders,
-  queryValidation,
-  ImageHeaderProvider,
 } from "@honohub/shared";
 import { useParams, useSearchParams } from "next/navigation";
 import { ImageHeaderDialog } from "./ImageHeaderDialog";
@@ -15,7 +15,7 @@ export function CollectionDataTable() {
 
   const searchParams = useSearchParams();
   const queryParams = queryValidation.parse(
-    Object.fromEntries(searchParams.entries())
+    Object.fromEntries(searchParams.entries()),
   );
 
   const queryKey = getCollectionQueryKey({

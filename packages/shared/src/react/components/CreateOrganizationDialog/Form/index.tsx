@@ -1,6 +1,4 @@
 "use client";
-import { endpoint, handleError } from "../../../utils";
-import { organizationValidation as schema } from "../../../validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -14,6 +12,8 @@ import { useRouter } from "next/navigation";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import type z from "zod";
+import { endpoint, handleError } from "../../../utils";
+import { organizationValidation as schema } from "../../../validations";
 import { TemplateField } from "./TemplateField";
 import { TemplateFieldOptions } from "./TemplateOptions";
 

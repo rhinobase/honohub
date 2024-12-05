@@ -95,7 +95,7 @@ export function EditNameForm(props: EditNameForm) {
       <form
         onSubmit={handleSubmit(
           (values) => mutation.mutateAsync(values),
-          console.error
+          console.error,
         )}
         className="space-y-2 md:space-y-3 w-full"
       >
@@ -127,7 +127,7 @@ function ResetButton() {
   const { first_name, last_name } = useWatch({ control });
 
   const handleResetForm = eventHandler(() =>
-    reset({ first_name: profile?.first_name, last_name: profile?.last_name })
+    reset({ first_name: profile?.first_name, last_name: profile?.last_name }),
   );
 
   return (

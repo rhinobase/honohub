@@ -1,16 +1,4 @@
 "use client";
-import { Logo } from "../../Logo";
-import { SidebarShrinkButton } from "./ShrinkButton";
-import { Sidebar, SidebarItem } from "../../sidebar";
-import {
-  SidebarLayout,
-  useAuth,
-  useCollection,
-  useOrganization,
-  usePreferences,
-} from "../../../providers";
-import type { SidebarItemType } from "../../../types";
-import { StaticCollection } from "../../../utils";
 import { TrashIcon, VariableIcon } from "@heroicons/react/24/outline";
 import {
   ChartBarIcon,
@@ -30,8 +18,20 @@ import { Tooltip, TooltipContent, TooltipTrigger, classNames } from "@rafty/ui";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { type HTMLAttributes, useMemo } from "react";
+import {
+  SidebarLayout,
+  useAuth,
+  useCollection,
+  useOrganization,
+  usePreferences,
+} from "../../../providers";
+import type { SidebarItemType } from "../../../types";
+import { StaticCollection } from "../../../utils";
+import { Logo } from "../../Logo";
+import { Sidebar, SidebarItem } from "../../sidebar";
 import Divider from "./Divider";
 import { SidebarItemsSkeleton } from "./ItemSkeleton";
+import { SidebarShrinkButton } from "./ShrinkButton";
 
 export type OrganizationSidebar = {
   className?: HTMLAttributes<HTMLDivElement>["className"];
@@ -157,7 +157,7 @@ export function OrganizationSidebar({ className }: OrganizationSidebar) {
                 label: collection.name.plural,
                 icon: collection.icon,
                 href: `/organisations/${org}/collections/${collection.slug}`,
-              } satisfies SidebarItemType)
+              }) satisfies SidebarItemType,
           )
         : [];
 

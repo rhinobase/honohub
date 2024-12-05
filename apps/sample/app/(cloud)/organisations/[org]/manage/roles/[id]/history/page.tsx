@@ -2,8 +2,8 @@
 import {
   DataTable,
   PageHeader,
-  useManageHistory,
   StaticCollection,
+  useManageHistory,
 } from "@honohub/shared";
 
 const HEADERS: DataTable["headers"] = [

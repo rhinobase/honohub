@@ -1,7 +1,7 @@
 import { SigninPage as PageRender } from "@honohub/shared";
+import { Suspense } from "react";
 import { redirectAuthenticatedUser } from "./redirectAuthenticatedUser";
 import { redirectURLValidation } from "./validation";
-import { Suspense } from "react";
 
 export default async function SignInPage({
   searchParams,

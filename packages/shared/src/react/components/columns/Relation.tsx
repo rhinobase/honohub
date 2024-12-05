@@ -1,7 +1,7 @@
-import type { ReferenceHeaderType } from "../../types";
 import { useField } from "duck-form";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import type { ReferenceHeaderType } from "../../types";
 
 type ReferenceHeaderProps = ReferenceHeaderType & {
   value: {

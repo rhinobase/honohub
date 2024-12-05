@@ -1,7 +1,7 @@
 "use client";
-import { endpoint } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { endpoint } from "../utils";
 
 const getCollectionActionsQueryKey = (options: {
   org: string | string[];

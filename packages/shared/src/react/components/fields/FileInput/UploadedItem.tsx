@@ -1,5 +1,3 @@
-import type { StorageDataType } from "../../../../storage";
-import { getCloudinaryURL } from "../../../utils";
 import {
   ArrowTopRightOnSquareIcon,
   XMarkIcon,
@@ -7,6 +5,8 @@ import {
 import { Button, eventHandler } from "@rafty/ui";
 import Image from "next/image";
 import Link from "next/link";
+import type { StorageDataType } from "../../../../storage";
+import { getCloudinaryURL } from "../../../utils";
 
 export type UploadedItem = {
   content: StorageDataType;

@@ -1,5 +1,5 @@
-import { PageHeader } from "@honohub/shared";
 import { ShieldExclamationIcon } from "@heroicons/react/24/outline";
+import { PageHeader } from "@honohub/shared";
 import { PasswordForm } from "./Form";
 
 export default function PasswordPage() {

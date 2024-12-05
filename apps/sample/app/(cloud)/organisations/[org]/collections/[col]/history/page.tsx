@@ -1,4 +1,5 @@
 "use client";
+import { ArchiveBoxIcon } from "@heroicons/react/24/outline";
 import {
   ActivitiesActionFilterMenu,
   DataTable,
@@ -6,7 +7,6 @@ import {
   useCollection,
   useOrganizationActivitiesData,
 } from "@honohub/shared";
-import { ArchiveBoxIcon } from "@heroicons/react/24/outline";
 
 const HEADERS: DataTable["headers"] = [
   {

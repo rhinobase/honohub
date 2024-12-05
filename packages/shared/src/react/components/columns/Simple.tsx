@@ -1,6 +1,6 @@
-import type { CommonHeaderType } from "../../types";
 import { Text } from "@rafty/ui";
 import { useField } from "duck-form";
+import type { CommonHeaderType } from "../../types";
 
 type SimpleHeaderProps = CommonHeaderType & {
   value: string;

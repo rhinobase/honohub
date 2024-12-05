@@ -29,7 +29,6 @@ function useHighlighter() {
     const controller = new AbortController();
     try {
       new Promise<void>((resolve, reject) => {
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         const abortListener = ({ target }: any) => {
           controller.signal.removeEventListener("abort", abortListener);
           reject(target.reason);

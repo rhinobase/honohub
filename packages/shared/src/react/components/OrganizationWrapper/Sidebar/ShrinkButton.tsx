@@ -1,7 +1,7 @@
 "use client";
-import { SidebarLayout, usePreferences } from "../../../providers";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { Button, classNames, eventHandler } from "@rafty/ui";
+import { SidebarLayout, usePreferences } from "../../../providers";
 
 export function SidebarShrinkButton() {
   const layout = usePreferences((state) => state.sidebar);
@@ -20,7 +20,7 @@ export function SidebarShrinkButton() {
       <ChevronLeftIcon
         className={classNames(
           "size-4 stroke-2 stroke-secondary-500 dark:stroke-secondary-300 transition-all ease-in-out duration-300",
-          layout === SidebarLayout.SHRINK && "rotate-180"
+          layout === SidebarLayout.SHRINK && "rotate-180",
         )}
       />
     </Button>

@@ -1,4 +1,3 @@
-import { endpoint } from "../../../utils";
 // @ts-expect-error
 import CheckList from "@editorjs/checklist";
 import Code from "@editorjs/code";
@@ -17,6 +16,7 @@ import Table from "@editorjs/table";
 import Underline from "@editorjs/underline";
 import Warning from "@editorjs/warning";
 import axios from "axios";
+import { endpoint } from "../../../utils";
 
 export function editorJsTools(org: string | string[]) {
   return {
@@ -64,7 +64,7 @@ export function editorJsTools(org: string | string[]) {
               return axios
                 .post(
                   `https://api.cloudinary.com/v1_1/${signature.cloudname}/auto/upload`,
-                  form
+                  form,
                 )
                 .then((res) => ({
                   success: 1,

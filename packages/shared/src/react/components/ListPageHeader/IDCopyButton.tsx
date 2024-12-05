@@ -1,6 +1,6 @@
 "use client";
-import { useAuth, useCollection } from "../../providers";
 import { useParams } from "next/navigation";
+import { useAuth, useCollection } from "../../providers";
 import { CopyButton } from "../CopyButton";
 
 export function IDCopyButton() {

@@ -197,7 +197,6 @@ function NavigationGroup({
               <AnimatePresence mode="popLayout" initial={false}>
                 {link.href === pathname && sections.length > 0 && (
                   <motion.ul
-                    role="list"
                     initial={{ opacity: 0 }}
                     animate={{
                       opacity: 1,

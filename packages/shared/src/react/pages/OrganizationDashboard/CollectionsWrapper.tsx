@@ -12,7 +12,7 @@ export function CollectionsWrapper(props: CollectionsWrapper) {
     <div
       className={classNames(
         "space-y-2 md:space-y-3 lg:space-y-4",
-        props.className
+        props.className,
       )}
     >
       <div className="flex items-center gap-2 text-secondary-800 dark:text-secondary-200">

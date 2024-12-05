@@ -1,4 +1,7 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import type z from "zod";
 import { useQueryParams } from "../hooks";
 import type { PaginatedResponse } from "../types";
 import { endpoint } from "../utils";
@@ -6,15 +9,12 @@ import type {
   collectionActionValidation,
   queryValidation,
 } from "../validations";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import type z from "zod";
 
 export const getCollectionActionsQueryKey = (
   options: z.infer<typeof queryValidation> & {
     org: string | string[];
     col: string | string[];
-  }
+  },
 ) => {
   const key = [
     "organisations",
@@ -48,7 +48,7 @@ export function useCollectionActionsData() {
           {
             signal,
             params: queryParams,
-          }
+          },
         )
         .then((res) => res.data),
   });

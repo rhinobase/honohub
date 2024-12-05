@@ -1,11 +1,11 @@
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import type { RangeTuple } from "fuse.js";
-import type { CollectionType } from "../../types";
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import type { BaseSyntheticEvent } from "react";
-import Link from "next/link";
 import { highlightMatches } from "../../../shared";
-import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import type { CollectionType } from "../../types";
 
 export type CollectionCard = CollectionType & {
   matches?: RangeTuple[];

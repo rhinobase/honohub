@@ -1,11 +1,11 @@
 "use client";
 import {
-  useOrganization,
-  getStorageQueryKey,
   endpoint,
   getCloudinaryURL,
+  getStorageQueryKey,
   handleError,
   queryValidation,
+  useOrganization,
 } from "@honohub/shared";
 import { StorageProvider as SharedStorageProvider } from "@honohub/storage";
 import axios from "axios";
@@ -18,7 +18,7 @@ export function StorageProvider(props: PropsWithChildren) {
   const { current } = useOrganization();
   const searchParams = useSearchParams();
   const { search } = queryValidation.parse(
-    Object.fromEntries(searchParams.entries())
+    Object.fromEntries(searchParams.entries()),
   );
   // @ts-expect-error
   const queryKey: string[] = getStorageQueryKey({ org, search });
@@ -38,7 +38,7 @@ export function StorageProvider(props: PropsWithChildren) {
           .create(config)
           .post(
             `https://api.cloudinary.com/v1_1/${signature.cloudname}/auto/upload`,
-            form
+            form,
           )
           .then((res) => res.data);
       }}
@@ -65,7 +65,7 @@ export function StorageProvider(props: PropsWithChildren) {
         getCloudinaryURL(props.content, {
           filters: props.filters
             ? Object.entries(props.filters).map(
-                ([key, value]) => `${key.slice(0, 1)}_${value}`
+                ([key, value]) => `${key.slice(0, 1)}_${value}`,
               )
             : undefined,
           raw: props.raw,
@@ -84,7 +84,7 @@ export function StorageProvider(props: PropsWithChildren) {
                 .replace(/[^a-z0-9_]+/gi, "-")
                 .replace(/^-|-$/g, "")
                 .toLowerCase(),
-            }
+            },
           )
           .then((res) => res.data);
       }}

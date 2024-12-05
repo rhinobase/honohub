@@ -1,11 +1,11 @@
 "use client";
+import { ArrowPathIcon, BoltIcon, PlusIcon } from "@heroicons/react/24/outline";
 import {
   DataTable,
   PageHeader,
   useCollection,
   useCollectionActionsData,
 } from "@honohub/shared";
-import { ArrowPathIcon, BoltIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Button, classNames, eventHandler } from "@rafty/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -66,7 +66,7 @@ export default function CollectionActionsPage() {
             <ArrowPathIcon
               className={classNames(
                 isFetching && "animate-spin",
-                "size-4 stroke-2"
+                "size-4 stroke-2",
               )}
             />
           }

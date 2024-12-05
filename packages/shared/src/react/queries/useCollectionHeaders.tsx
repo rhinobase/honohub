@@ -1,7 +1,4 @@
 "use client";
-import type { DataTable } from "../components";
-import type { HeaderType } from "../types";
-import { SortOrder, endpoint } from "../utils";
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
 import { classNames, eventHandler } from "@rafty/ui";
 import { useQuery } from "@tanstack/react-query";
@@ -13,6 +10,9 @@ import {
   parseAsStringEnum,
   useQueryStates,
 } from "nuqs";
+import type { DataTable } from "../components";
+import type { HeaderType } from "../types";
+import { SortOrder, endpoint } from "../utils";
 
 const QUERY_VALIDATION = {
   limit: parseAsInteger,
@@ -26,7 +26,7 @@ const getCollectionHeadersQueryKey = (
   options: {
     org: string | string[];
     col: string | string[];
-  } & Values<typeof QUERY_VALIDATION>
+  } & Values<typeof QUERY_VALIDATION>,
 ) => {
   const key = [
     "organisations",
@@ -91,7 +91,7 @@ export function useCollectionHeaders() {
                               options.order === SortOrder.ASC
                                 ? "rotate-180"
                                 : "rotate-0",
-                              "size-3 stroke-[3]"
+                              "size-3 stroke-[3]",
                             )}
                           />
                         )}
@@ -112,8 +112,8 @@ export function useCollectionHeaders() {
                 header: "Action",
                 type: "__collection_action",
               },
-            ]
-          )
+            ],
+          ),
         ),
     enabled: !!col,
     staleTime: Number.POSITIVE_INFINITY,

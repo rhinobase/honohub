@@ -12,7 +12,7 @@ export const collectionIndexValidation = z.object({
     z.object({
       name: z.string({ message: "Field name is required" }),
       type: z.nativeEnum(CollectionIndexFieldType),
-    })
+    }),
   ),
   options: z
     .object({

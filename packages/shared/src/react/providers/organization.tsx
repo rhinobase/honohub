@@ -1,6 +1,4 @@
 "use client";
-import { getOrganisationsQueryKey, useOrganisationsData } from "../queries";
-import type { OrganizationType } from "../types";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import {
@@ -10,6 +8,8 @@ import {
   useEffect,
   useMemo,
 } from "react";
+import { getOrganisationsQueryKey, useOrganisationsData } from "../queries";
+import type { OrganizationType } from "../types";
 import { useAuth } from "./auth";
 
 const OrganizationContext = createContext<ReturnType<

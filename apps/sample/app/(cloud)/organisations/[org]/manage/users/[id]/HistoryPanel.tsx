@@ -1,9 +1,9 @@
 "use client";
-import {
-  useOrganizationActivitiesData,
-  getActionPerformed,
-} from "@honohub/shared";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import {
+  getActionPerformed,
+  useOrganizationActivitiesData,
+} from "@honohub/shared";
 import { Button, Skeleton, Tag } from "@rafty/ui";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";

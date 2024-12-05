@@ -1,5 +1,5 @@
-import { SortOrder } from "../utils";
 import z from "zod";
+import { SortOrder } from "../utils";
 
 export const queryValidation = z.object({
   limit: z.coerce.number().min(0).max(100).default(10),
@@ -43,7 +43,7 @@ export const queryValidationWithFields = queryValidation.merge(
       .string()
       .optional()
       .transform((val) => val?.split(",")),
-  })
+  }),
 );
 
 export const collectionDocumentHistoryQueryValidation = queryValidation.omit({

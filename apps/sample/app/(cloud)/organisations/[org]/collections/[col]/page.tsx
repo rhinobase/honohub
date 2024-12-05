@@ -1,4 +1,4 @@
-import { HasCrudPermission, CollectionPermission } from "@honohub/shared";
+import { CollectionPermission, HasCrudPermission } from "@honohub/shared";
 import { CollectionDataTable } from "./Datatable";
 import { CollectionPageHeader } from "./Header";
 import { CollectionPreviewProvider } from "./Preview";

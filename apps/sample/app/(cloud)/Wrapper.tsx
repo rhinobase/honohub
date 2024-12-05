@@ -1,5 +1,5 @@
 "use client";
-import { LoadingComponent, ProfileMenu, Logo } from "@honohub/shared";
+import { LoadingComponent, Logo, ProfileMenu } from "@honohub/shared";
 import { ErrorComponent, useAuth } from "@honohub/shared";
 import { classNames } from "@rafty/ui";
 import Link from "next/link";
@@ -29,7 +29,7 @@ export function RootPageWrapper(props: PropsWithChildren) {
         <div
           className={classNames(
             pathname !== "/" ? "h-full" : "mx-auto max-w-6xl",
-            "w-full flex flex-col gap-3 md:gap-4 lg:gap-5 px-3 py-3 md:px-4 md:py-4 lg:px-5 lg:py-5 xl:py-6"
+            "w-full flex flex-col gap-3 md:gap-4 lg:gap-5 px-3 py-3 md:px-4 md:py-4 lg:px-5 lg:py-5 xl:py-6",
           )}
         >
           {props.children}

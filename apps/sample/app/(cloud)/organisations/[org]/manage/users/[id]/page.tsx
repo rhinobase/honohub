@@ -1,10 +1,10 @@
 "use client";
+import { ArrowRightIcon, PencilIcon } from "@heroicons/react/24/outline";
 import {
   PageHeader,
-  useManageDocument,
   StaticCollection,
+  useManageDocument,
 } from "@honohub/shared";
-import { ArrowRightIcon, PencilIcon } from "@heroicons/react/24/outline";
 import { FormMode } from "@honohub/shared";
 import { Button } from "@rafty/ui";
 import Link from "next/link";

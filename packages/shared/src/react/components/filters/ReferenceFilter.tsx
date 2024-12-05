@@ -1,4 +1,3 @@
-import type { ReferenceType } from "../../types";
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -13,6 +12,7 @@ import {
   eventHandler,
 } from "@rafty/ui";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
+import type { ReferenceType } from "../../types";
 
 export type ReferenceFilter = {
   name: string;
@@ -30,7 +30,7 @@ export type ReferenceFilter = {
 export function ReferenceFilter(props: ReferenceFilter) {
   const [queryParam, setQueryParam] = useQueryState(
     props.name,
-    parseAsArrayOf(parseAsString)
+    parseAsArrayOf(parseAsString),
   );
   const handleClearFilter = eventHandler(() => setQueryParam(null));
 
@@ -73,7 +73,7 @@ export function ReferenceFilter(props: ReferenceFilter) {
                       const tmp = values ? [...values] : [];
 
                       const index = tmp.findIndex(
-                        (value) => value === item._ref
+                        (value) => value === item._ref,
                       );
 
                       if (index > -1) tmp.splice(index, 1);
@@ -82,7 +82,7 @@ export function ReferenceFilter(props: ReferenceFilter) {
                       if (tmp.length === 0) return null;
 
                       return tmp;
-                    })
+                    }),
                   );
 
                   return (

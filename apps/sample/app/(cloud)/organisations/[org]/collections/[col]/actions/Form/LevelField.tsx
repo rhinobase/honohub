@@ -1,6 +1,6 @@
 "use client";
-import type { collectionActionValidation } from "@honohub/shared";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import type { collectionActionValidation } from "@honohub/shared";
 import {
   Checkbox,
   FieldWrapper,
@@ -83,7 +83,7 @@ function CustomErrorMessageField() {
     if (isCustom) {
       setValue(
         "level.message",
-        "Are you sure you want to perform this action?"
+        "Are you sure you want to perform this action?",
       );
     } else {
       resetField("level.title");

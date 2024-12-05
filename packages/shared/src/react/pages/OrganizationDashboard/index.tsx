@@ -1,14 +1,14 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import { useCollection } from "../../providers";
-import { useMemo } from "react";
-import Fuse from "fuse.js";
-import { LoadingSkeletons, PageHeader, Searchbar } from "../../components";
 import { Squares2X2Icon, SwatchIcon } from "@heroicons/react/24/outline";
+import Fuse from "fuse.js";
+import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
+import { LoadingSkeletons, PageHeader, Searchbar } from "../../components";
+import { useCollection } from "../../providers";
 import { useCollectionsGroups } from "../../queries";
+import { CollectionCard } from "./CollectionCard";
 import { CollectionsWrapper } from "./CollectionsWrapper";
 import { GridWrapper } from "./GridWrapper";
-import { CollectionCard } from "./CollectionCard";
 
 export function OrganizationDashboardPage() {
   const { collections } = useCollection();
@@ -21,7 +21,7 @@ export function OrganizationDashboardPage() {
         keys: ["name.plural"],
         includeMatches: true,
       }),
-    [collections]
+    [collections],
   );
 
   let searchResults: CollectionCard[] | undefined = collections;
@@ -38,7 +38,7 @@ export function OrganizationDashboardPage() {
 
         return prev;
       },
-      []
+      [],
     );
   }
 
@@ -65,7 +65,7 @@ function Groups(props: Groups) {
         prev[cur._id] = cur;
         return prev;
       }, {}),
-    [props.collections]
+    [props.collections],
   );
 
   if (!data || !collectionMap)
@@ -88,7 +88,7 @@ function Groups(props: Groups) {
         if (item) prev.push(item);
         return prev;
       },
-      []
+      [],
     );
 
     if (collections.length > 0)

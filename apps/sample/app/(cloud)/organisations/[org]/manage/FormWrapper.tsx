@@ -1,16 +1,16 @@
 "use client";
 import {
-  LoadingSkeletons,
-  useQueryParams,
-  getManageQueryKey,
-  getManageDocumentQueryKey,
-  endpoint,
-  type StaticCollection,
-  handleError,
   DocumentSubmitType,
   FormFooter,
   FormMode,
+  LoadingSkeletons,
   SUBMIT_BUTTON_KEY,
+  type StaticCollection,
+  endpoint,
+  getManageDocumentQueryKey,
+  getManageQueryKey,
+  handleError,
+  useQueryParams,
 } from "@honohub/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
@@ -77,7 +77,7 @@ export function ManageFormWrapper<T extends FieldValues>({
       if (mode === FormMode.UPDATE)
         return await endpoint.put(
           `/organisations/${org}/manage/${slug}/${id}`,
-          data
+          data,
         );
 
       return await endpoint.post(`/organisations/${org}/manage/${slug}`, data);
@@ -106,7 +106,7 @@ export function ManageFormWrapper<T extends FieldValues>({
     <form
       onSubmit={handleSubmit(
         (values) => mutation.mutateAsync(values),
-        console.error
+        console.error,
       )}
       className="w-full flex flex-col gap-3 md:gap-4 lg:gap-5 xl:gap-6"
     >

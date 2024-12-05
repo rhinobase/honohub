@@ -1,5 +1,5 @@
-import type { jsonValidator as schema } from "@honohub/shared";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
+import type { jsonValidator as schema } from "@honohub/shared";
 import { Button, eventHandler } from "@rafty/ui";
 import { useFormContext, useWatch } from "react-hook-form";
 import type z from "zod";

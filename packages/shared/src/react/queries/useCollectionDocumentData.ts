@@ -1,7 +1,7 @@
 "use client";
-import { endpoint } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { endpoint } from "../utils";
 
 export const getCollectionDocumentQueryKey = (options: {
   org: string | string[];
@@ -13,7 +13,6 @@ export function useCollectionDocumentData() {
   const { org, col, id } = useParams();
   const queryKey = getCollectionDocumentQueryKey({ org, col, id });
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   return useQuery<Record<string, any>>({
     queryKey,
     queryFn: ({ signal }) =>

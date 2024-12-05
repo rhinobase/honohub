@@ -1,7 +1,7 @@
 "use client";
-import { endpoint, type StaticCollection } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { type StaticCollection, endpoint } from "../utils";
 
 export const getManageDocumentQueryKey = (options: {
   org: string | string[];

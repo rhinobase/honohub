@@ -27,7 +27,7 @@ export const userValidation = z.object({
         create: z.boolean().default(false),
         update: z.boolean().default(false),
         delete: z.boolean().default(false),
-      })
+      }),
     )
     .default([]),
 });
@@ -56,5 +56,5 @@ export const userQueryValidation = queryValidation.merge(
       .string()
       .optional()
       .transform((val) => val?.split(",")),
-  })
+  }),
 );

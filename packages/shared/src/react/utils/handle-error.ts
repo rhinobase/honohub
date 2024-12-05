@@ -5,7 +5,7 @@ import { ZodError } from "zod";
 
 export function handleError<T extends Record<string, unknown>>(
   err: unknown,
-  setError?: UseFormSetError<T>
+  setError?: UseFormSetError<T>,
 ) {
   console.error(err);
 

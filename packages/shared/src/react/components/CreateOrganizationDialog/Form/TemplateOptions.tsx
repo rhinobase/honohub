@@ -1,8 +1,8 @@
 "use client";
-import type { organizationValidation as schema } from "../../../validations";
 import { Checkbox, FieldWrapper } from "@rafty/ui";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import type z from "zod";
+import type { organizationValidation as schema } from "../../../validations";
 
 export function TemplateFieldOptions() {
   const { control } = useFormContext<z.infer<typeof schema>>();

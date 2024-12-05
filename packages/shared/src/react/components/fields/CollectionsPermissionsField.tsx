@@ -1,5 +1,5 @@
 "use client";
-import { useCollection, CollectionPermission } from "@honohub/shared";
+import { CollectionPermission, useCollection } from "@honohub/shared";
 import {
   Checkbox,
   TreeView,
@@ -37,7 +37,7 @@ export function CollectionsPermissionsField() {
         [CollectionPermission.UPDATE]: false,
         [CollectionPermission.VIEW]: false,
       })),
-    [collections]
+    [collections],
   );
 
   return (
@@ -45,7 +45,7 @@ export function CollectionsPermissionsField() {
       <TreeView size="lg">
         {permissions.map(({ collection, ...permission }) => {
           const currentCol = value.find(
-            (item) => item.collection._ref === collection.id
+            (item) => item.collection._ref === collection.id,
           );
 
           let isAllChecked = false;
@@ -66,7 +66,7 @@ export function CollectionsPermissionsField() {
                       const temp = value;
 
                       const index = value.findIndex(
-                        (item) => item.collection._ref === collection.id
+                        (item) => item.collection._ref === collection.id,
                       );
                       if (index >= 0) {
                         temp[index].create = check;
@@ -112,7 +112,7 @@ export function CollectionsPermissionsField() {
                             const temp = value;
 
                             const index = value.findIndex(
-                              (item) => item.collection._ref === collection.id
+                              (item) => item.collection._ref === collection.id,
                             );
                             if (index >= 0) {
                               // @ts-expect-error

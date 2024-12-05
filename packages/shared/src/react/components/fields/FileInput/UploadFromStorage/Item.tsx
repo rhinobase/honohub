@@ -1,12 +1,12 @@
+import { CheckIcon } from "@heroicons/react/24/outline";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
+import Image from "next/image";
+import { type HTMLAttributes, forwardRef } from "react";
 import {
   type StorageDataType,
   getStorageItemIcon,
 } from "../../../../../storage";
 import { getCloudinaryURL } from "../../../../utils";
-import { CheckIcon } from "@heroicons/react/24/outline";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
-import Image from "next/image";
-import { type HTMLAttributes, forwardRef } from "react";
 
 export type UploadFromStorageItem = StorageDataType & {
   isSelected: boolean;

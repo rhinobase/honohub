@@ -31,7 +31,7 @@ export function ReferenceField() {
   const autoId = useId();
   const customId = useMemo(
     () => generateId?.(schema, props),
-    [generateId, schema, props]
+    [generateId, schema, props],
   );
 
   const id = customId ?? autoId;
