@@ -11,9 +11,9 @@ import { Avatar, useLastElement } from "@rafty/ui";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
 import dayjs from "dayjs";
-import { useParams } from "next/navigation";
 import { forwardRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { useServer } from "../providers";
 import type { PaginatedResponse } from "../types";
 
@@ -27,15 +27,13 @@ export type ReferenceField = {
   };
   initialValue?: string | (() => string);
   options?: {
-    filter: // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    filter:
       | any
       | ((params: {
           document: object;
           parent?: object;
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
           value: any;
           currentUser: object;
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         }) => any);
     filterParams?: Record<string, unknown>;
   };

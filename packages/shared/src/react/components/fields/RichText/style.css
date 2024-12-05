@@ -1,0 +1,19 @@
+.ce-toolbar__settings-btn {
+  @apply dark:text-secondary-300 dark:hover:bg-secondary-700;
+}
+
+.ce-toolbar__plus {
+  @apply dark:text-secondary-300 dark:hover:bg-secondary-700;
+}
+
+.ce-block__content {
+  @apply [&>h1]:text-[2em] [&>h2]:text-[1.5em] [&>h3]:text-[1.17em];
+}
+
+.ce-popover__items {
+  @apply dark:text-black;
+}
+
+.cdx-search-field {
+  @apply dark:text-black;
+}

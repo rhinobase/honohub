@@ -3,7 +3,7 @@ import {
   ChevronRightIcon,
   PuzzlePieceIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Text, classNames, eventHandler, useBoolean } from "@rafty/ui";
+import { Button, Text, classNames, eventHandler } from "@rafty/ui";
 import {
   Fragment,
   type HTMLAttributes,
