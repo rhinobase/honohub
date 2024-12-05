@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 
 export type useLocalStorage<T> = {
@@ -12,7 +13,7 @@ export function useLocalStorage<T>(props: useLocalStorage<T>) {
   useEffect(() => {
     if (state == null)
       setState(
-        (localStorage.getItem(props.storageKey) as T) ?? props.defaultValue,
+        (localStorage.getItem(props.storageKey) as T) ?? props.defaultValue
       );
     else localStorage.setItem(props.storageKey, String(state));
   }, [state]);

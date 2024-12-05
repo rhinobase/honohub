@@ -1,4 +1,4 @@
-import { useCollection } from "@/providers";
+import { useCollection } from "../../providers";
 import {
   ArrowTopRightOnSquareIcon,
   PencilIcon,

@@ -1,10 +1,10 @@
-import type { ReferenceType } from "@/types";
+import type { ReferenceType } from "../../types";
 import {
   CheckIcon,
   ChevronDownIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { Searchbar } from "@honohub/shared";
+import { SearchbarComponent } from "@honohub/shared";
 import {
   AccordionContent,
   AccordionItem,
@@ -30,7 +30,7 @@ export type ReferenceFilter = {
 export function ReferenceFilter(props: ReferenceFilter) {
   const [queryParam, setQueryParam] = useQueryState(
     props.name,
-    parseAsArrayOf(parseAsString),
+    parseAsArrayOf(parseAsString)
   );
   const handleClearFilter = eventHandler(() => setQueryParam(null));
 
@@ -57,7 +57,7 @@ export function ReferenceFilter(props: ReferenceFilter) {
       </AccordionTrigger>
       <AccordionContent className="h-full px-0">
         <div className="h-full p-1">
-          <Searchbar
+          <SearchbarComponent
             size="sm"
             local
             onChange={props.onSearchChange}
@@ -73,7 +73,7 @@ export function ReferenceFilter(props: ReferenceFilter) {
                       const tmp = values ? [...values] : [];
 
                       const index = tmp.findIndex(
-                        (value) => value === item._ref,
+                        (value) => value === item._ref
                       );
 
                       if (index > -1) tmp.splice(index, 1);
@@ -82,7 +82,7 @@ export function ReferenceFilter(props: ReferenceFilter) {
                       if (tmp.length === 0) return null;
 
                       return tmp;
-                    }),
+                    })
                   );
 
                   return (

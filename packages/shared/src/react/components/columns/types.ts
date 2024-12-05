@@ -1,4 +1,4 @@
-import type { HeaderType } from "@/types";
+import type { HeaderType } from "../../types";
 import type { Row } from "@tanstack/react-table";
 import type { TableColumnType } from ".";
 

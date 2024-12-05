@@ -1,4 +1,4 @@
-import { Searchbar } from "@honohub/shared";
+import { SearchbarComponent } from "@honohub/shared";
 import { Spinner, useLastElement } from "@rafty/ui";
 import { useField } from "duck-form";
 import { useState } from "react";
@@ -36,7 +36,7 @@ export function ReferenceFilter() {
   return (
     <CommonFilterWrapper label={props.label.plural} name={props.name}>
       <div className="h-full p-1">
-        <Searchbar
+        <SearchbarComponent
           size="sm"
           local
           onChange={setSearch}

@@ -1,6 +1,6 @@
-import { useImageHeader } from "@/providers";
-import type { StorageDataType } from "@/types";
-import { getCloudinaryURL } from "@/utils";
+import { useImageHeader } from "../../providers";
+import type { StorageDataType } from "../../../storage";
+import { getCloudinaryURL } from "../../utils";
 import { eventHandler } from "@rafty/ui";
 import { useField } from "duck-form";
 import Image from "next/image";

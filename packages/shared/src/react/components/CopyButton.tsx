@@ -1,3 +1,4 @@
+"use client";
 import { CheckIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import {
   Button,
@@ -55,13 +56,13 @@ export function CopyButton({ data, className, tooltipContent }: CopyButton) {
           <Icon
             className={classNames(
               "size-4 stroke-2",
-              isCopied && "stroke-green-500 dark:stroke-green-300",
+              isCopied && "stroke-green-500 dark:stroke-green-300"
             )}
           />
         </Button>
       </TooltipTrigger>
       <TooltipContent hidden={!data}>
-        {isCopied ? "Copied" : (tooltipContent ?? "Copy Code")}
+        {isCopied ? "Copied" : tooltipContent ?? "Copy Code"}
       </TooltipContent>
     </Tooltip>
   );

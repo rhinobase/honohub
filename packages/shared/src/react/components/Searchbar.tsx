@@ -1,8 +1,8 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Searchbar as SharedSearchbar } from "../../shared";
+import { SearchbarComponent } from "../../shared";
 
-export type Searchbar = Pick<SharedSearchbar, "placeholder">;
+export type Searchbar = Pick<SearchbarComponent, "placeholder">;
 
 export function Searchbar(props: Searchbar) {
   const router = useRouter();
@@ -10,7 +10,7 @@ export function Searchbar(props: Searchbar) {
   const searchParams = useSearchParams();
 
   return (
-    <SharedSearchbar
+    <SearchbarComponent
       {...props}
       onChange={router.push}
       pathname={pathname}

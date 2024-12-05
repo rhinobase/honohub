@@ -1,22 +1,23 @@
 "use client";
-import { SearchField } from "@rafty/ui";
+import { SearchField, type useQueryParams } from "@rafty/ui";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
 
-export type Searchbar = SearchField &
+export type SearchbarComponent = SearchField &
   (
-    | {
+    | (Pick<useQueryParams, "onChange" | "pathname"> & {
         local?: false;
+        searchParams: URLSearchParams;
         paramName?: string;
-      }
+      })
     | {
         local: true;
         onChange: (search?: string) => void;
       }
   );
 
-export function Searchbar(props: Searchbar) {
+export function SearchbarComponent(props: SearchbarComponent) {
   let componentProps = {};
 
   if (props.local) {
@@ -27,7 +28,7 @@ export function Searchbar(props: Searchbar) {
     componentProps = searchFieldProps;
   }
 
-  const defaultValue = !props.local ? (props.paramName ?? "search") : "";
+  const defaultValue = !props.local ? props.paramName ?? "search" : "";
 
   const [query, setQuery] = useQueryState(defaultValue);
   const [value, setValue] = useState(query);

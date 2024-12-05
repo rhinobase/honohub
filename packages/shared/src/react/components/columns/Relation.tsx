@@ -1,4 +1,4 @@
-import type { ReferenceHeaderType } from "@/types";
+import type { ReferenceHeaderType } from "../../types";
 import { useField } from "duck-form";
 import Link from "next/link";
 import { useParams } from "next/navigation";

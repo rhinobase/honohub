@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import type { StorageDataType } from "../../types";

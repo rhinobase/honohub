@@ -16,7 +16,7 @@ export type SidebarItem = ComponentPropsWithoutRef<typeof Link> & {
 export const SidebarItem = forwardRef<ElementRef<typeof Link>, SidebarItem>(
   function SidebarItem(
     { className, href, value, isActive = false, ...props },
-    forwardedRef,
+    forwardedRef
   ) {
     const layout = usePreferences((state) => state.sidebar);
 
@@ -32,11 +32,11 @@ export const SidebarItem = forwardRef<ElementRef<typeof Link>, SidebarItem>(
             : "text-secondary-600 hover:text-black hover:bg-secondary-200/80 dark:text-secondary-400 dark:hover:text-secondary-100 dark:hover:bg-secondary-800",
           layout === SidebarLayout.DEFAULT &&
             "min-w-[220px] w-full max-w-[220px]",
-          className,
+          className
         )}
         {...props}
         ref={forwardedRef}
       />
     );
-  },
+  }
 );

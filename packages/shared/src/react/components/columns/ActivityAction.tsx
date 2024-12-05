@@ -1,5 +1,5 @@
-import type { HistoryAction } from "@/types";
-import { getActionPerformed } from "@/utils/getActionPerformed";
+import type { HistoryAction } from "../../types";
+import { getActionPerformed } from "../../utils";
 import { Tag } from "@rafty/ui";
 import { useField } from "duck-form";
 import type { ColumnThreadProps } from "./types";

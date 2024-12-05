@@ -1,4 +1,4 @@
-import type { HeaderType } from "@/types";
+import type { HeaderType } from "../../types";
 import { ActivityAction } from "./ActivityAction";
 import { ActivityCollectionLink } from "./ActivityCollectionLink";
 import { ActivityDocument } from "./ActivityDocument";

@@ -3,7 +3,11 @@
   "description": "HonoHub shared components",
   "version": "0.3.1",
   "license": "MIT",
-  "keywords": ["hono", "components", "react"],
+  "keywords": [
+    "hono",
+    "components",
+    "react"
+  ],
   "homepage": "https://honohub.dev/",
   "publishConfig": {
     "access": "public"
@@ -28,10 +32,16 @@
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
     "duck-form": "^0.1.4",
+    "firebase": "^11.0.2",
     "fuse.js": "^7.0.0",
+    "next-themes": "^0.4.3",
+    "nuqs": "^2.2.3",
+    "react-cookie": "^7.2.2",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
     "react-pdf": "^9.1.0",
+    "shiki": "^1.24.0",
+    "validator": "^13.12.0",
     "zod": "^3.23.8",
     "zustand": "^5.0.1"
   },

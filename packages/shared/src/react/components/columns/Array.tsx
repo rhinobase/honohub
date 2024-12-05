@@ -1,4 +1,4 @@
-import type { ArrayHeaderType } from "@/types";
+import type { ArrayHeaderType } from "../../types";
 import { Text } from "@rafty/ui";
 import { useField } from "duck-form";
 
