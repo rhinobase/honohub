@@ -37,7 +37,7 @@
     "drizzle-kit": "^0.22.8",
     "husky": "^9.1.5",
     "is-ci": "^3.0.1",
-    "lint-staged": "^15.2.10",
+    "nano-staged": "^0.8.0",
     "nx": "19.5.1",
     "postcss": "^8.4.39",
     "rollup": "^4.14.0",
