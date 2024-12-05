@@ -49,7 +49,6 @@ export function UploadedItem({ content, onRemove }: UploadedItem) {
       <div className="flex w-full items-center gap-2 px-3 py-2">
         <p className="truncate">{resourceName}</p>
         <div className="flex-1" />
-        {/* TODO: this is not working */}
         <Link
           href={getCloudinaryURL(content, { raw: true, filters: [] })}
           target="_blank"

@@ -48,7 +48,7 @@ export function UploadFromStorage({
     ? Array().concat(...data.pages.map((item) => item.results))
     : [];
 
-  const isEmpty = data?.pages[0]?.results.length === 0;
+  const isEmpty = files.length === 0;
 
   const observer = useRef<any>();
   const lastImageElementRef = useCallback(
