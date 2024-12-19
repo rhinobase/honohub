@@ -80,7 +80,7 @@ export function FormFooter(props: FormFooter) {
           onKeyDown={handleSave}
           className="rounded sm:rounded-md"
         >
-          Submit
+          Save
         </Button>
       </div>
     </>
