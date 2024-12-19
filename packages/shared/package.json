@@ -24,6 +24,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "duck-form": "^0.1.4",
     "fuse.js": "^7.0.0",
+    "nuqs": "^2.2.3",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
     "zod": "^3.23.8"
