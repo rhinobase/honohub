@@ -1,6 +1,6 @@
 {
   "name": "@honohub/storage",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
