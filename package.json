@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "commit": "czg",
-    "prepare": "is-ci || husky install",
+    "prepare": "is-ci || husky",
     "format": "biome check --write ."
   },
   "private": true,
