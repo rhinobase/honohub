@@ -1,3 +1,4 @@
+"use client";
 import { eventHandler } from "@rafty/ui";
 import { forwardRef } from "react";
 import {

@@ -1,3 +1,4 @@
+"use client";
 import { useStorage } from "../../providers";
 import type { StorageDataType } from "../../types";
 

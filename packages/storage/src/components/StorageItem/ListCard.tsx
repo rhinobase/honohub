@@ -1,3 +1,4 @@
+"use client";
 import { DocumentIcon, PlayCircleIcon } from "@heroicons/react/24/outline";
 import type { eventHandler } from "@rafty/ui";
 import { forwardRef } from "react";

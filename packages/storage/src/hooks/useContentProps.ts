@@ -1,3 +1,4 @@
+"use client";
 import { type InfiniteData, useQueryClient } from "@tanstack/react-query";
 import { useStorage } from "../providers";
 import type { StorageDataType } from "../types";

@@ -1,3 +1,4 @@
+"use client";
 import {
   ArrowDownTrayIcon,
   ChevronLeftIcon,
@@ -14,7 +15,6 @@ import {
   DialogClose,
   DialogContent,
   DialogOverlay,
-  classNames,
   eventHandler,
 } from "@rafty/ui";
 import { useContentProps } from "../../hooks";

@@ -1,3 +1,4 @@
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, DialogClose, FieldWrapper, InputField } from "@rafty/ui";
 import {

@@ -1,3 +1,4 @@
+"use client";
 import { Dialog, DialogContent, DialogOverlay, DialogTitle } from "@rafty/ui";
 import { useStorageActions } from "../../providers";
 import { RenameForm } from "./Form";

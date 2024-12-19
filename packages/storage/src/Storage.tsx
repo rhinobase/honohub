@@ -1,3 +1,4 @@
+"use client";
 import { ExclamationCircleIcon, InboxIcon } from "@heroicons/react/24/outline";
 import { Spinner, classNames } from "@rafty/ui";
 import {
