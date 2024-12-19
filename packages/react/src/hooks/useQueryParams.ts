@@ -1,3 +1,4 @@
+"use client";
 import { useSearchParams } from "react-router-dom";
 import type z from "zod";
 import { queryValidation } from "../validations";
