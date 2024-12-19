@@ -1,6 +1,21 @@
 {
   "name": "@honohub/storage",
+  "description": "HonoHub storage components",
   "version": "0.1.0",
+  "license": "MIT",
+  "keywords": ["hono", "components", "react"],
+  "homepage": "https://honohub.dev/",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhinobase/honohub.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/rhinobase/honohub/issues"
+  },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
