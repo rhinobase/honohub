@@ -14,7 +14,6 @@ export type StorageDataType = {
     displayName?: string;
   };
   bytes: number;
-  private?: boolean;
   organisation: { _ref: string; _type: "organisations" };
 } & (
   | ({

@@ -33,8 +33,6 @@ export function StorageContextMenu({
 
   const handleInfoDrawerOpen = () => info.set(props.public_id);
 
-  const PrivateFileIcon = props.private ? LockOpenIcon : LockClosedIcon;
-
   const handleCopyLink = () => {
     navigator.clipboard.writeText(generateURL({ content: props, raw: true }));
     toast.success("Resource link copied!");
@@ -56,10 +54,6 @@ export function StorageContextMenu({
         >
           <InformationCircleIcon className="size-4 stroke-2" />
           View details
-        </MenuItem>
-        <MenuItem disabled>
-          <PrivateFileIcon className="size-4 stroke-2" />
-          Make file {props.private ? "public" : "private"}
         </MenuItem>
         <MenuItem onClick={handleCopyLink} onKeyDown={handleCopyLink}>
           <LinkIcon className="size-4 stroke-2" />
