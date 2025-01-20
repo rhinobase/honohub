@@ -61,7 +61,7 @@ export function Storage(props: Storage) {
           isListView
             ? "mx-auto max-w-4xl flex flex-col gap-2 md:gap-3"
             : "grid grid-cols-1 gap-3 md:gap-4 lg:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6",
-          "w-full",
+          "w-full empty:hidden",
         )}
       >
         <StorageActionsProvider>
@@ -101,7 +101,7 @@ export function Storage(props: Storage) {
           </p>
         </div>
       )}
-      {isFetching && !isLoading && (
+      {Boolean(isFetching) && !isLoading && (
         <div className="w-full flex items-center justify-center gap-1.5 py-10">
           <Spinner />
           <p className="text-secondary-600 dark:text-secondary-400 text-sm">
