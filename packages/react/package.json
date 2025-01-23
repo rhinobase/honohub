@@ -36,7 +36,7 @@
     "@duck-form/fields": "^0.1.0",
     "duck-form": "^0.1.4",
     "@tanstack/react-query": "^5.51.1",
-    "dayjs": "^5.0.3",
+    "dayjs": "^1.11.13",
     "@uidotdev/usehooks": "^2.4.1",
     "react-hot-toast": "^2.4.1",
     "react-hook-form": "^7.52.1",

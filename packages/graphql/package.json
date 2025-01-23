@@ -27,16 +27,16 @@
     "url": "https://github.com/rhinobase/honohub/issues"
   },
   "dependencies": {
-    "@hono/zod-validator": "^0.2.2",
-    "drizzle-graphql": "^0.8.4",
-    "graphql": "^16.9.0",
-    "zod": "^3.23.8"
+    "@hono/zod-validator": "^0.4.2",
+    "drizzle-graphql": "^0.8.5",
+    "graphql": "^16.10.0",
+    "zod": "^3.24.1"
   },
   "peerDependencies": {
-    "graphiql": "^3.3.2",
-    "@graphiql/toolkit": "^0.9.1",
-    "hono": "^4.1.1",
-    "honohub": "^0.1.0"
+    "graphiql": "^3.8.3",
+    "@graphiql/toolkit": "^0.11.1",
+    "hono": "^4.6.17",
+    "honohub": "^0.3.0"
   },
   "exports": {
     ".": {
