@@ -1,3 +1,4 @@
+import { useGraphQL } from "@honohub/graphql";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { type Env, Hono, type Schema } from "hono";
@@ -6,8 +7,7 @@ import {
   type GlobalPluginSetupProps,
   defineCollection,
   defineHub,
-} from "../../packages/core/src";
-import { useGraphQL } from "../../packages/graphql/src";
+} from "honohub";
 import * as schema from "./src/db/schema";
 
 const neonSql = neon(process.env.DATABASE_URL ?? "");
@@ -16,6 +16,7 @@ const db = drizzle(neonSql, { schema, logger: true });
 const collection = defineCollection({
   slug: "todos",
   schema: schema.todos,
+  queryKey: "id",
   admin: {
     label: { singular: "Todo", plural: "Todos" },
     fields: ["message", { name: "status", label: "Status", required: false }],
@@ -36,7 +37,7 @@ export default defineHub({
       bootstrap: <E extends Env, P extends Schema, I extends string>(
         props: GlobalPluginSetupProps<typeof db, E, P, I>,
       ) => {
-        return new Hono<E, P, I>().use("*", logger()).route("/", props.app);
+        return new Hono<E, P, I>().use(logger()).route("/", props.app);
       },
     },
     useGraphQL({

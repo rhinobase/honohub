@@ -132,6 +132,27 @@ importers:
         specifier: ^1.3.1
         version: 1.6.0(@types/node@18.16.9)(@vitest/ui@1.6.0)(less@4.1.3)(sass@1.81.0)(stylus@0.59.0)(terser@5.36.0)
 
+  apps/sandbox:
+    dependencies:
+      '@hono/node-server':
+        specifier: ^1.13.7
+        version: 1.13.7(hono@4.6.18)
+      '@honohub/graphql':
+        specifier: workspace:*
+        version: link:../../packages/graphql
+      '@neondatabase/serverless':
+        specifier: ^0.10.4
+        version: 0.10.4
+      drizzle-orm:
+        specifier: ^0.38.4
+        version: 0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+      hono:
+        specifier: ^4.6.18
+        version: 4.6.18
+      honohub:
+        specifier: workspace:*
+        version: link:../../packages/core
+
   packages/core:
     dependencies:
       '@hono/zod-validator':
@@ -139,10 +160,10 @@ importers:
         version: 0.4.2(hono@4.6.17)(zod@3.24.1)
       drizzle-orm:
         specifier: ^0.38.4
-        version: 0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+        version: 0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
       drizzle-zod:
         specifier: ^0.6.1
-        version: 0.6.1(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1)
+        version: 0.6.1(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1)
       hono:
         specifier: ^4.6.17
         version: 4.6.17
@@ -152,7 +173,7 @@ importers:
     devDependencies:
       drizzle-graphql:
         specifier: ^0.8.5
-        version: 0.8.5(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(graphql@16.10.0)
+        version: 0.8.5(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(graphql@16.10.0)
 
   packages/graphql:
     dependencies:
@@ -164,7 +185,7 @@ importers:
         version: 0.4.2(hono@4.6.17)(zod@3.24.1)
       drizzle-graphql:
         specifier: ^0.8.5
-        version: 0.8.5(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(graphql@16.10.0)
+        version: 0.8.5(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(graphql@16.10.0)
       graphiql:
         specifier: ^3.8.3
         version: 3.8.3(@codemirror/language@6.0.0)(@types/node@18.16.9)(@types/react-dom@18.3.0)(@types/react@18.3.1)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -176,7 +197,7 @@ importers:
         version: 4.6.17
       honohub:
         specifier: ^0.3.0
-        version: 0.3.0(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.17)
+        version: 0.3.0(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.17)
       zod:
         specifier: ^3.24.1
         version: 3.24.1
@@ -221,7 +242,7 @@ importers:
         version: 7.0.0
       honohub:
         specifier: ^0.2.2
-        version: 0.2.6(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.12)
+        version: 0.2.6(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.12)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -333,17 +354,17 @@ importers:
     dependencies:
       drizzle-orm:
         specifier: ^0.32.0
-        version: 0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+        version: 0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
     devDependencies:
       '@honohub/react':
         specifier: ^0.1.0
-        version: 0.1.6(@types/react-dom@18.3.0)(@types/react@18.3.1)(csstype@3.1.3)(honohub@0.1.2(drizzle-orm@0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 0.1.6(@types/react-dom@18.3.0)(@types/react@18.3.1)(honohub@0.1.2(drizzle-orm@0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.18))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       drizzle-graphql:
         specifier: ^0.8.4
-        version: 0.8.5(drizzle-orm@0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(graphql@16.10.0)
+        version: 0.8.5(drizzle-orm@0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(graphql@16.10.0)
       honohub:
         specifier: ^0.1.2
-        version: 0.1.2(drizzle-orm@0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.17)
+        version: 0.1.2(drizzle-orm@0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.18)
       vite:
         specifier: ^5.3.3
         version: 5.4.11(@types/node@18.16.9)(less@4.1.3)(sass@1.81.0)(stylus@0.59.0)(terser@5.36.0)
@@ -1689,6 +1710,12 @@ packages:
     peerDependencies:
       react: '>= 16 || ^19.0.0-rc'
 
+  '@hono/node-server@1.13.7':
+    resolution: {integrity: sha512-kTfUMsoloVKtRA2fLiGSd9qBddmru9KadNyhJCwgKBxTiNkaAJEwkVN9KV/rS4HtmmNRtUh6P+YpmjRMl0d9vQ==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      hono: ^4
+
   '@hono/zod-validator@0.2.2':
     resolution: {integrity: sha512-dSDxaPV70Py8wuIU2QNpoVEIOSzSXZ/6/B/h4xA7eOMz7+AarKTSGV8E6QwrdcCbBLkpqfJ4Q2TmBO0eP1tCBQ==}
     peerDependencies:
@@ -1993,8 +2020,8 @@ packages:
   '@napi-rs/wasm-runtime@0.2.4':
     resolution: {integrity: sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ==}
 
-  '@neondatabase/serverless@0.9.5':
-    resolution: {integrity: sha512-siFas6gItqv6wD/pZnvdu34wEqgG3nSE6zWZdq5j2DEsa+VvX8i/5HXJOo06qrw5axPXn+lGCxeR+NLaSPIXug==}
+  '@neondatabase/serverless@0.10.4':
+    resolution: {integrity: sha512-2nZuh3VUO9voBauuh+IGYRhGU/MskWHt1IuZvHcJw6GLjDgtqj/KViKo7SIrLdGLdot7vFbiRRw+BgEy3wT9HA==}
 
   '@next/env@14.2.9':
     resolution: {integrity: sha512-hnDAoDPMii31V0ivibI8p6b023jOF1XblWTVjsDUoZKwnZlaBtJFZKDwFqi22R8r9i6W08dThUWU7Bsh2Rg8Ww==}
@@ -5800,6 +5827,10 @@ packages:
 
   hono@4.6.17:
     resolution: {integrity: sha512-Kbh4M0so2RzLiIg6iP33DoTU68TdvP2O/kb1Hhhdwa37fazuf402ig8ZRfjkz2dqXwiWl2dAgh0f++TuKAdOtQ==}
+    engines: {node: '>=16.9.0'}
+
+  hono@4.6.18:
+    resolution: {integrity: sha512-Fu7hEPvdwtPG8LqSAiPn8p8HjD+PDxrP/HVnwRBnwtVKOn5zDDKsw0ma2Xt58oq97Rlp3t/mRNADEV/Ym6cDng==}
     engines: {node: '>=16.9.0'}
 
   honohub@0.1.2:
@@ -10490,6 +10521,10 @@ snapshots:
     dependencies:
       react: 18.3.1
 
+  '@hono/node-server@1.13.7(hono@4.6.18)':
+    dependencies:
+      hono: 4.6.18
+
   '@hono/zod-validator@0.2.2(hono@4.6.12)(zod@3.24.1)':
     dependencies:
       hono: 4.6.12
@@ -10500,12 +10535,17 @@ snapshots:
       hono: 4.6.17
       zod: 3.24.1
 
+  '@hono/zod-validator@0.2.2(hono@4.6.18)(zod@3.24.1)':
+    dependencies:
+      hono: 4.6.18
+      zod: 3.24.1
+
   '@hono/zod-validator@0.4.2(hono@4.6.17)(zod@3.24.1)':
     dependencies:
       hono: 4.6.17
       zod: 3.24.1
 
-  '@honohub/react@0.1.6(@types/react-dom@18.3.0)(@types/react@18.3.1)(csstype@3.1.3)(honohub@0.1.2(drizzle-orm@0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@honohub/react@0.1.6(@types/react-dom@18.3.0)(@types/react@18.3.1)(honohub@0.1.2(drizzle-orm@0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.18))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@fibr/react': 0.6.3(react@18.3.1)
       '@heroicons/react': 2.2.0(react@18.3.1)
@@ -10517,7 +10557,7 @@ snapshots:
       axios: 1.7.8
       dateformat: 5.0.3
       fuse.js: 7.0.0
-      honohub: 0.1.2(drizzle-orm@0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.17)
+      honohub: 0.1.2(drizzle-orm@0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.18)
       react: 18.3.1
       react-hook-form: 7.53.2(react@18.3.1)
       react-hot-toast: 2.4.1(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -10889,10 +10929,9 @@ snapshots:
       '@emnapi/runtime': 1.3.1
       '@tybys/wasm-util': 0.9.0
 
-  '@neondatabase/serverless@0.9.5':
+  '@neondatabase/serverless@0.10.4':
     dependencies:
       '@types/pg': 8.11.6
-    optional: true
 
   '@next/env@14.2.9': {}
 
@@ -12949,7 +12988,6 @@ snapshots:
       '@types/node': 18.16.9
       pg-protocol: 1.7.0
       pg-types: 4.0.2
-    optional: true
 
   '@types/prop-types@15.7.13': {}
 
@@ -14840,17 +14878,17 @@ snapshots:
 
   dotenv@16.4.5: {}
 
-  drizzle-graphql@0.8.5(drizzle-orm@0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(graphql@16.10.0):
+  drizzle-graphql@0.8.5(drizzle-orm@0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(graphql@16.10.0):
     dependencies:
-      drizzle-orm: 0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+      drizzle-orm: 0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
       graphql: 16.10.0
       graphql-parse-resolve-info: 4.13.0(graphql@16.10.0)
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-graphql@0.8.5(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(graphql@16.10.0):
+  drizzle-graphql@0.8.5(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(graphql@16.10.0):
     dependencies:
-      drizzle-orm: 0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+      drizzle-orm: 0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
       graphql: 16.10.0
       graphql-parse-resolve-info: 4.13.0(graphql@16.10.0)
     transitivePeerDependencies:
@@ -14864,32 +14902,33 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1):
+  drizzle-orm@0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1):
     optionalDependencies:
-      '@neondatabase/serverless': 0.9.5
+      '@neondatabase/serverless': 0.10.4
       '@types/pg': 8.11.6
       '@types/react': 18.3.1
       react: 18.3.1
 
-  drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1):
+  drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1):
     optionalDependencies:
+      '@neondatabase/serverless': 0.10.4
       '@types/pg': 8.11.6
       '@types/react': 18.3.1
       react: 18.3.1
 
-  drizzle-zod@0.5.1(drizzle-orm@0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1):
+  drizzle-zod@0.5.1(drizzle-orm@0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1):
     dependencies:
-      drizzle-orm: 0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+      drizzle-orm: 0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
       zod: 3.24.1
 
-  drizzle-zod@0.5.1(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1):
+  drizzle-zod@0.5.1(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1):
     dependencies:
-      drizzle-orm: 0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+      drizzle-orm: 0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
       zod: 3.24.1
 
-  drizzle-zod@0.6.1(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1):
+  drizzle-zod@0.6.1(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1):
     dependencies:
-      drizzle-orm: 0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+      drizzle-orm: 0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
       zod: 3.24.1
 
   duck-form@0.1.4(react@18.3.1):
@@ -15833,27 +15872,29 @@ snapshots:
 
   hono@4.6.17: {}
 
-  honohub@0.1.2(drizzle-orm@0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.17):
+  hono@4.6.18: {}
+
+  honohub@0.1.2(drizzle-orm@0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.18):
     dependencies:
-      '@hono/zod-validator': 0.2.2(hono@4.6.17)(zod@3.24.1)
-      drizzle-orm: 0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
-      drizzle-zod: 0.5.1(drizzle-orm@0.32.2(@neondatabase/serverless@0.9.5)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1)
-      hono: 4.6.17
+      '@hono/zod-validator': 0.2.2(hono@4.6.18)(zod@3.24.1)
+      drizzle-orm: 0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+      drizzle-zod: 0.5.1(drizzle-orm@0.32.2(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1)
+      hono: 4.6.18
       zod: 3.24.1
 
-  honohub@0.2.6(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.12):
+  honohub@0.2.6(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.12):
     dependencies:
       '@hono/zod-validator': 0.2.2(hono@4.6.12)(zod@3.24.1)
-      drizzle-orm: 0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
-      drizzle-zod: 0.5.1(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1)
+      drizzle-orm: 0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+      drizzle-zod: 0.5.1(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1)
       hono: 4.6.12
       zod: 3.24.1
 
-  honohub@0.3.0(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.17):
+  honohub@0.3.0(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(hono@4.6.17):
     dependencies:
       '@hono/zod-validator': 0.2.2(hono@4.6.17)(zod@3.24.1)
-      drizzle-orm: 0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
-      drizzle-zod: 0.5.1(drizzle-orm@0.38.4(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1)
+      drizzle-orm: 0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1)
+      drizzle-zod: 0.5.1(drizzle-orm@0.38.4(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.1)(react@18.3.1))(zod@3.24.1)
       hono: 4.6.17
       zod: 3.24.1
 
@@ -17077,14 +17118,11 @@ snapshots:
 
   performance-now@2.1.0: {}
 
-  pg-int8@1.0.1:
-    optional: true
+  pg-int8@1.0.1: {}
 
-  pg-numeric@1.0.2:
-    optional: true
+  pg-numeric@1.0.2: {}
 
-  pg-protocol@1.7.0:
-    optional: true
+  pg-protocol@1.7.0: {}
 
   pg-types@4.0.2:
     dependencies:
@@ -17095,7 +17133,6 @@ snapshots:
       postgres-date: 2.1.0
       postgres-interval: 3.0.0
       postgres-range: 1.1.4
-    optional: true
 
   picocolors@1.1.1: {}
 
@@ -17591,22 +17628,17 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postgres-array@3.0.2:
-    optional: true
+  postgres-array@3.0.2: {}
 
   postgres-bytea@3.0.0:
     dependencies:
       obuf: 1.1.2
-    optional: true
 
-  postgres-date@2.1.0:
-    optional: true
+  postgres-date@2.1.0: {}
 
-  postgres-interval@3.0.0:
-    optional: true
+  postgres-interval@3.0.0: {}
 
-  postgres-range@1.1.4:
-    optional: true
+  postgres-range@1.1.4: {}
 
   prelude-ls@1.2.1: {}
 

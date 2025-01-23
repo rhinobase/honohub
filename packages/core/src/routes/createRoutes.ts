@@ -35,7 +35,6 @@ export function createRoutes<
   let collectionInsertSchema = createInsertSchema(collection.schema);
 
   if (collection.admin.fields)
-    // @ts-expect-error
     collectionInsertSchema = collectionInsertSchema.pick(
       collection.admin.fields.reduce((acc, field) => {
         let key = field;
@@ -209,7 +208,6 @@ export function createRoutes<
         data,
       });
 
-      // @ts-expect-error
       if (res !== undefined) data = res;
     }
 
@@ -324,14 +322,12 @@ export function createRoutes<
         originalDoc: record,
       });
 
-      // @ts-expect-error
       if (res !== undefined) data = res;
     }
 
     // Updating the record
     const updatedDocQuery = db
       .update(collection.schema)
-      // @ts-expect-error
       .set(data)
       .where(eq(collection.queryKey, c.req.param("id")))
       .$dynamic();

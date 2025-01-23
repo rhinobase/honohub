@@ -1,0 +1,12 @@
+{
+  "name": "sandbox",
+  "version": "0.0.1",
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@honohub/graphql": "workspace:*",
+    "@neondatabase/serverless": "^0.10.4",
+    "drizzle-orm": "^0.38.4",
+    "hono": "^4.6.18",
+    "honohub": "workspace:*"
+  }
+}

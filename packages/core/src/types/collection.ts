@@ -8,7 +8,7 @@ import type { Prettify, Promisify } from "./utils";
 export type TableColumns<T extends Table> = keyof T["_"]["columns"];
 
 /** Manage all aspects of a data collection */
-export type CollectionConfig<T extends Table = Table> = {
+export type CollectionConfig<T extends Table = Table, U = TableColumns<T>> = {
   /**
    * The collection slug
    * @default tableName
@@ -33,15 +33,15 @@ export type CollectionConfig<T extends Table = Table> = {
   /**
    * Default sort order
    */
-  defaultSort?: TableColumns<T> | `-${TableColumns<T> & string}`;
+  defaultSort?: U | `-${U & string}`;
   /**
    * Fields to be searched via the full text search
    */
-  listSearchableFields?: TableColumns<T>[];
+  listSearchableFields?: U[];
   /**
    * Collection admin options
    */
-  admin?: Partial<CollectionAdminProps<T>>;
+  admin?: Partial<CollectionAdminProps<T, U>>;
   /**
    * Pagination options
    * @default false
@@ -55,10 +55,13 @@ export type CollectionConfig<T extends Table = Table> = {
 };
 
 /** Sanitized collection configuration */
-export type SanitizedCollection<T extends Table = Table> = Prettify<
-  Required<Omit<CollectionConfig<T>, "defaultSort" | "admin">> & {
-    defaultSort?: TableColumns<T> | `-${TableColumns<T> & string}`;
-    admin: CollectionAdminProps<T> & { actions: CollectionAction<T>[] };
+export type SanitizedCollection<
+  T extends Table = Table,
+  U = TableColumns<T>,
+> = Prettify<
+  Required<Omit<CollectionConfig<T, U>, "defaultSort" | "admin">> & {
+    defaultSort?: U | `-${U & string}`;
+    admin: CollectionAdminProps<T, U> & { actions: CollectionAction<T, U>[] };
   }
 >;
 
@@ -78,7 +81,10 @@ export type CollectionPagination = {
   maxLimit?: number;
 };
 
-export type CollectionAdminProps<T extends Table = Table> = {
+export type CollectionAdminProps<
+  T extends Table = Table,
+  U = TableColumns<T>,
+> = {
   /**
    * Label configuration
    */
@@ -86,14 +92,11 @@ export type CollectionAdminProps<T extends Table = Table> = {
   /**
    * Default columns to show in list view
    */
-  columns?: (
-    | TableColumns<T>
-    | { name: TableColumns<T>; label: string; type?: string }
-  )[];
+  columns?: (U | { name: U; label: string; type?: string })[];
   fields?: (
-    | TableColumns<T>
+    | U
     | {
-        name: TableColumns<T>;
+        name: U;
         label: string;
         type?: string;
         required?: boolean;
@@ -107,7 +110,7 @@ export type CollectionAdminProps<T extends Table = Table> = {
   actions?: boolean | CollectionAction<T>[];
 };
 
-export type CollectionAction<T extends Table = Table> = {
+export type CollectionAction<T extends Table = Table, U = TableColumns<T>> = {
   name: string;
   label?: string;
   icon?: string;
@@ -120,23 +123,23 @@ export type CollectionAction<T extends Table = Table> = {
     db: Database;
     items: unknown[];
     context: Context<E, P, I>;
-    config: SanitizedCollection<T>;
+    config: SanitizedCollection<T, U>;
   }) => Promisify<void>;
   level?: boolean | { title: string; message: string };
 };
 
-export type CollectionPlugin<T extends Table = Table> = {
+export type CollectionPlugin<T extends Table = Table, U = TableColumns<T>> = {
   name: string;
   register?: (
-    config: SanitizedCollection<T>,
-  ) => SanitizedCollection<T> | undefined;
+    config: SanitizedCollection<T, U>,
+  ) => SanitizedCollection<T, U> | undefined;
   bootstrap?: <
     E extends Env = Env,
     P extends Schema = BlankSchema,
     I extends string = string,
   >(props: {
     app: Hono<E, P, I>;
-    config: SanitizedCollection<T>;
+    config: SanitizedCollection<T, U>;
   }) => Hono<E, P, I> | undefined;
 };
 
