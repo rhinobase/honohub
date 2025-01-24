@@ -1,15 +1,4 @@
-import {
-  type Table,
-  getTableColumns,
-  getTableName,
-  inArray,
-} from "drizzle-orm";
-import { HTTPException } from "hono/http-exception";
-import type {
-  CollectionAction,
-  CollectionConfig,
-  SanitizedCollection,
-} from "../types";
+import type { CollectionConfig, SanitizedCollection } from "../types";
 
 /**
  * Defines the Collection config
@@ -17,14 +6,15 @@ import type {
  * @param config - The configuration object
  * @returns The sanitized collection configuration
  */
-export function defineCollection<T extends Table>(
-  config: CollectionConfig<T>,
-): SanitizedCollection<T> {
+export function defineCollection<
+  T extends Record<string, unknown>,
+  U = keyof T,
+>(config: CollectionConfig<T, U>): SanitizedCollection<T, U> {
   const {
     schema,
-    slug = getTableName(schema),
+    slug,
     admin = {},
-    queryKey = findPrimaryKey(schema),
+    queryKey,
     access = () => true,
     defaultSort,
     listSearchableFields = [],
@@ -47,40 +37,10 @@ export function defineCollection<T extends Table>(
       throw new Error("maxLimit must be greater than defaultLimit.");
   }
 
-  const actions: CollectionAction<T>[] = [];
-  const bulkDeleteAction: CollectionAction<T> = {
-    name: "bulk_delete",
-    label: "Bulk Delete",
-    icon: "TrashIcon",
-    level: true,
-    action: ({ items, db, config }) => {
-      const entries = [];
+  const actions =
+    admin?.actions && Array.isArray(admin.actions) ? admin.actions : [];
 
-      for (const item of items) {
-        if (item && typeof item === "object" && config.queryKey?.name in item)
-          // @ts-expect-error
-          entries.push(item[config.queryKey.name]);
-        else
-          new HTTPException(400, {
-            message: `Unable to find the query key '${config.queryKey.name}' in the given entries.`,
-          });
-      }
-
-      // @ts-expect-error
-      db.delete(config.schema)
-        .where(inArray(config.queryKey, entries))
-        .execute();
-    },
-  };
-
-  if (admin && admin.actions !== false) {
-    actions.push(
-      bulkDeleteAction,
-      ...(Array.isArray(admin.actions) ? admin.actions : []),
-    );
-  }
-
-  let sanitizedConfig: SanitizedCollection<T> = {
+  let sanitizedConfig: SanitizedCollection<T, U> = {
     slug,
     admin: {
       ...admin,
@@ -107,16 +67,4 @@ export function defineCollection<T extends Table>(
   }
 
   return sanitizedConfig;
-}
-
-function findPrimaryKey<T extends Table>(table: T) {
-  const columns = getTableColumns(table);
-
-  for (const [_, column] of Object.entries(columns)) {
-    if (column.primary) return column;
-  }
-
-  throw new Error(
-    `Unable to find primary key for ${getTableName(table)} table!`,
-  );
 }

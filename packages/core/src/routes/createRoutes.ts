@@ -11,12 +11,10 @@ import { z } from "zod";
 import type { SanitizedCollection, SanitizedHub } from "../types";
 
 export function createRoutes<
-  Database extends AnyDrizzleDB<any>,
-  U extends Table,
   E extends Env = Env,
   P extends Schema = BlankSchema,
   I extends string = string,
->(config: SanitizedHub<Database>, collection: SanitizedCollection<U>) {
+>(config: SanitizedHub, collection: SanitizedCollection) {
   // Creating a new app
   let app = new Hono<E, P, I>().use(async (c, next) => {
     // Checking if we have access

@@ -35,7 +35,7 @@ export default defineHub({
     {
       name: "hono-logger",
       bootstrap: <E extends Env, P extends Schema, I extends string>(
-        props: GlobalPluginSetupProps<typeof db, E, P, I>,
+        props: GlobalPluginSetupProps<E, P, I>,
       ) => {
         return new Hono<E, P, I>().use(logger()).route("/", props.app);
       },

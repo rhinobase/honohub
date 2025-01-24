@@ -1,4 +1,3 @@
-import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { HubConfig, SanitizedHub } from "../types";
 
 /**
@@ -7,9 +6,7 @@ import type { HubConfig, SanitizedHub } from "../types";
  * @param config - The configuration object
  * @returns The sanitized hub configuration
  */
-export function defineHub<Database extends AnyDrizzleDB<any>>(
-  config: HubConfig<Database>,
-): SanitizedHub<Database> {
+export function defineHub(config: HubConfig): SanitizedHub {
   const {
     db,
     collections = [],
@@ -18,7 +15,7 @@ export function defineHub<Database extends AnyDrizzleDB<any>>(
     routes = [],
   } = config;
 
-  let sanitizedConfig: SanitizedHub<Database> = {
+  let sanitizedConfig: SanitizedHub = {
     db,
     collections,
     plugins,

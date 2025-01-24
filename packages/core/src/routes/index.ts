@@ -1,10 +1,7 @@
-import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { GlobalPlugin } from "../types";
 import { createRoutes } from "./createRoutes";
 
-export function useRestAPI<
-  Database extends AnyDrizzleDB<any>,
->(): GlobalPlugin<Database> {
+export function useRestAPI(): GlobalPlugin {
   return {
     name: "honhub-rest-api",
     bootstrap(props) {

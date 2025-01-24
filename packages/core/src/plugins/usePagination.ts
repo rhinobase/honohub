@@ -1,9 +1,6 @@
-import type { AnyDrizzleDB } from "drizzle-graphql";
 import type { CollectionPagination, GlobalPlugin } from "../types";
 
-export function usePagination<Database extends AnyDrizzleDB<any>>(
-  options: CollectionPagination,
-): GlobalPlugin<Database> {
+export function usePagination(options: CollectionPagination): GlobalPlugin {
   return {
     name: "honohub-pagination",
     register(config) {

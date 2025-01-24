@@ -1,4 +1,3 @@
-import type { AnyDrizzleDB } from "drizzle-graphql";
 import { type Env, Hono, type Schema } from "hono";
 import type { SanitizedHub } from "../types";
 
@@ -8,12 +7,9 @@ import type { SanitizedHub } from "../types";
  * @param config - The configuration object
  * @returns The Hono instance
  */
-export function createBase<
-  Database extends AnyDrizzleDB<any>,
-  E extends Env,
-  P extends Schema,
-  I extends string,
->(config: SanitizedHub<Database>) {
+export function createBase<E extends Env, P extends Schema, I extends string>(
+  config: SanitizedHub,
+) {
   const { plugins } = config;
 
   let app = new Hono<E, P, I>();
