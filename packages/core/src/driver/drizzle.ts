@@ -1,6 +1,7 @@
 import type { AnyDrizzleDB } from "drizzle-graphql";
 import {
   type Column,
+  type InferModelFromColumns,
   type Table,
   asc,
   count,
@@ -11,36 +12,50 @@ import {
   ilike,
   or,
 } from "drizzle-orm";
+import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
+import type { ZodType } from "zod";
 import type { CollectionConfig } from "../types";
 import type { Driver, DriverCollection, ListQueryOptions } from "../types";
 
 type TableColumns<T extends Table> = T["_"]["columns"];
 
-export class DrizzleDriver<
-  Database extends AnyDrizzleDB<any> = AnyDrizzleDB<any>,
-> implements Driver
-{
-  constructor(private instance: Database) {}
+export class DrizzleDriver implements Driver {
+  constructor(private instance: AnyDrizzleDB<any>) {}
 
-  collection<T extends Table, U = TableColumns<T>>(
-    config: CollectionConfig<T, U>,
-  ) {
+  collection<T, U>(config: CollectionConfig<T, U>) {
+    // @ts-expect-error
     return new Collection(this.instance, config);
   }
 }
 
-class Collection<
-  Database extends AnyDrizzleDB<any>,
-  T extends Database["_"]["fullSchema"][keyof Database["_"]["fullSchema"]],
-  U = keyof TableColumns<T>,
-> implements DriverCollection
+class Collection<T extends Table, U = keyof TableColumns<T>>
+  implements DriverCollection
 {
-  constructor(
-    private instance: Database,
-    private config: CollectionConfig<T, U>,
-  ) {}
+  columns: TableColumns<T>;
+  validation: {
+    create: <T>(values: unknown) => Promise<T>;
+    update: <T>(values: unknown) => Promise<T>;
+  };
 
-  async list<V extends T["$inferSelect"]>(options?: Partial<ListQueryOptions>) {
+  constructor(
+    private instance: AnyDrizzleDB<any>,
+    private config: CollectionConfig<T, U>,
+  ) {
+    this.columns = getTableColumns(this.config.schema);
+
+    // Validation
+    const insertSchema = createInsertSchema(this.config.schema);
+    const updateSchema = createUpdateSchema(this.config.schema);
+
+    this.validation = {
+      // @ts-expect-error
+      create: (values) => insertSchema.parseAsync(values),
+      // @ts-expect-error
+      update: (values) => updateSchema.parseAsync(values),
+    };
+  }
+
+  async list<R>(options?: Partial<ListQueryOptions>) {
     // Querying all the records
     // @ts-expect-error
     const records = this.instance.select().from(this.config.schema).$dynamic();
@@ -52,7 +67,7 @@ class Collection<
             if (String(field) in this.config.schema) {
               prev.push(
                 // @ts-expect-error
-                ilike(this.config.schema[String(field)], `%${options.search}%`),
+                ilike(this.columns[String(field)], `%${options.search}%`),
               );
             }
             return prev;
@@ -74,7 +89,7 @@ class Collection<
     }
 
     if (sortBy && sortByInString in this.config.schema) {
-      records.orderBy(order(this.config.schema[sortByInString]));
+      records.orderBy(order(this.columns[sortByInString]));
     }
 
     if (this.config.pagination) {
@@ -109,12 +124,12 @@ class Collection<
       ]);
 
       return { results, count: totalRecords } as {
-        results: V[];
+        results: R[];
         count: number;
       };
     }
 
-    return records.execute() as Promise<V[]>;
+    return records.execute() as Promise<R[]>;
   }
 
   async count() {
@@ -134,27 +149,24 @@ class Collection<
     );
   }
 
-  create(values: T["$inferInsert"]) {
+  create<R>(values: R): Promise<R> {
     // Saving the record
-    const createdDocQuery = this.instance
+    const query = this.instance
       // @ts-expect-error
       .insert(this.config.schema)
       .values(values)
       .$dynamic();
 
-    if (
-      "$returningId" in createdDocQuery &&
-      typeof createdDocQuery.$returningId === "function"
-    ) {
-      createdDocQuery.$returningId?.();
+    if ("$returningId" in query && typeof query.$returningId === "function") {
+      query.$returningId?.();
     } else {
-      createdDocQuery.returning();
+      query.returning();
     }
 
-    return createdDocQuery.execute() as Promise<T["$inferSelect"]>;
+    return query.execute();
   }
 
-  retrieve(id: string | number): Promise<T["$inferSelect"]> {
+  retrieve<R>(id: string | number): Promise<R> {
     return (
       this.instance
         .select()
@@ -166,41 +178,45 @@ class Collection<
     );
   }
 
-  update(id: string | number, values: T["$inferInsert"]) {
+  update<R>(id: string | number, values: R): Promise<R> {
     // Updating the record
-    const updatedDocQuery = this.instance
+    const query = this.instance
       // @ts-expect-error
       .update(this.config.schema)
       .set(values)
       .where(eq(this.queryKey, id))
       .$dynamic();
 
-    if (
-      "$returningId" in updatedDocQuery &&
-      typeof updatedDocQuery.$returningId === "function"
-    ) {
-      updatedDocQuery.$returningId?.();
+    if ("$returningId" in query && typeof query.$returningId === "function") {
+      query.$returningId?.();
     } else {
-      updatedDocQuery.returning();
+      query.returning();
     }
 
-    return updatedDocQuery.execute() as Promise<T["$inferInsert"]>;
+    return query.execute();
   }
 
-  delete(id: string | number) {
-    return (
-      this.instance
-        // @ts-expect-error
-        .delete(this.config.schema)
-        .where(eq(this.queryKey, id))
-        .returning() as Promise<T["$inferSelect"]>
-    );
+  delete<R>(id: string | number): Promise<R> {
+    const query = this.instance
+      // @ts-expect-error
+      .delete(this.config.schema)
+      .where(eq(this.queryKey, id))
+      .$dynamic();
+
+    if ("$returningId" in query && typeof query.$returningId === "function") {
+      query.$returningId?.();
+    } else {
+      query.returning();
+    }
+
+    return query.execute();
   }
 
   get queryKey() {
-    const columns = getTableColumns(this.config.schema);
-
-    for (const [_, column] of Object.entries(columns) as [string, Column][]) {
+    for (const [_, column] of Object.entries(this.columns) as [
+      string,
+      Column,
+    ][]) {
       if (this.config.queryKey) {
         if (column.name === this.config.queryKey) return column;
       } else if (column.primary) return column;

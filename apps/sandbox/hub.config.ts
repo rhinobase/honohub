@@ -4,6 +4,7 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { type Env, Hono, type Schema } from "hono";
 import { logger } from "hono/logger";
 import {
+  DrizzleDriver,
   type GlobalPluginSetupProps,
   defineCollection,
   defineHub,
@@ -28,7 +29,7 @@ const collection = defineCollection({
 });
 
 export default defineHub({
-  db,
+  db: new DrizzleDriver(db),
   serverUrl: "http://localhost:3000/",
   collections: [collection],
   plugins: [
@@ -40,19 +41,19 @@ export default defineHub({
         return new Hono<E, P, I>().use(logger()).route("/", props.app);
       },
     },
-    useGraphQL({
-      playground: {
-        graphQLEndpoint: "http://localhost:3000/graphql",
-      },
-    }),
-    {
-      name: "dev",
-      register: (config) => {
-        config.routes[0].import =
-          "../../../packages/graphql/src/playground.tsx";
+    // useGraphQL({
+    //   playground: {
+    //     graphQLEndpoint: "http://localhost:3000/graphql",
+    //   },
+    // }),
+    // {
+    //   name: "dev",
+    //   register: (config) => {
+    //     config.routes[0].import =
+    //       "../../../packages/graphql/src/playground.tsx";
 
-        return config;
-      },
-    },
+    //     return config;
+    //   },
+    // },
   ],
 });

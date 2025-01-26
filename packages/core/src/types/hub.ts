@@ -8,7 +8,7 @@ import type { Prettify } from "./utils";
 export type HubConfig = {
   db: Driver;
   serverUrl?: string;
-  collections?: SanitizedCollection<any>[];
+  collections?: SanitizedCollection[];
   routes?: RouteOptions[];
   plugins?: GlobalPlugin[];
 };

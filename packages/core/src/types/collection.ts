@@ -5,7 +5,7 @@ import type { Driver } from "./driver";
 import type { Prettify, Promisify } from "./utils";
 
 /** Manage all aspects of a data collection */
-export type CollectionConfig<T extends Record<string, unknown>, U = keyof T> = {
+export type CollectionConfig<T = Record<string, unknown>, U = keyof T> = {
   /**
    * The collection slug
    */
@@ -52,7 +52,7 @@ export type CollectionConfig<T extends Record<string, unknown>, U = keyof T> = {
 
 /** Sanitized collection configuration */
 export type SanitizedCollection<
-  T extends Record<string, unknown> = Record<string, unknown>,
+  T = Record<string, unknown>,
   U = keyof T,
 > = Prettify<
   Required<Omit<CollectionConfig<T, U>, "defaultSort" | "queryKey" | "admin">> &
@@ -77,10 +77,7 @@ export type CollectionPagination = {
   maxLimit?: number;
 };
 
-export type CollectionAdminProps<
-  T extends Record<string, unknown> = Record<string, unknown>,
-  U = keyof T,
-> = {
+export type CollectionAdminProps<T = Record<string, unknown>, U = keyof T> = {
   /**
    * Label configuration
    */
@@ -106,10 +103,7 @@ export type CollectionAdminProps<
   actions?: boolean | CollectionAction<T, U>[];
 };
 
-export type CollectionAction<
-  T extends Record<string, unknown> = Record<string, unknown>,
-  U = keyof T,
-> = {
+export type CollectionAction<T = Record<string, unknown>, U = keyof T> = {
   name: string;
   label?: string;
   icon?: string;
@@ -126,10 +120,7 @@ export type CollectionAction<
   level?: boolean | { title: string; message: string };
 };
 
-export type CollectionPlugin<
-  T extends Record<string, unknown> = Record<string, unknown>,
-  U = keyof T,
-> = {
+export type CollectionPlugin<T = Record<string, unknown>, U = keyof T> = {
   name: string;
   register?: (
     config: SanitizedCollection<T, U>,
@@ -144,9 +135,7 @@ export type CollectionPlugin<
   }) => Hono<E, P, I> | undefined;
 };
 
-export type CollectionHooks<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = {
+export type CollectionHooks<T = Record<string, unknown>> = {
   beforeOperation: CollectionBeforeOperationHook[];
   beforeValidate: CollectionBeforeValidateHook<T>[];
   beforeChange: CollectionBeforeChangeHook<T>[];
@@ -166,9 +155,7 @@ export type CollectionBeforeOperationHook = <
   context: Context<E, P, I>;
 }) => Promisify<void>;
 
-export type CollectionBeforeValidateHook<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = <
+export type CollectionBeforeValidateHook<T = Record<string, unknown>> = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
@@ -178,9 +165,7 @@ export type CollectionBeforeValidateHook<
   originalDoc?: T;
 }) => Promisify<JSONValue>;
 
-export type CollectionBeforeChangeHook<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = <
+export type CollectionBeforeChangeHook<T = Record<string, unknown>> = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
@@ -190,9 +175,7 @@ export type CollectionBeforeChangeHook<
   originalDoc?: T;
 }) => Promisify<T>;
 
-export type CollectionAfterChangeHook<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = <
+export type CollectionAfterChangeHook<T = Record<string, unknown>> = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
@@ -210,9 +193,7 @@ export type CollectionBeforeReadHook = <
   context: Context<E, P, I>;
 }) => Promisify<void>;
 
-export type CollectionAfterReadHook<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = <
+export type CollectionAfterReadHook<T = Record<string, unknown>> = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,
@@ -233,9 +214,7 @@ export type CollectionBeforeDeleteHook = <
  * Runs immediately after the delete operation removes
  * records from the database. Returned values are discarded.
  */
-export type CollectionAfterDeleteHook<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = <
+export type CollectionAfterDeleteHook<T = Record<string, unknown>> = <
   E extends Env = Env,
   P extends string = string,
   I extends Input = Input,

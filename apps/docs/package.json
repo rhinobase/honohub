@@ -1,0 +1,36 @@
+{
+  "name": "docs",
+  "dependencies": {
+    "@algolia/autocomplete-core": "^1.17.2",
+    "@heroicons/react": "^2.1.4",
+    "@mdx-js/loader": "^3.0.1",
+    "@next/mdx": "^14.2.4",
+    "@next/third-parties": "^14.2.5",
+    "@rafty/ui": "^1.7.5",
+    "@sindresorhus/slugify": "^2.2.1",
+    "acorn": "^8.12.1",
+    "fast-glob": "^3.3.2",
+    "flexsearch": "^0.7.43",
+    "framer-motion": "^11.2.11",
+    "mdast-util-to-string": "^4.0.0",
+    "mdx-annotations": "^0.1.4",
+    "next": "14.2.9",
+    "next-themes": "^0.3.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-highlight-words": "^0.20.0",
+    "react-icons": "^5.2.1",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.0",
+    "remark-mdx": "^3.0.1",
+    "shiki": "^1.4.0",
+    "simple-functional-loader": "^1.2.1",
+    "unist-util-filter": "^5.0.1",
+    "unist-util-visit": "^5.0.0",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "0.5.9",
+    "@types/mdx": "^2.0.13"
+  }
+}
