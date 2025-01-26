@@ -239,7 +239,12 @@ export function createRoutes<
           const { items } = c.req.valid("json");
 
           try {
-            await action({ items, context: c, db, config: collection });
+            await action({
+              items,
+              context: c,
+              db: config.db,
+              config: collection,
+            });
           } catch (err) {
             console.error(err);
             throw new HTTPException(400, {
