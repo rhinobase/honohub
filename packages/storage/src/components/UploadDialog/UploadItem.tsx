@@ -41,9 +41,7 @@ export function UploadFileItem({ id }: UploadFileItem) {
   const { uploadedFiles, setUploadedFiles } = useUploadContext();
   const file = uploadedFiles[id].file;
 
-  function onSuccess(data: StorageDataType) {
-    const content: StorageDataType = data;
-
+  function onSuccess(content: StorageDataType) {
     // Adding the asset to the cache
     queryClient.setQueryData<
       InfiniteData<{ results: StorageDataType[]; count: number }>
@@ -60,10 +58,13 @@ export function UploadFileItem({ id }: UploadFileItem) {
     });
 
     // Updating the orgainzation's storage usage
-    usage.set((prev) => prev + data.bytes);
+    usage.set((prev) => prev + content.bytes);
 
     setUploadedFiles((prev) => {
       prev[id].uploaded = true;
+
+      prev[id].onSuccess?.(content);
+
       return { ...prev };
     });
   }

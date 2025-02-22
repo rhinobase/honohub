@@ -29,7 +29,7 @@ export function UploadDialog() {
   const handleMinimize = eventHandler(() => toggleMinimize());
 
   return (
-    <div className="rounded-lg border border-secondary-200 dark:border-secondary-800 max-h-[350px] w-[400px] bg-white dark:bg-secondary-900 shadow-2xl flex flex-col overflow-hidden fixed bottom-2 right-2">
+    <div className="rounded-lg border border-secondary-200 dark:border-secondary-800 max-h-[350px] w-[400px] bg-white dark:bg-secondary-900 shadow-2xl flex flex-col overflow-hidden fixed bottom-2 right-2 z-[999]">
       <div
         className={classNames(
           !isMinimized &&

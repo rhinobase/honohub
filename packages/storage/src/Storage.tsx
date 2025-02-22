@@ -46,7 +46,7 @@ export function Storage(props: Storage) {
     ? Array().concat(...data.pages.map((item) => item.results))
     : [];
 
-  const isEmpty = data?.pages[0]?.results.length === 0;
+  const isEmpty = files.length === 0;
 
   const isListView = layout === StorageLayout.LIST;
 

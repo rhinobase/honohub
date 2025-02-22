@@ -22,52 +22,60 @@ export function useUpload(options: useUpload) {
   const cancel = useRef<Canceler>();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const upload = useCallback(async (file: File) => {
-    // Resetting the variables
-    setPercentage(0);
-    setError(() => undefined);
+  const upload = useCallback(
+    async (
+      file: File,
+      onSignatureSuccess?: (signature: Record<string, string>) => void,
+    ) => {
+      // Resetting the variables
+      setPercentage(0);
+      setError(() => undefined);
 
-    // Sending the request to upload the data and returning the response
-    try {
-      const signature = await createSignature(file);
+      // Sending the request to upload the data and returning the response
+      try {
+        const signature = await createSignature(file);
 
-      if (!signature) return null;
+        if (!signature) return null;
 
-      setLoading(false);
+        onSignatureSuccess?.(signature);
 
-      // Sending the request to upload the data
-      return create({
-        signature,
-        file,
-        config: {
-          onUploadProgress: (progressEvent) => {
-            if (!progressEvent.total) return;
-            setPercentage(
-              Math.round((progressEvent.loaded * 100) / progressEvent.total),
-            );
+        setLoading(false);
+
+        // Sending the request to upload the data
+        return create({
+          signature,
+          file,
+          config: {
+            onUploadProgress: (progressEvent) => {
+              if (!progressEvent.total) return;
+              setPercentage(
+                Math.round((progressEvent.loaded * 100) / progressEvent.total),
+              );
+            },
+            cancelToken: new axios.CancelToken((c) => {
+              cancel.current = c;
+            }),
           },
-          cancelToken: new axios.CancelToken((c) => {
-            cancel.current = c;
-          }),
-        },
-      }).then((data) => {
-        setSuccess(true);
-        options.onSuccess?.(data as StorageDataType);
-      });
-    } catch (err) {
-      if (axios.isCancel(err)) return;
-      console.error(err);
-      setError(err);
-    }
-  }, []);
+        }).then((data) => {
+          setSuccess(true);
+          options.onSuccess?.(data as StorageDataType);
+        });
+      } catch (err) {
+        if (axios.isCancel(err)) return;
+        console.error(err);
+        setError(err);
+      }
+    },
+    [],
+  );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: just need to run on initial call
   useEffect(() => {
-    const { file, uploaded } = uploadedFiles[options.id];
+    const { file, uploaded, onSignatureSuccess } = uploadedFiles[options.id];
 
     if (uploaded) return;
 
-    upload(file);
+    upload(file, onSignatureSuccess);
 
     return () => {
       cancel.current?.();

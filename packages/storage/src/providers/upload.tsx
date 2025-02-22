@@ -19,9 +19,18 @@ export function UploadProvider({ children }: PropsWithChildren) {
   );
 }
 
+type Callback = <T>(result: T) => void;
+
+type UploadingPayload = {
+  file: File;
+  uploaded?: boolean;
+  onSignatureSuccess?: Callback;
+  onSuccess?: Callback;
+};
+
 function useUploadManager() {
   const [uploadedFiles, setUploadedFiles] = useState<
-    Record<string, { file: File; uploaded: boolean }>
+    Record<string, UploadingPayload>
   >({});
   const [isCancel, toggleCancel] = useBoolean();
   const [isMinimized, toggleMinimize] = useBoolean();
